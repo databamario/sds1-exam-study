@@ -12,11 +12,11 @@ sys.path.insert(0, str(ROOT))
 
 from src.loader import MC, WA, validate_bank  # noqa: E402
 
-MODULES = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9"]
+MODULES = ["l1", "l2", "l3", "l4", "l5", "l6", "l7", "l8", "l9", "graphs"]
 OUT = ROOT / "data" / "questions.json"
 
 # Retired: these were valid but duplicated another question's learning objective,
-# so they were cut to land the bank on exactly 130 MC / 70 WA.
+# so they were cut to keep the bank tight.
 RETIRED = {
     "L2-MC-013",  # pipe statements - duplicated L2-MC-012
     "L4-MC-003",  # disjoint pairs  - duplicated L4-MC-002
@@ -67,19 +67,33 @@ def main() -> int:
     wa = [q for q in questions if q["type"] == WA]
     zero = [q for q in mc if q["n_correct"] == 0]
     rq = [q for q in questions if q.get("r_flavoured")]
+    figs = [q for q in questions if q.get("image")]
+    withfig = sorted({q["image"] for q in figs})
 
     print("\nWrote %s" % OUT.relative_to(ROOT))
     print("  total questions : %d" % len(questions))
-    print("  MC              : %d  (target 130)" % len(mc))
-    print("  WA              : %d  (target 70)" % len(wa))
-    print("  zero-correct MC : %d  (exam special case)" % len(zero))
+    print("  MC              : %d" % len(mc))
+    print("  WA              : %d" % len(wa))
+    print("  zero-correct MC : %d  (must be 0)" % len(zero))
+    print("  with a figure   : %d  across %d figures" % (len(figs), len(withfig)))
     print("  R-flavoured     : %d  (%.0f%%)" % (len(rq), 100 * len(rq) / max(len(questions), 1)))
     print()
-    print("  %-4s %5s %5s %6s" % ("Lec", "MC", "WA", "Total"))
-    for lec in range(1, 10):
-        m = sum(1 for q in mc if q["lecture"] == lec)
-        w = sum(1 for q in wa if q["lecture"] == lec)
-        print("  %-4d %5d %5d %6d" % (lec, m, w, m + w))
+    print("  %-4s %5s %5s %6s %7s" % ("Lec", "MC", "WA", "Total", "Figure"))
+    for lec in list(range(1, 10)) + [0]:
+        sel = [q for q in questions if q["lecture"] == lec]
+        if not sel:
+            continue
+        m = sum(1 for q in sel if q["type"] == MC)
+        w = sum(1 for q in sel if q["type"] == WA)
+        f = sum(1 for q in sel if q.get("image"))
+        name = "fig" if lec == 0 else str(lec)
+        print("  %-4s %5d %5d %6d %7d" % (name, m, w, m + w, f))
+
+    missing = [f for f in withfig if not (ROOT / "data" / "images" / (f + ".png")).exists()]
+    if missing:
+        print("\n  MISSING FIGURE FILES: %s" % ", ".join(missing))
+        print("  run: python tools/figures.py")
+        return 1
     return 0
 
 

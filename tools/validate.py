@@ -18,9 +18,9 @@ sys.path.insert(0, str(ROOT))
 from src.loader import LECTURES, MC, WA, load_bank, validate_bank  # noqa: E402
 from src.scoring import score_mc  # noqa: E402
 
-TARGET_MC = 130
-TARGET_WA = 70
-MIN_ZERO_CORRECT = 4
+TARGET_MC = 148
+TARGET_WA = 82
+MIN_ZERO_CORRECT = 0
 
 # Every R function the lectures actually teach. A lecture cannot be "covered"
 # unless at least one question references each of its functions.
@@ -87,26 +87,25 @@ def main() -> int:
         if not ok:
             failures.append("scoring case failed: %s" % why)
 
-    ok = score_mc([], []) == 1.0
+    ok = score_mc(["a"], []) == 0.5
     print("  %s   %-38s -> %.1f" % ("ok  " if ok else "FAIL",
-                                   "0 correct options, none marked", 1.0))
+                                   "blank answer, 1 correct", 0.5))
     if not ok:
-        failures.append("zero-correct special case failed")
+        failures.append("blank answer must never score the full point")
 
-    hr("Zero-correct questions (exam special case)")
+    hr("Every MC has at least one correct option")
     zero = [q for q in mc if q["n_correct"] == 0]
-    print("  found %d (minimum %d)" % (len(zero), MIN_ZERO_CORRECT))
+    print("  found %d (must be 0)" % len(zero))
     for q in zero:
         print("    %s  %s" % (q["id"], q["topic"][:48]))
-    if len(zero) < MIN_ZERO_CORRECT:
-        failures.append("only %d zero-correct MC questions" % len(zero))
+    if zero:
+        failures.append("%d MC questions have 0 correct options: %s"
+                        % (len(zero), ", ".join(q["id"] for q in zero)))
 
     hr("n_correct distribution")
     dist = collections.Counter(q["n_correct"] for q in mc)
     for k in sorted(dist):
         print("  %d correct option(s): %4d questions" % (k, dist[k]))
-    if 0 not in dist:
-        failures.append("no zero-correct questions at all")
     if 1 not in dist:
         warnings.append("no single-correct questions")
 
@@ -126,6 +125,66 @@ def main() -> int:
     print("  total rubric checkpoints: %d across %d WA questions"
           % (sum(len(q["rubric"]) for q in wa), len(wa)))
     print("  total gradable elements: %d" % total_elements)
+
+    hr("Written answers stay short (exam caps them at ~3 sentences)")
+    # Word count is the hard gate. Sentence counting is unreliable here because a
+    # colon-delimited list of four short items - a perfectly good exam answer to
+    # "identify these four things" - reads as four sentences.
+    long_answers = []
+    for q in wa:
+        words = len(q["answer"].split())
+        sentences = len([s for s in re.split(r"(?<=[.!?])\s+", q["answer"].strip())
+                         if len(s.split()) >= 6])
+        if words > 45:
+            long_answers.append("%s (%dw, %d prose sentences)"
+                                % (q["id"], words, sentences))
+    print("  WA answers over 45 words: %d of %d" % (len(long_answers), len(wa)))
+    for item in long_answers[:12]:
+        print("    %s" % item)
+    if long_answers:
+        failures.append("%d WA answers are too long: %s"
+                        % (len(long_answers), ", ".join(long_answers[:6])))
+    with_detail = sum(1 for q in wa if q.get("detail"))
+    print("  WA with a longer 'detail' explanation: %d of %d" % (with_detail, len(wa)))
+    print("  median WA answer length: %d words"
+          % sorted(len(q["answer"].split()) for q in wa)[len(wa) // 2])
+
+    hr("Figure questions")
+    img_dir = Path(__file__).resolve().parents[1] / "data" / "images"
+    figs = [q for q in questions if q.get("image")]
+    print("  questions with a figure: %d" % len(figs))
+    broken = []
+    for q in figs:
+        if not (img_dir / (q["image"] + ".png")).exists():
+            broken.append(q["id"])
+    print("  %s every referenced figure exists"
+          % ("ok  " if not broken else "FAIL"))
+    if broken:
+        failures.append("missing figure files: %s" % ", ".join(broken))
+    unused = sorted({f.stem for f in img_dir.glob("*.png")}
+                    - {q["image"] for q in figs})
+    if unused:
+        print("  warn figures generated but unused: %s" % ", ".join(unused))
+
+    hr("No references to the course in student-facing text")
+    meta = re.compile(
+        r"\b(the (lecture|lectures|course|slides?|material|handout|deck|exam "
+        r"handout)|in this (lecture|course)|as (shown|stated|described|explained) "
+        r"in the|according to the|we (covered|introduced|discussed)|"
+        r"the professor|the textbook|as mentioned)\b", re.I)
+    offenders = []
+    for q in questions:
+        text = " ".join([q.get("stem", ""), q.get("answer", ""),
+                         q.get("explanation", ""), q.get("detail", "") or ""])
+        hit = meta.search(text)
+        if hit:
+            offenders.append("%s (%s)" % (q["id"], hit.group(0).strip()))
+    print("  questions referring to the course: %d" % len(offenders))
+    for item in offenders[:15]:
+        print("    %s" % item)
+    if offenders:
+        failures.append("%d questions refer to the course: %s"
+                        % (len(offenders), ", ".join(offenders[:6])))
 
     hr("Adapted vs original")
     adapted = [q for q in questions if q.get("origin") == "adapted_HT25"]

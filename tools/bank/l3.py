@@ -182,7 +182,7 @@ def questions():
     out.append(mc(
         "L3-MC-013", 3, "Describing two variables",
         "You want to compare the distribution of a numerical variable across the levels "
-        "of a categorical variable. Which approach does the lecture use?",
+        "of a categorical variable. Which approach is used?",
         ["Side-by-side box plots grouped by the categorical variable",
          "A single box plot of the pooled data",
          "A bar plot of the means only",
@@ -285,7 +285,7 @@ def questions():
 
     out.append(mc(
         "L3-MC-020", 3, "Merging data",
-        "Why is merging data useful in this course?",
+        "Why is merging data useful?",
         ["To increase the sample size",
          "To bring together information stored in different tables and align datasets "
          "collected from different sources",
@@ -293,7 +293,7 @@ def questions():
          "To remove duplicate rows",
          "To compute a correlation coefficient"],
         ["b"],
-        "The lecture gives exactly these reasons: combining information from different "
+        "The reasons are: combining information from different "
         "tables, enriching data with new variables, and aligning datasets from "
         "different sources. Merging neither adds observations nor changes types.",
         PDF, "p.60", r_functions=["left_join", "inner_join"]))
@@ -318,74 +318,64 @@ def questions():
         "L3-WA-002", 3, "Quantiles, quartiles and box plots",
         "Explain what the interquartile range measures and why it is preferable to the "
         "standard deviation for a right-skewed distribution.",
-        "The interquartile range spans the middle 50% of the data, from Q1 to Q3, so it "
-        "is Q3 - Q1. The standard deviation squares every deviation from the mean, so a "
-        "single very large value inflates it heavily. Because the IQR depends only on "
-        "the middle half of the ordered data, it ignores the extreme tail and is "
-        "therefore much more stable for skewed data.",
+        "The interquartile range spans the middle 50% of the data, from Q1 to Q3, so it is Q3 - Q1. The standard deviation squares every deviation from the mean, so a single very large value inflates it heavily.",
         [rb("IQR defined as Q3 - Q1 and described as the middle 50%", 2),
          rb("Explains that squaring amplifies the influence of extreme values", 2),
          rb("Concludes the IQR is therefore preferable for skewed data")],
-        1, PDF, "p.35", r_functions=["IQR", "quantile"]))
+        1, PDF, "p.35", r_functions=["IQR", "quantile"],
+        detail="Because the IQR depends only on the middle half of the ordered data, it ignores the extreme tail and is far more stable for skewed data. That is why the IQR is the preferred measure of spread whenever the distribution is not roughly symmetric, and why income-type variables are routinely summarised with a median and IQR rather than a mean and standard deviation."))
 
     out.append(wa(
         "L3-WA-003", 3, "Type hierarchy and implicit coercion",
         "Explain R's type hierarchy for implicit coercion, and describe the common pitfall "
         "with `c(1, 2, \"3\")`.",
-        "When types are combined R promotes them up the hierarchy logical -> integer -> "
-        "double -> character, so TRUE becomes 1 and numbers can become strings. The "
-        "pitfall is that `c(1, 2, \"3\")` is coerced entirely to character, and calling "
-        "`mean()` on it returns NA with a warning because R will not convert strings for "
-        "you. The fix is an explicit conversion, `mean(as.numeric(c(1, 2, \"3\")))`.",
+        "R promotes types up the hierarchy logical, integer, double, character, so `c(1, 2, \"3\")` becomes entirely character. `mean()` on that returns NA with a warning, because R will not convert strings for you.",
         [rb("Hierarchy stated in order, lowest to highest flexibility", 2),
          rb("Notes coercion only goes upward, never downward", 2),
          rb("Identifies that `c(1,2,\"3\")` becomes character", 2),
          rb("States mean() returns NA and that as.numeric() is the fix", 2)],
         1, PDF, "p.58", code="mean(c(1, 2, \"3\"))\nmean(as.numeric(c(1, 2, \"3\")))",
-        r_functions=["c", "mean", "as.numeric"]))
+        r_functions=["c", "mean", "as.numeric"],
+        detail="The fix is an explicit conversion, `mean(as.numeric(c(1, 2, \"3\")))`. This is the single most common source of NA results in practice, and it usually appears when a numeric column has picked up a stray non-numeric entry such as a dash or a space. `str()` on the column will reveal the type, and `is.numeric()` tests it."))
 
     out.append(wa(
         "L3-WA-004", 3, "Merging data",
         "Explain the difference between an inner join and a left join, and give a "
         "situation where you would need a left join rather than an inner join.",
-        "An inner join keeps only the rows whose key appears in both tables, so any "
-        "unmatched row on either side is silently discarded. A left join keeps every row "
-        "of the left-hand table and fills unmatched columns with NA. You would need a "
-        "left join when the left table is the list of interest, for example keeping all "
-        "students even when some have no recorded score, because an inner join would "
-        "quietly drop those students and change who is in the study.",
+        "An inner join keeps only rows whose key appears in both tables, discarding unmatched rows. A left join keeps every row of the left table and fills unmatched columns with NA. You need a left join when the left table is the list of interest.",
         [rb("Inner join described as keeping only rows matched in both", 2),
          rb("Left join described as keeping all left rows and filling with NA", 2),
          rb("Gives a concrete situation where dropping rows would be wrong", 2)],
-        1, PDF, "p.62", r_functions=["inner_join", "left_join"]))
+        1, PDF, "p.62", r_functions=["inner_join", "left_join"],
+        detail="Keeping all students even when some have no recorded score is the motivating case: an inner join would quietly drop those students and change who is in the study. Right joins and full joins complete the family. The danger of an inner join is that it rarely errors, so a row count before and after is the cheapest safety check available."))
 
     out.append(wa(
         "L3-WA-005", 3, "Describing two variables",
         "Write down the R code to compute the correlation between two numerical vectors, "
         "and say what values close to -1, 0 and +1 indicate.",
-        "```r\ncor(x, y)\n```\nA value close to +1 means a strong positive linear "
-        "relationship, close to -1 a strong negative linear relationship, and close to 0 "
-        "little or no linear relationship. Correlation measures linear association only, "
-        "so a value near 0 does not rule out a curved relationship.",
+        "```r" 
+                "```r "
+                "cor(x, y) "
+                "``` "
+                "A value near +1 means a strong positive linear relationship, near -1 a strong negative one, and near 0 little or no linear relationship.",
         [rb("`cor()` used to compute the correlation"),
          rb("+1 described as a strong positive linear relationship"),
          rb("-1 described as a strong negative linear relationship"),
          rb("0 described as little or no LINEAR relationship")],
-        1, PDF, "p.42", code="cor(x, y)", r_functions=["cor"]))
+        1, PDF, "p.42", code="cor(x, y)", r_functions=["cor"],
+        detail="Correlation measures linear association only, so a value near 0 does not rule out a curved relationship. Two clearly curved clouds can correlate at almost zero. It is also unit-free and unaffected by linear rescaling, but it is not a measure of cause, and a high value in observational data can still be explained by a confounding variable."))
 
     out.append(wa(
         "L3-WA-006", 3, "Measures of central tendency",
         "A dataset has mean 46.8 and median 42. Explain what this tells you about the "
         "shape of the distribution and name one statistic you would report alongside the "
         "mean.",
-        "The mean sitting above the median indicates a right-skewed distribution, because "
-        "a long right tail of large values pulls the mean upward. A sensible companion to "
-        "the mean here would be the standard deviation for a roughly symmetric "
-        "distribution, or the interquartile range when the skew is strong.",
+        "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. A sensible companion is the standard deviation if the distribution is roughly symmetric, or the interquartile range when the skew is strong.",
         [rb("Identifies right skew from mean exceeding median", 2),
          rb("Explains that a long right tail pulls the mean up", 2),
          rb("Names a suitable accompanying statistic and justifies it")],
-        1, PDF, "p.23", r_functions=["mean", "median", "sd", "IQR"]))
+        1, PDF, "p.23", r_functions=["mean", "median", "sd", "IQR"],
+        detail="The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population."))
 
     out.append(wa(
         "L3-WA-007", 3, "Measures of spread",
@@ -405,14 +395,11 @@ def questions():
         "L3-WA-008", 3, "Visualising continuous data",
         "Explain why you would generally prefer a histogram to a bar plot for summarising "
         "a numerical variable.",
-        "A bar plot treats the categories on the axis as separate labels with gaps "
-        "between them, which suits nominal categories but wastes the fact that numerical "
-        "values are ordered and evenly spaced. A histogram places values into ordered "
-        "bins with no gaps, so the shape of the distribution, its centre and any skewness "
-        "become visible.",
+        "A bar plot treats axis categories as separate labels with gaps, which suits nominal categories but wastes the fact that numerical values are ordered and evenly spaced. A histogram places values into ordered bins with no gaps, so shape, centre and skewness become visible.",
         [rb("Bar plot treats categories as unordered labels", 2),
          rb("Histogram uses ordered bins with no gaps", 2),
          rb("Notes this reveals distribution shape, centre and skewness")],
-        1, PDF, "p.47", r_functions=["geom_histogram", "geom_bar"]))
+        1, PDF, "p.47", r_functions=["geom_histogram", "geom_bar"],
+        detail="The gap is the tell: if the axis could sensibly carry intermediate values, a histogram is the right choice. A histogram of a categorical variable is not meaningful because the bin edges would imply a numeric spacing that the categories do not have. The number of bins also controls how much detail you see, and it is a display choice rather than part of the data."))
 
     return out

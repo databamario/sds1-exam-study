@@ -133,7 +133,7 @@ def questions():
          "48/72"],
         ["b"],
         "Conditioning on the voucher restricts to the 24 teenagers who received one, of "
-        "whom 14 enrolled, giving 14/24. The slide shows this as the ratio (14/72)/(24/72), "
+        "whom 14 enrolled, giving 14/24. This is the ratio (14/72)/(24/72), "
         "which simplifies to 14/24.",
         PDF, "p.43", origin="adapted_HT25"))
 
@@ -227,29 +227,25 @@ def questions():
     # ----------------------------------------------------------------- written
     out.append(wa(
         "L4-WA-001", 4, "Basic probability",
-        "Explain the difference between disjoint events and joint events, using the card "
-        "example from the lecture.",
-        "Disjoint (mutually exclusive) events cannot occur at the same time, so their "
-        "intersection is empty and the probability of both is 0; drawing a red card and a "
-        "black card in one draw is an example. Joint events can occur together, so "
-        "drawing a red card and drawing a queen is joint, since a card can satisfy both.",
+        "Explain the difference between disjoint events and joint events, using a "
+        "card example.",
+        "Disjoint events cannot occur together, so their intersection is empty and the probability of both is 0; a red card and a black card in one draw is an example. Joint events can occur together, so a red card and a queen is joint.",
         [rb("Disjoint defined as unable to occur together, intersection probability 0", 2),
          rb("Joint defined as able to occur together", 2),
          rb("Correct card example given for each", 2)],
-        1, PDF, "p.15"))
+        1, PDF, "p.15",
+        detail="The two are easy to confuse because the word joint is used loosely in everyday speech. In probability a joint probability is simply the probability of an intersection, whether or not that intersection is empty. Disjoint is a special case of mutually exclusive, and the pair red-and-black in a single draw is the clearest classroom example because a card genuinely cannot be both."))
 
     out.append(wa(
         "L4-WA-002", 4, "Complementary events",
         "Explain what makes two events complementary, and show why P(red or black) equals "
         "1 for a shuffled deck.",
-        "Two events are complementary when they are disjoint and their union covers the "
-        "entire sample space. For a deck, a card is either red or black and cannot be "
-        "both, so the addition rule simplifies to P(red or black) = P(red) + P(black) = "
-        "26/52 + 26/52 = 1.",
+        "Two events are complementary when they are disjoint and their union covers the entire sample space. A card is either red or black and cannot be both, so P(red or black) = P(red) + P(black) = 26/52 + 26/52 = 1.",
         [rb("Complementary defined as disjoint plus covering the whole sample space", 2),
          rb("Addition rule correctly applied to disjoint events", 2),
          rb("Substitutes 26/52 + 26/52 and concludes the probability is 1")],
-        1, PDF, "p.17"))
+        1, PDF, "p.17",
+        detail="Complementary is stronger than disjoint: two events are disjoint whenever they cannot co-occur, but they are complementary only when nothing is left over. That is why complementary events always sum to exactly 1, which makes them useful for finding the remaining case without computing it directly."))
 
     out.append(wa(
         "L4-WA-003", 4, "Conditional probability",
@@ -267,15 +263,12 @@ def questions():
         "L4-WA-004", 4, "Independence",
         "Define independence of two events, and explain why drawing two cards without "
         "replacement gives dependent outcomes.",
-        "Two events are independent if knowing whether B occurred gives no useful "
-        "information about A, which is written P(A|B) = P(A|Bc) = P(A). Drawing without "
-        "replacement is dependent because the first card changes the composition of what "
-        "remains, so in the bag example the probability of a second blue drops from 3/10 "
-        "to 2/9.",
+        "Two events are independent if knowing whether B occurred gives no useful information about A, written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent, because the first card changes what remains.",
         [rb("Independence defined via P(A|B) = P(A|Bc) = P(A)", 2),
          rb("Explains the first draw changes what remains", 2),
          rb("Uses the 3/10 versus 2/9 contrast as evidence")],
-        1, PDF, "p.30"))
+        1, PDF, "p.30",
+        detail="In the bag example the probability of a second blue drops from 3/10 to 2/9 once a blue is removed, so the second draw depends on the first. Independence is what allows the multiplication rule P(A and B) = P(A) * P(B) to be used; without it you need the conditional form instead."))
 
     out.append(wa(
         "L4-WA-005", 4, "Addition rule",
@@ -293,41 +286,33 @@ def questions():
         "L4-WA-006", 4, "Joint and conditional probability",
         "Explain the difference between a marginal probability and a conditional "
         "probability, using the MTO example.",
-        "A marginal probability ignores the other variable and uses an overall total, "
-        "for example P(enrolled) = 24/72. A conditional probability restricts to the rows "
-        "or columns satisfying a condition and divides the joint probability by that "
-        "condition, for example P(enrolled | low-poverty voucher) = (14/72)/(24/72) = "
-        "14/24. The two differ, which is itself evidence of an association.",
+        "A marginal probability ignores the other variable and uses an overall total, for example P(enrolled) = 24/72. A conditional probability restricts to the condition and divides the joint probability by it, for example P(enrolled | voucher) = (14/72)/(24/72) = 14/24.",
         [rb("Marginal defined as using an overall total and ignoring the other variable", 2),
          rb("Conditional defined as joint probability divided by the condition", 2),
          rb("Correct MTO figures 24/72 and 14/24 used")],
-        1, PDF, "p.43"))
+        1, PDF, "p.43",
+        detail="The two differ, which is itself evidence of an association. A conditional probability is always read inside the given condition, so the denominator is the total for that condition rather than the grand total. This is the calculation behind a comparison of two conditional probabilities that produces a chi-squared test for independence."))
 
     out.append(wa(
         "L4-WA-007", 4, "Random variables",
         "Explain what makes a random variable discrete or continuous, and classify the "
         "time until a light bulb burns out.",
-        "A random variable is discrete when its support is a finite or countable set of "
-        "values, such as die rolls or counts per hour, and continuous when it can take "
-        "any value in a range. The time until a bulb burns out is continuous, since it "
-        "could be 100 hours, 250.5 hours, or any other positive real number.",
+        "A random variable is discrete when its support is a finite or countable set of values, such as die rolls or counts per hour, and continuous when it can take any value in a range. The time until a bulb burns out is continuous.",
         [rb("Discrete defined via finite or countable support", 2),
          rb("Continuous defined via any value in a range", 2),
          rb("Bulb burn-out time correctly classified as continuous with justification")],
-        1, PDF, "p.13"))
+        1, PDF, "p.13",
+        detail="The bulb lifetime could be 100 hours, 250.5 hours, or any other positive real number, so no value is excluded. A count of cars per hour is discrete because 4.5 cars is meaningless. The distinction matters because continuous variables can be described by density functions and their probabilities come from areas, whereas discrete ones use probability masses that sum to 1."))
 
     out.append(wa(
         "L4-WA-008", 4, "Sampling with and without replacement",
         "Explain the difference between sampling with and without replacement, and state "
         "what happens to the probability of a second blue ball in each case.",
-        "With replacement, the ball is returned after each draw so the bag's composition "
-        "is unchanged and the draws are independent, giving 3/10 for the second blue. "
-        "Without replacement the ball is not returned, so the bag changes to 2 blue out of "
-        "9 total, giving 2/9, which is a different value and shows the draws are "
-        "dependent.",
+        "With replacement the ball is returned after each draw, so the bag is unchanged, the draws are independent, and the second blue has probability 3/10. Without replacement the bag becomes 2 blue out of 9, giving 2/9, so the draws are dependent.",
         [rb("With-replacement behaviour described as restoring the bag and independence", 2),
          rb("Without-replacement behaviour described as changing the composition", 2),
          rb("Both probabilities 3/10 and 2/9 correctly stated")],
-        1, PDF, "p.37"))
+        1, PDF, "p.37",
+        detail="The two values 3/10 and 2/9 are the standard test of independence: they are equal exactly when the draws are independent. Replacement is the case that makes repeated draws behave like repeated copies of the same experiment, which is what justifies using the product rule repeatedly. Note that 3/10 comes from 3 blue out of 10 balls."))
 
     return out

@@ -3,11 +3,12 @@
 
 def mc(qid, lecture, topic, stem, options, correct, explanation,
        pdf, slide, points=1, code=None, r_functions=None,
-       origin="new", r_flavoured=False):
+       origin="new", r_flavoured=False, image=None):
     """Build a multiple-choice question.
 
-    ``correct`` is a list of option labels. Pass ``[]`` for the zero-correct
-    special case from the exam instructions.
+    ``correct`` is a list of option labels and must never be empty: every
+    question has at least one correct option, so leaving the answer blank is
+    always at least one mistake.
     """
     q = {
         "id": qid,
@@ -27,12 +28,19 @@ def mc(qid, lecture, topic, stem, options, correct, explanation,
     }
     if code:
         q["code"] = code
+    if image:
+        q["image"] = image
     return q
 
 
 def wa(qid, lecture, topic, stem, answer, rubric, points, pdf, slide,
-       code=None, r_functions=None, origin="new", bullets=None):
+       code=None, r_functions=None, origin="new", bullets=None,
+       detail=None, image=None):
     """Build a written-answer question with a self-grading rubric.
+
+    ``answer`` is what the exam asks for and must stay short - the exam caps
+    written answers at roughly three sentences. Put anything longer in
+    ``detail``, which the app shows under a collapsed "Why?" panel.
 
     Each rubric entry is ``{"text": ..., "elements": n}`` where ``n`` is how
     many separate things the answer must contain, so partial credit is possible.
@@ -45,6 +53,7 @@ def wa(qid, lecture, topic, stem, answer, rubric, points, pdf, slide,
         "stem": stem,
         "points": points,
         "answer": answer,
+        "detail": detail or "",
         "rubric": rubric,
         "r_flavoured": bool(code) or bool(r_functions),
         "r_functions": list(r_functions or []),
@@ -55,6 +64,8 @@ def wa(qid, lecture, topic, stem, answer, rubric, points, pdf, slide,
         q["code"] = code
     if bullets:
         q["bullets"] = bullets
+    if image:
+        q["image"] = image
     return q
 
 

@@ -3,11 +3,13 @@
 MC scoring follows the mock exam (HT25) grading scheme exactly:
 
     1.0  All correct options marked AND no incorrect options marked.
-          Special case: if a question has 0 correct options, leaving all
-          options unmarked also gives 1.0.
     0.5  Exactly one mistake (one correct option missed, OR one incorrect
           option marked).
     0.0  Two or more mistakes.
+
+Every MC question has at least one correct option (enforced by
+``tools/validate.py``), so marking nothing is always at least one mistake and
+never scores the full point.
 
 WA questions are self-graded against a rubric, mirroring the instruction that
 "You can get partial credits for partial answers."
@@ -30,11 +32,7 @@ def mc_mistakes(correct: Iterable[str], selected: Iterable[str]) -> int:
 
 def score_mc(correct: Sequence[str] | Iterable[str],
              selected: Sequence[str] | Iterable[str]) -> float:
-    """Score one multiple-choice answer, per the exam's grading scheme.
-
-    The zero-correct special case needs no branch of its own: an empty correct
-    set with an empty selection gives zero mistakes, which is 1.0.
-    """
+    """Score one multiple-choice answer, per the exam's grading scheme."""
     mistakes = mc_mistakes(correct, selected)
     if mistakes == 0:
         return MC_MAX_POINTS
@@ -54,11 +52,7 @@ def mc_feedback(correct: Iterable[str],
     score = score_mc(correct_set, selected_set)
 
     if mistakes == 0:
-        if not correct_set:
-            explanation = ("This question has 0 correct options and you left "
-                           "all of them unmarked, which scores the full point.")
-        else:
-            explanation = "All correct options marked, no mistakes."
+        explanation = "All correct options marked, no mistakes."
     elif mistakes == 1:
         parts = []
         if missed:

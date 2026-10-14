@@ -11,14 +11,14 @@ def questions():
     out.append(mc(
         "L9-MC-001", 9, "Non-parametric methods",
         "All the tests seen so far rely on a known sampling distribution such as z, t, F or "
-        "chi-squared. What is the non-parametric alternative discussed in this lecture?",
+        "chi-squared. What is the non-parametric alternative?",
         ["Bootstrapping",
          "The bootstrap permutation test",
          "Bagging",
          "Cross-validation",
          "The jackknife confidence interval"],
         ["a"],
-        "The lecture defines non-parametric methods as those not assuming a specific form "
+        "Non-parametric methods assume no specific form "
         "for the population distribution, and states that it focuses on bootstrapping as the "
         "workable option, estimating standard errors, confidence intervals and p-values "
         "directly from the sample.",
@@ -26,7 +26,7 @@ def questions():
 
     out.append(mc(
         "L9-MC-002", 9, "Monte-Carlo simulations",
-        "What are the steps of a Monte-Carlo simulation as given in the lecture?",
+        "What are the steps of a Monte-Carlo simulation?",
         ["Collect real data, fit a model, test, report",
          "Define the data generating process and statistic, generate many random samples, "
          "compute the statistic for each",
@@ -63,7 +63,7 @@ def questions():
          "The mean of X"],
         ["a"],
         "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N "
-        "gives the simulated probability P(X < Y). The lecture uses exactly this to "
+        "gives the simulated probability P(X < Y). This is used to "
         "estimate a probability that is analytically awkward, here for X normal and Y "
         "exponential.",
         PDF, "p.11",
@@ -119,39 +119,41 @@ def questions():
         code="boot_medians <- numeric(N)\nfor (i in 1:N) {\n  boot_sample <- sample(x, length(x), replace = TRUE)\n  boot_medians[i] <- median(boot_sample)\n}",
         r_functions=["numeric", "sample", "median", "for"]))
 
-    # ---------------------------------------------- zero-correct special cases
+    # ----------------------------------------------- all-true-except-one traps
     out.append(mc(
         "L9-MC-008", 9, "Reading R code",
-        "Consider this code. Which statements about it are true?",
+        "Consider this code. Which statements about it are true? "
+        "`N <- 100000; X <- rnorm(N, 3, 1); Y <- rexp(N, rate = 0.5); "
+        "H <- sum(X < Y); H / N`",
         ["`N <- 100000` sets the number of simulations",
          "`X <- rnorm(N, mean = 3, sd = 1)` draws N values from a normal distribution",
          "`H <- sum(X < Y)` counts the draws where X is less than Y",
          "`H / N` gives an estimate of P(X < Y)",
          "The result is the exact analytical probability of P(X < Y)"],
-        [],
-        "Every option here is true. The code sets the simulation count, draws from the two "
-        "distributions, counts the favourable cases and divides by N to estimate P(X < Y). "
-        "The final option overstates it: this is a simulation-based approximation, accurate "
-        "as N grows by the law of large numbers, not an exact closed-form answer. Mark "
-        "nothing to score the full point.",
+        ["a", "b", "c", "d"],
+        "The code sets the number of simulations, draws N values from each distribution, "
+        "counts the draws in which X is less than Y, and divides by N to estimate P(X < Y). "
+        "The result is a simulation-based approximation that becomes more accurate as N "
+        "grows, not an exact closed-form answer, so (e) is false.",
         PDF, "p.11",
         code="N <- 100000\nX <- rnorm(N, mean = 3, sd = 1)\nY <- rexp(N, rate = 0.5)\nH <- sum(X < Y)\nH / N",
         r_functions=["rnorm", "rexp", "sum"]))
 
     out.append(mc(
         "L9-MC-009", 9, "Reading R code",
-        "Which statements about the birthday problem simulation are true?",
+        "Which statements about the birthday problem simulation are true? "
+        "`bdays <- sample(1:365, 30, replace = TRUE)`, repeated for `N` iterations.",
         ["`sample(1:365, 30, replace = TRUE)` simulates 30 people's birthdays",
          "The replacement is appropriate because two people can share a birthday",
          "The simulation estimates the probability of at least one shared birthday",
          "The simulation would be exact regardless of how large N is",
          "Increasing N generally improves the accuracy of the estimate"],
-        [],
-        "Every option here is true. Sampling 30 birthdays with replacement from 1 to 365 "
-        "models independent birthdays, repeating it estimates the probability of a shared "
-        "birthday, and raising N improves accuracy through the law of large numbers. The "
-        "fourth option is wrong: no finite N gives an exact answer. Mark nothing to score "
-        "the full point.",
+        ["a", "b", "c", "e"],
+        "Sampling 30 birthdays with replacement from 1 to 365 models birthdays as "
+        "independent, which is what allows two people to share one. Repeating the simulation "
+        "estimates the probability of at least one shared birthday, and raising N improves "
+        "accuracy through the law of large numbers. No finite N gives an exact answer, so "
+        "(d) is false.",
         PDF, "p.15", code="bdays <- sample(1:365, 30, replace = TRUE)",
         r_functions=["sample", "replace"]))
 
@@ -160,13 +162,7 @@ def questions():
         "L9-WA-001", 9, "Monte-Carlo simulations",
         "Explain what Monte-Carlo simulation is, list its three steps, and say which "
         "theoretical result it relies on.",
-        "A Monte-Carlo simulation generates a large number of random samples from a "
-        "specified data generating process to approximate the sampling distribution of a "
-        "statistic, which is useful for standard errors, confidence intervals and p-values "
-        "when analytic solutions are difficult. The steps are to define the data generating "
-        "process and the statistic of interest, generate a large number of random samples, "
-        "and calculate the statistic for each sample. It relies on the law of large numbers, "
-        "since the approximation improves as the number of simulations grows.",
+        "Monte-Carlo simulation generates many random samples from a data generating process to approximate the sampling distribution of a statistic. The steps: define the process and the statistic, generate many samples, compute the statistic for each. It relies on the law of large numbers.",
         [rb("Defined as approximating a sampling distribution by repeated sampling", 2),
          rb("All three steps listed", 3),
          rb("Law of large numbers correctly named as the basis", 2),
@@ -178,11 +174,7 @@ def questions():
         "Assume X is normal with mean 3 and standard deviation 1, and Y is exponential with "
         "rate 0.5. Describe how you would use a simulation to estimate P(X < Y), writing "
         "the relevant R code.",
-        "Generate N values from each distribution, count how often the comparison holds, "
-        "and divide by N. In R: `X <- rnorm(N, mean = 3, sd = 1)`, `Y <- rexp(N, rate = "
-        "0.5)`, `H <- sum(X < Y)`, then `H / N` is the estimated probability, which for "
-        "large N settles near 0.25. The analytic solution is awkward, which is exactly the "
-        "case simulation is meant for.",
+        "Generate N values from each distribution, count how often the comparison holds, and divide by N. In R: `X <- rnorm(N, 3, 1)`, `Y <- rexp(N, 0.5)`, `H <- sum(X < Y)`, then `H / N` estimates the probability, near 0.25 for large N.",
         [rb("Both distributions generated with `rnorm()` and `rexp()` and correct "
             "parameters", 3),
          rb("Count of favourable cases computed with `sum(X < Y)`", 2),
@@ -195,13 +187,7 @@ def questions():
         "L9-WA-003", 9, "Bootstrapping",
         "Explain how you would bootstrap a median, writing the R code, and say why you "
         "cannot simply do this with a mean on the exam.",
-        "Resample the observed data with replacement many times, compute the median of each "
-        "resample, and use the distribution of those medians to form a confidence interval. "
-        "In R: pre-allocate with `boot_medians <- numeric(N)`, then in a loop over "
-        "`i in 1:N` take `boot_sample <- sample(x, length(x), replace = TRUE)` and store "
-        "`boot_medians[i] <- median(boot_sample)`. The bootstrap is an approximation that "
-        "improves with N, not an exact calculation, so you describe the procedure rather "
-        "than compute a number.",
+        "Resample the observed data with replacement many times, compute the median of each resample, and use the distribution of those medians to form a confidence interval. In R pre-allocate `boot_medians <- numeric(N)`, then in a loop take `sample(x, length(x), replace = TRUE)` and store `median(boot_sample)`.",
         [rb("Resampling with replacement correctly described", 2),
          rb("Median computed for each resample and stored", 2),
          rb("R code given including pre-allocation with `numeric(N)`", 2),
@@ -214,12 +200,7 @@ def questions():
         "L9-WA-004", 9, "Non-parametric methods",
         "Explain what a non-parametric method is, and why simulation-based inference is "
         "needed at all given that we already have z, t, F and chi-squared tests.",
-        "A non-parametric method makes no assumption about the specific form of the "
-        "population distribution, unlike the parametric tests that rely on a known sampling "
-        "distribution justified by normality or the central limit theorem. Simulation is "
-        "needed because when the normality assumption is violated, especially with small "
-        "samples, the standard tests can give unreliable results, and sometimes the "
-        "mathematics of the analytic solution is simply too hard.",
+        "A non-parametric method makes no assumption about the specific form of the population distribution, unlike parametric tests that rely on a known sampling distribution. Simulation is needed because when normality is violated, especially with small samples, the standard tests can give unreliable results.",
         [rb("Defined as making no assumption about the population distribution form", 2),
          rb("Contrasts with the parametric tests relying on known sampling distributions", 2),
          rb("Notes unreliability when normality is violated, especially at small n", 2),
@@ -230,11 +211,7 @@ def questions():
         "L9-WA-005", 9, "Reproducibility",
         "Explain the purpose of `set.seed()` and describe what happens to your simulated "
         "results if you do not use it.",
-        "`set.seed()` fixes the initial state of R's random number generator, so the same "
-        "seed always produces the same sequence of pseudo-random draws. Without it, each run "
-        "starts from a different state, so a Monte-Carlo or bootstrap result will differ "
-        "slightly every time you run it, which makes results impossible to reproduce, "
-        "report or have checked by someone else.",
+        "`set.seed()` fixes the initial state of R's random number generator, so the same seed always produces the same sequence of pseudo-random draws. Without it each run starts from a different state, so a Monte-Carlo or bootstrap result differs every time and cannot be reproduced.",
         [rb("Explains it fixes the random number generator state", 2),
          rb("States that the same seed reproduces the same draws", 2),
          rb("Explains results differ between runs without it", 2)],
@@ -242,14 +219,10 @@ def questions():
 
     out.append(wa(
         "L9-WA-006", 9, "Comparing analytic and simulation approaches",
-        "The lecture checks a probability analytically and then suggests simulating it. Give "
+        "A probability can be checked analytically, or estimated by simulating it. Give "
         "the analytic approach and the simulation approach for the probability of obtaining "
         "1, 5 or 9 heads in 10 tosses of a fair coin.",
-        "Analytically, the number of heads in 10 tosses follows a binomial distribution with "
-        "n = 10 and p = 0.5, so the probability is P(X = 1) + P(X = 5) + P(X = 9), which "
-        "evaluates to about 0.2656. The simulation approach instead draws many samples of 10 "
-        "coin tosses, counts the fraction of samples with 1, 5 or 9 heads, and uses that "
-        "fraction as an estimate that converges on the analytic value as N grows.",
+        "The count of heads in 10 tosses is binomial(n = 10, p = 0.5), so the probability is P(X = 1) + P(X = 5) + P(X = 9) \u2248 0.2656. The simulation draws many samples and uses the matching fraction as the estimate.",
         [rb("Identifies the binomial distribution with n = 10 and p = 0.5", 2),
          rb("Correctly sums P(X=1), P(X=5) and P(X=9) and gives about 0.2656", 2),
          rb("Describes the simulation as repeated draws with a sample fraction", 2),
@@ -261,13 +234,7 @@ def questions():
         "L9-WA-007", 9, "The birthday problem",
         "Describe how the birthday problem would be simulated in R, and explain why the "
         "sampling is done with replacement.",
-        "Draw 30 birthdays at random from the 365 possible days with `sample(1:365, 30, "
-        "replace = TRUE)`, check whether any day repeats within that draw, and record "
-        "whether a match occurred. Repeat this for a large number of iterations and divide "
-        "the number of iterations with a match by the total to estimate the probability. "
-        "Replacement is correct because different people are independent, so two of them "
-        "really can share a birthday; sampling without replacement would make a shared "
-        "birthday impossible.",
+        "Draw 30 birthdays with `sample(1:365, 30, replace = TRUE)`, check whether any day repeats, and record whether a match occurred. Repeat for many iterations and divide matches by the total to estimate the probability. Replacement is correct because two people really can share a birthday.",
         [rb("30 birthdays drawn from 1 to 365", 2),
          rb("Describes detecting a repeated day and averaging over iterations", 2),
          rb("Justifies replacement by independence of different people", 2),
@@ -277,13 +244,9 @@ def questions():
 
     out.append(wa(
         "L9-WA-008", 9, "Scope of the course and next steps",
-        "Summarise what this lecture adds to the course, and state which statistical topic "
-        "the lectures explicitly defer to the next course.",
-        "This lecture adds simulation-based inference: Monte-Carlo simulation to approximate "
-        "sampling distributions and awkward probabilities, and bootstrapping to estimate "
-        "standard errors, confidence intervals and p-values without assuming a parametric "
-        "form. Linear regression, along with a fuller treatment of correlation, is "
-        "explicitly deferred to the next course in the programme, SDS2.",
+        "Summarise what simulation-based inference adds, and state which statistical "
+        "topic is deferred to SDS2.",
+        "Simulation-based inference covers Monte-Carlo simulation to approximate sampling distributions and awkward probabilities, and bootstrapping to estimate standard errors, confidence intervals and p-values without assuming a parametric form. Linear regression and a fuller treatment of correlation are deferred to SDS2.",
         [rb("Identifies Monte-Carlo simulation as the addition", 2),
          rb("Identifies bootstrapping as the second addition", 2),
          rb("Correctly defers linear regression to SDS2", 2)],

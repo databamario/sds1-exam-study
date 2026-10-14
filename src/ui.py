@@ -82,14 +82,6 @@ def render_stem(q: dict, show_source: bool = True) -> None:
         )
 
 
-def zero_correct_notice(q: dict) -> None:
-    if q["type"] == loader.MC and q.get("n_correct") == 0:
-        st.markdown(
-            '<div class="sds-hint"><b>Careful.</b> This question has <b>0 correct '
-            "options</b>. Leaving everything unmarked scores the full 1 point.</div>",
-            unsafe_allow_html=True,
-        )
-
 
 def score_colour(score: float, maximum: float) -> str:
     if maximum <= 0:
@@ -161,7 +153,6 @@ def grade_mc_session(qs: list[dict], conn=None) -> None:
     q = qs[i]
     st.caption("Question %d of %d" % (i + 1, len(qs)))
     render_stem(q)
-    zero_correct_notice(q)
     st.markdown("**Mark ALL correct options.** There may be none, or more than one.")
 
     answered = q["id"] in st.session_state.mc_done

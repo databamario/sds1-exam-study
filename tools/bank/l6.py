@@ -10,7 +10,7 @@ def questions():
 
     out.append(mc(
         "L6-MC-001", 6, "Hypothesis testing steps",
-        "What are the steps of a hypothesis test as laid out in the lecture?",
+        "What are the steps of a hypothesis test?",
         ["Compute the p-value, then reject H0, then state the hypotheses",
          "Formulate H0, compute the test statistic, calculate the p-value, draw "
          "conclusions",
@@ -157,7 +157,7 @@ def questions():
         ["a", "b", "c", "d"],
         "The four functions mirror the normal set d/p/q/r but for the t distribution, and "
         "the fifth option is wrong because `pt()` is the t-distribution CDF, not the "
-        "normal one. The lecture lists exactly these four.",
+        "normal one. There are exactly these four.",
         PDF, "p.22", code="pt(qt(0.975, df = 7 - 1), df = 7 - 1)",
         r_functions=["dt", "pt", "qt", "rt"]))
 
@@ -173,7 +173,7 @@ def questions():
         ["b"],
         "The interval is point estimate plus or minus critical value times standard "
         "error, and a higher confidence level needs a larger critical value while the "
-        "standard error is unchanged. This is the trade-off the lecture notes: a wider "
+        "standard error is unchanged. This is the trade-off: a wider "
         "interval is more likely to contain the parameter but less informative.",
         PDF, "p.33"))
 
@@ -225,13 +225,7 @@ def questions():
         "L6-WA-002", 6, "Hypothesis testing steps",
         "Describe the four steps of a hypothesis test, and state the conclusion when the "
         "resulting p-value is approximately 0.",
-        "First formulate the null hypothesis, for example that the sample comes from a "
-        "population with mean 170. Second compute the test statistic, which measures how "
-        "far the observed estimate is from the null value in units of standard error. "
-        "Third compute the p-value, the probability of a statistic at least as extreme as "
-        "the observed one under H0. Fourth draw the conclusion: with p approximately 0 "
-        "the result is so unlikely under H0 that we reject it and conclude the sample "
-        "probably comes from a population with a different mean.",
+        "Formulate the null hypothesis, for example that the sample comes from a population with mean 170. Compute the test statistic, which measures how far the estimate sits from the null in standard-error units, and the p-value. Then conclude: with p near 0, reject H0.",
         [rb("Hypothesis formulation given as step 1", 2),
          rb("Test statistic explained as distance in SE units", 2),
          rb("P-value defined as an H0-conditional tail probability", 2),
@@ -242,11 +236,7 @@ def questions():
         "L6-WA-003", 6, "Confidence intervals",
         "Without doing calculations, write down the formula for the 95% confidence interval "
         "for a population mean, and state the formula for any confidence level.",
-        "For any confidence level the interval is point estimate plus or minus critical "
-        "value times standard error. For 95% with a large sample this is "
-        "`(xbar - 1.96 * s/sqrt(n), xbar + 1.96 * s/sqrt(n))`. Ideally sigma is used rather "
-        "than s, but when the population standard deviation is unknown s is used provided "
-        "n is large enough, say greater than 30.",
+        "The interval is point estimate plus or minus critical value times standard error, so for 95% it is `(xbar - 1.96 * s/sqrt(n), xbar + 1.96 * s/sqrt(n))`. Sigma is preferred, but s is used when sigma is unknown and n is large enough.",
         [rb("General form given as estimate plus or minus critical value times SE", 2),
          rb("95% critical value 1.96 correctly used"),
          rb("Standard error written as s/sqrt(n)"),
@@ -257,12 +247,7 @@ def questions():
         "L6-WA-004", 6, "Bias",
         "Define bias in terms of the estimator and the true parameter, and explain how "
         "sampling bias would affect a height study.",
-        "Bias is the expected value of the estimator minus the true parameter, "
-        "Bias(theta-hat) = E[theta-hat] - theta, and an estimator is unbiased when that is "
-        "zero. In a height study, if we unknowingly sampled mainly members of a basketball "
-        "club, the expected sample mean would be shifted upward relative to the true "
-        "population mean, giving a positive bias and a wrong conclusion about the "
-        "population.",
+        "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`, and an estimator is unbiased when that is zero. Sampling mainly basketball players would shift the expected sample mean upward, giving positive bias.",
         [rb("Bias defined as E[estimator] minus the true parameter", 2),
          rb("Unbiased estimator correctly identified as having bias of zero", 2),
          rb("Basketball club example used to illustrate upward bias of the mean")],
@@ -272,12 +257,7 @@ def questions():
         "L6-WA-005", 6, "Bias and missing data",
         "Name two ways missing data can arise besides sampling bias, and explain the "
         "consequence of missing data for a hypothesis test.",
-        "Two further sources are attrition, where individuals drop out of a longitudinal "
-        "study, and item non-response, where individuals skip particular questions in a "
-        "survey. Missing data reduces the effective sample size, which increases the "
-        "standard error and therefore reduces the power of the test, and when the missing "
-        "data is not random it can additionally introduce bias and invalidate the "
-        "inference.",
+        "Two further sources are attrition, where individuals drop out of a study, and item non-response, where individuals skip particular questions. Missing data reduces the effective sample size, raising the standard error and lowering power, and non-random missing data also introduces bias.",
         [rb("Attrition and item non-response both named", 2),
          rb("Reduced sample size linked to a larger standard error", 2),
          rb("Reduced power correctly identified as the consequence", 2),
@@ -288,12 +268,7 @@ def questions():
         "L6-WA-006", 6, "Interpreting a confidence interval",
         "Explain what a 95% confidence interval does and does not tell you, and why it is "
         "described as a random interval.",
-        "A 95% CI is an interval estimate of plausible values for the population "
-        "parameter: across many samples, about 95% of the intervals computed this way would "
-        "contain the true parameter. It does not say that 95% of sample means or 95% of the "
-        "data points fall inside it. It is called random because its endpoints move from "
-        "sample to sample as the sample mean and standard error change, which is why no "
-        "single interval can be certain.",
+        "A 95% CI is an interval of plausible values for the population parameter: across many samples about 95% of intervals built this way would contain the true parameter. It is random because its endpoints move from sample to sample.",
         [rb("Describes the repeated-samples coverage meaning of 95%", 2),
          rb("Explicitly rules out the claim about sample means or data points", 2),
          rb("Explains randomness via sample mean and SE changing between samples", 2)],
@@ -302,10 +277,7 @@ def questions():
     out.append(wa(
         "L6-WA-007", 6, "P-values",
         "Explain what a p-value is and state one thing it is NOT.",
-        "A p-value is the probability, assuming the null hypothesis is true, of observing a "
-        "test statistic at least as extreme as the one actually obtained. It is not the "
-        "probability that the null hypothesis is true, and it does not measure the size or "
-        "importance of an effect, only how inconsistent the data are with the null.",
+        "A p-value is the probability, assuming the null is true, of observing a statistic at least as extreme as the one obtained. It is not the probability that the null is true, and it does not measure the size of an effect.",
         [rb("P-value defined as an H0-conditional tail probability", 2),
          rb("States that it is NOT the probability that H0 is true"),
          rb("Notes it says nothing about effect size or importance")],
@@ -316,10 +288,11 @@ def questions():
         "Write the R code to compute the p-value for an observed sample mean of 179 when "
         "the hypothesised mean is 170 and the standard error is 1.83, for an upper-tailed "
         "test.",
-        "```r\npnorm(179, mean = 170, sd = 1.83, lower.tail = FALSE)\n```\nSetting "
-        "`lower.tail = FALSE` returns the upper-tail probability, which is the p-value for "
-        "an upper-tailed test, about 4.37e-07. The equivalent forms "
-        "`1 - pnorm(179, 170, 1.83)` and standardising to a z-score give the same answer.",
+        "```r" 
+                "```r "
+                "pnorm(179, mean = 170, sd = 1.83, lower.tail = FALSE) "
+                "``` "
+                "`lower.tail = FALSE` returns the upper-tail probability, which is the p-value for an upper-tailed test, about 4.37e-07.",
         [rb("`pnorm()` used with the observed value as the first argument", 2),
          rb("`lower.tail = FALSE` used to obtain the upper tail"),
          rb("Mean 170 and sd 1.83 correctly supplied")],

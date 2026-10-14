@@ -42,7 +42,7 @@ def questions():
 
     out.append(mc(
         "L1-MC-003", 1, "Sources of uncertainty",
-        "The lecture notes that uncertainty in a conclusion can come from several "
+        "Uncertainty in a conclusion can come from several "
         "places. Which of the following are listed as sources of uncertainty?",
         ["An incorrect sampling strategy.",
          "An incorrect measurement of stress.",
@@ -60,7 +60,7 @@ def questions():
         "L1-MC-004", 1, "Sampling bias",
         "In the 1936 Literary Digest poll, 2.4 million people were surveyed and "
         "Landon was predicted to win with 57% of the vote. Roosevelt actually won "
-        "with 62%. According to the lecture, why did such a large poll fail?",
+        "with 62%. Why did such a large poll fail?",
         ["The sample size was too small to be reliable.",
          "The magazine polled its subscribers and car owners, who during the Great "
          "Depression were mostly wealthy Republicans.",
@@ -70,7 +70,7 @@ def questions():
         ["b"],
         "The poll was enormous but biased: it surveyed the magazine's own subscribers "
         "and car owners, who were disproportionately wealthy Republicans. The lesson "
-        "the lecture draws is explicit: a large sample size does not fix a biased "
+        "is explicit: a large sample size does not fix a biased "
         "sampling strategy.",
         PDF, "p.25"))
 
@@ -86,7 +86,7 @@ def questions():
         ["c"],
         "Sample size reduces random error, i.e. sampling variability. It cannot "
         "repair a systematically unrepresentative sampling frame. The Literary "
-        "Digest poll is the lecture's example of exactly this.",
+        "Digest poll is exactly this kind of example.",
         PDF, "p.25"))
 
     # ------------------------------------------------------ target/sampled/sample
@@ -281,7 +281,7 @@ def questions():
          "The > prompt indicates where you type commands in the console."],
         ["a", "b", "c", "e"],
         "Commands are generally separated by a new line but a semicolon can also be "
-        "used, although the lecture notes it is rare. That makes (d) false.",
+        "used, although a semicolon is rarely needed. That makes (d) false.",
         PDF, "p.44"))
 
     out.append(mc(
@@ -301,77 +301,87 @@ def questions():
     # -------------------------------------------------------------- written answers
     out.append(wa(
         "L1-WA-001", 1, "Study design terminology",
-        "For a study of the relationship between neighbourhood characteristics and "
-        "well-being, a team selects 10 municipalities, then 5 urban districts within "
-        "each, then 50 adults aged 20-64 per district from the national population "
-        "register. 2,150 people respond. Identify the target population, the sampled "
-        "population, the sample and the observation unit.",
-        "Target population: all Swedish adults aged 20-64 about whom the team wants to "
-        "make claims. Sampled population: the adults aged 20-64 listed in the Swedish "
-        "population register, i.e. the group actually sampled from. Sample: the 2,150 "
-        "individuals who responded. Observation unit: the individual adult, since each "
-        "respondent contributes one survey record.",
+        "A survey draws 50 adults aged 20-64 from each of 5 urban districts, using the "
+        "national population register, and 2,150 people respond. Identify the target "
+        "population, the sampled population, the sample and the observation unit.",
+        "Target population: all Swedish adults aged 20-64. Sampled population: the "
+        "register-listed adults aged 20-64 that were drawn from. Sample: the 2,150 "
+        "responders. Observation unit: the individual adult.",
         [rb("Target population identified as all Swedish adults aged 20-64"),
          rb("Sampled population identified as the register-based group that could "
             "actually be drawn from"),
          rb("Sample identified as the 2,150 responders"),
          rb("Observation unit identified as the individual person")],
         2, PDF, "p.26",
-        origin="adapted_HT25"))
+        origin="adapted_HT25",
+        detail="The distinction that trips people up is between the sampled population "
+               "and the sample. The sampled population is the group the sampling frame "
+               "could have reached, and the sample is the subset that actually took "
+               "part. Non-response is what separates them here: 2,150 is the sample, "
+               "while everyone reachable through the register is the sampled "
+               "population."))
 
     out.append(wa(
         "L1-WA-002", 1, "R data structures",
-        "Explain the difference between a vector, a matrix, a data frame and a list in "
-        "R.",
-        "A vector is a one-dimensional sequence of elements that all share one data "
-        "type, and is created with c(). A matrix is a two-dimensional version of the "
-        "same idea, so all its elements still share one type. A data frame is also "
-        "two-dimensional, but its columns are separate vectors that may have different "
-        "types. A list is a multidimensional collection whose elements may have "
-        "different types, which is why it is the most flexible of the four.",
+        "Explain how a vector, a matrix, a data frame and a list differ in R.",
+        "A vector is one-dimensional with a single type, made with `c()`. A matrix is the two-dimensional version and still holds one type. A data frame is two-dimensional but its columns may differ in type, and a list may hold elements of differing types.",
         [rb("Vector described as 1-dimensional, single type, made with c()", 2),
          rb("Matrix described as 2-dimensional, still single type", 2),
          rb("Data frame described as 2-dimensional columns that may differ in type", 2),
          rb("List described as a collection whose elements may differ in type", 2)],
-        1, PDF, "p.48"))
+        1, PDF, "p.48",
+        detail="The single-type rule is what separates the first two from the last "
+               "two. A matrix is essentially a vector with a `dim` attribute, so it "
+               "inherits the restriction that everything inside must share a type. A "
+               "data frame drops that restriction by treating each column as its own "
+               "vector, which is why a data frame can hold a numeric column next to a "
+               "character one. The list is the most permissive of the four."))
 
     out.append(wa(
         "L1-WA-003", 1, "R data types",
-        "R has six data types but the course covers four. Name them and give one "
-        "example value for each.",
-        "The four covered types are numeric (for example 3.14), integer (for example 3 "
-        "or 2L), logical (TRUE, FALSE, or NA) and character (for example \"SDS1\"). The "
-        "two types deliberately left out are complex and raw, which students rarely or "
-        "never use.",
+        "R has six data types. Name the four that matter for this exam and give one "
+        "example value of each.",
+        "Numeric (3.14), integer (2L), logical (TRUE or NA) and character (\"SDS1\"). "
+        "The two types not used here are complex and raw.",
         [rb("Numeric and integer both named"),
          rb("Logical and character both named"),
          rb("Complex and raw correctly identified as the excluded types")],
-        1, PDF, "p.46"))
+        1, PDF, "p.46",
+        detail="`numeric` and `integer` are stored the same way but behave differently "
+               "in arithmetic: `1/2` gives 0.5 but `1L/2L` gives 0, which is why a "
+               "count read from a file often needs `as.numeric()`. Logical values can "
+               "hold TRUE, FALSE or NA. Complex numbers and raw vectors exist in R but "
+               "do not appear in this material."))
 
     out.append(wa(
         "L1-WA-004", 1, "R syntax",
-        "Explain what happens to the text that follows a hash symbol (#) in an R "
-        "script, and why you would use it.",
-        "Anything after the hash symbol is ignored by R and is never run, so it is "
-        "treated as a comment. Comments are used to annotate code so that a reader, "
-        "including your future self, can follow the logic of a script.",
+        "Explain what happens to the text after a hash symbol (#) in an R script, and "
+        "why you would use it.",
+        "R ignores everything after the hash symbol and never runs it, so it is a "
+        "comment. Comments annotate code so a reader can follow the logic.",
         [rb("Text after # is ignored / not executed"),
          rb("Purpose given as documenting or annotating code")],
-        1, PDF, "p.44"))
+        1, PDF, "p.44",
+        detail="A `#` inside a quoted string is not a comment, because R only treats "
+               "it as one outside of strings. This is why a variable holding a colour "
+               "like \"#FF0000\" still works."))
 
     out.append(wa(
         "L1-WA-005", 1, "R objects and functions",
-        "Explain why the following R code does not modify the original object `x`, and "
-        "describe what `<-` does when it is used on an object that already exists.",
-        "The right-hand side is evaluated first and only then is the result assigned "
-        "to the name on the left, so the original value of x is not touched until the "
-        "assignment completes. When the name already exists, `<-` simply overwrites the "
-        "previous contents without warning, which is why reusing a name like `a` for a "
-        "different kind of object can cause confusion later.",
+        "Explain why `x <- x + 1` does not change the original `x`, and what `<-` does "
+        "when the name already exists.",
+        "The right-hand side is evaluated first and the result is then assigned to the "
+        "name on the left, so the original value survives until the assignment "
+        "completes. When the name already exists, `<-` overwrites the previous contents "
+        "without warning.",
         [rb("Right-hand side evaluated first, then assigned"),
          rb("`<-` overwrites an existing object without warning")],
         1, PDF, "p.41", code="x <- 5\nx <- x + 1",
-        r_functions=["<-"]))
+        r_functions=["<-"],
+        detail="Because the overwrite is silent, reusing a common name like `a` for an "
+               "unrelated object is a frequent source of confusion later. A function "
+               "body is evaluated in its own environment, so assigning `x` inside a "
+               "function does not change the `x` in the global environment."))
 
     out.append(wa(
         "L1-WA-006", 1, "R objects and functions",
@@ -382,36 +392,47 @@ def questions():
         [rb("Vector created with c(1, 2, 3, 4)"),
          rb("Doubling performed by multiplying the vector by 2")],
         1, PDF, "p.42", code="d <- c(1, 2, 3, 4)\nd * 2",
-        r_functions=["c", "*"]))
+        r_functions=["c", "*"],
+        detail="Recycling is what lets a single-element vector combine with a longer "
+               "one: R repeats the shorter operand until it matches the longer. The "
+               "same rule applies to `/` and `+`, which is why `1:5 - 1` subtracts one "
+               "from every element."))
 
     out.append(wa(
         "L1-WA-007", 1, "Factors",
-        "A factor is stored internally as integers with labels attached. Explain what "
-        "this means in practice, and why it matters when you want a specific order of "
-        "categories.",
-        "Because a factor is stored as integers with a set of labels attached, the "
-        "numeric codes are not meaningful in themselves; what matters is the mapping to "
-        "labels and the order of the levels. The order of levels controls both sorting "
-        "and plotting, so a factor used as a plotting variable will be drawn in the "
-        "order of its levels rather than alphabetically, which is why the level order "
-        "must often be set explicitly.",
+        "A factor stores integers with labels attached. Explain what that means in "
+        "practice, and why it matters when you need a specific order of categories.",
+        "The integer codes are not meaningful on their own, so the labels and the order "
+        "of the levels carry the information. Level order controls sorting and "
+        "plotting, so categories appear in the order of their levels rather than "
+        "alphabetically.",
         [rb("Explanation that storage is integer codes plus a label mapping", 2),
          rb("Levels control ordering, so order must sometimes be set explicitly", 2)],
-        1, PDF, "p.52"))
+        1, PDF, "p.52",
+        detail="A frequent symptom of this is a bar chart whose categories come out in "
+               "the wrong order, with \"High\" before \"Low\". Setting the levels with "
+               "`factor(x, levels = c(\"Low\", \"Medium\", \"High\"), ordered = TRUE)` "
+               "fixes both the plot and any subsequent arithmetic. The distinction "
+               "between a factor's stored codes and its printed labels is also why "
+               "`mean(x)` fails on a factor: the codes are meaningless as numbers."))
 
     out.append(wa(
         "L1-WA-008", 1, "Sampling bias",
-        "Explain, using the Literary Digest poll as an example, why a very large sample "
-        "does not guarantee a correct conclusion.",
-        "A large sample reduces random error but it cannot repair a biased sampling "
-        "strategy, because a systematically unrepresentative frame is not fixed by "
-        "collecting more of the same units. The Literary Digest polled 2.4 million "
-        "people but only its own subscribers and car owners, who during the Great "
-        "Depression were mostly wealthy Republicans, so it predicted Landon at 57% "
-        "while Roosevelt won with 62%.",
+        "Explain why a very large sample does not guarantee a correct conclusion, using "
+        "the Literary Digest poll as an example.",
+        "A large sample reduces random error but cannot repair a biased sampling "
+        "strategy. Literary Digest polled 2.4 million people but only its subscribers "
+        "and car owners, who were mostly wealthy Republicans, so it predicted Landon at "
+        "57% while Roosevelt won with 62%.",
         [rb("Large sample reduces random error but not bias"),
          rb("Literary Digest mechanism described: subscribers and car owners"),
          rb("Correct consequence given: wrong prediction despite huge n")],
-        1, PDF, "p.25"))
+        1, PDF, "p.25",
+        detail="The distinction is between random error and bias. Random error shrinks "
+               "as the sample grows, roughly with the square root of n, so it is fixed "
+               "by collecting more. Bias comes from how units were chosen and does not "
+               "shrink at all: a frame of car owners stays unrepresentative no matter "
+               "how many of them answer. Precision is not the same thing as being "
+               "right, and this poll had extreme precision and was still wrong."))
 
     return out

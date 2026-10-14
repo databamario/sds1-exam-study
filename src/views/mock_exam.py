@@ -127,7 +127,6 @@ def mock_exam(bank, conn):
     ui.render_stem(q)
 
     if q["type"] == loader.MC:
-        ui.zero_correct_notice(q)
         chosen = answers.get(q["id"], {})
         st.markdown("**Mark ALL correct options.**")
         opts = []

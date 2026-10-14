@@ -23,9 +23,6 @@ CASES = [
     (["c", "d", "e"], 0.0, "Two or more mistakes"),
 ]
 
-ZERO_CORRECT = []
-
-
 def main() -> int:
     failures = []
 
@@ -41,21 +38,22 @@ def main() -> int:
                             % (selected, got, expected))
 
     print()
-    print("Zero-correct special case")
+    print("A blank answer never scores the full point")
     print("-" * 58)
-    zero_checks = [
-        ([], 1.0, "nothing marked -> full point"),
-        (["a"], 0.5, "one incorrect marked"),
-        (["a", "b"], 0.0, "two incorrect marked"),
+    # Every MC has at least one correct option, so marking nothing always
+    # misses it. This is the guard against the "mark nothing" exploit.
+    blank_checks = [
+        (["a", "b"], [], 0.0, "2 correct missed"),
+        (["a"], [], 0.5, "1 correct missed"),
     ]
-    for selected, expected, note in zero_checks:
-        got = score_mc(ZERO_CORRECT, selected)
+    for correct, selected, expected, note in blank_checks:
+        got = score_mc(correct, selected)
         mark = "ok " if got == expected else "FAIL"
-        print("  %s  answer %-12s -> %.1f  (expected %.1f)  %s"
-              % (mark, ",".join(selected) or "(none)", got, expected, note))
+        print("  %s  correct=%-10s blank -> %.1f  (expected %.1f)  %s"
+              % (mark, ",".join(correct), got, expected, note))
         if got != expected:
-            failures.append("zero-correct %s: got %.1f expected %.1f"
-                            % (selected, got, expected))
+            failures.append("blank answer on %s: got %.1f expected %.1f"
+                            % (correct, got, expected))
 
     print()
     print("Mistake counting")
@@ -73,8 +71,8 @@ def main() -> int:
     print("  full credit : %s" % fb["explanation"])
     fb = mc_feedback(CORRECT, ["a"])
     print("  half credit : %s" % fb["explanation"])
-    fb = mc_feedback(ZERO_CORRECT, [])
-    print("  zero-correct: %s" % fb["explanation"])
+    fb = mc_feedback(CORRECT, [])
+    print("  blank      : %s" % fb["explanation"])
 
     print()
     if failures:

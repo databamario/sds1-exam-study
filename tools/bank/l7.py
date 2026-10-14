@@ -230,11 +230,7 @@ def questions():
         "L7-WA-001", 7, "One-sided vs two-sided tests",
         "Explain the difference between a one-sided and a two-sided hypothesis test, and "
         "state how the confidence level differs between them for a given alpha.",
-        "A two-sided test has the alternative mu != mu0, so the rejection region lies in "
-        "both tails of the distribution, whereas a one-sided test has the alternative mu > "
-        "mu0 or mu < mu0 and the rejection region in only one tail. For a given alpha, a "
-        "one-sided test corresponds to a confidence level of 1 - alpha, while a two-sided "
-        "test corresponds to 1 - alpha/2, so their critical values and p-values differ.",
+        "A two-sided test has the alternative mu != mu0, with the rejection region in both tails; a one-sided test has mu > mu0 or mu < mu0, in one tail. A one-sided test matches level 1 - alpha, a two-sided test 1 - alpha/2.",
         [rb("Two-sided described as alternative mu != mu0 with both tails", 2),
          rb("One-sided described as one direction with a single tail", 2),
          rb("Correctly gives confidence levels 1 - alpha and 1 - alpha/2", 2),
@@ -245,11 +241,7 @@ def questions():
         "L7-WA-002", 7, "Type I and Type II errors",
         "Define a Type I and a Type II error, give the symbol for each, and explain the "
         "trade-off between them.",
-        "A Type I error, with probability alpha, is rejecting H0 when it is actually true, "
-        "a false positive. A Type II error, with probability beta, is failing to reject H0 "
-        "when it is false, a false negative, and the power of the test is 1 - beta. There "
-        "is a trade-off because tightening alpha to reduce false positives makes rejection "
-        "harder, which raises beta and lowers power.",
+        "A Type I error, probability alpha, is rejecting a true H0. A Type II error, probability beta, is failing to reject a false H0, and power is 1 - beta. Tightening alpha makes rejection harder, which raises beta and lowers power.",
         [rb("Type I defined as rejecting a true H0, symbol alpha", 2),
          rb("Type II defined as failing to reject a false H0, symbol beta", 2),
          rb("Power correctly given as 1 - beta", 2),
@@ -261,11 +253,7 @@ def questions():
         "For a two-sided z-test at alpha = 0.05, write down the condition on the test "
         "statistic under which you reject H0, and the corresponding condition on the "
         "sample mean.",
-        "You reject H0 when the statistic falls outside plus or minus 1.96, that is when "
-        "`(xbar - mu0)/ (s/sqrt(n)) < -1.96` or the same quantity is greater than 1.96. "
-        "Translating to the sample mean this is `xbar < mu0 - 1.96 * s/sqrt(n)` or "
-        "`xbar > mu0 + 1.96 * s/sqrt(n)`, so the acceptance region is "
-        "`mu0 plus or minus 1.96 * s/sqrt(n)`.",
+        "You reject H0 when the statistic falls outside plus or minus 1.96, that is when `(xbar - mu0) / (s/sqrt(n))` is below -1.96 or above 1.96. Equivalently `xbar < mu0 - 1.96 * s/sqrt(n)` or `xbar > mu0 + 1.96 * s/sqrt(n)`.",
         [rb("Rejection condition on the test statistic given as beyond plus or minus 1.96", 2),
          rb("Equivalent condition on the sample mean derived", 2),
          rb("Acceptance region identified as mu0 plus or minus 1.96 times s/sqrt(n)", 2)],
@@ -275,11 +263,7 @@ def questions():
         "L7-WA-004", 7, "Connection between tests and CIs",
         "Explain how a hypothesis test and a confidence interval relate, using an example "
         "with a 95% CI of (172.06, 177.94) and a test of H0: mu = 175.",
-        "For a two-sided test at significance level alpha, you fail to reject H0 exactly "
-        "when the corresponding 1 - alpha confidence interval contains the null value, and "
-        "you reject exactly when it does not. Here the null value 175 lies inside "
-        "(172.06, 177.94), so at the 5% level we fail to reject H0, which is also what "
-        "seeing the observed mean of 173.0 inside the acceptance region tells us.",
+        "For a two-sided test you fail to reject H0 exactly when the corresponding 1 - alpha confidence interval contains the null value. Here 175 lies inside (172.06, 177.94), so at the 5% level we fail to reject H0.",
         [rb("Duality between test at level alpha and the 1 - alpha CI stated", 2),
          rb("States that rejection happens when the null value is outside the interval", 2),
          rb("175 correctly identified as lying inside the interval"),
@@ -291,11 +275,7 @@ def questions():
         "Explain how this R output should be read: `t = 2.5, df = 29, p-value = 0.017`, "
         "`alternative hypothesis: true mean is not equal to 50`, "
         "`95 percent confidence interval: 51.2 58.8`, `mean of x 55`.",
-        "This is a one-sample t-test comparing the sample mean to a null value of 50. The "
-        "alternative is two-sided, that the true mean differs from 50, and the test "
-        "statistic is 2.5 with 29 degrees of freedom. The p-value of 0.017 is below 0.05, "
-        "so we reject H0 at the 5% level; equivalently the 95% CI of (51.2, 58.8) excludes "
-        "50. The sample mean is 55.",
+        "This is a one-sample t-test of the sample mean against a null value of 50, two-sided, statistic 2.5 on 29 df. The p-value 0.017 is below 0.05, so we reject H0; equivalently the 95% CI (51.2, 58.8) excludes 50. The mean is 55.",
         [rb("Identifies the test as a one-sample t-test against a null value of 50", 2),
          rb("States the alternative is two-sided, mean not equal to 50"),
          rb("Reports the test statistic and degrees of freedom"),
@@ -335,12 +315,7 @@ def questions():
         "L7-WA-008", 7, "Choosing the right distribution",
         "Explain why a t-test is used when the population standard deviation is unknown, "
         "and write the R code for a two-sided one-sample t-test.",
-        "A z-test requires the population standard deviation sigma, which is almost never "
-        "known. Substituting the sample standard deviation s makes the statistic follow a "
-        "t-distribution with n - 1 degrees of freedom rather than a normal one, and the "
-        "corresponding critical values come from `qt()` rather than `qnorm()`. For two "
-        "independent samples the code is `t.test(x, y)` and for one sample against a null "
-        "value it is `t.test(x, mu = 50)`.",
+        "A z-test requires the population standard deviation sigma, which is never known. Substituting s makes the statistic follow a t-distribution with n - 1 df, so critical values come from `qt()`. Two samples use `t.test(x, y)`, one against a null `t.test(x, mu = 50)`.",
         [rb("Explains the z-test needs the unknown population sigma", 2),
          rb("States that substituting s gives a t-distribution with n - 1 df", 2),
          rb("Gives the R code for a two-sided one-sample t-test", 2)],

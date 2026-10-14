@@ -60,7 +60,7 @@
    "lecture": 1,
    "type": "MC",
    "topic": "Sources of uncertainty",
-   "stem": "The lecture notes that uncertainty in a conclusion can come from several places. Which of the following are listed as sources of uncertainty?",
+   "stem": "Uncertainty in a conclusion can come from several places. Which of the following are listed as sources of uncertainty?",
    "options": {
     "a": "An incorrect sampling strategy.",
     "b": "An incorrect measurement of stress.",
@@ -89,7 +89,7 @@
    "lecture": 1,
    "type": "MC",
    "topic": "Sampling bias",
-   "stem": "In the 1936 Literary Digest poll, 2.4 million people were surveyed and Landon was predicted to win with 57% of the vote. Roosevelt actually won with 62%. According to the lecture, why did such a large poll fail?",
+   "stem": "In the 1936 Literary Digest poll, 2.4 million people were surveyed and Landon was predicted to win with 57% of the vote. Roosevelt actually won with 62%. Why did such a large poll fail?",
    "options": {
     "a": "The sample size was too small to be reliable.",
     "b": "The magazine polled its subscribers and car owners, who during the Great Depression were mostly wealthy Republicans.",
@@ -102,7 +102,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The poll was enormous but biased: it surveyed the magazine's own subscribers and car owners, who were disproportionately wealthy Republicans. The lesson the lecture draws is explicit: a large sample size does not fix a biased sampling strategy.",
+   "explanation": "The poll was enormous but biased: it surveyed the magazine's own subscribers and car owners, who were disproportionately wealthy Republicans. The lesson is explicit: a large sample size does not fix a biased sampling strategy.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -129,7 +129,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "Sample size reduces random error, i.e. sampling variability. It cannot repair a systematically unrepresentative sampling frame. The Literary Digest poll is the lecture's example of exactly this.",
+   "explanation": "Sample size reduces random error, i.e. sampling variability. It cannot repair a systematically unrepresentative sampling frame. The Literary Digest poll is exactly this kind of example.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -509,9 +509,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "Study design terminology",
-   "stem": "For a study of the relationship between neighbourhood characteristics and well-being, a team selects 10 municipalities, then 5 urban districts within each, then 50 adults aged 20-64 per district from the national population register. 2,150 people respond. Identify the target population, the sampled population, the sample and the observation unit.",
+   "stem": "A survey draws 50 adults aged 20-64 from each of 5 urban districts, using the national population register, and 2,150 people respond. Identify the target population, the sampled population, the sample and the observation unit.",
    "points": 2,
-   "answer": "Target population: all Swedish adults aged 20-64 about whom the team wants to make claims. Sampled population: the adults aged 20-64 listed in the Swedish population register, i.e. the group actually sampled from. Sample: the 2,150 individuals who responded. Observation unit: the individual adult, since each respondent contributes one survey record.",
+   "answer": "Target population: all Swedish adults aged 20-64. Sampled population: the register-listed adults aged 20-64 that were drawn from. Sample: the 2,150 responders. Observation unit: the individual adult.",
+   "detail": "The distinction that trips people up is between the sampled population and the sample. The sampled population is the group the sampling frame could have reached, and the sample is the subset that actually took part. Non-response is what separates them here: 2,150 is the sample, while everyone reachable through the register is the sampled population.",
    "rubric": [
     {
      "text": "Target population identified as all Swedish adults aged 20-64",
@@ -543,9 +544,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "R data structures",
-   "stem": "Explain the difference between a vector, a matrix, a data frame and a list in R.",
+   "stem": "Explain how a vector, a matrix, a data frame and a list differ in R.",
    "points": 1,
-   "answer": "A vector is a one-dimensional sequence of elements that all share one data type, and is created with c(). A matrix is a two-dimensional version of the same idea, so all its elements still share one type. A data frame is also two-dimensional, but its columns are separate vectors that may have different types. A list is a multidimensional collection whose elements may have different types, which is why it is the most flexible of the four.",
+   "answer": "A vector is one-dimensional with a single type, made with `c()`. A matrix is the two-dimensional version and still holds one type. A data frame is two-dimensional but its columns may differ in type, and a list may hold elements of differing types.",
+   "detail": "The single-type rule is what separates the first two from the last two. A matrix is essentially a vector with a `dim` attribute, so it inherits the restriction that everything inside must share a type. A data frame drops that restriction by treating each column as its own vector, which is why a data frame can hold a numeric column next to a character one. The list is the most permissive of the four.",
    "rubric": [
     {
      "text": "Vector described as 1-dimensional, single type, made with c()",
@@ -577,9 +579,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "R data types",
-   "stem": "R has six data types but the course covers four. Name them and give one example value for each.",
+   "stem": "R has six data types. Name the four that matter for this exam and give one example value of each.",
    "points": 1,
-   "answer": "The four covered types are numeric (for example 3.14), integer (for example 3 or 2L), logical (TRUE, FALSE, or NA) and character (for example \"SDS1\"). The two types deliberately left out are complex and raw, which students rarely or never use.",
+   "answer": "Numeric (3.14), integer (2L), logical (TRUE or NA) and character (\"SDS1\"). The two types not used here are complex and raw.",
+   "detail": "`numeric` and `integer` are stored the same way but behave differently in arithmetic: `1/2` gives 0.5 but `1L/2L` gives 0, which is why a count read from a file often needs `as.numeric()`. Logical values can hold TRUE, FALSE or NA. Complex numbers and raw vectors exist in R but do not appear in this material.",
    "rubric": [
     {
      "text": "Numeric and integer both named",
@@ -607,9 +610,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "R syntax",
-   "stem": "Explain what happens to the text that follows a hash symbol (#) in an R script, and why you would use it.",
+   "stem": "Explain what happens to the text after a hash symbol (#) in an R script, and why you would use it.",
    "points": 1,
-   "answer": "Anything after the hash symbol is ignored by R and is never run, so it is treated as a comment. Comments are used to annotate code so that a reader, including your future self, can follow the logic of a script.",
+   "answer": "R ignores everything after the hash symbol and never runs it, so it is a comment. Comments annotate code so a reader can follow the logic.",
+   "detail": "A `#` inside a quoted string is not a comment, because R only treats it as one outside of strings. This is why a variable holding a colour like \"#FF0000\" still works.",
    "rubric": [
     {
      "text": "Text after # is ignored / not executed",
@@ -633,9 +637,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "R objects and functions",
-   "stem": "Explain why the following R code does not modify the original object `x`, and describe what `<-` does when it is used on an object that already exists.",
+   "stem": "Explain why `x <- x + 1` does not change the original `x`, and what `<-` does when the name already exists.",
    "points": 1,
-   "answer": "The right-hand side is evaluated first and only then is the result assigned to the name on the left, so the original value of x is not touched until the assignment completes. When the name already exists, `<-` simply overwrites the previous contents without warning, which is why reusing a name like `a` for a different kind of object can cause confusion later.",
+   "answer": "The right-hand side is evaluated first and the result is then assigned to the name on the left, so the original value survives until the assignment completes. When the name already exists, `<-` overwrites the previous contents without warning.",
+   "detail": "Because the overwrite is silent, reusing a common name like `a` for an unrelated object is a frequent source of confusion later. A function body is evaluated in its own environment, so assigning `x` inside a function does not change the `x` in the global environment.",
    "rubric": [
     {
      "text": "Right-hand side evaluated first, then assigned",
@@ -665,6 +670,7 @@
    "stem": "Write the R code that creates a vector containing the values 1, 2, 3, 4, and then doubles every element of it. No need to give the final printed result.",
    "points": 1,
    "answer": "```r\nd <- c(1, 2, 3, 4)\nd * 2\n```\nThe scalar 2 is recycled across the vector, giving 2 4 6 8.",
+   "detail": "Recycling is what lets a single-element vector combine with a longer one: R repeats the shorter operand until it matches the longer. The same rule applies to `/` and `+`, which is why `1:5 - 1` subtracts one from every element.",
    "rubric": [
     {
      "text": "Vector created with c(1, 2, 3, 4)",
@@ -692,9 +698,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "Factors",
-   "stem": "A factor is stored internally as integers with labels attached. Explain what this means in practice, and why it matters when you want a specific order of categories.",
+   "stem": "A factor stores integers with labels attached. Explain what that means in practice, and why it matters when you need a specific order of categories.",
    "points": 1,
-   "answer": "Because a factor is stored as integers with a set of labels attached, the numeric codes are not meaningful in themselves; what matters is the mapping to labels and the order of the levels. The order of levels controls both sorting and plotting, so a factor used as a plotting variable will be drawn in the order of its levels rather than alphabetically, which is why the level order must often be set explicitly.",
+   "answer": "The integer codes are not meaningful on their own, so the labels and the order of the levels carry the information. Level order controls sorting and plotting, so categories appear in the order of their levels rather than alphabetically.",
+   "detail": "A frequent symptom of this is a bar chart whose categories come out in the wrong order, with \"High\" before \"Low\". Setting the levels with `factor(x, levels = c(\"Low\", \"Medium\", \"High\"), ordered = TRUE)` fixes both the plot and any subsequent arithmetic. The distinction between a factor's stored codes and its printed labels is also why `mean(x)` fails on a factor: the codes are meaningless as numbers.",
    "rubric": [
     {
      "text": "Explanation that storage is integer codes plus a label mapping",
@@ -718,9 +725,10 @@
    "lecture": 1,
    "type": "WA",
    "topic": "Sampling bias",
-   "stem": "Explain, using the Literary Digest poll as an example, why a very large sample does not guarantee a correct conclusion.",
+   "stem": "Explain why a very large sample does not guarantee a correct conclusion, using the Literary Digest poll as an example.",
    "points": 1,
-   "answer": "A large sample reduces random error but it cannot repair a biased sampling strategy, because a systematically unrepresentative frame is not fixed by collecting more of the same units. The Literary Digest polled 2.4 million people but only its own subscribers and car owners, who during the Great Depression were mostly wealthy Republicans, so it predicted Landon at 57% while Roosevelt won with 62%.",
+   "answer": "A large sample reduces random error but cannot repair a biased sampling strategy. Literary Digest polled 2.4 million people but only its subscribers and car owners, who were mostly wealthy Republicans, so it predicted Landon at 57% while Roosevelt won with 62%.",
+   "detail": "The distinction is between random error and bias. Random error shrinks as the sample grows, roughly with the square root of n, so it is fixed by collecting more. Bias comes from how units were chosen and does not shrink at all: a frame of car owners stays unrepresentative no matter how many of them answer. Precision is not the same thing as being right, and this poll had extreme precision and was still wrong.",
    "rubric": [
     {
      "text": "Large sample reduces random error but not bias",
@@ -742,6 +750,60 @@
     "slide": "p.25"
    },
    "origin": "new"
+  },
+  {
+   "id": "G-MC-012",
+   "lecture": 2,
+   "type": "MC",
+   "topic": "Comparing distributions",
+   "stem": "The plot shows the densities of two groups. Which statement is correct?",
+   "options": {
+    "a": "Group B has the higher mean and the larger spread",
+    "b": "Group A has the higher mean and the larger spread",
+    "c": "Both groups have the same mean and the same spread",
+    "d": "Group A has the higher mean but the smaller spread"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Group B's curve peaks further to the right, so its values are typically larger, and it is much flatter and wider, so it is more spread out. Group A's curve is taller and narrower.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2_after.pdf",
+    "slide": "p.8"
+   },
+   "origin": "new",
+   "image": "density_overlay"
+  },
+  {
+   "id": "G-MC-013",
+   "lecture": 2,
+   "type": "MC",
+   "topic": "Comparing distributions",
+   "stem": "The area under a density curve for one group is much larger than the area for the other. What does that tell you?",
+   "options": {
+    "a": "That group contains more observations",
+    "b": "That group has a larger total value",
+    "c": "That group has a higher variance",
+    "d": "That group's mean is larger"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Density curves are each normalised so the total area is 1 regardless of how many observations were collected. A larger area on the plot comes from a wider distribution, not a larger sample.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2_after.pdf",
+    "slide": "p.8"
+   },
+   "origin": "new",
+   "image": "density_overlay"
   },
   {
    "id": "L2-MC-001",
@@ -1092,7 +1154,7 @@
    "lecture": 2,
    "type": "MC",
    "topic": "The pipe operator",
-   "stem": "What is the main advantage of the pipe `|>` as described in the lecture?",
+   "stem": "What is the main advantage of the pipe `|>`?",
    "options": {
     "a": "It makes R run faster",
     "b": "It lets you chain operations, passing the result forward, for more readable code",
@@ -1303,7 +1365,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. The lecture makes this point about the education variable.",
+   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. The education variable is a case where this matters.",
    "r_flavoured": true,
    "r_functions": [
     "factor",
@@ -1400,7 +1462,7 @@
    ],
    "n_correct": 3,
    "points": 1,
-   "explanation": "Title, labelled axes with units, and a legend are the standard elements the lecture lists. Citing the source is good practice rather than something to omit, so (d) is false; and omitting axis labels is never right.",
+   "explanation": "Title, labelled axes with units, and a legend are the standard elements to include. Citing the source is good practice rather than something to omit, so (d) is false; and omitting axis labels is never right.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -1410,6 +1472,70 @@
    "origin": "new"
   },
   {
+   "id": "G-WA-006",
+   "lecture": 2,
+   "type": "WA",
+   "topic": "Comparing distributions",
+   "stem": "The plot shows the densities of two groups. Compare their centres and their spreads.",
+   "points": 2,
+   "answer": "Group B is centred further right than group A, so it has the higher typical value. Group B is also flatter and wider, so it has the larger spread, while Group A's curve is taller and narrower.",
+   "detail": "A taller peak does not mean a larger total, because each density is normalised to have area 1. Height and width trade off: the curve that is spread out must be flatter for its area to stay the same. Overlapping curves like these indicate the groups are not perfectly separated, so some individuals could belong to either.",
+   "rubric": [
+    {
+     "text": "States that group B has the higher centre or mean",
+     "elements": 1
+    },
+    {
+     "text": "States that group B has the larger spread or variance",
+     "elements": 1
+    },
+    {
+     "text": "Notes that group A's curve is narrower and more concentrated",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2_after.pdf",
+    "slide": "p.8"
+   },
+   "origin": "new",
+   "image": "density_overlay"
+  },
+  {
+   "id": "G-WA-010",
+   "lecture": 2,
+   "type": "WA",
+   "topic": "Reading a grouped bar chart",
+   "stem": "The chart compares how often men and women read a book. Describe the main difference between the two groups in two or three sentences.",
+   "points": 2,
+   "answer": "Women report reading less often than men: their bars shrink steadily from the 'Never' category, while the men's peak in the middle. The clearest contrast is at the extremes, where reading often is about twice as common among men. The middle categories are much closer.",
+   "detail": "A grouped bar chart with an ordered categorical variable like this is best read by looking at the shape of each group's profile rather than at individual bar heights. Note that this is an association between two categorical variables, so a comparison of proportions within each group is more informative than a comparison of raw counts.",
+   "rubric": [
+    {
+     "text": "Identifies that women report reading less often",
+     "elements": 1
+    },
+    {
+     "text": "Cites the contrast between the extreme categories",
+     "elements": 1
+    },
+    {
+     "text": "Notes that the middle categories are similar",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2_after.pdf",
+    "slide": "p.8"
+   },
+   "origin": "new",
+   "image": "bar_stacked"
+  },
+  {
    "id": "L2-WA-001",
    "lecture": 2,
    "type": "WA",
@@ -1417,6 +1543,7 @@
    "stem": "Write the R code that counts how many observations fall in each of the `class` categories of `titanic_data`, and then converts those counts to proportions. No need to give the numerical output.",
    "points": 1,
    "answer": "```r\ntable(titanic_data$class) |>\n  prop.table()\n```\n`table()` produces the counts and `prop.table()` divides them by the total so they sum to 1.",
+   "detail": "",
    "rubric": [
     {
      "text": "`table()` used to get the counts",
@@ -1449,6 +1576,7 @@
    "stem": "Write the R code that produces a two-way table of `class` by `survived`, and then shows the proportion within each class.",
    "points": 1,
    "answer": "```r\ntable(titanic_data$class, titanic_data$survived) |>\n  prop.table(margin = 1)\n```\nA two-argument `table()` builds the contingency table, and `margin = 1` normalises within each row so each class sums to 1.",
+   "detail": "",
    "rubric": [
     {
      "text": "Two-argument `table()` used to cross the two variables",
@@ -1480,6 +1608,7 @@
    "stem": "Write the R code that computes the mean fare for each passenger class using dplyr.",
    "points": 1,
    "answer": "```r\ntitanic_data |>\n  group_by(class) |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE))\n```\n`group_by()` splits the data by class, `summarize()` computes the mean within each group, and `na.rm = TRUE` drops missing fares.",
+   "detail": "",
    "rubric": [
     {
      "text": "`group_by(class)` used to split by class",
@@ -1514,9 +1643,10 @@
    "lecture": 2,
    "type": "WA",
    "topic": "The pipe operator",
-   "stem": "Explain what the pipe operator `|>` does, and why it was introduced in R 4.1.0 rather than being available from the start.",
+   "stem": "Explain what the pipe operator `|>` does, and why it arrived in R 4.1.0 rather than being available from the start.",
    "points": 1,
-   "answer": "The pipe takes the value on its left and passes it as the first argument of the function on its right, so a chain of operations can be written as a sequence of steps instead of deeply nested parentheses. It was added natively in R 4.1.0 in 2021; before that the magrittr package supplied `%>%`, which meant base R itself could not offer the operator without depending on a package.",
+   "answer": "The pipe passes the value on its left in as the first argument of the call on its right, so operations chain as steps rather than nested parentheses. Before R 4.1.0 it came only from the magrittr package as `%>%`.",
+   "detail": "The native pipe is slightly faster and needs no library call, which is why it works in a fresh R session without loading anything. The two operators are near-interchangeable for this purpose, so reading older code with `%>%` is not a sign of an old R version.",
    "rubric": [
     {
      "text": "Describes passing the left value as the first argument of the right call",
@@ -1547,9 +1677,10 @@
    "lecture": 2,
    "type": "WA",
    "topic": "Anatomy of functions",
-   "stem": "Explain the difference between passing an argument by position and passing it by name, and mention how a default value is set.",
+   "stem": "Explain the difference between passing an argument by position and by name, and say how a default value is set.",
    "points": 1,
-   "answer": "Positional matching assigns arguments in the order they appear in the function definition, so the first value goes to the first parameter. Named matching writes `name = value` and is safer because it stays correct if the definition order changes. A default is set by putting the value after an equals sign in the definition, as in `function(x, total = 100)`, and is used automatically when the argument is omitted.",
+   "answer": "Positional matching assigns arguments in the order of the function definition. Named matching writes `name = value` and stays correct if the definition order changes. A default is set with an equals sign in the definition, as in `function(x, total = 100)`.",
+   "detail": "Partial matching is allowed but deprecated, so naming arguments in full is the safer habit. Arguments are also matched lazily in R, which is why the order of evaluation can produce surprises when defaults refer to other arguments.",
    "rubric": [
     {
      "text": "Position explained as order-based assignment",
@@ -1581,9 +1712,10 @@
    "lecture": 2,
    "type": "WA",
    "topic": "Subsetting a data.frame",
-   "stem": "Give three different ways to select rows of `titanic_data` where `class == \"3rd\"` and `survived == \"yes\"`, and say which dplyr verb is the one the course prefers.",
+   "stem": "Give three ways to select rows of `titanic_data` where `class == \"3rd\"` and `survived == \"yes\"`, and say which dplyr verb is preferred.",
    "points": 1,
-   "answer": "One way is base R logical indexing, `titanic_data[titanic_data$class == \"3rd\" & titanic_data$survived == \"yes\", ]`. A second is the dedicated function, `subset(titanic_data, class ==\"3rd\" & survived == \"yes\")`. The third, and the one the course prefers, is the pipe with the dplyr verb: `titanic_data |> dplyr::filter(class == \"3rd\" & survived == \"yes\")`.",
+   "answer": "Base R indexing: `titanic_data[titanic_data$class == \"3rd\" & titanic_data$survived == \"yes\", ]`. The `subset()` function: `subset(titanic_data, class ==\"3rd\" & survived == \"yes\")`. The preferred dplyr version is `titanic_data |> dplyr::filter(class == \"3rd\" & survived == \"yes\")`.",
+   "detail": "All three return the same rows, but only `filter()` returns a data frame directly. Base R indexing is the easiest to get wrong, because forgetting the trailing comma drops the column selection and can return a vector instead of a table. `filter()` also handles missing values by dropping rows where the condition is NA, which is usually what you want but is worth knowing.",
    "rubric": [
     {
      "text": "Base R logical indexing given",
@@ -1621,6 +1753,7 @@
    "stem": "Write the R code for a grouped bar plot showing the count of passengers in each class, split by whether they survived.",
    "points": 1,
    "answer": "```r\nggplot(titanic_data, aes(x = class, fill = survived)) +\n  geom_bar()\n```\n`class` goes on the x-axis and `survived` is mapped to `fill` so the bars are split and coloured by survival.",
+   "detail": "Mapping to `fill` rather than to `position` is what produces side-by-side bars, because `geom_bar()` defaults to a stacked position. Add `position = \"dodge\"` to the `geom_bar()` call to make that explicit. Because the default stack normalises to proportions, you should be careful comparing bar heights when the group sizes differ.",
    "rubric": [
     {
      "text": "`ggplot()` call mapping `x = class`",
@@ -1654,9 +1787,10 @@
    "lecture": 2,
    "type": "WA",
    "topic": "Grouped operations",
-   "stem": "Explain the difference between `group_by(class) |> summarize(...) |> ungroup()` and `summarize(..., .by = class)`, and say which the lecture shows as the modern alternative.",
+   "stem": "Explain the difference between `group_by(class) |> summarize(...) |> ungroup()` and `summarize(..., .by = class)`, and say which is the modern alternative.",
    "points": 1,
-   "answer": "With `group_by()` the grouped state is created first and persists across every later call, so you must remember to add `ungroup()` at the end or every downstream operation stays grouped by accident. With `.by = class` the grouping applies only inside that single call and the result comes back ungrouped. The lecture shows `.by` as the modern alternative.",
+   "answer": "With `group_by()` the grouped state persists across later calls, so `ungroup()` is needed or downstream operations stay grouped. With `.by = class` the grouping applies only inside that one call and the result comes back ungrouped, which is why `.by` is the modern alternative.",
+   "detail": "A forgotten `ungroup()` is a common source of confusing output, because later `mutate()` or `arrange()` calls then operate per group without warning. `.by` removes the failure mode entirely at the cost of not supporting the more elaborate grouped operations. Both give the same numbers for this question.",
    "rubric": [
     {
      "text": "`group_by()` state persists and needs explicit `ungroup()`",
@@ -1684,6 +1818,168 @@
    },
    "origin": "new",
    "code": "titanic_data |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE), .by = class)"
+  },
+  {
+   "id": "G-MC-001",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Reading a box plot",
+   "stem": "Three groups are compared. Based on the plot, which group has the highest variance?",
+   "options": {
+    "a": "Group A",
+    "b": "Group B",
+    "c": "Group C",
+    "d": "They all have the same variance"
+   },
+   "correct": [
+    "b"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Group B has both the widest box, so the largest interquartile range, and the longest whiskers, so the widest overall spread. Group C is tightly clustered around 30 and therefore has by far the smallest variance.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "boxplots_h"
+  },
+  {
+   "id": "G-MC-002",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Reading a box plot",
+   "stem": "Based on the plot, what can you say about the medians of the three groups?",
+   "options": {
+    "a": "Group B has the highest median",
+    "b": "Group A has the lowest median",
+    "c": "All three groups have the same median",
+    "d": "The medians cannot be compared from a box plot"
+   },
+   "correct": [
+    "c"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The dark line inside each box sits at 30 in all three groups, so the medians are equal even though the spreads differ. A box plot is built precisely so the median can be read off directly.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "boxplots_h"
+  },
+  {
+   "id": "G-MC-003",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Reading a box plot",
+   "stem": "A box plot shows a box covering the middle 50% of the data. Which statement about group A in the plot is correct?",
+   "options": {
+    "a": "At least 75% of the values lie between 10 and 50",
+    "b": "The range of group A is 40",
+    "c": "About 25% of the values lie above 38",
+    "d": "The standard deviation of group A is 16"
+   },
+   "correct": [
+    "c"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The top edge of the box is the third quartile at 38, so roughly the top 25% of values lie above it. A range of 40 would mean 50 minus 10, but the whiskers are not necessarily the true extremes, and the standard deviation cannot be read off a box plot at all.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "boxplots_h"
+  },
+  {
+   "id": "G-MC-004",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Skew and centre",
+   "stem": "Based on the shape of the histogram, would you expect the mean of this variable to be higher or lower than the median?",
+   "options": {
+    "a": "Higher, because the long right tail pulls the mean up",
+    "b": "Lower, because the long right tail pulls the mean down",
+    "c": "They are always equal for this shape",
+    "d": "The mean is always higher for any right-skewed distribution"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The distribution has a long tail to the right. The mean uses every value, so the few large values pull it up, while the median only cares about the middle observation and stays lower. Here the mean sits around 4 while the median is near 2.3.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "hist_skewed"
+  },
+  {
+   "id": "G-MC-005",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Skew and centre",
+   "stem": "Which distribution is right-skewed, meaning it has a long tail to the right?",
+   "options": {
+    "a": "The one shown in the first plot",
+    "b": "The one shown in the second plot",
+    "c": "Both are right-skewed",
+    "d": "Neither is right-skewed"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The first plot has its mass on the left and a tail stretching to the right. A symmetric histogram such as the second has its centre in the middle and no long tail on either side.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "hist_skewed"
+  },
+  {
+   "id": "G-MC-006",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Shape and spread",
+   "stem": "Two histograms have the same shape and the same centre but one is more spread out than the other. What is true of the more spread-out one?",
+   "options": {
+    "a": "Its variance is larger",
+    "b": "Its variance is smaller",
+    "c": "Its variance is zero because the shape is the same",
+    "d": "Its mean and median are further apart"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Variance measures how far values sit from the centre, so spreading the same shape out increases it. Identical shapes that differ only in width differ in variance and standard deviation but not in shape or centre.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "hist_symmetric"
   },
   {
    "id": "L3-MC-001",
@@ -2014,7 +2310,7 @@
    "lecture": 3,
    "type": "MC",
    "topic": "Describing two variables",
-   "stem": "You want to compare the distribution of a numerical variable across the levels of a categorical variable. Which approach does the lecture use?",
+   "stem": "You want to compare the distribution of a numerical variable across the levels of a categorical variable. Which approach is used?",
    "options": {
     "a": "Side-by-side box plots grouped by the categorical variable",
     "b": "A single box plot of the pooled data",
@@ -2232,7 +2528,7 @@
    "lecture": 3,
    "type": "MC",
    "topic": "Merging data",
-   "stem": "Why is merging data useful in this course?",
+   "stem": "Why is merging data useful?",
    "options": {
     "a": "To increase the sample size",
     "b": "To bring together information stored in different tables and align datasets collected from different sources",
@@ -2245,7 +2541,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The lecture gives exactly these reasons: combining information from different tables, enriching data with new variables, and aligning datasets from different sources. Merging neither adds observations nor changes types.",
+   "explanation": "The reasons are: combining information from different tables, enriching data with new variables, and aligning datasets from different sources. Merging neither adds observations nor changes types.",
    "r_flavoured": true,
    "r_functions": [
     "left_join",
@@ -2258,6 +2554,102 @@
    "origin": "new"
   },
   {
+   "id": "G-WA-001",
+   "lecture": 3,
+   "type": "WA",
+   "topic": "Reading a box plot",
+   "stem": "Based on the plot, explain which group has the highest variance and why.",
+   "points": 2,
+   "answer": "Group B has the highest variance. Its box is the widest, so it has the largest interquartile range, and its whiskers extend furthest, so it covers the widest overall range. Group C is tightly clustered around 30 and has the smallest variance.",
+   "detail": "The variance measures average squared distance from the mean, so a wider spread always gives a larger variance. Here the three medians are all 30, so the groups differ only in spread, which makes this a clean comparison: same centre, different variance.",
+   "rubric": [
+    {
+     "text": "Names group B as having the highest variance",
+     "elements": 1
+    },
+    {
+     "text": "Refers to the width of the box or interquartile range",
+     "elements": 1
+    },
+    {
+     "text": "Refers to the length of the whiskers or the overall range",
+     "elements": 2
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "boxplots_h"
+  },
+  {
+   "id": "G-WA-002",
+   "lecture": 3,
+   "type": "WA",
+   "topic": "Skew and centre",
+   "stem": "Based on the histogram, do you expect the mean of this variable to be higher or lower than the median? Justify your answer.",
+   "points": 2,
+   "answer": "The mean is higher than the median. The distribution is right-skewed, so its long right tail holds a few large values, and the mean uses every value and is pulled up by that tail. The median depends only on the middle observation.",
+   "detail": "A quick way to read this off a histogram is to look for an asymmetry: a long thin tail on one side is what separates the mean from the median. The reverse happens for a left-skewed distribution, where the mean falls below the median. Neither the mean nor the median can be read exactly from a histogram, only compared.",
+   "rubric": [
+    {
+     "text": "States that the mean is higher than the median",
+     "elements": 1
+    },
+    {
+     "text": "Identifies the distribution as right-skewed with a long right tail",
+     "elements": 1
+    },
+    {
+     "text": "Explains that the tail pulls the mean up but not the median",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "hist_skewed"
+  },
+  {
+   "id": "G-WA-009",
+   "lecture": 3,
+   "type": "WA",
+   "topic": "Shape and spread",
+   "stem": "Compare the two histograms: do they have the same shape, and which has the larger variance?",
+   "points": 2,
+   "answer": "The two histograms have the same shape and the same centre but different spreads. The more spread-out histogram has the larger variance, because variance measures average squared distance from the centre and stretching the same shape over a wider range increases every such distance.",
+   "detail": "Shape, centre and spread are three separate properties of a distribution, and two histograms can agree on the first two while differing on the third. Keeping them apart is the point of summarising a distribution with several numbers at once.",
+   "rubric": [
+    {
+     "text": "States that the shape is the same in both",
+     "elements": 1
+    },
+    {
+     "text": "Identifies the more spread-out histogram as having the larger variance",
+     "elements": 1
+    },
+    {
+     "text": "Explains variance as distance from the centre",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3_after.pdf",
+    "slide": "p.10"
+   },
+   "origin": "new",
+   "image": "hist_symmetric"
+  },
+  {
    "id": "L3-WA-001",
    "lecture": 3,
    "type": "WA",
@@ -2265,6 +2657,7 @@
    "stem": "Consider the vector `x = c(2, 4, 6, 8)`. Without doing the actual calculations, write down the formula you would use for the mean, the variance and the standard deviation.",
    "points": 1,
    "answer": "Mean: `xbar = sum(x)/n = (2+4+6+8)/4`. Variance: `s^2 = (1/(n-1)) * sum((x_i - xbar)^2)` with n = 4 and xbar = 5. Standard deviation: `s = sqrt(s^2) = sqrt((1/(4-1)) * sum((x_i - 5)^2))`. No final numbers are needed.",
+   "detail": "",
    "rubric": [
     {
      "text": "Mean formula written as sum(x)/n with the values substituted",
@@ -2299,7 +2692,8 @@
    "topic": "Quantiles, quartiles and box plots",
    "stem": "Explain what the interquartile range measures and why it is preferable to the standard deviation for a right-skewed distribution.",
    "points": 1,
-   "answer": "The interquartile range spans the middle 50% of the data, from Q1 to Q3, so it is Q3 - Q1. The standard deviation squares every deviation from the mean, so a single very large value inflates it heavily. Because the IQR depends only on the middle half of the ordered data, it ignores the extreme tail and is therefore much more stable for skewed data.",
+   "answer": "The interquartile range spans the middle 50% of the data, from Q1 to Q3, so it is Q3 - Q1. The standard deviation squares every deviation from the mean, so a single very large value inflates it heavily.",
+   "detail": "Because the IQR depends only on the middle half of the ordered data, it ignores the extreme tail and is far more stable for skewed data. That is why the IQR is the preferred measure of spread whenever the distribution is not roughly symmetric, and why income-type variables are routinely summarised with a median and IQR rather than a mean and standard deviation.",
    "rubric": [
     {
      "text": "IQR defined as Q3 - Q1 and described as the middle 50%",
@@ -2332,7 +2726,8 @@
    "topic": "Type hierarchy and implicit coercion",
    "stem": "Explain R's type hierarchy for implicit coercion, and describe the common pitfall with `c(1, 2, \"3\")`.",
    "points": 1,
-   "answer": "When types are combined R promotes them up the hierarchy logical -> integer -> double -> character, so TRUE becomes 1 and numbers can become strings. The pitfall is that `c(1, 2, \"3\")` is coerced entirely to character, and calling `mean()` on it returns NA with a warning because R will not convert strings for you. The fix is an explicit conversion, `mean(as.numeric(c(1, 2, \"3\")))`.",
+   "answer": "R promotes types up the hierarchy logical, integer, double, character, so `c(1, 2, \"3\")` becomes entirely character. `mean()` on that returns NA with a warning, because R will not convert strings for you.",
+   "detail": "The fix is an explicit conversion, `mean(as.numeric(c(1, 2, \"3\")))`. This is the single most common source of NA results in practice, and it usually appears when a numeric column has picked up a stray non-numeric entry such as a dash or a space. `str()` on the column will reveal the type, and `is.numeric()` tests it.",
    "rubric": [
     {
      "text": "Hierarchy stated in order, lowest to highest flexibility",
@@ -2371,7 +2766,8 @@
    "topic": "Merging data",
    "stem": "Explain the difference between an inner join and a left join, and give a situation where you would need a left join rather than an inner join.",
    "points": 1,
-   "answer": "An inner join keeps only the rows whose key appears in both tables, so any unmatched row on either side is silently discarded. A left join keeps every row of the left-hand table and fills unmatched columns with NA. You would need a left join when the left table is the list of interest, for example keeping all students even when some have no recorded score, because an inner join would quietly drop those students and change who is in the study.",
+   "answer": "An inner join keeps only rows whose key appears in both tables, discarding unmatched rows. A left join keeps every row of the left table and fills unmatched columns with NA. You need a left join when the left table is the list of interest.",
+   "detail": "Keeping all students even when some have no recorded score is the motivating case: an inner join would quietly drop those students and change who is in the study. Right joins and full joins complete the family. The danger of an inner join is that it rarely errors, so a row count before and after is the cheapest safety check available.",
    "rubric": [
     {
      "text": "Inner join described as keeping only rows matched in both",
@@ -2404,7 +2800,8 @@
    "topic": "Describing two variables",
    "stem": "Write down the R code to compute the correlation between two numerical vectors, and say what values close to -1, 0 and +1 indicate.",
    "points": 1,
-   "answer": "```r\ncor(x, y)\n```\nA value close to +1 means a strong positive linear relationship, close to -1 a strong negative linear relationship, and close to 0 little or no linear relationship. Correlation measures linear association only, so a value near 0 does not rule out a curved relationship.",
+   "answer": "```r```r cor(x, y) ``` A value near +1 means a strong positive linear relationship, near -1 a strong negative one, and near 0 little or no linear relationship.",
+   "detail": "Correlation measures linear association only, so a value near 0 does not rule out a curved relationship. Two clearly curved clouds can correlate at almost zero. It is also unit-free and unaffected by linear rescaling, but it is not a measure of cause, and a high value in observational data can still be explained by a confounding variable.",
    "rubric": [
     {
      "text": "`cor()` used to compute the correlation",
@@ -2441,7 +2838,8 @@
    "topic": "Measures of central tendency",
    "stem": "A dataset has mean 46.8 and median 42. Explain what this tells you about the shape of the distribution and name one statistic you would report alongside the mean.",
    "points": 1,
-   "answer": "The mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. A sensible companion to the mean here would be the standard deviation for a roughly symmetric distribution, or the interquartile range when the skew is strong.",
+   "answer": "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. A sensible companion is the standard deviation if the distribution is roughly symmetric, or the interquartile range when the skew is strong.",
+   "detail": "The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population.",
    "rubric": [
     {
      "text": "Identifies right skew from mean exceeding median",
@@ -2477,6 +2875,7 @@
    "stem": "Without doing the actual calculations, what is the median of `y = c(43, 23, 22, 104, 42)`? Explain your reasoning.",
    "points": 1,
    "answer": "Order the data first: 22, 23, 42, 43, 104. With n = 5 the median is the third value, so the median is 42. The value 104 is far too large to affect the median at all, which is the point of using it here.",
+   "detail": "",
    "rubric": [
     {
      "text": "Data ordered correctly as 22, 23, 42, 43, 104",
@@ -2514,7 +2913,8 @@
    "topic": "Visualising continuous data",
    "stem": "Explain why you would generally prefer a histogram to a bar plot for summarising a numerical variable.",
    "points": 1,
-   "answer": "A bar plot treats the categories on the axis as separate labels with gaps between them, which suits nominal categories but wastes the fact that numerical values are ordered and evenly spaced. A histogram places values into ordered bins with no gaps, so the shape of the distribution, its centre and any skewness become visible.",
+   "answer": "A bar plot treats axis categories as separate labels with gaps, which suits nominal categories but wastes the fact that numerical values are ordered and evenly spaced. A histogram places values into ordered bins with no gaps, so shape, centre and skewness become visible.",
+   "detail": "The gap is the tell: if the axis could sensibly carry intermediate values, a histogram is the right choice. A histogram of a categorical variable is not meaningful because the bin edges would imply a numeric spacing that the categories do not have. The number of bins also controls how much detail you see, and it is a display choice rather than part of the data.",
    "rubric": [
     {
      "text": "Bar plot treats categories as unordered labels",
@@ -2539,6 +2939,87 @@
     "slide": "p.47"
    },
    "origin": "new"
+  },
+  {
+   "id": "G-MC-016",
+   "lecture": 4,
+   "type": "MC",
+   "topic": "Reading a frequency table",
+   "stem": "The bar chart shows how many students read each number of books last year. How many students are there in total?",
+   "options": {
+    "a": "30",
+    "b": "11",
+    "c": "20",
+    "d": "9"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Add the bar heights: 2 + 5 + 11 + 9 + 3 = 30. Reading only the tallest bar would give 11, which is just the modal group.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture4_after.pdf",
+    "slide": "p.14"
+   },
+   "origin": "new",
+   "image": "freq_bars"
+  },
+  {
+   "id": "G-MC-017",
+   "lecture": 4,
+   "type": "MC",
+   "topic": "Reading a frequency table",
+   "stem": "Using the same bar chart, what proportion of students read fewer than 20 books?",
+   "options": {
+    "a": "7/30",
+    "b": "11/30",
+    "c": "2/30",
+    "d": "20/30"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Fewer than 20 books covers the first two bars, 2 + 5 = 7 students out of 30 in total, so the proportion is 7/30.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture4_after.pdf",
+    "slide": "p.14"
+   },
+   "origin": "new",
+   "image": "freq_bars"
+  },
+  {
+   "id": "G-MC-018",
+   "lecture": 4,
+   "type": "MC",
+   "topic": "Reading a frequency table",
+   "stem": "The same bar chart shows books read per student. Which variable type and measurement level does it represent?",
+   "options": {
+    "a": "Quantitative discrete",
+    "b": "Quantitative continuous",
+    "c": "Categorical nominal",
+    "d": "Categorical ordinal"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Books is a count, so it is quantitative and discrete because you cannot read 2.5 books. It is not categorical, because the categories would have to be labels rather than numbers.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture4_after.pdf",
+    "slide": "p.14"
+   },
+   "origin": "new",
+   "image": "freq_bars"
   },
   {
    "id": "L4-MC-001",
@@ -2752,7 +3233,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "Conditioning on the voucher restricts to the 24 teenagers who received one, of whom 14 enrolled, giving 14/24. The slide shows this as the ratio (14/72)/(24/72), which simplifies to 14/24.",
+   "explanation": "Conditioning on the voucher restricts to the 24 teenagers who received one, of whom 14 enrolled, giving 14/24. This is the ratio (14/72)/(24/72), which simplifies to 14/24.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2932,13 +3413,46 @@
    "origin": "new"
   },
   {
+   "id": "G-WA-008",
+   "lecture": 4,
+   "type": "WA",
+   "topic": "Reading a frequency table",
+   "stem": "Using the bar chart, state the total number of students, the modal number of books, and the proportion who read fewer than 20 books.",
+   "points": 3,
+   "answer": "There are 30 students, since the bars add to 2 + 5 + 11 + 9 + 3. The mode is 20 to 29 books, the tallest bar. Fewer than 20 books is (2 + 5) / 30 = 7/30, about 0.23.",
+   "detail": "The mode is the most frequent value and is read off the tallest bar, not off the axis. For the proportion, the denominator is the total across all bars, while the numerator sums only the bars below the cut-off. A cumulative frequency table answers the same question and is the more efficient way to do it once the cut-off moves.",
+   "rubric": [
+    {
+     "text": "Gives the total as 30",
+     "elements": 1
+    },
+    {
+     "text": "Gives the mode as the 20 to 29 group",
+     "elements": 1
+    },
+    {
+     "text": "Computes the proportion as 7/30",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture4_after.pdf",
+    "slide": "p.14"
+   },
+   "origin": "new",
+   "image": "freq_bars"
+  },
+  {
    "id": "L4-WA-001",
    "lecture": 4,
    "type": "WA",
    "topic": "Basic probability",
-   "stem": "Explain the difference between disjoint events and joint events, using the card example from the lecture.",
+   "stem": "Explain the difference between disjoint events and joint events, using a card example.",
    "points": 1,
-   "answer": "Disjoint (mutually exclusive) events cannot occur at the same time, so their intersection is empty and the probability of both is 0; drawing a red card and a black card in one draw is an example. Joint events can occur together, so drawing a red card and drawing a queen is joint, since a card can satisfy both.",
+   "answer": "Disjoint events cannot occur together, so their intersection is empty and the probability of both is 0; a red card and a black card in one draw is an example. Joint events can occur together, so a red card and a queen is joint.",
+   "detail": "The two are easy to confuse because the word joint is used loosely in everyday speech. In probability a joint probability is simply the probability of an intersection, whether or not that intersection is empty. Disjoint is a special case of mutually exclusive, and the pair red-and-black in a single draw is the clearest classroom example because a card genuinely cannot be both.",
    "rubric": [
     {
      "text": "Disjoint defined as unable to occur together, intersection probability 0",
@@ -2968,7 +3482,8 @@
    "topic": "Complementary events",
    "stem": "Explain what makes two events complementary, and show why P(red or black) equals 1 for a shuffled deck.",
    "points": 1,
-   "answer": "Two events are complementary when they are disjoint and their union covers the entire sample space. For a deck, a card is either red or black and cannot be both, so the addition rule simplifies to P(red or black) = P(red) + P(black) = 26/52 + 26/52 = 1.",
+   "answer": "Two events are complementary when they are disjoint and their union covers the entire sample space. A card is either red or black and cannot be both, so P(red or black) = P(red) + P(black) = 26/52 + 26/52 = 1.",
+   "detail": "Complementary is stronger than disjoint: two events are disjoint whenever they cannot co-occur, but they are complementary only when nothing is left over. That is why complementary events always sum to exactly 1, which makes them useful for finding the remaining case without computing it directly.",
    "rubric": [
     {
      "text": "Complementary defined as disjoint plus covering the whole sample space",
@@ -2999,6 +3514,7 @@
    "stem": "In the MTO experiment, write down the formula for P(enrolled | low-poverty voucher) and substitute the values. You do not need to calculate the final number.",
    "points": 1,
    "answer": "`P(enrolled | low-poverty voucher) = P(enrolled and low-poverty voucher) / P(low-poverty voucher) = (14/72) / (24/72) = 14/24`",
+   "detail": "",
    "rubric": [
     {
      "text": "Correct ratio of joint probability over conditioning probability",
@@ -3031,7 +3547,8 @@
    "topic": "Independence",
    "stem": "Define independence of two events, and explain why drawing two cards without replacement gives dependent outcomes.",
    "points": 1,
-   "answer": "Two events are independent if knowing whether B occurred gives no useful information about A, which is written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent because the first card changes the composition of what remains, so in the bag example the probability of a second blue drops from 3/10 to 2/9.",
+   "answer": "Two events are independent if knowing whether B occurred gives no useful information about A, written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent, because the first card changes what remains.",
+   "detail": "In the bag example the probability of a second blue drops from 3/10 to 2/9 once a blue is removed, so the second draw depends on the first. Independence is what allows the multiplication rule P(A and B) = P(A) * P(B) to be used; without it you need the conditional form instead.",
    "rubric": [
     {
      "text": "Independence defined via P(A|B) = P(A|Bc) = P(A)",
@@ -3062,6 +3579,7 @@
    "stem": "A bag holds 5 red, 3 blue and 2 orange balls. Without calculating, write down the formula for the probability of drawing a red or an orange ball.",
    "points": 1,
    "answer": "`P(red or orange) = P(red) + P(orange) - P(red and orange) = 5/10 + 2/10 - 0 = 7/10`, because a single ball cannot be both red and orange so the intersection is empty.",
+   "detail": "",
    "rubric": [
     {
      "text": "Addition rule written in full including the subtraction term",
@@ -3091,7 +3609,8 @@
    "topic": "Joint and conditional probability",
    "stem": "Explain the difference between a marginal probability and a conditional probability, using the MTO example.",
    "points": 1,
-   "answer": "A marginal probability ignores the other variable and uses an overall total, for example P(enrolled) = 24/72. A conditional probability restricts to the rows or columns satisfying a condition and divides the joint probability by that condition, for example P(enrolled | low-poverty voucher) = (14/72)/(24/72) = 14/24. The two differ, which is itself evidence of an association.",
+   "answer": "A marginal probability ignores the other variable and uses an overall total, for example P(enrolled) = 24/72. A conditional probability restricts to the condition and divides the joint probability by it, for example P(enrolled | voucher) = (14/72)/(24/72) = 14/24.",
+   "detail": "The two differ, which is itself evidence of an association. A conditional probability is always read inside the given condition, so the denominator is the total for that condition rather than the grand total. This is the calculation behind a comparison of two conditional probabilities that produces a chi-squared test for independence.",
    "rubric": [
     {
      "text": "Marginal defined as using an overall total and ignoring the other variable",
@@ -3121,7 +3640,8 @@
    "topic": "Random variables",
    "stem": "Explain what makes a random variable discrete or continuous, and classify the time until a light bulb burns out.",
    "points": 1,
-   "answer": "A random variable is discrete when its support is a finite or countable set of values, such as die rolls or counts per hour, and continuous when it can take any value in a range. The time until a bulb burns out is continuous, since it could be 100 hours, 250.5 hours, or any other positive real number.",
+   "answer": "A random variable is discrete when its support is a finite or countable set of values, such as die rolls or counts per hour, and continuous when it can take any value in a range. The time until a bulb burns out is continuous.",
+   "detail": "The bulb lifetime could be 100 hours, 250.5 hours, or any other positive real number, so no value is excluded. A count of cars per hour is discrete because 4.5 cars is meaningless. The distinction matters because continuous variables can be described by density functions and their probabilities come from areas, whereas discrete ones use probability masses that sum to 1.",
    "rubric": [
     {
      "text": "Discrete defined via finite or countable support",
@@ -3151,7 +3671,8 @@
    "topic": "Sampling with and without replacement",
    "stem": "Explain the difference between sampling with and without replacement, and state what happens to the probability of a second blue ball in each case.",
    "points": 1,
-   "answer": "With replacement, the ball is returned after each draw so the bag's composition is unchanged and the draws are independent, giving 3/10 for the second blue. Without replacement the ball is not returned, so the bag changes to 2 blue out of 9 total, giving 2/9, which is a different value and shows the draws are dependent.",
+   "answer": "With replacement the ball is returned after each draw, so the bag is unchanged, the draws are independent, and the second blue has probability 3/10. Without replacement the bag becomes 2 blue out of 9, giving 2/9, so the draws are dependent.",
+   "detail": "The two values 3/10 and 2/9 are the standard test of independence: they are equal exactly when the draws are independent. Replacement is the case that makes repeated draws behave like repeated copies of the same experiment, which is what justifies using the product rule repeatedly. Note that 3/10 comes from 3 blue out of 10 balls.",
    "rubric": [
     {
      "text": "With-replacement behaviour described as restoring the bag and independence",
@@ -3222,7 +3743,7 @@
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "Emails per hour is the lecture's Poisson example, not binomial, so (d) is false. The rest are exactly as described on the slide.",
+   "explanation": "Emails per hour is a Poisson example, not binomial, so (d) is false. The rest are correct as stated.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3342,7 +3863,7 @@
    ],
    "n_correct": 3,
    "points": 1,
-   "explanation": "Parameters are fixed population quantities while statistics vary with the sample, so (c) and (e) are both wrong. The lecture's summary line is that parameters are what we want to know and statistics are what we can compute.",
+   "explanation": "Parameters are fixed population quantities while statistics vary with the sample, so (c) and (e) are both wrong. The summary is that parameters are what we want to know and statistics are what we can compute.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3552,13 +4073,78 @@
    "origin": "new"
   },
   {
+   "id": "G-WA-011",
+   "lecture": 5,
+   "type": "WA",
+   "topic": "Areas under a curve",
+   "stem": "For the normal curve shown, the shaded regions are marked a, b and c from left to right. Write P(5 < X < 6.2) in terms of these regions.",
+   "points": 2,
+   "answer": "P(5 < X < 6.2) is regions a and b added, written P(a) + P(b). Region a covers 5 to 6.2 and b covers 6.2 to 7.4, and the boundary point 6.2 adds no area, so together they are the interval.",
+   "detail": "The rule for splitting an interval at an interior point is that the probabilities of the pieces add up, because the events are mutually exclusive. A single value has probability zero under a continuous distribution, which is why the endpoints never cause trouble. The same logic gives P(X < 6.2) = P(a) + P(b) and P(X > 7.4) = P(c).",
+   "rubric": [
+    {
+     "text": "Identifies the correct regions as a and b",
+     "elements": 1
+    },
+    {
+     "text": "States the answer as P(a) + P(b) or P(a and b)",
+     "elements": 1
+    },
+    {
+     "text": "Notes that the single boundary point adds no area",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.6"
+   },
+   "origin": "new",
+   "image": "normal_shaded"
+  },
+  {
+   "id": "G-WA-012",
+   "lecture": 5,
+   "type": "WA",
+   "topic": "Areas under a curve",
+   "stem": "Using the same curve, express the probability of the rightmost shaded region on its own, and say what you would need in order to compute it as a number.",
+   "points": 2,
+   "answer": "The rightmost region is P(X > 7.4), written P(c). To compute it you need the mean and standard deviation, so you can standardise 7.4 to a z-score and read the area to its right from the normal table.",
+   "detail": "A picture tells you which region is meant but not its numerical value, because the drawing is not drawn to a measurable scale. That is the whole reason the normal table exists: it stores the area to the left of each z-score so that any region can be read off after standardising. The symmetry of the normal distribution also gives P(c) = P(X < 5) in this figure, since 5 and 7.4 sit equally far from the centre at 6.2.",
+   "rubric": [
+    {
+     "text": "Identifies the region as P(X > 7.4) or P(c)",
+     "elements": 1
+    },
+    {
+     "text": "States that the mean and standard deviation are needed",
+     "elements": 1
+    },
+    {
+     "text": "Mentions standardising to a z-score and using the normal table",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.6"
+   },
+   "origin": "new",
+   "image": "normal_shaded"
+  },
+  {
    "id": "L5-WA-001",
    "lecture": 5,
    "type": "WA",
    "topic": "Estimand, estimator, estimate",
    "stem": "For a study estimating the average height of all Norrkoping residents, state the estimand, the estimator and the estimate.",
    "points": 1,
-   "answer": "The estimand is the population mean height mu of all Norrkoping residents. The estimator is the rule used to compute it from data, namely the sample mean formula Xbar = (1/n) sum of X_i. The estimate is the particular number obtained by applying that formula to one sample, for example 169.03 cm from n = 50.",
+   "answer": "The estimand is the population mean height of all residents. The estimator is the rule used to compute it, the sample mean Xbar = (1/n) sum of X_i. The estimate is the number that rule produces from one sample, 169.03 cm for n = 50.",
+   "detail": "",
    "rubric": [
     {
      "text": "Estimand correctly identified as the unknown population mean mu",
@@ -3588,7 +4174,8 @@
    "topic": "Central limit theorem",
    "stem": "Explain what the central limit theorem states and why it matters for inference.",
    "points": 1,
-   "answer": "The CLT states that for large n the sampling distribution of the sample mean is approximately normal even when the population itself is not normally distributed. It matters because it lets us use the normal machinery, z-scores and confidence intervals, to make inferences about the population without ever needing to know the population's shape, which is rarely known in practice.",
+   "answer": "The CLT states that for large n the sampling distribution of the sample mean is approximately normal even when the population is not. It matters because it lets us use z-scores and confidence intervals without knowing the population's shape, which is rarely available in practice.",
+   "detail": "",
    "rubric": [
     {
      "text": "States the approximate normality of the sampling distribution of the mean",
@@ -3618,7 +4205,8 @@
    "topic": "Sampling distribution and variance",
    "stem": "Write down the formula for the variance of the sample mean, and explain what happens to it as n increases.",
    "points": 1,
-   "answer": "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n increases the variance shrinks, so the sample mean becomes a more precise estimate of the population mean; it approaches zero but only reaches it in the limit.",
+   "answer": "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n grows the variance shrinks, so the sample mean becomes a more precise estimate, approaching zero only in the limit.",
+   "detail": "",
    "rubric": [
     {
      "text": "Variance of sample mean given as sigma squared over n",
@@ -3651,7 +4239,8 @@
    "topic": "PMF, PDF and CDF",
    "stem": "Explain the difference between a probability mass function, a probability density function and a cumulative distribution function, and say which applies to a fair die.",
    "points": 1,
-   "answer": "A PMF gives the probability of each individual outcome and applies to discrete variables, so for a fair die it is 1/6 at each face. A PDF describes the relative likelihood across a continuous range and does not itself integrate to a probability at a point. A CDF gives P(X <= x) and is a step function for a discrete variable like a die, but a smooth increasing curve for a continuous one.",
+   "answer": "A PMF gives the probability of each individual outcome and applies to discrete variables, so a fair die has 1/6 at each face. A PDF describes relative likelihood across a continuous range and gives no probability at a point. A CDF gives P(X <= x).",
+   "detail": "",
    "rubric": [
     {
      "text": "PMF defined as the probability of each discrete outcome",
@@ -3690,7 +4279,8 @@
    "topic": "Working with the normal distribution",
    "stem": "Shampoo bottles have a nominal fill of 36 mL with a standard deviation of 0.11. Without calculating, write down the R code for the probability that a bottle contains less than 35.8 mL.",
    "points": 1,
-   "answer": "```r\npnorm(35.8, mean = 36, sd = 0.11)\n```\n`pnorm()` returns P(X <= x) for a normal variable, so this is the area under the PDF to the left of 35.8. The value is about 0.0345, which the lecture slide rounds to 0.0344.",
+   "answer": "```r\npnorm(35.8, mean = 36, sd = 0.11)\n```\n`pnorm()` returns P(X <= x) for a normal variable, so this is the area under the PDF to the left of 35.8. The value is about 0.0345, which is normally rounded to 0.0344.",
+   "detail": "",
    "rubric": [
     {
      "text": "`pnorm()` used as the correct function",
@@ -3723,7 +4313,8 @@
    "topic": "Law of large numbers",
    "stem": "Explain the law of large numbers and how it differs from the central limit theorem.",
    "points": 1,
-   "answer": "The law of large numbers says that as the sample size grows the sample mean converges to the population mean, so it is a statement about where the sample mean ends up. The central limit theorem additionally says that for large n the sampling distribution of the sample mean is approximately normal, which is a statement about its shape. The CLT builds on the LLN and is what justifies normal-based inference.",
+   "answer": "The law of large numbers says the sample mean converges to the population mean as the sample grows, so it concerns where the sample mean ends up. The CLT adds that the sampling distribution is approximately normal for large n, a statement about shape.",
+   "detail": "",
    "rubric": [
     {
      "text": "LLN stated as convergence of the sample mean to the population mean",
@@ -3753,7 +4344,8 @@
    "topic": "Choosing a distribution",
    "stem": "For each situation, name the distribution you would expect to model it and give the reason: the number of heads in 20 coin tosses, the number of customers arriving in an hour, and the height of a randomly chosen adult.",
    "points": 1,
-   "answer": "Heads in 20 tosses is binomial, because it counts successes across a fixed number of independent trials with two outcomes. Customers in an hour is Poisson, because it counts events in a fixed interval. Adult height is normal, because it is a natural measurement that is roughly symmetric and bell-shaped.",
+   "answer": "Heads in 20 tosses is binomial, counting successes across a fixed number of independent trials with two outcomes. Customers in an hour is Poisson, counting events in a fixed interval. Adult height is normal, a roughly symmetric bell-shaped measurement.",
+   "detail": "",
    "rubric": [
     {
      "text": "Binomial correctly matched to coin tosses with a reason",
@@ -3783,7 +4375,8 @@
    "topic": "Unbiasedness",
    "stem": "Explain what it means to say the sample mean is an unbiased estimator of the population mean, and why small samples are still a problem even when the estimator is unbiased.",
    "points": 1,
-   "answer": "Unbiased means the expected value of the sample mean equals the population mean, E[Xbar] = mu, so the estimator is on target in the long run even though any single sample can fall above or below mu. Small samples remain a problem because bias is only about the average: for small n the variance sigma squared over n is still large, so individual sample means fluctuate widely around mu.",
+   "answer": "Unbiased means E[Xbar] = mu, so the estimator is on target in the long run even though a single sample can fall above or below mu. Small samples remain a problem because at small n the variance sigma squared over n is still large.",
+   "detail": "",
    "rubric": [
     {
      "text": "Unbiasedness explained via E[Xbar] = mu",
@@ -3814,7 +4407,7 @@
    "lecture": 6,
    "type": "MC",
    "topic": "Hypothesis testing steps",
-   "stem": "What are the steps of a hypothesis test as laid out in the lecture?",
+   "stem": "What are the steps of a hypothesis test?",
    "options": {
     "a": "Compute the p-value, then reject H0, then state the hypotheses",
     "b": "Formulate H0, compute the test statistic, calculate the p-value, draw conclusions",
@@ -4087,7 +4680,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The interval is point estimate plus or minus critical value times standard error, and a higher confidence level needs a larger critical value while the standard error is unchanged. This is the trade-off the lecture notes: a wider interval is more likely to contain the parameter but less informative.",
+   "explanation": "The interval is point estimate plus or minus critical value times standard error, and a higher confidence level needs a larger critical value while the standard error is unchanged. This is the trade-off: a wider interval is more likely to contain the parameter but less informative.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -4144,7 +4737,7 @@
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The four functions mirror the normal set d/p/q/r but for the t distribution, and the fifth option is wrong because `pt()` is the t-distribution CDF, not the normal one. The lecture lists exactly these four.",
+   "explanation": "The four functions mirror the normal set d/p/q/r but for the t distribution, and the fifth option is wrong because `pt()` is the t-distribution CDF, not the normal one. There are exactly these four.",
    "r_flavoured": true,
    "r_functions": [
     "dt",
@@ -4167,6 +4760,7 @@
    "stem": "The population mean height is 170 cm and the standard error of the sample mean is 1.83 cm. A sample of 30 gives a mean of 179 cm. Without calculating, write down the formula you would use for the test statistic.",
    "points": 1,
    "answer": "`z = (xbar - mu) / SE = (179 - 170) / 1.83`, which is a z-score of about 4.9, meaning the observed sample mean sits roughly 4.9 standard errors above the hypothesised population mean.",
+   "detail": "",
    "rubric": [
     {
      "text": "Test statistic written as (xbar - mu)/SE",
@@ -4201,7 +4795,8 @@
    "topic": "Hypothesis testing steps",
    "stem": "Describe the four steps of a hypothesis test, and state the conclusion when the resulting p-value is approximately 0.",
    "points": 2,
-   "answer": "First formulate the null hypothesis, for example that the sample comes from a population with mean 170. Second compute the test statistic, which measures how far the observed estimate is from the null value in units of standard error. Third compute the p-value, the probability of a statistic at least as extreme as the observed one under H0. Fourth draw the conclusion: with p approximately 0 the result is so unlikely under H0 that we reject it and conclude the sample probably comes from a population with a different mean.",
+   "answer": "Formulate the null hypothesis, for example that the sample comes from a population with mean 170. Compute the test statistic, which measures how far the estimate sits from the null in standard-error units, and the p-value. Then conclude: with p near 0, reject H0.",
+   "detail": "",
    "rubric": [
     {
      "text": "Hypothesis formulation given as step 1",
@@ -4235,7 +4830,8 @@
    "topic": "Confidence intervals",
    "stem": "Without doing calculations, write down the formula for the 95% confidence interval for a population mean, and state the formula for any confidence level.",
    "points": 1,
-   "answer": "For any confidence level the interval is point estimate plus or minus critical value times standard error. For 95% with a large sample this is `(xbar - 1.96 * s/sqrt(n), xbar + 1.96 * s/sqrt(n))`. Ideally sigma is used rather than s, but when the population standard deviation is unknown s is used provided n is large enough, say greater than 30.",
+   "answer": "The interval is point estimate plus or minus critical value times standard error, so for 95% it is `(xbar - 1.96 * s/sqrt(n), xbar + 1.96 * s/sqrt(n))`. Sigma is preferred, but s is used when sigma is unknown and n is large enough.",
+   "detail": "",
    "rubric": [
     {
      "text": "General form given as estimate plus or minus critical value times SE",
@@ -4274,7 +4870,8 @@
    "topic": "Bias",
    "stem": "Define bias in terms of the estimator and the true parameter, and explain how sampling bias would affect a height study.",
    "points": 1,
-   "answer": "Bias is the expected value of the estimator minus the true parameter, Bias(theta-hat) = E[theta-hat] - theta, and an estimator is unbiased when that is zero. In a height study, if we unknowingly sampled mainly members of a basketball club, the expected sample mean would be shifted upward relative to the true population mean, giving a positive bias and a wrong conclusion about the population.",
+   "answer": "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`, and an estimator is unbiased when that is zero. Sampling mainly basketball players would shift the expected sample mean upward, giving positive bias.",
+   "detail": "",
    "rubric": [
     {
      "text": "Bias defined as E[estimator] minus the true parameter",
@@ -4304,7 +4901,8 @@
    "topic": "Bias and missing data",
    "stem": "Name two ways missing data can arise besides sampling bias, and explain the consequence of missing data for a hypothesis test.",
    "points": 1,
-   "answer": "Two further sources are attrition, where individuals drop out of a longitudinal study, and item non-response, where individuals skip particular questions in a survey. Missing data reduces the effective sample size, which increases the standard error and therefore reduces the power of the test, and when the missing data is not random it can additionally introduce bias and invalidate the inference.",
+   "answer": "Two further sources are attrition, where individuals drop out of a study, and item non-response, where individuals skip particular questions. Missing data reduces the effective sample size, raising the standard error and lowering power, and non-random missing data also introduces bias.",
+   "detail": "",
    "rubric": [
     {
      "text": "Attrition and item non-response both named",
@@ -4342,7 +4940,8 @@
    "topic": "Interpreting a confidence interval",
    "stem": "Explain what a 95% confidence interval does and does not tell you, and why it is described as a random interval.",
    "points": 1,
-   "answer": "A 95% CI is an interval estimate of plausible values for the population parameter: across many samples, about 95% of the intervals computed this way would contain the true parameter. It does not say that 95% of sample means or 95% of the data points fall inside it. It is called random because its endpoints move from sample to sample as the sample mean and standard error change, which is why no single interval can be certain.",
+   "answer": "A 95% CI is an interval of plausible values for the population parameter: across many samples about 95% of intervals built this way would contain the true parameter. It is random because its endpoints move from sample to sample.",
+   "detail": "",
    "rubric": [
     {
      "text": "Describes the repeated-samples coverage meaning of 95%",
@@ -4375,7 +4974,8 @@
    "topic": "P-values",
    "stem": "Explain what a p-value is and state one thing it is NOT.",
    "points": 1,
-   "answer": "A p-value is the probability, assuming the null hypothesis is true, of observing a test statistic at least as extreme as the one actually obtained. It is not the probability that the null hypothesis is true, and it does not measure the size or importance of an effect, only how inconsistent the data are with the null.",
+   "answer": "A p-value is the probability, assuming the null is true, of observing a statistic at least as extreme as the one obtained. It is not the probability that the null is true, and it does not measure the size of an effect.",
+   "detail": "",
    "rubric": [
     {
      "text": "P-value defined as an H0-conditional tail probability",
@@ -4407,7 +5007,8 @@
    "topic": "Working with the normal distribution",
    "stem": "Write the R code to compute the p-value for an observed sample mean of 179 when the hypothesised mean is 170 and the standard error is 1.83, for an upper-tailed test.",
    "points": 1,
-   "answer": "```r\npnorm(179, mean = 170, sd = 1.83, lower.tail = FALSE)\n```\nSetting `lower.tail = FALSE` returns the upper-tail probability, which is the p-value for an upper-tailed test, about 4.37e-07. The equivalent forms `1 - pnorm(179, 170, 1.83)` and standardising to a z-score give the same answer.",
+   "answer": "```r```r pnorm(179, mean = 170, sd = 1.83, lower.tail = FALSE) ``` `lower.tail = FALSE` returns the upper-tail probability, which is the p-value for an upper-tailed test, about 4.37e-07.",
+   "detail": "",
    "rubric": [
     {
      "text": "`pnorm()` used with the observed value as the first argument",
@@ -4433,6 +5034,87 @@
    },
    "origin": "adapted_HT25",
    "code": "pnorm(179, mean = 170, sd = 1.83, lower.tail = FALSE)"
+  },
+  {
+   "id": "G-MC-007",
+   "lecture": 7,
+   "type": "MC",
+   "topic": "Interpreting a confidence interval",
+   "stem": "The plot shows a mean and a 95% confidence interval for two groups against a reference value. Which group differs significantly from the reference at the 5% level?",
+   "options": {
+    "a": "Group A only",
+    "b": "Group B only",
+    "c": "Both groups",
+    "d": "Neither group"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Group A's interval runs from about 48.6 to 56.2 and does not touch the reference line at 44, so the difference is significant. Group B's interval runs from about 41.3 to 48.9 and does contain 44, so it is not significant.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.12"
+   },
+   "origin": "new",
+   "image": "ci_dotplot"
+  },
+  {
+   "id": "G-MC-008",
+   "lecture": 7,
+   "type": "MC",
+   "topic": "Interpreting a confidence interval",
+   "stem": "Based on the plot, which group has the larger margin of error?",
+   "options": {
+    "a": "Group A",
+    "b": "Group B",
+    "c": "They are equal",
+    "d": "This cannot be determined"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The margin of error is half the width of the interval. Group A's spans about 7.6 units and Group B's about 3.8, so Group A's is larger and its estimate is less precise.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.12"
+   },
+   "origin": "new",
+   "image": "ci_dotplot"
+  },
+  {
+   "id": "G-MC-009",
+   "lecture": 7,
+   "type": "MC",
+   "topic": "Interpreting a confidence interval",
+   "stem": "What does it mean when a 95% confidence interval contains the reference value, as it does for group B?",
+   "options": {
+    "a": "The difference from the reference is not significant at the 5% level",
+    "b": "There is a 95% probability the reference value is wrong",
+    "c": "The estimate is definitely equal to the reference value",
+    "d": "The sample size was too small to compute the interval"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "An interval that contains the reference value means the data are compatible with no difference, so we cannot reject the null hypothesis at the 5% level. It is not a probability statement about the reference value.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.12"
+   },
+   "origin": "new",
+   "image": "ci_dotplot"
   },
   {
    "id": "L7-MC-001",
@@ -4815,13 +5497,82 @@
    "code": "p_value <- 2 * pt(t_stat, df = 9)"
   },
   {
+   "id": "G-WA-003",
+   "lecture": 7,
+   "type": "WA",
+   "topic": "Interpreting a confidence interval",
+   "stem": "The plot shows a mean and a 95% confidence interval for each group against a reference value. Which group differs significantly from the reference, and what does that mean?",
+   "points": 3,
+   "answer": "Group A differs significantly from the reference at the 5% level, because its interval lies entirely above the reference line so the reference is not a plausible population mean. Group B's interval contains the reference, so for group B we cannot reject the null.",
+   "detail": "This is the whole logic of a hypothesis test expressed as a picture. A 95% interval that misses the value you are testing against corresponds to a p-value below 0.05, and one that contains it corresponds to a p-value above 0.05. Note that the interval describes the precision of the estimate, not the probability that the true mean lies inside it.",
+   "rubric": [
+    {
+     "text": "Names group A as the significant one",
+     "elements": 1
+    },
+    {
+     "text": "Notes that group A's interval excludes the reference value",
+     "elements": 1
+    },
+    {
+     "text": "Notes that group B's interval contains the reference value",
+     "elements": 1
+    },
+    {
+     "text": "Links this to rejecting or not rejecting the null hypothesis",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.12"
+   },
+   "origin": "new",
+   "image": "ci_dotplot"
+  },
+  {
+   "id": "G-WA-004",
+   "lecture": 7,
+   "type": "WA",
+   "topic": "Interpreting a confidence interval",
+   "stem": "Using the same plot, which group has the larger margin of error, and what does that tell you about the two estimates?",
+   "points": 2,
+   "answer": "Group A has the larger margin of error, because its interval is about twice as wide as group B's. Group A's estimate is therefore less precise, so we are less certain about its population mean even though its point estimate sits further from the reference.",
+   "detail": "A wider interval usually means a larger standard error, which typically comes from a smaller sample size or more variability in the data. Precision and statistical significance are different things: a wide interval can still miss the reference value, and a narrow one can still contain it.",
+   "rubric": [
+    {
+     "text": "Names group A as having the larger margin of error",
+     "elements": 1
+    },
+    {
+     "text": "Relates the margin of error to the width of the interval",
+     "elements": 1
+    },
+    {
+     "text": "Explains that group A's estimate is less precise",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.12"
+   },
+   "origin": "new",
+   "image": "ci_dotplot"
+  },
+  {
    "id": "L7-WA-001",
    "lecture": 7,
    "type": "WA",
    "topic": "One-sided vs two-sided tests",
    "stem": "Explain the difference between a one-sided and a two-sided hypothesis test, and state how the confidence level differs between them for a given alpha.",
    "points": 1,
-   "answer": "A two-sided test has the alternative mu != mu0, so the rejection region lies in both tails of the distribution, whereas a one-sided test has the alternative mu > mu0 or mu < mu0 and the rejection region in only one tail. For a given alpha, a one-sided test corresponds to a confidence level of 1 - alpha, while a two-sided test corresponds to 1 - alpha/2, so their critical values and p-values differ.",
+   "answer": "A two-sided test has the alternative mu != mu0, with the rejection region in both tails; a one-sided test has mu > mu0 or mu < mu0, in one tail. A one-sided test matches level 1 - alpha, a two-sided test 1 - alpha/2.",
+   "detail": "",
    "rubric": [
     {
      "text": "Two-sided described as alternative mu != mu0 with both tails",
@@ -4858,7 +5609,8 @@
    "topic": "Type I and Type II errors",
    "stem": "Define a Type I and a Type II error, give the symbol for each, and explain the trade-off between them.",
    "points": 1,
-   "answer": "A Type I error, with probability alpha, is rejecting H0 when it is actually true, a false positive. A Type II error, with probability beta, is failing to reject H0 when it is false, a false negative, and the power of the test is 1 - beta. There is a trade-off because tightening alpha to reduce false positives makes rejection harder, which raises beta and lowers power.",
+   "answer": "A Type I error, probability alpha, is rejecting a true H0. A Type II error, probability beta, is failing to reject a false H0, and power is 1 - beta. Tightening alpha makes rejection harder, which raises beta and lowers power.",
+   "detail": "",
    "rubric": [
     {
      "text": "Type I defined as rejecting a true H0, symbol alpha",
@@ -4892,7 +5644,8 @@
    "topic": "Acceptance and rejection regions",
    "stem": "For a two-sided z-test at alpha = 0.05, write down the condition on the test statistic under which you reject H0, and the corresponding condition on the sample mean.",
    "points": 1,
-   "answer": "You reject H0 when the statistic falls outside plus or minus 1.96, that is when `(xbar - mu0)/ (s/sqrt(n)) < -1.96` or the same quantity is greater than 1.96. Translating to the sample mean this is `xbar < mu0 - 1.96 * s/sqrt(n)` or `xbar > mu0 + 1.96 * s/sqrt(n)`, so the acceptance region is `mu0 plus or minus 1.96 * s/sqrt(n)`.",
+   "answer": "You reject H0 when the statistic falls outside plus or minus 1.96, that is when `(xbar - mu0) / (s/sqrt(n))` is below -1.96 or above 1.96. Equivalently `xbar < mu0 - 1.96 * s/sqrt(n)` or `xbar > mu0 + 1.96 * s/sqrt(n)`.",
+   "detail": "",
    "rubric": [
     {
      "text": "Rejection condition on the test statistic given as beyond plus or minus 1.96",
@@ -4927,7 +5680,8 @@
    "topic": "Connection between tests and CIs",
    "stem": "Explain how a hypothesis test and a confidence interval relate, using an example with a 95% CI of (172.06, 177.94) and a test of H0: mu = 175.",
    "points": 1,
-   "answer": "For a two-sided test at significance level alpha, you fail to reject H0 exactly when the corresponding 1 - alpha confidence interval contains the null value, and you reject exactly when it does not. Here the null value 175 lies inside (172.06, 177.94), so at the 5% level we fail to reject H0, which is also what seeing the observed mean of 173.0 inside the acceptance region tells us.",
+   "answer": "For a two-sided test you fail to reject H0 exactly when the corresponding 1 - alpha confidence interval contains the null value. Here 175 lies inside (172.06, 177.94), so at the 5% level we fail to reject H0.",
+   "detail": "",
    "rubric": [
     {
      "text": "Duality between test at level alpha and the 1 - alpha CI stated",
@@ -4961,7 +5715,8 @@
    "topic": "Working in R for a hypothesis test",
    "stem": "Explain how this R output should be read: `t = 2.5, df = 29, p-value = 0.017`, `alternative hypothesis: true mean is not equal to 50`, `95 percent confidence interval: 51.2 58.8`, `mean of x 55`.",
    "points": 2,
-   "answer": "This is a one-sample t-test comparing the sample mean to a null value of 50. The alternative is two-sided, that the true mean differs from 50, and the test statistic is 2.5 with 29 degrees of freedom. The p-value of 0.017 is below 0.05, so we reject H0 at the 5% level; equivalently the 95% CI of (51.2, 58.8) excludes 50. The sample mean is 55.",
+   "answer": "This is a one-sample t-test of the sample mean against a null value of 50, two-sided, statistic 2.5 on 29 df. The p-value 0.017 is below 0.05, so we reject H0; equivalently the 95% CI (51.2, 58.8) excludes 50. The mean is 55.",
+   "detail": "",
    "rubric": [
     {
      "text": "Identifies the test as a one-sample t-test against a null value of 50",
@@ -5003,6 +5758,7 @@
    "stem": "Two independent groups have sample standard deviations 15 and 20 with sample sizes 100 and 100. Without calculating the final number, write down the formula for the standard error of the difference in means.",
    "points": 1,
    "answer": "`SE(xbar1 - xbar2) = sqrt(s1^2/n1 + s2^2/n2) = sqrt(15^2/100 + 20^2/100)`, obtained by adding the two variances under the square root because the samples are independent. If the samples were paired you would instead work with the differences within pairs.",
+   "detail": "",
    "rubric": [
     {
      "text": "Formula given as sqrt of the sum of the two variances",
@@ -5037,6 +5793,7 @@
    "stem": "Without doing calculations, write down the formula for the standard error of a sample proportion p-hat from a sample of size n.",
    "points": 1,
    "answer": "`SE(p-hat) = sqrt(p-hat * (1 - p-hat) / n)`. It takes the same shape as the standard error of the mean, and a confidence interval is then p-hat plus or minus the critical value times this standard error.",
+   "detail": "",
    "rubric": [
     {
      "text": "Formula given as sqrt of p-hat(1 - p-hat)/n",
@@ -5066,7 +5823,8 @@
    "topic": "Choosing the right distribution",
    "stem": "Explain why a t-test is used when the population standard deviation is unknown, and write the R code for a two-sided one-sample t-test.",
    "points": 1,
-   "answer": "A z-test requires the population standard deviation sigma, which is almost never known. Substituting the sample standard deviation s makes the statistic follow a t-distribution with n - 1 degrees of freedom rather than a normal one, and the corresponding critical values come from `qt()` rather than `qnorm()`. For two independent samples the code is `t.test(x, y)` and for one sample against a null value it is `t.test(x, mu = 50)`.",
+   "answer": "A z-test requires the population standard deviation sigma, which is never known. Substituting s makes the statistic follow a t-distribution with n - 1 df, so critical values come from `qt()`. Two samples use `t.test(x, y)`, one against a null `t.test(x, mu = 50)`.",
+   "detail": "",
    "rubric": [
     {
      "text": "Explains the z-test needs the unknown population sigma",
@@ -5093,6 +5851,114 @@
    },
    "origin": "adapted_HT25",
    "code": "t.test(x, mu = 50)"
+  },
+  {
+   "id": "G-MC-010",
+   "lecture": 8,
+   "type": "MC",
+   "topic": "Reading a scatter plot",
+   "stem": "Based on the scatter plot, how would you describe the relationship between study hours and final score?",
+   "options": {
+    "a": "Positive and moderately strong",
+    "b": "Negative and strong",
+    "c": "No relationship at all",
+    "d": "Perfectly positive, since the points lie on a line"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The points drift upward from left to right, so more study hours go with higher scores, which is a positive association. The points are scattered around the trend rather than lying on a line, so the relationship is moderate rather than perfect.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new",
+   "image": "scatter_trend"
+  },
+  {
+   "id": "G-MC-011",
+   "lecture": 8,
+   "type": "MC",
+   "topic": "Reading a scatter plot",
+   "stem": "If the correlation between the two variables were exactly 0, what would the scatter plot look like?",
+   "options": {
+    "a": "A diffuse cloud with no upward or downward trend",
+    "b": "A tight upward-sloping line",
+    "c": "A tight downward-sloping line",
+    "d": "A set of distinct parallel groups"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "A correlation of 0 means no linear association, so the points form a cloud with no direction. A tight upward line would be a correlation near 1 and a tight downward line a correlation near -1.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new",
+   "image": "scatter_trend"
+  },
+  {
+   "id": "G-MC-014",
+   "lecture": 8,
+   "type": "MC",
+   "topic": "Reading a correlation matrix",
+   "stem": "Based on the correlation matrix, which pair of variables has the strongest linear relationship?",
+   "options": {
+    "a": "Hours and Screen",
+    "b": "Hours and Sleep",
+    "c": "Sleep and Stress",
+    "d": "Screen and Caff"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Hours and Screen have a correlation of 0.62, the largest positive value in the matrix apart from the diagonal. Sleep and Stress is the strongest in absolute terms only by comparison with the other listed pairs at 0.33, which is still well below 0.62.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new",
+   "image": "corr_heatmap"
+  },
+  {
+   "id": "G-MC-015",
+   "lecture": 8,
+   "type": "MC",
+   "topic": "Reading a correlation matrix",
+   "stem": "Which statement about the Hours and Sleep correlation of -0.28 is correct?",
+   "options": {
+    "a": "It is weak and negative",
+    "b": "It is strong and negative",
+    "c": "It is strong and positive",
+    "d": "It is zero, so the variables are unrelated"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "The sign is negative, so the two move in opposite directions, and the magnitude is only 0.28, so the linear association is weak. It is not zero, so the variables are not unrelated.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new",
+   "image": "corr_heatmap"
   },
   {
    "id": "L8-MC-001",
@@ -5177,7 +6043,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The standard error of r is sqrt((1 - r squared)/(n - 2)) and the statistic follows a t distribution with n - 2 degrees of freedom, because r is built from two estimated means rather than one. The lecture also notes this standard error is only valid when rho = 0.",
+   "explanation": "The standard error of r is sqrt((1 - r squared)/(n - 2)) and the statistic follows a t distribution with n - 2 degrees of freedom, because r is built from two estimated means rather than one. This standard error is only valid when rho = 0.",
    "r_flavoured": true,
    "r_functions": [
     "sqrt"
@@ -5306,7 +6172,7 @@
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "ANOVA is an omnibus test: rejecting H0 only says something differs, not what. Identifying the differing pairs needs post-hoc tests such as `pairwise.t.test()`, which the lecture mentions but does not cover, so (d) is false.",
+   "explanation": "ANOVA is an omnibus test: rejecting H0 only says something differs, not what. Identifying the differing pairs needs post-hoc tests such as `pairwise.t.test()`, which is not covered here, so (d) is false.",
    "r_flavoured": true,
    "r_functions": [
     "oneway.test",
@@ -5324,7 +6190,7 @@
    "lecture": 8,
    "type": "MC",
    "topic": "Omnibus tests and multiple testing",
-   "stem": "The lecture notes that for alpha = 0.05 and m = 190 separate tests, the probability of at least one Type I error is about 99.3%. What is the consequence for practice?",
+   "stem": "For alpha = 0.05 and m = 190 separate tests, the probability of at least one Type I error is about 99.3%. What is the consequence for practice?",
    "options": {
     "a": "Each individual test should be run at a much smaller alpha.",
     "b": "We should use omnibus tests that make a single decision for all groups at once.",
@@ -5384,7 +6250,7 @@
    "lecture": 8,
    "type": "MC",
    "topic": "Reading R output",
-   "stem": "Consider this R output. Which statements about it are true?",
+   "stem": "Consider this R output. Which statements about it are true? `X-squared = 1, df = 5, p-value = 0.9626`",
    "options": {
     "a": "X-squared = 1",
     "b": "df = 5",
@@ -5392,10 +6258,15 @@
     "d": "The test provides evidence that the die is unfair",
     "e": "The expected count for each face is 10"
    },
-   "correct": [],
-   "n_correct": 0,
+   "correct": [
+    "a",
+    "b",
+    "c",
+    "e"
+   ],
+   "n_correct": 4,
    "points": 1,
-   "explanation": "Every option here is true. R reports X-squared = 1, df = 5 and p-value = 0.9626, the die has 60 rolls over 6 faces so each expected count is 10, and a p-value of 0.96 is high, meaning we FAIL to reject the fair-die hypothesis - so there is no evidence the die is unfair. Remember that on the real exam a question like this scores the full point if you mark nothing.",
+   "explanation": "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 is far above any usual significance level, so we fail to reject the hypothesis that the die is fair and there is no evidence that it is unfair, which makes (d) false.",
    "r_flavoured": true,
    "r_functions": [
     "chisq.test",
@@ -5421,10 +6292,15 @@
     "d": "We accept the null hypothesis that all city means are equal",
     "e": "There is significant evidence that average height differs between the cities"
    },
-   "correct": [],
-   "n_correct": 0,
+   "correct": [
+    "a",
+    "b",
+    "c",
+    "e"
+   ],
+   "n_correct": 4,
    "points": 1,
-   "explanation": "Every option here is true. R reports F = 13.915 with numerator df 2 and denominator df 297 and a p-value of 1.673e-06, and such a small p-value means we REJECT H0, so the cities do differ significantly in mean height. Option (d) states the opposite of what the output implies. Mark nothing here to score the full point.",
+   "explanation": "R reports F = 13.915 with numerator df 2 and denominator df 297, and a p-value of 1.673e-06. That p-value is far below any usual significance level, so we reject the hypothesis that all city means are equal; we never accept the null, so (d) is false. The cities do differ significantly in mean height, which is what (e) states.",
    "r_flavoured": true,
    "r_functions": [
     "oneway.test"
@@ -5449,10 +6325,15 @@
     "d": "We fail to reject H0 because the p-value is large",
     "e": "The data provide evidence of a positive correlation"
    },
-   "correct": [],
-   "n_correct": 0,
+   "correct": [
+    "a",
+    "b",
+    "c",
+    "e"
+   ],
+   "n_correct": 4,
    "points": 1,
-   "explanation": "Every option here is true. The output reports t = 5.4738, df = 48, p = 1.579e-06 and cor = 0.6199, and because that p-value is far below any usual significance level we REJECT H0 and conclude there is a positive correlation. Option (d) says the opposite. Leaving everything unmarked scores the full point.",
+   "explanation": "The output reports t = 5.4738, df = 48, p-value = 1.579e-06 and cor = 0.6199323. The p-value is far below any usual significance level, not large, so we reject the hypothesis of no correlation and (d) is false. The reported correlation is positive, so (e) is true.",
    "r_flavoured": true,
    "r_functions": [
     "cor.test"
@@ -5465,13 +6346,78 @@
    "code": "cor.test(states$hs_grad, states$income)"
   },
   {
+   "id": "G-WA-005",
+   "lecture": 8,
+   "type": "WA",
+   "topic": "Reading a scatter plot",
+   "stem": "Describe the relationship between study hours and final score shown in the plot, and say whether you would describe it as strong or weak.",
+   "points": 2,
+   "answer": "The relationship is positive: more study hours go with higher final scores. I would call it moderate rather than strong, because the points are scattered widely around the upward trend instead of hugging a single line. The direction is clear but much variation is unexplained.",
+   "detail": "Strength here refers to how tightly the points follow the trend, not to whether a trend exists at all. A visible upward drift with a wide cloud still counts as a positive association, and the correlation coefficient would land somewhere around 0.6. Remember that association is not causation: nothing in this plot shows that the study hours caused the scores.",
+   "rubric": [
+    {
+     "text": "Identifies the relationship as positive",
+     "elements": 1
+    },
+    {
+     "text": "Describes the strength as moderate or imperfect, not strong",
+     "elements": 1
+    },
+    {
+     "text": "Mentions that the points are scattered around the trend",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new",
+   "image": "scatter_trend"
+  },
+  {
+   "id": "G-WA-007",
+   "lecture": 8,
+   "type": "WA",
+   "topic": "Reading a correlation matrix",
+   "stem": "Using the correlation matrix, identify the strongest positive pair and the strongest negative pair, and say what the values mean.",
+   "points": 3,
+   "answer": "The strongest positive pair is Hours and Screen at 0.62, meaning that more screen time goes with more study hours, moderately strongly. The strongest negative pair is Sleep and Stress at -0.33, meaning more sleep goes with less stress, but only weakly.",
+   "detail": "The diagonal is always 1 because every variable is perfectly correlated with itself, so it is ignored when comparing. Note that -0.33 and 0.62 are both fairly weak to moderate linear relationships, and none of these values is close to 1 or -1, which would look like a tight straight line in a scatter plot.",
+   "rubric": [
+    {
+     "text": "Names Hours and Screen as the strongest positive pair at about 0.62",
+     "elements": 1
+    },
+    {
+     "text": "Names Sleep and Stress as the strongest negative pair at about -0.33",
+     "elements": 1
+    },
+    {
+     "text": "Explains that the signs give direction and the sizes give strength",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new",
+   "image": "corr_heatmap"
+  },
+  {
    "id": "L8-WA-001",
    "lecture": 8,
    "type": "WA",
    "topic": "Correlation and association",
    "stem": "Explain what the correlation coefficient measures, and give one situation where a correlation near zero would be misleading.",
    "points": 1,
-   "answer": "Correlation measures the strength and direction of the LINEAR association between two continuous variables, running from -1 through 0 to 1. A value near zero only rules out a linear relationship, so it can be misleading when the true pattern is curved or driven by an outlier, as in the states example where Alaska alone produces a moderate Pearson r but almost no Spearman correlation.",
+   "answer": "Correlation measures the strength and direction of the LINEAR association between two continuous variables, running from -1 through 0 to 1. A value near zero only rules out a linear relationship, so it can mislead when the pattern is curved or driven by an outlier.",
+   "detail": "",
    "rubric": [
     {
      "text": "Defined as the strength and direction of LINEAR association",
@@ -5504,7 +6450,8 @@
    "topic": "Analysis of variance",
    "stem": "Explain what the F-statistic in a one-way ANOVA is, what a large value means, and what rejecting the null hypothesis does NOT tell you.",
    "points": 1,
-   "answer": "The F-statistic is the ratio of the variance between groups to the variance within groups, and it follows an F distribution with degrees of freedom determined by the number of groups and the sample size. A large F means the group means differ substantially relative to the noise inside the groups. Rejecting H0 only shows that at least one group differs; it does not reveal which groups, which requires post-hoc tests such as `pairwise.t.test()`.",
+   "answer": "The F-statistic is the ratio of the variance between groups to the variance within them. A large F means the group means differ substantially relative to the noise inside the groups. Rejecting H0 shows only that some group differs, so post-hoc tests are needed.",
+   "detail": "",
    "rubric": [
     {
      "text": "F defined as between-group variance over within-group variance",
@@ -5541,7 +6488,8 @@
    "topic": "Chi-squared tests",
    "stem": "Name the three main types of chi-squared test and state the degrees of freedom for a goodness-of-fit test with k categories.",
    "points": 1,
-   "answer": "The three types are the goodness-of-fit test, which checks whether one variable matches an expected distribution, the test for homogeneity, which checks whether a distribution is the same across different populations or groups, and the test for independence, which checks whether two categorical variables are associated. For a goodness-of-fit test the degrees of freedom are k - 1, so for a die with k = 6 faces we get df = 5.",
+   "answer": "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated. For goodness-of-fit df = k - 1, so a 6-faced die gives df = 5.",
+   "detail": "",
    "rubric": [
     {
      "text": "All three test types named with correct purpose",
@@ -5570,7 +6518,8 @@
    "topic": "Working in R for a chi-squared test",
    "stem": "Write the R code for a goodness-of-fit test of a fair die, given observed counts of 8, 10, 9, 12, 11 and 10 over 60 rolls.",
    "points": 1,
-   "answer": "```r\nobserved <- c(8, 10, 9, 12, 11, 10)\nchisq.test(observed, p = rep(1/6, 6))\n```\n`chisq.test()` with a vector of expected probabilities performs the goodness-of-fit test; the output is X-squared = 1, df = 5, p-value = 0.9626. Since the p-value is very high we fail to reject H0 and find no evidence the die is unfair.",
+   "answer": "```r\nobserved <- c(8, 10, 9, 12, 11, 10)\nchisq.test(observed, p = rep(1/6, 6))\n```\nExpected probabilities make this a goodness-of-fit test, giving X-squared = 1, df = 5, p = 0.9626. The p-value is high, so we fail to reject H0.",
+   "detail": "",
    "rubric": [
     {
      "text": "`chisq.test()` used with the observed counts",
@@ -5605,7 +6554,8 @@
    "topic": "Correlation matrix",
    "stem": "Explain two properties a correlation matrix always has, and describe how you would compute one in R for a data.frame with many numeric variables.",
    "points": 1,
-   "answer": "A correlation matrix is symmetric, because r_xy equals r_yx, and its diagonal is always 1, since each variable is perfectly correlated with itself. In R you select the numeric columns of interest and pipe into `cor()`, typically rounding for readability, for example `states |> select(income, hs_grad) |> cor() |> round(2)`, and then read off the strongest off-diagonal entries.",
+   "answer": "A correlation matrix is symmetric, since r_xy equals r_yx, and its diagonal is always 1, because each variable is perfectly correlated with itself. In R you pipe the numeric columns of interest into `cor()` and round the result.",
+   "detail": "",
    "rubric": [
     {
      "text": "Symmetry correctly identified and justified",
@@ -5641,7 +6591,8 @@
    "topic": "Choosing the right test",
    "stem": "For each scenario, name the appropriate test: comparing average height across three cities; whether smoking is independent of eye colour; whether a die is fair; and whether two continuous variables move together.",
    "points": 1,
-   "answer": "Comparing a mean across three cities uses a one-way ANOVA, for example `oneway.test()`. Whether smoking is independent of eye colour is a chi-squared test for independence. Whether a die is fair is a chi-squared goodness-of-fit test. And whether two continuous variables move together is tested with Pearson correlation via `cor.test()`, or Spearman if the association is non-linear or there are outliers.",
+   "answer": "Comparing a mean across three cities uses a one-way ANOVA, `oneway.test()`. Whether smoking is independent of eye colour is a chi-squared test for independence. Whether a die is fair is a chi-squared goodness-of-fit test. Whether two continuous variables move together is tested with `cor.test()`.",
+   "detail": "",
    "rubric": [
     {
      "text": "ANOVA correctly matched to comparing three city means",
@@ -5677,7 +6628,7 @@
    "lecture": 9,
    "type": "MC",
    "topic": "Non-parametric methods",
-   "stem": "All the tests seen so far rely on a known sampling distribution such as z, t, F or chi-squared. What is the non-parametric alternative discussed in this lecture?",
+   "stem": "All the tests seen so far rely on a known sampling distribution such as z, t, F or chi-squared. What is the non-parametric alternative?",
    "options": {
     "a": "Bootstrapping",
     "b": "The bootstrap permutation test",
@@ -5690,7 +6641,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The lecture defines non-parametric methods as those not assuming a specific form for the population distribution, and states that it focuses on bootstrapping as the workable option, estimating standard errors, confidence intervals and p-values directly from the sample.",
+   "explanation": "Non-parametric methods assume no specific form for the population distribution, and states that it focuses on bootstrapping as the workable option, estimating standard errors, confidence intervals and p-values directly from the sample.",
    "r_flavoured": true,
    "r_functions": [
     "sample",
@@ -5707,7 +6658,7 @@
    "lecture": 9,
    "type": "MC",
    "topic": "Monte-Carlo simulations",
-   "stem": "What are the steps of a Monte-Carlo simulation as given in the lecture?",
+   "stem": "What are the steps of a Monte-Carlo simulation?",
    "options": {
     "a": "Collect real data, fit a model, test, report",
     "b": "Define the data generating process and statistic, generate many random samples, compute the statistic for each",
@@ -5781,7 +6732,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N gives the simulated probability P(X < Y). The lecture uses exactly this to estimate a probability that is analytically awkward, here for X normal and Y exponential.",
+   "explanation": "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N gives the simulated probability P(X < Y). This is used to estimate a probability that is analytically awkward, here for X normal and Y exponential.",
    "r_flavoured": true,
    "r_functions": [
     "rnorm",
@@ -5895,7 +6846,7 @@
    "lecture": 9,
    "type": "MC",
    "topic": "Reading R code",
-   "stem": "Consider this code. Which statements about it are true?",
+   "stem": "Consider this code. Which statements about it are true? `N <- 100000; X <- rnorm(N, 3, 1); Y <- rexp(N, rate = 0.5); H <- sum(X < Y); H / N`",
    "options": {
     "a": "`N <- 100000` sets the number of simulations",
     "b": "`X <- rnorm(N, mean = 3, sd = 1)` draws N values from a normal distribution",
@@ -5903,10 +6854,15 @@
     "d": "`H / N` gives an estimate of P(X < Y)",
     "e": "The result is the exact analytical probability of P(X < Y)"
    },
-   "correct": [],
-   "n_correct": 0,
+   "correct": [
+    "a",
+    "b",
+    "c",
+    "d"
+   ],
+   "n_correct": 4,
    "points": 1,
-   "explanation": "Every option here is true. The code sets the simulation count, draws from the two distributions, counts the favourable cases and divides by N to estimate P(X < Y). The final option overstates it: this is a simulation-based approximation, accurate as N grows by the law of large numbers, not an exact closed-form answer. Mark nothing to score the full point.",
+   "explanation": "The code sets the number of simulations, draws N values from each distribution, counts the draws in which X is less than Y, and divides by N to estimate P(X < Y). The result is a simulation-based approximation that becomes more accurate as N grows, not an exact closed-form answer, so (e) is false.",
    "r_flavoured": true,
    "r_functions": [
     "rnorm",
@@ -5925,7 +6881,7 @@
    "lecture": 9,
    "type": "MC",
    "topic": "Reading R code",
-   "stem": "Which statements about the birthday problem simulation are true?",
+   "stem": "Which statements about the birthday problem simulation are true? `bdays <- sample(1:365, 30, replace = TRUE)`, repeated for `N` iterations.",
    "options": {
     "a": "`sample(1:365, 30, replace = TRUE)` simulates 30 people's birthdays",
     "b": "The replacement is appropriate because two people can share a birthday",
@@ -5933,10 +6889,15 @@
     "d": "The simulation would be exact regardless of how large N is",
     "e": "Increasing N generally improves the accuracy of the estimate"
    },
-   "correct": [],
-   "n_correct": 0,
+   "correct": [
+    "a",
+    "b",
+    "c",
+    "e"
+   ],
+   "n_correct": 4,
    "points": 1,
-   "explanation": "Every option here is true. Sampling 30 birthdays with replacement from 1 to 365 models independent birthdays, repeating it estimates the probability of a shared birthday, and raising N improves accuracy through the law of large numbers. The fourth option is wrong: no finite N gives an exact answer. Mark nothing to score the full point.",
+   "explanation": "Sampling 30 birthdays with replacement from 1 to 365 models birthdays as independent, which is what allows two people to share one. Repeating the simulation estimates the probability of at least one shared birthday, and raising N improves accuracy through the law of large numbers. No finite N gives an exact answer, so (d) is false.",
    "r_flavoured": true,
    "r_functions": [
     "sample",
@@ -5956,7 +6917,8 @@
    "topic": "Monte-Carlo simulations",
    "stem": "Explain what Monte-Carlo simulation is, list its three steps, and say which theoretical result it relies on.",
    "points": 1,
-   "answer": "A Monte-Carlo simulation generates a large number of random samples from a specified data generating process to approximate the sampling distribution of a statistic, which is useful for standard errors, confidence intervals and p-values when analytic solutions are difficult. The steps are to define the data generating process and the statistic of interest, generate a large number of random samples, and calculate the statistic for each sample. It relies on the law of large numbers, since the approximation improves as the number of simulations grows.",
+   "answer": "Monte-Carlo simulation generates many random samples from a data generating process to approximate the sampling distribution of a statistic. The steps: define the process and the statistic, generate many samples, compute the statistic for each. It relies on the law of large numbers.",
+   "detail": "",
    "rubric": [
     {
      "text": "Defined as approximating a sampling distribution by repeated sampling",
@@ -5994,7 +6956,8 @@
    "topic": "Monte-Carlo example",
    "stem": "Assume X is normal with mean 3 and standard deviation 1, and Y is exponential with rate 0.5. Describe how you would use a simulation to estimate P(X < Y), writing the relevant R code.",
    "points": 1,
-   "answer": "Generate N values from each distribution, count how often the comparison holds, and divide by N. In R: `X <- rnorm(N, mean = 3, sd = 1)`, `Y <- rexp(N, rate = 0.5)`, `H <- sum(X < Y)`, then `H / N` is the estimated probability, which for large N settles near 0.25. The analytic solution is awkward, which is exactly the case simulation is meant for.",
+   "answer": "Generate N values from each distribution, count how often the comparison holds, and divide by N. In R: `X <- rnorm(N, 3, 1)`, `Y <- rexp(N, 0.5)`, `H <- sum(X < Y)`, then `H / N` estimates the probability, near 0.25 for large N.",
+   "detail": "",
    "rubric": [
     {
      "text": "Both distributions generated with `rnorm()` and `rexp()` and correct parameters",
@@ -6029,7 +6992,8 @@
    "topic": "Bootstrapping",
    "stem": "Explain how you would bootstrap a median, writing the R code, and say why you cannot simply do this with a mean on the exam.",
    "points": 1,
-   "answer": "Resample the observed data with replacement many times, compute the median of each resample, and use the distribution of those medians to form a confidence interval. In R: pre-allocate with `boot_medians <- numeric(N)`, then in a loop over `i in 1:N` take `boot_sample <- sample(x, length(x), replace = TRUE)` and store `boot_medians[i] <- median(boot_sample)`. The bootstrap is an approximation that improves with N, not an exact calculation, so you describe the procedure rather than compute a number.",
+   "answer": "Resample the observed data with replacement many times, compute the median of each resample, and use the distribution of those medians to form a confidence interval. In R pre-allocate `boot_medians <- numeric(N)`, then in a loop take `sample(x, length(x), replace = TRUE)` and store `median(boot_sample)`.",
+   "detail": "",
    "rubric": [
     {
      "text": "Resampling with replacement correctly described",
@@ -6068,7 +7032,8 @@
    "topic": "Non-parametric methods",
    "stem": "Explain what a non-parametric method is, and why simulation-based inference is needed at all given that we already have z, t, F and chi-squared tests.",
    "points": 1,
-   "answer": "A non-parametric method makes no assumption about the specific form of the population distribution, unlike the parametric tests that rely on a known sampling distribution justified by normality or the central limit theorem. Simulation is needed because when the normality assumption is violated, especially with small samples, the standard tests can give unreliable results, and sometimes the mathematics of the analytic solution is simply too hard.",
+   "answer": "A non-parametric method makes no assumption about the specific form of the population distribution, unlike parametric tests that rely on a known sampling distribution. Simulation is needed because when normality is violated, especially with small samples, the standard tests can give unreliable results.",
+   "detail": "",
    "rubric": [
     {
      "text": "Defined as making no assumption about the population distribution form",
@@ -6105,7 +7070,8 @@
    "topic": "Reproducibility",
    "stem": "Explain the purpose of `set.seed()` and describe what happens to your simulated results if you do not use it.",
    "points": 1,
-   "answer": "`set.seed()` fixes the initial state of R's random number generator, so the same seed always produces the same sequence of pseudo-random draws. Without it, each run starts from a different state, so a Monte-Carlo or bootstrap result will differ slightly every time you run it, which makes results impossible to reproduce, report or have checked by someone else.",
+   "answer": "`set.seed()` fixes the initial state of R's random number generator, so the same seed always produces the same sequence of pseudo-random draws. Without it each run starts from a different state, so a Monte-Carlo or bootstrap result differs every time and cannot be reproduced.",
+   "detail": "",
    "rubric": [
     {
      "text": "Explains it fixes the random number generator state",
@@ -6138,9 +7104,10 @@
    "lecture": 9,
    "type": "WA",
    "topic": "Comparing analytic and simulation approaches",
-   "stem": "The lecture checks a probability analytically and then suggests simulating it. Give the analytic approach and the simulation approach for the probability of obtaining 1, 5 or 9 heads in 10 tosses of a fair coin.",
+   "stem": "A probability can be checked analytically, or estimated by simulating it. Give the analytic approach and the simulation approach for the probability of obtaining 1, 5 or 9 heads in 10 tosses of a fair coin.",
    "points": 1,
-   "answer": "Analytically, the number of heads in 10 tosses follows a binomial distribution with n = 10 and p = 0.5, so the probability is P(X = 1) + P(X = 5) + P(X = 9), which evaluates to about 0.2656. The simulation approach instead draws many samples of 10 coin tosses, counts the fraction of samples with 1, 5 or 9 heads, and uses that fraction as an estimate that converges on the analytic value as N grows.",
+   "answer": "The count of heads in 10 tosses is binomial(n = 10, p = 0.5), so the probability is P(X = 1) + P(X = 5) + P(X = 9) ≈ 0.2656. The simulation draws many samples and uses the matching fraction as the estimate.",
+   "detail": "",
    "rubric": [
     {
      "text": "Identifies the binomial distribution with n = 10 and p = 0.5",
@@ -6179,7 +7146,8 @@
    "topic": "The birthday problem",
    "stem": "Describe how the birthday problem would be simulated in R, and explain why the sampling is done with replacement.",
    "points": 1,
-   "answer": "Draw 30 birthdays at random from the 365 possible days with `sample(1:365, 30, replace = TRUE)`, check whether any day repeats within that draw, and record whether a match occurred. Repeat this for a large number of iterations and divide the number of iterations with a match by the total to estimate the probability. Replacement is correct because different people are independent, so two of them really can share a birthday; sampling without replacement would make a shared birthday impossible.",
+   "answer": "Draw 30 birthdays with `sample(1:365, 30, replace = TRUE)`, check whether any day repeats, and record whether a match occurred. Repeat for many iterations and divide matches by the total to estimate the probability. Replacement is correct because two people really can share a birthday.",
+   "detail": "",
    "rubric": [
     {
      "text": "30 birthdays drawn from 1 to 365",
@@ -6217,9 +7185,10 @@
    "lecture": 9,
    "type": "WA",
    "topic": "Scope of the course and next steps",
-   "stem": "Summarise what this lecture adds to the course, and state which statistical topic the lectures explicitly defer to the next course.",
+   "stem": "Summarise what simulation-based inference adds, and state which statistical topic is deferred to SDS2.",
    "points": 1,
-   "answer": "This lecture adds simulation-based inference: Monte-Carlo simulation to approximate sampling distributions and awkward probabilities, and bootstrapping to estimate standard errors, confidence intervals and p-values without assuming a parametric form. Linear regression, along with a fuller treatment of correlation, is explicitly deferred to the next course in the programme, SDS2.",
+   "answer": "Simulation-based inference covers Monte-Carlo simulation to approximate sampling distributions and awkward probabilities, and bootstrapping to estimate standard errors, confidence intervals and p-values without assuming a parametric form. Linear regression and a fuller treatment of correlation are deferred to SDS2.",
+   "detail": "",
    "rubric": [
     {
      "text": "Identifies Monte-Carlo simulation as the addition",

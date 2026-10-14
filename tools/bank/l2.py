@@ -178,7 +178,7 @@ def questions():
 
     out.append(mc(
         "L2-MC-012", 2, "The pipe operator",
-        "What is the main advantage of the pipe `|>` as described in the lecture?",
+        "What is the main advantage of the pipe `|>`?",
         ["It makes R run faster",
          "It lets you chain operations, passing the result forward, for more readable code",
          "It automatically removes missing values",
@@ -203,7 +203,7 @@ def questions():
          "Both pipes work in current versions of R."],
         ["a", "b", "e"],
         "The pipe only changes how the call is written, never the result, so (d) is "
-        "false. `%>%` comes from the magrittr package, and the lecture's grouped "
+        "false. `%>%` comes from the magrittr package, and the grouped "
         "examples do use `dplyr::` prefixes.",
         PDF, "p.51", r_functions=["|>", "%>%"]))
 
@@ -301,8 +301,8 @@ def questions():
          "Use `mutate()` to rename each value"],
         ["b"],
         "ggplot2 sorts a factor by its level order, not alphabetically, so setting the "
-        "levels explicitly is the direct fix. The lecture makes this point about the "
-        "education variable.",
+        "levels explicitly is the direct fix. The education variable is a "
+            "case where this matters.",
         PDF, "p.66", r_functions=["factor", "levels", "ggplot"]))
 
     out.append(mc(
@@ -346,8 +346,8 @@ def questions():
          "A graph should never include a source note",
          "Axis labels should be omitted when the variable names are obvious"],
         ["a", "b", "c"],
-        "Title, labelled axes with units, and a legend are the standard elements the "
-        "lecture lists. Citing the source is good practice rather than something to "
+        "Title, labelled axes with units, and a legend are the standard elements to "
+            "include. Citing the source is good practice rather than something to "
         "omit, so (d) is false; and omitting axis labels is never right.",
         PDF, "p.37"))
 
@@ -394,52 +394,55 @@ def questions():
 
     out.append(wa(
         "L2-WA-004", 2, "The pipe operator",
-        "Explain what the pipe operator `|>` does, and why it was introduced in R 4.1.0 "
-        "rather than being available from the start.",
-        "The pipe takes the value on its left and passes it as the first argument of the "
-        "function on its right, so a chain of operations can be written as a sequence "
-        "of steps instead of deeply nested parentheses. It was added natively in R 4.1.0 "
-        "in 2021; before that the magrittr package supplied `%>%`, which meant base R "
-        "itself could not offer the operator without depending on a package.",
+        "Explain what the pipe operator `|>` does, and why it arrived in R 4.1.0 rather "
+        "than being available from the start.",
+        "The pipe passes the value on its left in as the first argument of the call on its right, so operations chain as steps rather than nested parentheses. Before R 4.1.0 it came only from the magrittr package as `%>%`.",
         [rb("Describes passing the left value as the first argument of the right call", 2),
          rb("Mentions readability / avoiding nested calls", 2),
          rb("Notes R 4.1.0 (2021) and the magrittr `%>%` predecessor", 2)],
-        1, PDF, "p.51", r_functions=["|>", "%>%"]))
+        1, PDF, "p.51", r_functions=["|>", "%>%"],
+        detail="The native pipe is slightly faster and needs no library call, which is "
+               "why it works in a fresh R session without loading anything. The two "
+               "operators are near-interchangeable for this purpose, so reading older "
+               "code with `%>%` is not a sign of an old R version."))
 
     out.append(wa(
         "L2-WA-005", 2, "Anatomy of functions",
-        "Explain the difference between passing an argument by position and passing it "
-        "by name, and mention how a default value is set.",
-        "Positional matching assigns arguments in the order they appear in the function "
-        "definition, so the first value goes to the first parameter. Named matching "
-        "writes `name = value` and is safer because it stays correct if the definition "
-        "order changes. A default is set by putting the value after an equals sign in "
-        "the definition, as in `function(x, total = 100)`, and is used automatically "
-        "when the argument is omitted.",
+        "Explain the difference between passing an argument by position and by name, and "
+        "say how a default value is set.",
+        "Positional matching assigns arguments in the order of the function definition. Named matching writes `name = value` and stays correct if the definition order changes. A default is set with an equals sign in the definition, as in `function(x, total = 100)`.",
         [rb("Position explained as order-based assignment", 2),
          rb("Name explained as explicit `name = value`", 2),
          rb("Default explained as `arg = value` in the definition", 2)],
         1, PDF, "p.44",
         code="calc_percent <- function(x, total = 100) (x / total) * 100",
-        r_functions=["function", "<-"]))
+        r_functions=["function", "<-"],
+        detail="Partial matching is allowed but deprecated, so naming arguments in full "
+               "is the safer habit. Arguments are also matched lazily in R, which is "
+               "why the order of evaluation can produce surprises when defaults refer "
+               "to other arguments."))
 
     out.append(wa(
         "L2-WA-006", 2, "Subsetting a data.frame",
-        "Give three different ways to select rows of `titanic_data` where "
-        "`class == \"3rd\"` and `survived == \"yes\"`, and say which dplyr verb is the "
-        "one the course prefers.",
-        "One way is base R logical indexing, "
+        "Give three ways to select rows of `titanic_data` where `class == \"3rd\"` and "
+        "`survived == \"yes\"`, and say which dplyr verb is preferred.",
+        "Base R indexing: "
         "`titanic_data[titanic_data$class == \"3rd\" & titanic_data$survived == "
-        "\"yes\", ]`. A second is the dedicated function, `subset(titanic_data, class =="
-        "\"3rd\" & survived == \"yes\")`. The third, and the one the course prefers, is "
-        "the pipe with the dplyr verb: `titanic_data |> dplyr::filter(class == \"3rd\" "
-        "& survived == \"yes\")`.",
+        "\"yes\", ]`. The `subset()` function: `subset(titanic_data, class =="
+        "\"3rd\" & survived == \"yes\")`. The preferred dplyr version is "
+        "`titanic_data |> dplyr::filter(class == \"3rd\" & survived == \"yes\")`.",
         [rb("Base R logical indexing given"),
          rb("`subset()` given"),
          rb("`dplyr::filter()` given and identified as preferred")],
         1, PDF, "p.77",
         code="titanic_data |> dplyr::filter(class == \"3rd\" & survived == \"yes\")",
-        r_functions=["filter", "subset", "|>", "&", "$"]))
+        r_functions=["filter", "subset", "|>", "&", "$"],
+        detail="All three return the same rows, but only `filter()` returns a data "
+               "frame directly. Base R indexing is the easiest to get wrong, because "
+               "forgetting the trailing comma drops the column selection and can return "
+               "a vector instead of a table. `filter()` also handles missing values by "
+               "dropping rows where the condition is NA, which is usually what you "
+               "want but is worth knowing."))
 
     out.append(wa(
         "L2-WA-007", 2, "Visualising categorical data",
@@ -453,23 +456,28 @@ def questions():
          rb("`geom_bar()` layer added")],
         1, PDF, "p.34",
         code="ggplot(titanic_data, aes(x = class, fill = survived)) +\n  geom_bar()",
-        r_functions=["ggplot", "aes", "fill", "geom_bar"]))
+        r_functions=["ggplot", "aes", "fill", "geom_bar"],
+        detail="Mapping to `fill` rather than to `position` is what produces side-by-"
+               "side bars, because `geom_bar()` defaults to a stacked position. Add "
+               "`position = \"dodge\"` to the `geom_bar()` call to make that explicit. "
+               "Because the default stack normalises to proportions, you should be "
+               "careful comparing bar heights when the group sizes differ."))
 
     out.append(wa(
         "L2-WA-008", 2, "Grouped operations",
         "Explain the difference between `group_by(class) |> summarize(...) |> ungroup()` "
-        "and `summarize(..., .by = class)`, and say which the lecture shows as the "
-        "modern alternative.",
-        "With `group_by()` the grouped state is created first and persists across every "
-        "later call, so you must remember to add `ungroup()` at the end or every "
-        "downstream operation stays grouped by accident. With `.by = class` the grouping "
-        "applies only inside that single call and the result comes back ungrouped. The "
-        "lecture shows `.by` as the modern alternative.",
+        "and `summarize(..., .by = class)`, and say which is the modern alternative.",
+        "With `group_by()` the grouped state persists across later calls, so `ungroup()` is needed or downstream operations stay grouped. With `.by = class` the grouping applies only inside that one call and the result comes back ungrouped, which is why `.by` is the modern alternative.",
         [rb("`group_by()` state persists and needs explicit `ungroup()`", 2),
          rb("`.by` scopes grouping to one call and returns ungrouped", 2),
          rb("`.by` correctly identified as the modern alternative")],
         1, PDF, "p.139",
         code="titanic_data |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE), .by = class)",
-        r_functions=[".by", "group_by", "ungroup", "summarize"]))
+        r_functions=[".by", "group_by", "ungroup", "summarize"],
+        detail="A forgotten `ungroup()` is a common source of confusing output, because "
+               "later `mutate()` or `arrange()` calls then operate per group without "
+               "warning. `.by` removes the failure mode entirely at the cost of not "
+               "supporting the more elaborate grouped operations. Both give the same "
+               "numbers for this question."))
 
     return out

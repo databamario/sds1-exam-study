@@ -31,8 +31,8 @@ def questions():
          "The number of emails received per hour follows a binomial distribution.",
          "Heights and weights are typical examples of a normal distribution."],
         ["a", "b", "c", "e"],
-        "Emails per hour is the lecture's Poisson example, not binomial, so (d) is "
-        "false. The rest are exactly as described on the slide.",
+        "Emails per hour is a Poisson example, not binomial, so (d) is "
+        "false. The rest are correct as stated.",
         PDF, "p.15"))
 
     out.append(mc(
@@ -88,7 +88,7 @@ def questions():
          "A statistic is fixed once the population is defined."],
         ["a", "b", "d"],
         "Parameters are fixed population quantities while statistics vary with the "
-        "sample, so (c) and (e) are both wrong. The lecture's summary line is that "
+        "sample, so (c) and (e) are both wrong. The summary is that "
         "parameters are what we want to know and statistics are what we can compute.",
         PDF, "p.34", origin="adapted_HT25"))
 
@@ -204,7 +204,7 @@ def questions():
          "An estimator is sometimes called an estimand.",
          "An estimand is a random variable."],
         ["a", "b", "c", "d"],
-        "The lecture notes the estimator is sometimes called an estimand, though it is "
+        "The estimator is sometimes called an estimand, though it is "
         "more precisely the estimand that is the target quantity. The estimand is the "
         "population parameter and so is fixed, not random, which rules out (e).",
         PDF, "p.34"))
@@ -228,10 +228,7 @@ def questions():
         "L5-WA-001", 5, "Estimand, estimator, estimate",
         "For a study estimating the average height of all Norrkoping residents, state the "
         "estimand, the estimator and the estimate.",
-        "The estimand is the population mean height mu of all Norrkoping residents. The "
-        "estimator is the rule used to compute it from data, namely the sample mean "
-        "formula Xbar = (1/n) sum of X_i. The estimate is the particular number obtained "
-        "by applying that formula to one sample, for example 169.03 cm from n = 50.",
+        "The estimand is the population mean height of all residents. The estimator is the rule used to compute it, the sample mean Xbar = (1/n) sum of X_i. The estimate is the number that rule produces from one sample, 169.03 cm for n = 50.",
         [rb("Estimand correctly identified as the unknown population mean mu", 2),
          rb("Estimator correctly identified as the sample mean formula", 2),
          rb("Estimate correctly identified as the observed value from one sample")],
@@ -240,11 +237,7 @@ def questions():
     out.append(wa(
         "L5-WA-002", 5, "Central limit theorem",
         "Explain what the central limit theorem states and why it matters for inference.",
-        "The CLT states that for large n the sampling distribution of the sample mean is "
-        "approximately normal even when the population itself is not normally "
-        "distributed. It matters because it lets us use the normal machinery, z-scores "
-        "and confidence intervals, to make inferences about the population without ever "
-        "needing to know the population's shape, which is rarely known in practice.",
+        "The CLT states that for large n the sampling distribution of the sample mean is approximately normal even when the population is not. It matters because it lets us use z-scores and confidence intervals without knowing the population's shape, which is rarely available in practice.",
         [rb("States the approximate normality of the sampling distribution of the mean", 2),
          rb("Notes it holds regardless of the population shape", 2),
          rb("Explains it enables normal-based inference without knowing the population")],
@@ -254,10 +247,7 @@ def questions():
         "L5-WA-003", 5, "Sampling distribution and variance",
         "Write down the formula for the variance of the sample mean, and explain what "
         "happens to it as n increases.",
-        "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using "
-        "the independence of the observations. As n increases the variance shrinks, so the "
-        "sample mean becomes a more precise estimate of the population mean; it approaches "
-        "zero but only reaches it in the limit.",
+        "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n grows the variance shrinks, so the sample mean becomes a more precise estimate, approaching zero only in the limit.",
         [rb("Variance of sample mean given as sigma squared over n", 2),
          rb("Derivation or intermediate term involving n sigma squared over n squared "
             "shown", 2),
@@ -269,11 +259,7 @@ def questions():
         "Explain the difference between a probability mass function, a probability density "
         "function and a cumulative distribution function, and say which applies to a fair "
         "die.",
-        "A PMF gives the probability of each individual outcome and applies to discrete "
-        "variables, so for a fair die it is 1/6 at each face. A PDF describes the relative "
-        "likelihood across a continuous range and does not itself integrate to a "
-        "probability at a point. A CDF gives P(X <= x) and is a step function for a "
-        "discrete variable like a die, but a smooth increasing curve for a continuous one.",
+        "A PMF gives the probability of each individual outcome and applies to discrete variables, so a fair die has 1/6 at each face. A PDF describes relative likelihood across a continuous range and gives no probability at a point. A CDF gives P(X <= x).",
         [rb("PMF defined as the probability of each discrete outcome", 2),
          rb("PDF defined as relative likelihood for a continuous variable", 2),
          rb("CDF defined as P(X <= x) and distinguished as step versus smooth", 2),
@@ -287,7 +273,7 @@ def questions():
         "contains less than 35.8 mL.",
         "```r\npnorm(35.8, mean = 36, sd = 0.11)\n```\n`pnorm()` returns P(X <= x) for a "
         "normal variable, so this is the area under the PDF to the left of 35.8. The value "
-        "is about 0.0345, which the lecture slide rounds to 0.0344.",
+        "is about 0.0345, which is normally rounded to 0.0344.",
         [rb("`pnorm()` used as the correct function", 2),
          rb("Mean and standard deviation supplied as named arguments", 2),
          rb("States that this is P(X <= 35.8), the area to the left")],
@@ -298,12 +284,7 @@ def questions():
         "L5-WA-006", 5, "Law of large numbers",
         "Explain the law of large numbers and how it differs from the central limit "
         "theorem.",
-        "The law of large numbers says that as the sample size grows the sample mean "
-        "converges to the population mean, so it is a statement about where the sample "
-        "mean ends up. The central limit theorem additionally says that for large n the "
-        "sampling distribution of the sample mean is approximately normal, which is a "
-        "statement about its shape. The CLT builds on the LLN and is what justifies "
-        "normal-based inference.",
+        "The law of large numbers says the sample mean converges to the population mean as the sample grows, so it concerns where the sample mean ends up. The CLT adds that the sampling distribution is approximately normal for large n, a statement about shape.",
         [rb("LLN stated as convergence of the sample mean to the population mean", 2),
          rb("CLT stated as approximate normality of the sampling distribution", 2),
          rb("Relationship between the two explained", 2)],
@@ -314,10 +295,7 @@ def questions():
         "For each situation, name the distribution you would expect to model it and give "
         "the reason: the number of heads in 20 coin tosses, the number of customers "
         "arriving in an hour, and the height of a randomly chosen adult.",
-        "Heads in 20 tosses is binomial, because it counts successes across a fixed number "
-        "of independent trials with two outcomes. Customers in an hour is Poisson, because "
-        "it counts events in a fixed interval. Adult height is normal, because it is a "
-        "natural measurement that is roughly symmetric and bell-shaped.",
+        "Heads in 20 tosses is binomial, counting successes across a fixed number of independent trials with two outcomes. Customers in an hour is Poisson, counting events in a fixed interval. Adult height is normal, a roughly symmetric bell-shaped measurement.",
         [rb("Binomial correctly matched to coin tosses with a reason", 2),
          rb("Poisson correctly matched to arrivals per interval with a reason", 2),
          rb("Normal correctly matched to height with a reason")],
@@ -328,11 +306,7 @@ def questions():
         "Explain what it means to say the sample mean is an unbiased estimator of the "
         "population mean, and why small samples are still a problem even when the "
         "estimator is unbiased.",
-        "Unbiased means the expected value of the sample mean equals the population mean, "
-        "E[Xbar] = mu, so the estimator is on target in the long run even though any "
-        "single sample can fall above or below mu. Small samples remain a problem because "
-        "bias is only about the average: for small n the variance sigma squared over n is "
-        "still large, so individual sample means fluctuate widely around mu.",
+        "Unbiased means E[Xbar] = mu, so the estimator is on target in the long run even though a single sample can fall above or below mu. Small samples remain a problem because at small n the variance sigma squared over n is still large.",
         [rb("Unbiasedness explained via E[Xbar] = mu", 2),
          rb("Notes that a single sample may still deviate from mu", 2),
          rb("Explains that large variance at small n causes wide fluctuation")],

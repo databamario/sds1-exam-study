@@ -47,7 +47,6 @@ def answer_key(bank):
                     mark = "**[x]**" if k in q["correct"] else "[ ]"
                     st.markdown("%s **%s)** %s" % (mark, k, text))
                 if not q["correct"]:
-                    st.info("0 correct options - leaving all unmarked scores 1.0.")
                 st.markdown("**Explanation:** %s" % q["explanation"])
             else:
                 st.markdown("**Model answer:**")

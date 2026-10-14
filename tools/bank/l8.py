@@ -52,7 +52,7 @@ def questions():
         ["a"],
         "The standard error of r is sqrt((1 - r squared)/(n - 2)) and the statistic follows "
         "a t distribution with n - 2 degrees of freedom, because r is built from two "
-        "estimated means rather than one. The lecture also notes this standard error is "
+        "estimated means rather than one. This standard error is "
         "only valid when rho = 0.",
         PDF, "p.14", code="sqrt(1 - r^2) / sqrt(n - 2)", r_functions=["sqrt"]))
 
@@ -113,13 +113,13 @@ def questions():
         ["a", "b", "c", "e"],
         "ANOVA is an omnibus test: rejecting H0 only says something differs, not what. "
         "Identifying the differing pairs needs post-hoc tests such as `pairwise.t.test()`, "
-        "which the lecture mentions but does not cover, so (d) is false.",
+        "which is not covered here, so (d) is false.",
         PDF, "p.29", code="oneway.test(height ~ city, data = heights, var.equal = TRUE)",
         r_functions=["oneway.test", "pairwise.t.test"]))
 
     out.append(mc(
         "L8-MC-008", 8, "Omnibus tests and multiple testing",
-        "The lecture notes that for alpha = 0.05 and m = 190 separate tests, the "
+        "For alpha = 0.05 and m = 190 separate tests, the "
         "probability of at least one Type I error is about 99.3%. What is the consequence "
         "for practice?",
         ["Each individual test should be run at a much smaller alpha.",
@@ -165,21 +165,21 @@ def questions():
         PDF, "p.33", code="chisq.test(observed, p = rep(1/6, 6))",
         r_functions=["chisq.test", "rep"]))
 
-    # ---------------------------------------------- zero-correct special cases
+    # ------------------------------------------------- all-true-except-one traps
     out.append(mc(
         "L8-MC-011", 8, "Reading R output",
-        "Consider this R output. Which statements about it are true?",
+        "Consider this R output. Which statements about it are true? "
+        "`X-squared = 1, df = 5, p-value = 0.9626`",
         ["X-squared = 1",
          "df = 5",
          "p-value = 0.9626",
          "The test provides evidence that the die is unfair",
          "The expected count for each face is 10"],
-        [],
-        "Every option here is true. R reports X-squared = 1, df = 5 and p-value = 0.9626, "
-        "the die has 60 rolls over 6 faces so each expected count is 10, and a p-value of "
-        "0.96 is high, meaning we FAIL to reject the fair-die hypothesis - so there is no "
-        "evidence the die is unfair. Remember that on the real exam a question like this "
-        "scores the full point if you mark nothing.",
+        ["a", "b", "c", "e"],
+        "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times "
+        "over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 "
+        "is far above any usual significance level, so we fail to reject the hypothesis that "
+        "the die is fair and there is no evidence that it is unfair, which makes (d) false.",
         PDF, "p.33", code="chisq.test(c(8, 10, 9, 12, 11, 10), p = rep(1/6, 6))",
         r_functions=["chisq.test", "rep"]))
 
@@ -192,11 +192,11 @@ def questions():
          "p-value = 1.673e-06",
          "We accept the null hypothesis that all city means are equal",
          "There is significant evidence that average height differs between the cities"],
-        [],
-        "Every option here is true. R reports F = 13.915 with numerator df 2 and denominator "
-        "df 297 and a p-value of 1.673e-06, and such a small p-value means we REJECT H0, "
-        "so the cities do differ significantly in mean height. Option (d) states the "
-        "opposite of what the output implies. Mark nothing here to score the full point.",
+        ["a", "b", "c", "e"],
+        "R reports F = 13.915 with numerator df 2 and denominator df 297, and a p-value of "
+        "1.673e-06. That p-value is far below any usual significance level, so we reject the "
+        "hypothesis that all city means are equal; we never accept the null, so (d) is false. "
+        "The cities do differ significantly in mean height, which is what (e) states.",
         PDF, "p.29", code="oneway.test(height ~ city, data = heights, var.equal = TRUE)",
         r_functions=["oneway.test"]))
 
@@ -209,11 +209,11 @@ def questions():
          "The sample correlation is 0.6199323",
          "We fail to reject H0 because the p-value is large",
          "The data provide evidence of a positive correlation"],
-        [],
-        "Every option here is true. The output reports t = 5.4738, df = 48, p = 1.579e-06 "
-        "and cor = 0.6199, and because that p-value is far below any usual significance "
-        "level we REJECT H0 and conclude there is a positive correlation. Option (d) says "
-        "the opposite. Leaving everything unmarked scores the full point.",
+        ["a", "b", "c", "e"],
+        "The output reports t = 5.4738, df = 48, p-value = 1.579e-06 and cor = 0.6199323. "
+        "The p-value is far below any usual significance level, not large, so we reject the "
+        "hypothesis of no correlation and (d) is false. The reported correlation is positive, "
+        "so (e) is true.",
         PDF, "p.16", code="cor.test(states$hs_grad, states$income)",
         r_functions=["cor.test"]))
 
@@ -222,11 +222,7 @@ def questions():
         "L8-WA-001", 8, "Correlation and association",
         "Explain what the correlation coefficient measures, and give one situation where a "
         "correlation near zero would be misleading.",
-        "Correlation measures the strength and direction of the LINEAR association between "
-        "two continuous variables, running from -1 through 0 to 1. A value near zero only "
-        "rules out a linear relationship, so it can be misleading when the true pattern is "
-        "curved or driven by an outlier, as in the states example where Alaska alone "
-        "produces a moderate Pearson r but almost no Spearman correlation.",
+        "Correlation measures the strength and direction of the LINEAR association between two continuous variables, running from -1 through 0 to 1. A value near zero only rules out a linear relationship, so it can mislead when the pattern is curved or driven by an outlier.",
         [rb("Defined as the strength and direction of LINEAR association", 2),
          rb("Notes zero rules out only a linear relationship", 2),
          rb("Gives a valid non-linear or outlier example")],
@@ -236,12 +232,7 @@ def questions():
         "L8-WA-002", 8, "Analysis of variance",
         "Explain what the F-statistic in a one-way ANOVA is, what a large value means, and "
         "what rejecting the null hypothesis does NOT tell you.",
-        "The F-statistic is the ratio of the variance between groups to the variance within "
-        "groups, and it follows an F distribution with degrees of freedom determined by the "
-        "number of groups and the sample size. A large F means the group means differ "
-        "substantially relative to the noise inside the groups. Rejecting H0 only shows "
-        "that at least one group differs; it does not reveal which groups, which requires "
-        "post-hoc tests such as `pairwise.t.test()`.",
+        "The F-statistic is the ratio of the variance between groups to the variance within them. A large F means the group means differ substantially relative to the noise inside the groups. Rejecting H0 shows only that some group differs, so post-hoc tests are needed.",
         [rb("F defined as between-group variance over within-group variance", 2),
          rb("Explains what a large F indicates", 2),
          rb("Notes the F distribution and its degrees of freedom"),
@@ -252,12 +243,7 @@ def questions():
         "L8-WA-003", 8, "Chi-squared tests",
         "Name the three main types of chi-squared test and state the degrees of freedom for "
         "a goodness-of-fit test with k categories.",
-        "The three types are the goodness-of-fit test, which checks whether one variable "
-        "matches an expected distribution, the test for homogeneity, which checks whether a "
-        "distribution is the same across different populations or groups, and the test for "
-        "independence, which checks whether two categorical variables are associated. For "
-        "a goodness-of-fit test the degrees of freedom are k - 1, so for a die with k = 6 "
-        "faces we get df = 5.",
+        "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated. For goodness-of-fit df = k - 1, so a 6-faced die gives df = 5.",
         [rb("All three test types named with correct purpose", 3),
          rb("Degrees of freedom given as k - 1 with the die example giving 5", 2)],
         1, PDF, "p.31", r_functions=["chisq.test", "pchisq"]))
@@ -266,11 +252,7 @@ def questions():
         "L8-WA-004", 8, "Working in R for a chi-squared test",
         "Write the R code for a goodness-of-fit test of a fair die, given observed counts of "
         "8, 10, 9, 12, 11 and 10 over 60 rolls.",
-        "```r\nobserved <- c(8, 10, 9, 12, 11, 10)\nchisq.test(observed, p = rep(1/6, 6))\n```\n"
-        "`chisq.test()` with a vector of expected probabilities performs the "
-        "goodness-of-fit test; the output is X-squared = 1, df = 5, p-value = 0.9626. Since "
-        "the p-value is very high we fail to reject H0 and find no evidence the die is "
-        "unfair.",
+        "```r\nobserved <- c(8, 10, 9, 12, 11, 10)\nchisq.test(observed, p = rep(1/6, 6))\n```\nExpected probabilities make this a goodness-of-fit test, giving X-squared = 1, df = 5, p = 0.9626. The p-value is high, so we fail to reject H0.",
         [rb("`chisq.test()` used with the observed counts", 2),
          rb("Expected probabilities given as `rep(1/6, 6)`", 2),
          rb("Reports the correct output and conclusion", 2)],
@@ -282,11 +264,7 @@ def questions():
         "L8-WA-005", 8, "Correlation matrix",
         "Explain two properties a correlation matrix always has, and describe how you would "
         "compute one in R for a data.frame with many numeric variables.",
-        "A correlation matrix is symmetric, because r_xy equals r_yx, and its diagonal is "
-        "always 1, since each variable is perfectly correlated with itself. In R you select "
-        "the numeric columns of interest and pipe into `cor()`, typically rounding for "
-        "readability, for example `states |> select(income, hs_grad) |> cor() |> round(2)`, "
-        "and then read off the strongest off-diagonal entries.",
+        "A correlation matrix is symmetric, since r_xy equals r_yx, and its diagonal is always 1, because each variable is perfectly correlated with itself. In R you pipe the numeric columns of interest into `cor()` and round the result.",
         [rb("Symmetry correctly identified and justified", 2),
          rb("Diagonal of 1 correctly identified and justified", 2),
          rb("R pipeline with select, cor and round given correctly", 2)],
@@ -299,12 +277,7 @@ def questions():
         "For each scenario, name the appropriate test: comparing average height across "
         "three cities; whether smoking is independent of eye colour; whether a die is fair; "
         "and whether two continuous variables move together.",
-        "Comparing a mean across three cities uses a one-way ANOVA, for example "
-        "`oneway.test()`. Whether smoking is independent of eye colour is a chi-squared test "
-        "for independence. Whether a die is fair is a chi-squared goodness-of-fit test. And "
-        "whether two continuous variables move together is tested with Pearson correlation "
-        "via `cor.test()`, or Spearman if the association is non-linear or there are "
-        "outliers.",
+        "Comparing a mean across three cities uses a one-way ANOVA, `oneway.test()`. Whether smoking is independent of eye colour is a chi-squared test for independence. Whether a die is fair is a chi-squared goodness-of-fit test. Whether two continuous variables move together is tested with `cor.test()`.",
         [rb("ANOVA correctly matched to comparing three city means", 2),
          rb("Chi-squared independence correctly matched to smoking and eye colour", 2),
          rb("Chi-squared goodness-of-fit correctly matched to the fair die", 2),
