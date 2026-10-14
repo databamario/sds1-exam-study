@@ -63,7 +63,7 @@ with st.sidebar:
     choice = st.radio("Go to", list(PAGES), label_visibility="collapsed")
     st.divider()
     st.caption(
-        "MC: mark **all** correct options - there may be none, or more than one.\n\n"
+        "MC: mark **all** correct options - there may be more than one.\n\n"
         "WA: short answer, max 3 sentences. Partial credit is possible."
     )
 
@@ -74,15 +74,15 @@ if target == "home":
         """
         ### How the real exam marks you
 
-        **Multiple-choice (MC)** - mark *all* correct options. There may be none,
-        or more than one. Each question is worth at most 1 point.
+        **Multiple-choice (MC)** - mark *all* correct options; there may be more
+        than one. Each question is worth at most 1 point.
 
         | Your answer | Score | Why |
         |---|---|---|
         | all correct, nothing extra | **1.0** | no mistakes |
-        | (0 correct options, nothing marked) | **1.0** | special case |
         | exactly one mistake | **0.5** | one correct missed, or one wrong marked |
         | two or more mistakes | **0.0** | |
+        | nothing marked | **0.0** | every question has a correct option to find |
 
         **Written-answer (WA)** - short and succinct, max 3 sentences unless
         stated otherwise. Partial credit for partial answers.

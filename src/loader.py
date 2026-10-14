@@ -10,6 +10,7 @@ from typing import Any, Iterable
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 QUESTIONS_PATH = DATA_DIR / "questions.json"
+IMAGES_DIR = DATA_DIR / "images"
 
 LECTURES = {
     1: "What is statistics? + R basics",
@@ -122,6 +123,7 @@ def _validate_mc(q: dict, where: str) -> None:
 
 def _validate_wa(q: dict, where: str) -> None:
     _require(q, "answer", str, where)
+    _require(q, "detail", str, where)
     rubric = _require(q, "rubric", list, where)
     if not rubric:
         raise QuestionBankError("%s: WA needs a non-empty rubric" % where)
@@ -134,6 +136,26 @@ def _validate_wa(q: dict, where: str) -> None:
             raise QuestionBankError("%s: rubric elements must be >= 1" % where)
 
 
+def validate_question_figure(q: dict) -> Path | None:
+    """Return the figure path a question points at, checking it exists.
+
+    Figures are optional. When one is referenced it must be present, otherwise
+    the student would silently get a question they cannot answer.
+    """
+    name = q.get("image")
+    if not name:
+        return None
+    if not isinstance(name, str):
+        raise QuestionBankError("%s: image should be a string" % q.get("id"))
+    path = IMAGES_DIR / (name + ".png")
+    if not path.exists():
+        raise QuestionBankError(
+            "%s: missing figure %s (run `python tools/figures.py`)"
+            % (q.get("id"), path.name)
+        )
+    return path
+
+
 def validate_bank(questions: Iterable[dict]) -> list[str]:
     """Validate every question. Returns a list of problems (empty means ok)."""
     problems: list[str] = []
@@ -141,6 +163,7 @@ def validate_bank(questions: Iterable[dict]) -> list[str]:
     for idx, q in enumerate(questions):
         try:
             validate_question(q)
+            validate_question_figure(q)
         except QuestionBankError as exc:
             problems.append("question[%d]: %s" % (idx, exc))
             continue

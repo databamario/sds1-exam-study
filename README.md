@@ -2,8 +2,10 @@
 
 A practice app for the **Statistics and Data Science I (771A15 / 771A16)** final exam.
 
-**200 questions** — 130 multiple-choice (MC) and 70 written-answer (WA) — built from all
+**230 questions** — 148 multiple-choice (MC) and 82 written-answer (WA) — built from all
 9 lectures, with the *exact* multiple-choice marking rules from the official exam paper.
+30 of them put a **graph in front of you** and ask you to infer from its shape, the way the
+real paper does.
 
 > Everything runs locally on your own machine. Nothing is uploaded, nothing is tracked,
 > no account needed. Your progress is saved to a local file you can delete any time.
@@ -51,24 +53,24 @@ The app reproduces the real grading scheme exactly.
 
 ### Multiple-choice (MC)
 
-Mark **all** correct options — *there may be none, or more than one*. Each question is
-worth at most 1 point.
+Mark **all** correct options — *there may be more than one*. Each question is worth at
+most 1 point.
 
 | Your answer | Score | Why |
 |---|---|---|
 | All correct marked, nothing extra marked | **1.0** | no mistakes |
-| 0 correct options, nothing marked | **1.0** | special case in the instructions |
 | Exactly one mistake | **0.5** | one correct option missed, **or** one incorrect option marked |
 | Two or more mistakes | **0.0** | |
+| Nothing marked | **0.0** | every question has a correct option to find |
 
-> ⚠️ **Watch out.** 5 of the 130 MC questions have **zero correct options**. In those,
-> marking *nothing* earns the full point. The app flags them in yellow before you answer.
+> Every question in this app has at least one correct option, so leaving the answer blank
+> never scores the full point. `tools/validate.py` enforces this.
 
 ### Written-answer (WA)
 
 Short and succinct — **max 3 sentences** unless the question says otherwise. Partial
-credit is possible for partial answers, so the app gives you a checklist after you
-write your answer and lets you score yourself point by point.
+credit is possible for partial answers, so the app shows the model answer and then lets
+you tap each point your answer covered.
 
 You do **not** need to grind through calculations. The exam says: *show how you would
 solve it — give the formula with the values substituted.* For example, write
@@ -79,6 +81,9 @@ Xbar = sum(x)/n = (1+2+3)/3
 
 and stop there. Doing the final arithmetic is optional and earns nothing extra.
 
+Every model answer is kept short on purpose — the median is 42 words — with any longer
+reasoning tucked under a **"Why?"** panel that stays collapsed until you ask for it.
+
 ---
 
 ## What's in the app
@@ -86,8 +91,8 @@ and stop there. Doing the final arithmetic is optional and earns nothing extra.
 | Section | What it does |
 |---|---|
 | **Home** | The marking rules and a suggested study order. |
-| **Study MC** | Multiple-choice practice, lecture by lecture. Instant marking and explanation. |
-| **Study WA** | Written-answer practice. Write your answer, then reveal the model answer and self-grade against the checklist. |
+| **Study MC** | Multiple-choice practice, lecture by lecture. One question at a time, instant marking and explanation. |
+| **Study WA** | Written-answer practice. Write your answer, reveal the model answer, then tap the points you covered. |
 | **Mock exam** | A timed paper that mirrors the real one: **41 points, 4 hours**, mixed MC and WA. MC is marked automatically; WA you self-grade. Change the seed to get a different paper. |
 | **Answer key** | Every question with answers, model answers, explanations and the source slide. Filter by lecture and type. **Flag anything you think is wrong** so it is easy to report. |
 | **Progress** | Points earned per lecture, and which lectures you are weakest on. One-click reset. |
@@ -97,28 +102,61 @@ and stop there. Doing the final arithmetic is optional and earns nothing extra.
 MC trains careful reading and holding several facts at once; WA trains writing a correct
 method under a 3-sentence limit. Practise them separately, then mix them in the mock exam.
 
+### How practice works
+
+Both study modes run the same loop, so nothing feels like a different app halfway
+through:
+
+1. One question on screen — the stem, then the figure if it has one.
+2. You commit an answer and see the verdict straight away, with the score and what you
+   missed.
+3. The explanation sits under a collapsed **"Why?"** panel, so you can move on fast or
+   dig in.
+4. **Next** moves on. Anything not answered at full marks is queued and comes back in a
+   second round, and keeps coming back until you get it.
+
+A row of dots above the question tracks the set: green for full marks, amber for part,
+red for none. The end-of-set summary gives your score, how many were at full marks, and
+how many are still outstanding.
+
+**No question ever refers to the lectures.** The wording talks about the statistics, not
+about what you were taught or which slide it was on. The source citation is kept in the
+Answer key, where it is useful for you, and hidden during practice.
+
 ---
 
 ## Question coverage
 
-| # | Lecture | MC | WA | Total |
-|---|---|---:|---:|---:|
-| 1 | What is statistics? + R basics | 17 | 8 | 25 |
-| 2 | Descriptive stats for categorical data + R fundamentals | 21 | 8 | 29 |
-| 3 | Descriptive stats for continuous data + joins | 19 | 8 | 27 |
-| 4 | Probability and sampling theory | 14 | 8 | 22 |
-| 5 | Random variables and probability distributions | 13 | 8 | 21 |
-| 6 | Statistical inference and hypothesis testing | 12 | 8 | 20 |
-| 7 | Tests for means and proportions, confidence intervals | 13 | 8 | 21 |
-| 8 | Correlation, ANOVA and chi-squared tests | 12 | 6 | 18 |
-| 9 | Simulation-based inference (Monte Carlo, bootstrapping) | 9 | 8 | 17 |
-| | **Total** | **130** | **70** | **200** |
+| # | Lecture | MC | WA | Total | With a graph |
+|---|---|---:|---:|---:|---:|
+| 1 | What is statistics? + R basics | 17 | 8 | 25 | |
+| 2 | Descriptive stats for categorical data + R fundamentals | 23 | 10 | 33 | 4 |
+| 3 | Descriptive stats for continuous data + joins | 25 | 11 | 36 | 9 |
+| 4 | Probability and sampling theory | 17 | 9 | 26 | 4 |
+| 5 | Random variables and probability distributions | 13 | 10 | 23 | 2 |
+| 6 | Statistical inference and hypothesis testing | 12 | 8 | 20 | |
+| 7 | Tests for means and proportions, confidence intervals | 16 | 10 | 26 | 5 |
+| 8 | Correlation, ANOVA and chi-squared tests | 16 | 8 | 24 | 6 |
+| 9 | Simulation-based inference (Monte Carlo, bootstrapping) | 9 | 8 | 17 | |
+| | **Total** | **148** | **82** | **230** | **30** |
 
 Questions are weighted by how much material each lecture covers, not spread evenly. About
-60% of all questions involve R code, R output or R tooling.
+53% of all questions involve R code, R output or R tooling.
 
-Every question records the lecture slide it came from, shown under the question and in the
-answer key.
+Every question records the lecture slide it came from, shown in the answer key.
+
+### Graph questions
+
+30 questions put a figure in front of you. The figures are generated by
+`tools/figures.py` with matplotlib — sharp at any size, reproducible with one command,
+and carrying no course material. They deliberately mirror the kinds of plot the real
+paper uses: grouped bars, box plots, histograms, estimates with confidence intervals,
+a normal curve with shaded regions, scatter plots, overlapping densities and a
+correlation matrix.
+
+Most ask you to **infer** from a shape rather than read a number off it — which group has
+the largest variance, whether a confidence interval clears the reference line, whether the
+mean sits above or below the median.
 
 ### Not covered, on purpose
 
@@ -130,7 +168,7 @@ never tested it. If your lecturer announces otherwise, this app will not have co
 
 ## Where the answers come from
 
-- **138 questions** written fresh from the lecture slides.
+- **168 questions** written fresh from the lecture slides.
 - **62 questions** adapted from the HT25 mock exam, reworded and re-tagged. They are
   marked `adapted_HT25` so you can see which are calibrated to a real paper.
 
@@ -168,20 +206,24 @@ sds1-exam-study/
 │   ├── scoring.py          MC marking engine (the exam rules)
 │   ├── loader.py           question loading + schema validation
 │   ├── progress.py         local SQLite progress
-│   ├── ui.py               shared components
+│   ├── ui.py               shared components + the practice loop
 │   └── views/              one module per screen
-├── data/questions.json     the 200 questions
+├── data/
+│   ├── questions.json      the 230 questions
+│   └── images/             the 10 generated figures
 └── tools/
     ├── build_bank.py       rebuild data/questions.json from tools/bank/
+    ├── figures.py          regenerate data/images/ (matplotlib)
     ├── validate.py         full validation (schema, counts, R coverage)
     ├── test_scoring.py     regression tests vs the official marking table
     ├── verify_r.py         executes every R snippet in the bank
-    └── bank/               question sources, one file per lecture
+    └── bank/               question sources, one file per lecture, + graphs.py
 ```
 
 ## Contributing questions
 
-Questions live in `tools/bank/l1.py` … `l9.py`. To change one:
+Questions live in `tools/bank/l1.py` … `l9.py`, with the graph questions in
+`tools/bank/graphs.py`. To change one:
 
 ```bash
 python tools/build_bank.py     # rebuild data/questions.json
@@ -190,8 +232,9 @@ python tools/verify_r.py       # run every R snippet
 python tools/test_scoring.py   # re-run the grading regression tests
 ```
 
-All four must pass before opening a pull request. `validate.py` fails if any lecture loses
-R coverage, so you cannot silently drop a topic.
+All four must pass before opening a pull request. `validate.py` also fails if an MC
+question loses its correct option, if a written answer runs long, if a question refers to
+the course rather than to the statistics, or if a referenced figure file is missing.
 
 ---
 

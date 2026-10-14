@@ -201,6 +201,11 @@ def render_result(bank):
             st.write(answers.get(q["id"]) or "_(not answered)_")
             st.markdown("**Model answer**")
             st.markdown(q["answer"])
+            if q.get("detail"):
+                # Inline, because Streamlit does not allow nested expanders.
+                st.markdown("**Longer explanation:**")
+                st.markdown(q["detail"])
+            st.markdown("**What the marker is looking for**")
             for item in q["rubric"]:
                 st.markdown("- %s" % item["text"])
     if st.button("Clear result"):

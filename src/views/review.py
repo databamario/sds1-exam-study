@@ -41,16 +41,22 @@ def answer_key(bank):
         label = "%s %s  [%s]%s" % (
             q["id"], q["topic"][:44], q["type"], "  **FLAGGED**" if flagged else "")
         with st.expander(label):
-            ui.render_stem(q)
+            ui.render_stem(q, show_source=True)
+            if q.get("image"):
+                ui.render_figure(q)
             if q["type"] == loader.MC:
                 for k, text in q["options"].items():
                     mark = "**[x]**" if k in q["correct"] else "[ ]"
                     st.markdown("%s **%s)** %s" % (mark, k, text))
-                if not q["correct"]:
                 st.markdown("**Explanation:** %s" % q["explanation"])
             else:
                 st.markdown("**Model answer:**")
                 st.markdown(q["answer"])
+                if q.get("detail"):
+                    # Already inside an expander, so the detail has to be inline:
+                    # Streamlit does not allow nested expanders.
+                    st.markdown("**Longer explanation:**")
+                    st.markdown(q["detail"])
                 st.markdown("**Checklist:**")
                 for item in q["rubric"]:
                     st.markdown("- %s" % item["text"])
