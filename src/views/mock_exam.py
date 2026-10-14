@@ -12,23 +12,53 @@ from ..scoring import score_mc
 EXAM_MINUTES = 240
 EXAM_POINTS = 41
 
+# The HT25 mock had 9 MC out of 29 questions, so roughly a third of the paper
+# is multiple-choice. We aim for a similar split by points rather than filling
+# greedily, which otherwise produces an all-written-answer paper.
+MC_POINT_SHARE = 0.33
 
-def _build_paper(bank):
-    """Pick questions summing to the real exam's 41 points, mixed MC and WA."""
-    mc = loader.of_type(bank, loader.MC)
-    wa = loader.of_type(bank, loader.WA)
-    if not mc:
-        return []
-    seed = st.session_state.get("exam_seed", 42)
-    mc = loader.shuffled(mc, seed=seed)
-    wa = loader.shuffled(wa, seed=seed + 1)
-    paper, total = [], 0.0
-    pool = wa + mc
-    for q in pool:
+
+def _build_paper(bank, seed=None):
+    """Build a mixed MC/WA paper worth about EXAM_POINTS."""
+    seed = st.session_state.get("exam_seed", 42) if seed is None else seed
+    mc_pool = loader.shuffled(loader.of_type(bank, loader.MC), seed=seed)
+    wa_pool = loader.shuffled(loader.of_type(bank, loader.WA), seed=seed + 1)
+
+    paper: list[dict] = []
+    total = 0.0
+    mc_points = 0.0
+    mc_budget = EXAM_POINTS * MC_POINT_SHARE
+
+    for q in mc_pool:
+        if mc_points >= mc_budget or total + q["points"] > EXAM_POINTS:
+            break
+        paper.append(q)
+        mc_points += q["points"]
+        total += q["points"]
+
+    wa_added = False
+    for q in wa_pool:
+        if total >= EXAM_POINTS:
+            break
         if total + q["points"] > EXAM_POINTS:
             continue
         paper.append(q)
+        wa_added = True
         total += q["points"]
+
+    # Top up with any remaining MC so the paper really lands on EXAM_POINTS.
+    if total < EXAM_POINTS:
+        for q in mc_pool:
+            if total >= EXAM_POINTS:
+                break
+            if q in paper:
+                continue
+            if total + q["points"] > EXAM_POINTS:
+                continue
+            paper.append(q)
+            total += q["points"]
+
+    # Interleave so the paper alternates rather than being all MC then all WA.
     paper.sort(key=lambda q: (0 if q["type"] == loader.MC else 1, q["id"]))
     return paper
 
