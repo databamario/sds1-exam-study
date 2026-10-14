@@ -31,10 +31,10 @@ def questions():
          "The test rejects H0: rho = 0 at the 5% level.",
          "There is evidence that income and high-school graduation are positively "
          "correlated.",
-         "The 95% confidence interval of about (0.41, 0.77) contains 0.",
+         "The 95% confidence interval of about (0.41, 0.76) contains 0.",
          "The test has 48 degrees of freedom."],
         ["a", "b", "c", "e"],
-        "The 95% CI of (0.4128, 0.7661) excludes 0, so the statement that it contains 0 is "
+        "The 95% CI of (0.4153, 0.7648) excludes 0, so the statement that it contains 0 is "
         "false. That is also exactly why the test rejects, since a null value outside the "
         "interval means rejection at that level.",
         PDF, "p.16", code="cor.test(states$hs_grad, states$income)",
@@ -61,13 +61,14 @@ def questions():
         "Which statements about Spearman's correlation are TRUE?",
         ["It is the Pearson correlation computed on the ranks of the variables.",
          "It measures monotonic association rather than only linear association.",
+         "It cannot detect a relationship where larger states are richer but not linearly.",
          "It is robust to outliers.",
-         "It is obtained in R with `cor.test(x, y, method = \"spearman\")`.",
-         "It cannot detect a relationship where larger states are richer but not linearly."],
-        ["a", "b", "c", "d"],
+         "It is obtained in R with `cor.test(x, y, method = \"spearman\")`."],
+        ["a", "b", "d", "e"],
         "Spearman's coefficient is specifically designed to capture monotonic patterns "
         "that Pearson misses, which is the whole point of the Alaska example where "
-        "Pearson said yes and Spearman said no. So the final statement is false.",
+        "Pearson said yes and Spearman said no. So the claim that it cannot detect a "
+        "relationship that is not linear is false.",
         PDF, "p.19", code="cor.test(x, y, method = \"spearman\")",
         r_functions=["cor.test", "method"]))
 
@@ -138,14 +139,15 @@ def questions():
         "L8-MC-009", 8, "Chi-squared tests",
         "Which statements are TRUE?",
         ["The chi-squared statistic compares observed counts to expected counts.",
+         "The goodness-of-fit degrees of freedom is k, where k is the number of categories.",
          "A goodness-of-fit test checks whether one variable matches an expected "
          "distribution.",
          "A test for homogeneity checks whether a distribution is the same across groups.",
-         "A test for independence checks whether two categorical variables are associated.",
-         "The goodness-of-fit degrees of freedom is k, where k is the number of categories."],
-        ["a", "b", "c", "d"],
+         "A test for independence checks whether two categorical variables are associated."],
+        ["a", "c", "d", "e"],
         "For a goodness-of-fit test the degrees of freedom are k - 1, because one parameter "
-        "is used up fitting the total, so (e) is false.",
+        "is used up fitting the total, so the claim that the degrees of freedom equal k is "
+        "false.",
         PDF, "p.30", r_functions=["chisq.test", "pchisq"]))
 
     out.append(mc(
@@ -170,16 +172,17 @@ def questions():
         "L8-MC-011", 8, "Reading R output",
         "Consider this R output. Which statements about it are true? "
         "`X-squared = 1, df = 5, p-value = 0.9626`",
-        ["X-squared = 1",
+        ["The test provides evidence that the die is unfair",
+         "X-squared = 1",
          "df = 5",
          "p-value = 0.9626",
-         "The test provides evidence that the die is unfair",
          "The expected count for each face is 10"],
-        ["a", "b", "c", "e"],
+        ["b", "c", "d", "e"],
         "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times "
         "over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 "
         "is far above any usual significance level, so we fail to reject the hypothesis that "
-        "the die is fair and there is no evidence that it is unfair, which makes (d) false.",
+        "the die is fair and there is no evidence that it is unfair, which makes the claim "
+        "that the test provides such evidence false.",
         PDF, "p.33", code="chisq.test(c(8, 10, 9, 12, 11, 10), p = rep(1/6, 6))",
         r_functions=["chisq.test", "rep"]))
 
@@ -205,15 +208,16 @@ def questions():
         "Which statements about the following correlation output are true? "
         "`t = 5.4738, df = 48, p-value = 1.579e-06, cor = 0.6199323`.",
         ["The test statistic is 5.4738",
-         "The degrees of freedom are 48",
-         "The sample correlation is 0.6199323",
          "We fail to reject H0 because the p-value is large",
+         "The sample correlation is 0.6199323",
+         "The degrees of freedom are 48",
          "The data provide evidence of a positive correlation"],
-        ["a", "b", "c", "e"],
+        ["a", "c", "d", "e"],
         "The output reports t = 5.4738, df = 48, p-value = 1.579e-06 and cor = 0.6199323. "
         "The p-value is far below any usual significance level, not large, so we reject the "
-        "hypothesis of no correlation and (d) is false. The reported correlation is positive, "
-        "so (e) is true.",
+        "hypothesis of no correlation and the claim that we fail to reject is false. The "
+        "reported correlation is positive, so the data do provide evidence of a positive "
+        "correlation.",
         PDF, "p.16", code="cor.test(states$hs_grad, states$income)",
         r_functions=["cor.test"]))
 

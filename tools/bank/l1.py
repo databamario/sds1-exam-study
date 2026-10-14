@@ -217,28 +217,34 @@ def questions():
         "Which of the following statements about R data types are TRUE?",
         ["`x <- 2L` creates an integer, because the L suffix forces integer type.",
          "`x <- 3.14` creates a numeric value.",
-         "`x <- \"hello\"` creates a character vector.",
+         "`x <- 2L` creates a double-precision numeric value, because integers are stored "
+         "as a subset of numerics.",
          "`x <- TRUE` creates a logical vector.",
-         "`x <- 2L` creates a numeric value, because integers are a subset of numerics."],
-        ["a", "b", "c", "d"],
-        "The L suffix explicitly forces integer type, so (e) is false even though R "
-        "will happily do arithmetic with integers. All of (a) to (d) are true.",
+         "`x <- \"hello\"` creates a character vector."],
+        ["a", "b", "d", "e"],
+        "The L suffix explicitly forces integer type, so the claim that `x <- 2L` creates a "
+        "double-precision numeric is false. Note the trap: `is.numeric(2L)` is TRUE, because "
+        "is.numeric() asks whether the value is a number rather than a character or logical, "
+        "and R will happily do arithmetic with integers. But 2L is stored as an integer, not a "
+        "double. The other four statements are true.",
         PDF, "p.52", code="x <- 2L\nclass(x)",
         r_functions=["<-", "class"]))
 
     out.append(mc(
         "L1-MC-015", 1, "R data structures",
         "Which of the following statements about R data structures are TRUE?",
-        ["A vector is a one-dimensional list of elements of the same data type.",
+        ["A data frame can only contain numeric columns.",
+         "A vector is a one-dimensional list of elements of the same data type.",
          "A matrix is a two-dimensional list of elements of the same data type.",
          "A data frame is a two-dimensional list of vectors that may have different types.",
-         "A list may contain elements of different types.",
-         "A data frame can only contain numeric columns."],
-        ["a", "b", "c", "e"],
+         "A list may contain elements of different types."],
+        ["b", "c", "d", "e"],
         "A vector is a one-dimensional list of elements of the same data type. A matrix "
         "is a two-dimensional list of elements of the same data type. A data frame is a "
-        "two-dimensional list of vectors that may have different types. A list may contain "
-        "elements of different types. Only (e) is false.",
+        "two-dimensional list of vectors that may have different types, and a list may "
+        "contain elements of different types. Only the claim that a data frame holds "
+        "only numeric columns is false: it holds one column per vector, and those "
+        "columns can be numeric, character, logical or factor.",
         PDF, "p.50", r_functions=["data.frame", "c", "matrix", "list", "factor"]))
 
     out.append(mc(

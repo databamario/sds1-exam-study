@@ -155,13 +155,14 @@ def questions():
          "over n).",
          "The standard error of a difference in proportions adds the two variances under "
          "the square root.",
+         "Proportions can only be used for continuous variables.",
          "A hypothesis test for a single proportion uses the normal distribution rather "
-         "than the binomial.",
-         "Proportions can only be used for continuous variables."],
-        ["a", "b", "c", "d"],
+         "than the binomial."],
+        ["a", "b", "c", "e"],
         "The proportion machinery is built on the normal approximation to the binomial, "
-        "which is why the SE has the familiar squaring form. All of (a) to (d) hold; (e) "
-        "is false because proportions are for categorical, binary-type variables.",
+        "which is why the SE has the familiar squaring form. The claim that proportions "
+        "can only be used for continuous variables is false, because proportions are for "
+        "categorical, binary-type variables.",
         PDF, "p.54", r_functions=["prop.test", "p_hat"]))
 
     out.append(mc(
@@ -182,15 +183,16 @@ def questions():
     out.append(mc(
         "L7-MC-012", 7, "Proportions",
         "Consider this R code. What is the value of `p1_hat_se`?",
-        ["0.2",
+        ["0.0008",
          "0.25",
          "0.0016",
          "0.04",
          "0.08"],
         ["a"],
         "`p1_hat <- 160/200` is 0.8, and the code computes p1_hat * (1 - p1_hat) / 200 = "
-        "0.8 * 0.2 / 200 = 0.0008. The quantity being tested is the variance of the "
-        "proportion, and its square root 0.028 is the standard error itself.",
+        "0.8 * 0.2 / 200 = 0.0008. Note the misleading name: the quantity computed is a "
+        "variance, not a standard error, and its square root 0.028 is the standard error "
+        "itself.",
         PDF, "p.48", code="p1_hat <- 160 / 200\np1_hat_se <- p1_hat * (1 - p1_hat) / 200",
         r_functions=["<-", "sqrt"], origin="adapted_HT25"))
 
@@ -272,16 +274,19 @@ def questions():
 
     out.append(wa(
         "L7-WA-005", 7, "Working in R for a hypothesis test",
-        "Explain how this R output should be read: `t = 2.5, df = 29, p-value = 0.017`, "
-        "`alternative hypothesis: true mean is not equal to 50`, "
-        "`95 percent confidence interval: 51.2 58.8`, `mean of x 55`.",
-        "This is a one-sample t-test of the sample mean against a null value of 50, two-sided, statistic 2.5 on 29 df. The p-value 0.017 is below 0.05, so we reject H0; equivalently the 95% CI (51.2, 58.8) excludes 50. The mean is 55.",
-        [rb("Identifies the test as a one-sample t-test against a null value of 50", 2),
-         rb("States the alternative is two-sided, mean not equal to 50"),
+        "Explain how this R output should be read: `t = -1.1859, df = 9, p-value = 0.266`, "
+        "`alternative hypothesis: true mean is not equal to 75`, "
+        "`95 percent confidence interval: 66.27714 77.72286`, `mean of x 72`.",
+        "One-sample two-sided t-test of the sample mean against 75, statistic -1.1859 on "
+        "9 df. The p-value 0.266 is above 0.05, so we fail to reject H0; consistently, "
+        "the 95% CI (66.28, 77.72) contains 75. The sample mean is 72.",
+        [rb("Identifies the test as a one-sample t-test against a null value of 75", 2),
+         rb("States the alternative is two-sided, mean not equal to 75"),
          rb("Reports the test statistic and degrees of freedom"),
-         rb("Draws the correct decision at the 5% level from p = 0.017", 2),
-         rb("Links the decision to the CI excluding 50")],
-        2, PDF, "p.51", code="t.test(x, mu = 50)", r_functions=["t.test"],
+         rb("Draws the correct decision at the 5% level from p = 0.266", 2),
+         rb("Links the decision to the CI containing 75")],
+        2, PDF, "p.27", code="t.test(sampl, mu = 75, alternative = \"two.sided\")",
+        r_functions=["t.test"],
         origin="adapted_HT25"))
 
     out.append(wa(

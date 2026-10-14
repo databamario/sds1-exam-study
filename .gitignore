@@ -6,3 +6,5 @@ tools/streamlit.log
 tools/streamlit.err
 .playwright-mcp/
 .DS_Store
+# R side effect when a snippet draws without an explicit device
+Rplots.pdf

@@ -104,14 +104,15 @@ def questions():
     out.append(mc(
         "L6-MC-007", 6, "Bias and missing data",
         "Which statements are TRUE?",
-        ["Sampling bias is a type of missing data problem.",
+        ["Missing data can introduce bias only if it is random.",
+         "Sampling bias is a type of missing data problem.",
          "Attrition means individuals drop out of a longitudinal study.",
          "Item non-response means individuals skip certain questions in a survey.",
-         "Missing data reduces the effective sample size, which increases the standard error.",
-         "Missing data can introduce bias only if it is random."],
-        ["a", "b", "c", "d"],
+         "Missing data reduces the effective sample size, which increases the standard error."],
+        ["b", "c", "d", "e"],
         "It is missing data that is NOT random that can introduce bias and invalidate "
-        "inference, which is the opposite of what (e) claims.",
+        "inference, which is the opposite of the claim that bias arises only when "
+        "missingness is random.",
         PDF, "p.29", origin="adapted_HT25"))
 
     out.append(mc(
@@ -150,14 +151,14 @@ def questions():
         "Which of the following are TRUE statements about the t-distribution functions in "
         "R?",
         ["`dt()` gives the probability density function",
+         "`pt()` can only be used for a normal distribution",
          "`pt()` gives the cumulative distribution function",
          "`qt()` gives quantiles",
-         "`rt()` generates random samples",
-         "`pt()` can only be used for a normal distribution"],
-        ["a", "b", "c", "d"],
-        "The four functions mirror the normal set d/p/q/r but for the t distribution, and "
-        "the fifth option is wrong because `pt()` is the t-distribution CDF, not the "
-        "normal one. There are exactly these four.",
+         "`rt()` generates random samples"],
+        ["a", "c", "d", "e"],
+        "The four functions mirror the normal set d/p/q/r but for the t distribution. The "
+        "claim that `pt()` can only be used for a normal distribution is wrong: `pt()` is "
+        "the t-distribution CDF. There are exactly these four.",
         PDF, "p.22", code="pt(qt(0.975, df = 7 - 1), df = 7 - 1)",
         r_functions=["dt", "pt", "qt", "rt"]))
 

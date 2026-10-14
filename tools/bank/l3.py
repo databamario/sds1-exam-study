@@ -41,14 +41,15 @@ def questions():
     out.append(mc(
         "L3-MC-003", 3, "Measures of central tendency",
         "Which statements about the three measures of central tendency are TRUE?",
-        ["The mean uses every observation.",
+        ["The mean is always reported with a standard deviation.",
          "The median is robust to extreme values.",
          "The mode is the only measure that works for categorical data.",
-         "The mean is always reported with a standard deviation.",
-         "The mode can be multimodal."],
-        ["a", "b", "c", "e"],
+         "The mode can be multimodal.",
+         "The mean uses every observation."],
+        ["b", "c", "d", "e"],
         "The mean uses all values and the median resists outliers, but a standard "
-        "deviation is not a compulsory companion of the mean, so (d) is false.",
+        "deviation is not a compulsory companion of the mean, so the claim that the mean "
+        "is always reported with a standard deviation is false.",
         PDF, "p.19"))
 
     out.append(mc(

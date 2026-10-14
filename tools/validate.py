@@ -216,21 +216,109 @@ def main() -> int:
             failures.append("Lecture %d has no questions" % lec)
 
     hr("Duplicate detection")
-    seen_stem = {}
-    dupes = []
+    # Two questions can share a stem and still test different things: "Which
+    # statements are TRUE?" is boilerplate that dozens of multi-select questions
+    # legitimately reuse. What makes a pair a real duplicate is the OPTION SET
+    # overlapping, so that is what decides it.
+    def _norm(s: str) -> str:
+        return re.sub(r"\W+", " ", (s or "").lower()).strip()
+
+    def _opts(q: dict) -> set:
+        return {_norm(v) for v in (q.get("options") or {}).values()}
+
+    def _jaccard(a: set, b: set) -> float:
+        if not a or not b:
+            return 0.0
+        return len(a & b) / float(len(a | b))
+
+    by_stem: dict = {}
     for q in questions:
-        key = re.sub(r"\W+", " ", q["stem"].lower()).strip()[:90]
-        if key in seen_stem:
-            dupes.append("%s ~ %s" % (q["id"], seen_stem[key]))
-        seen_stem[key] = q["id"]
-    print("  near-duplicate stems: %d" % len(dupes))
+        by_stem.setdefault(_norm(q["stem"]), []).append(q)
+
+    dupes = []
+    shared_stems = 0
+    for stem, group in by_stem.items():
+        if len(group) < 2:
+            continue
+        shared_stems += 1
+        for i in range(len(group)):
+            for j in range(i + 1, len(group)):
+                a, b = group[i], group[j]
+                if a["type"] != "MC" or b["type"] != "MC":
+                    continue
+                score = _jaccard(_opts(a), _opts(b))
+                if score >= 0.6:
+                    dupes.append("%s ~ %s  (option overlap %.0f%%)"
+                                 % (a["id"], b["id"], score * 100))
+
+    # A repeated option set is a duplicate even when the stem was reworded.
+    by_opts: dict = {}
+    for q in questions:
+        if q["type"] == "MC" and _opts(q):
+            by_opts.setdefault(frozenset(_opts(q)), []).append(q["id"])
+    for group in by_opts.values():
+        if len(group) > 1:
+            dupes.append("identical option set: %s" % ", ".join(sorted(group)))
+
+    print("  stems shared by >1 question: %d (boilerplate stems are fine)" % shared_stems)
+    print("  true near-duplicates: %d" % len(dupes))
     for d in dupes:
         print("    %s" % d)
     if dupes:
-        warnings.append("%d duplicate stems" % len(dupes))
+        failures.append("%d true near-duplicate questions" % len(dupes))
 
     ids = [q["id"] for q in questions]
     print("  duplicate ids: %d" % (len(ids) - len(set(ids))))
+
+    hr("Answer-key consistency")
+    # An explanation that says "(c) is false" must not sit next to a key that
+    # marks c correct. This is the failure mode where a question is unanswerable
+    # for a student who reasons correctly.
+    LETTERS = "abcde"
+    bad_refs = []
+    for q in questions:
+        if q["type"] != "MC":
+            continue
+        expl = q.get("explanation") or ""
+        correct = set(q.get("correct") or [])
+        for m in re.finditer(r"\(([a-e])\)\s+(?:is|are)\s+(false|wrong|incorrect)", expl, re.I):
+            letter, verdict = m.group(1), m.group(2).lower()
+            if letter in correct:
+                bad_refs.append("%s: explanation calls (%s) false but the key marks it correct"
+                                % (q["id"], letter))
+        for m in re.finditer(r"\(([a-e])\)\s+(?:is|are)\s+(true|right|correct)", expl, re.I):
+            letter = m.group(1)
+            if letter not in correct:
+                bad_refs.append("%s: explanation calls (%s) true but the key marks it false"
+                                % (q["id"], letter))
+    print("  explanations contradicting their own key: %d" % len(bad_refs))
+    for b in bad_refs:
+        print("    %s" % b)
+    if bad_refs:
+        failures.extend(bad_refs)
+
+    hr("False-option position spread")
+    # In a multi-select question with exactly one wrong option, a student who
+    # noticed the wrong one is always in the same position could skip the
+    # question entirely. No single position may dominate.
+    single = [q for q in questions if q["type"] == "MC"
+              and len(q.get("correct") or []) > 1
+              and sum(1 for k in LETTERS
+                      if k in (q.get("options") or {}) and k not in q["correct"]) == 1]
+    tally = {}
+    for q in single:
+        tally.setdefault([k for k in LETTERS if k not in q["correct"]][0], 0)
+        tally[[k for k in LETTERS if k not in q["correct"]][0]] += 1
+    if single:
+        worst = max(tally.values())
+        share = worst / float(len(single))
+        print("  single-false multi-select questions: %d" % len(single))
+        print("  false option by position: %s"
+              % ", ".join("%s=%d" % kv for kv in sorted(tally.items())))
+        print("  most common position: %.1f%% (limit 30%%)" % (share * 100))
+        if share > 0.30:
+            failures.append("false option sits in one position for %.0f%% of "
+                            "single-false multi-select questions" % (share * 100))
 
     hr("Result")
     for wmsg in warnings:

@@ -25,14 +25,14 @@ def questions():
     out.append(mc(
         "L5-MC-002", 5, "Probability distributions",
         "Which statements are TRUE?",
-        ["The normal distribution is also called the Gaussian distribution or bell curve.",
+        ["The number of emails received per hour follows a binomial distribution.",
+         "The normal distribution is also called the Gaussian distribution or bell curve.",
          "The Poisson distribution counts events occurring in a fixed interval.",
          "The binomial distribution counts successes in repeated trials.",
-         "The number of emails received per hour follows a binomial distribution.",
          "Heights and weights are typical examples of a normal distribution."],
-        ["a", "b", "c", "e"],
-        "Emails per hour is a Poisson example, not binomial, so (d) is "
-        "false. The rest are correct as stated.",
+        ["b", "c", "d", "e"],
+        "Emails per hour is a Poisson example, not binomial, so the claim that it follows "
+        "a binomial distribution is false. The rest are correct as stated.",
         PDF, "p.15"))
 
     out.append(mc(

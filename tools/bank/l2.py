@@ -228,12 +228,13 @@ def questions():
         "L2-MC-015", 2, "dplyr verbs",
         "Which statements about these verbs are TRUE?",
         ["`select()` picks out columns",
-         "`mutate()` adds or modifies columns",
+         "`arrange(desc(fare))` sorts from smallest to largest",
          "`arrange()` sorts rows",
          "`arrange(desc(fare))` sorts from largest to smallest",
-         "`arrange(desc(fare))` sorts from smallest to largest"],
-        ["a", "b", "c", "d"],
-        "`desc()` requests descending order, so (d) is right and (e) is wrong. A bare "
+         "`mutate()` adds or modifies columns"],
+        ["a", "c", "d", "e"],
+        "`desc()` requests descending order, so sorting from largest to smallest is right "
+        "and the claim that it sorts from smallest to largest is wrong. A bare "
         "`arrange(fare)` would sort ascending.",
         PDF, "p.109",
         code="titanic_data |>\n  arrange(desc(fare))",

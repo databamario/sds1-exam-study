@@ -214,9 +214,10 @@ sds1-exam-study/
 └── tools/
     ├── build_bank.py       rebuild data/questions.json from tools/bank/
     ├── figures.py          regenerate data/images/ (matplotlib)
-    ├── validate.py         full validation (schema, counts, R coverage)
+    ├── validate.py         full validation (schema, counts, R coverage, keys)
     ├── test_scoring.py     regression tests vs the official marking table
     ├── verify_r.py         executes every R snippet in the bank
+    ├── verify_numbers.py   checks every number a question asserts
     └── bank/               question sources, one file per lecture, + graphs.py
 ```
 
@@ -227,14 +228,48 @@ Questions live in `tools/bank/l1.py` … `l9.py`, with the graph questions in
 
 ```bash
 python tools/build_bank.py     # rebuild data/questions.json
-python tools/validate.py       # check schema, counts and R coverage
+python tools/validate.py       # check schema, counts, keys and R coverage
 python tools/verify_r.py       # run every R snippet
+python tools/verify_numbers.py # check every number a question asserts
 python tools/test_scoring.py   # re-run the grading regression tests
 ```
 
-All four must pass before opening a pull request. `validate.py` also fails if an MC
-question loses its correct option, if a written answer runs long, if a question refers to
-the course rather than to the statistics, or if a referenced figure file is missing.
+All five must pass before opening a pull request.
+
+Two of these exist because the first version of the R gate was decorative: it
+turned each snippet into a string literal instead of running it, so invalid R
+reported PASS. Both are now proven to fail — each was run against the bank as it
+stood before these checks were added, and both reported the real problems.
+
+- `verify_r.py` really executes every snippet. Because most snippets are
+  fragments lifted out of the lecturer's session, it prepends a fixture holding
+  stand-ins for the objects the slides already define. The fixture proves the
+  code *runs and calls the right API*; it says nothing about values, because the
+  values are synthetic.
+- `verify_numbers.py` covers the values. Each check names a number the question
+  claims, requires that claim to still be in the question text, and then either
+  recomputes it in R or looks it up in the source slide. Editing a number in the
+  bank breaks the check instead of silently passing it.
+
+`validate.py` also fails if an MC question loses its correct option, if an
+explanation contradicts its own answer key, if a written answer runs long, if a
+question refers to the course rather than to the statistics, or if a referenced
+figure file is missing.
+
+### Where the wrong option goes
+
+In a multi-select question with exactly one wrong option, its position is a
+free guess for anyone who notices the pattern. This bank originally had 20 of its
+22 such questions with the wrong option at (d) or (e), which made "leave the
+last two boxes" worth 20 questions on its own. `validate.py` now fails when one
+position holds the wrong option for more than 30% of them; the bank sits at
+27.3%.
+
+So when you add a multi-select question, put the wrong option where it reads
+naturally rather than last, and say *what* is wrong in the explanation rather
+than naming a letter. An explanation that says "(d) is false" silently becomes a
+lie the moment the options are reordered.
+
 
 ---
 

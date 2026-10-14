@@ -350,19 +350,19 @@
    "options": {
     "a": "`x <- 2L` creates an integer, because the L suffix forces integer type.",
     "b": "`x <- 3.14` creates a numeric value.",
-    "c": "`x <- \"hello\"` creates a character vector.",
+    "c": "`x <- 2L` creates a double-precision numeric value, because integers are stored as a subset of numerics.",
     "d": "`x <- TRUE` creates a logical vector.",
-    "e": "`x <- 2L` creates a numeric value, because integers are a subset of numerics."
+    "e": "`x <- \"hello\"` creates a character vector."
    },
    "correct": [
     "a",
     "b",
-    "c",
-    "d"
+    "d",
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The L suffix explicitly forces integer type, so (e) is false even though R will happily do arithmetic with integers. All of (a) to (d) are true.",
+   "explanation": "The L suffix explicitly forces integer type, so the claim that `x <- 2L` creates a double-precision numeric is false. Note the trap: `is.numeric(2L)` is TRUE, because is.numeric() asks whether the value is a number rather than a character or logical, and R will happily do arithmetic with integers. But 2L is stored as an integer, not a double. The other four statements are true.",
    "r_flavoured": true,
    "r_functions": [
     "<-",
@@ -382,21 +382,21 @@
    "topic": "R data structures",
    "stem": "Which of the following statements about R data structures are TRUE?",
    "options": {
-    "a": "A vector is a one-dimensional list of elements of the same data type.",
-    "b": "A matrix is a two-dimensional list of elements of the same data type.",
-    "c": "A data frame is a two-dimensional list of vectors that may have different types.",
-    "d": "A list may contain elements of different types.",
-    "e": "A data frame can only contain numeric columns."
+    "a": "A data frame can only contain numeric columns.",
+    "b": "A vector is a one-dimensional list of elements of the same data type.",
+    "c": "A matrix is a two-dimensional list of elements of the same data type.",
+    "d": "A data frame is a two-dimensional list of vectors that may have different types.",
+    "e": "A list may contain elements of different types."
    },
    "correct": [
-    "a",
     "b",
     "c",
+    "d",
     "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "A vector is a one-dimensional list of elements of the same data type. A matrix is a two-dimensional list of elements of the same data type. A data frame is a two-dimensional list of vectors that may have different types. A list may contain elements of different types. Only (e) is false.",
+   "explanation": "A vector is a one-dimensional list of elements of the same data type. A matrix is a two-dimensional list of elements of the same data type. A data frame is a two-dimensional list of vectors that may have different types, and a list may contain elements of different types. Only the claim that a data frame holds only numeric columns is false: it holds one column per vector, and those columns can be numeric, character, logical or factor.",
    "r_flavoured": true,
    "r_functions": [
     "data.frame",
@@ -1219,20 +1219,20 @@
    "stem": "Which statements about these verbs are TRUE?",
    "options": {
     "a": "`select()` picks out columns",
-    "b": "`mutate()` adds or modifies columns",
+    "b": "`arrange(desc(fare))` sorts from smallest to largest",
     "c": "`arrange()` sorts rows",
     "d": "`arrange(desc(fare))` sorts from largest to smallest",
-    "e": "`arrange(desc(fare))` sorts from smallest to largest"
+    "e": "`mutate()` adds or modifies columns"
    },
    "correct": [
     "a",
-    "b",
     "c",
-    "d"
+    "d",
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "`desc()` requests descending order, so (d) is right and (e) is wrong. A bare `arrange(fare)` would sort ascending.",
+   "explanation": "`desc()` requests descending order, so sorting from largest to smallest is right and the claim that it sorts from smallest to largest is wrong. A bare `arrange(fare)` would sort ascending.",
    "r_flavoured": true,
    "r_functions": [
     "arrange",
@@ -2050,21 +2050,21 @@
    "topic": "Measures of central tendency",
    "stem": "Which statements about the three measures of central tendency are TRUE?",
    "options": {
-    "a": "The mean uses every observation.",
+    "a": "The mean is always reported with a standard deviation.",
     "b": "The median is robust to extreme values.",
     "c": "The mode is the only measure that works for categorical data.",
-    "d": "The mean is always reported with a standard deviation.",
-    "e": "The mode can be multimodal."
+    "d": "The mode can be multimodal.",
+    "e": "The mean uses every observation."
    },
    "correct": [
-    "a",
     "b",
     "c",
+    "d",
     "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The mean uses all values and the median resists outliers, but a standard deviation is not a compulsory companion of the mean, so (d) is false.",
+   "explanation": "The mean uses all values and the median resists outliers, but a standard deviation is not a compulsory companion of the mean, so the claim that the mean is always reported with a standard deviation is false.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3729,21 +3729,21 @@
    "topic": "Probability distributions",
    "stem": "Which statements are TRUE?",
    "options": {
-    "a": "The normal distribution is also called the Gaussian distribution or bell curve.",
-    "b": "The Poisson distribution counts events occurring in a fixed interval.",
-    "c": "The binomial distribution counts successes in repeated trials.",
-    "d": "The number of emails received per hour follows a binomial distribution.",
+    "a": "The number of emails received per hour follows a binomial distribution.",
+    "b": "The normal distribution is also called the Gaussian distribution or bell curve.",
+    "c": "The Poisson distribution counts events occurring in a fixed interval.",
+    "d": "The binomial distribution counts successes in repeated trials.",
     "e": "Heights and weights are typical examples of a normal distribution."
    },
    "correct": [
-    "a",
     "b",
     "c",
+    "d",
     "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "Emails per hour is a Poisson example, not binomial, so (d) is false. The rest are correct as stated.",
+   "explanation": "Emails per hour is a Poisson example, not binomial, so the claim that it follows a binomial distribution is false. The rest are correct as stated.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -4580,21 +4580,21 @@
    "topic": "Bias and missing data",
    "stem": "Which statements are TRUE?",
    "options": {
-    "a": "Sampling bias is a type of missing data problem.",
-    "b": "Attrition means individuals drop out of a longitudinal study.",
-    "c": "Item non-response means individuals skip certain questions in a survey.",
-    "d": "Missing data reduces the effective sample size, which increases the standard error.",
-    "e": "Missing data can introduce bias only if it is random."
+    "a": "Missing data can introduce bias only if it is random.",
+    "b": "Sampling bias is a type of missing data problem.",
+    "c": "Attrition means individuals drop out of a longitudinal study.",
+    "d": "Item non-response means individuals skip certain questions in a survey.",
+    "e": "Missing data reduces the effective sample size, which increases the standard error."
    },
    "correct": [
-    "a",
     "b",
     "c",
-    "d"
+    "d",
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "It is missing data that is NOT random that can introduce bias and invalidate inference, which is the opposite of what (e) claims.",
+   "explanation": "It is missing data that is NOT random that can introduce bias and invalidate inference, which is the opposite of the claim that bias arises only when missingness is random.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -4724,20 +4724,20 @@
    "stem": "Which of the following are TRUE statements about the t-distribution functions in R?",
    "options": {
     "a": "`dt()` gives the probability density function",
-    "b": "`pt()` gives the cumulative distribution function",
-    "c": "`qt()` gives quantiles",
-    "d": "`rt()` generates random samples",
-    "e": "`pt()` can only be used for a normal distribution"
+    "b": "`pt()` can only be used for a normal distribution",
+    "c": "`pt()` gives the cumulative distribution function",
+    "d": "`qt()` gives quantiles",
+    "e": "`rt()` generates random samples"
    },
    "correct": [
     "a",
-    "b",
     "c",
-    "d"
+    "d",
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The four functions mirror the normal set d/p/q/r but for the t distribution, and the fifth option is wrong because `pt()` is the t-distribution CDF, not the normal one. There are exactly these four.",
+   "explanation": "The four functions mirror the normal set d/p/q/r but for the t distribution. The claim that `pt()` can only be used for a normal distribution is wrong: `pt()` is the t-distribution CDF. There are exactly these four.",
    "r_flavoured": true,
    "r_functions": [
     "dt",
@@ -5349,18 +5349,18 @@
     "a": "A confidence interval for a proportion is point estimate plus or minus critical value times the standard error of the proportion.",
     "b": "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) over n).",
     "c": "The standard error of a difference in proportions adds the two variances under the square root.",
-    "d": "A hypothesis test for a single proportion uses the normal distribution rather than the binomial.",
-    "e": "Proportions can only be used for continuous variables."
+    "d": "Proportions can only be used for continuous variables.",
+    "e": "A hypothesis test for a single proportion uses the normal distribution rather than the binomial."
    },
    "correct": [
     "a",
     "b",
     "c",
-    "d"
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The proportion machinery is built on the normal approximation to the binomial, which is why the SE has the familiar squaring form. All of (a) to (d) hold; (e) is false because proportions are for categorical, binary-type variables.",
+   "explanation": "The proportion machinery is built on the normal approximation to the binomial, which is why the SE has the familiar squaring form. The claim that proportions can only be used for continuous variables is false, because proportions are for categorical, binary-type variables.",
    "r_flavoured": true,
    "r_functions": [
     "prop.test",
@@ -5409,7 +5409,7 @@
    "topic": "Proportions",
    "stem": "Consider this R code. What is the value of `p1_hat_se`?",
    "options": {
-    "a": "0.2",
+    "a": "0.0008",
     "b": "0.25",
     "c": "0.0016",
     "d": "0.04",
@@ -5420,7 +5420,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "`p1_hat <- 160/200` is 0.8, and the code computes p1_hat * (1 - p1_hat) / 200 = 0.8 * 0.2 / 200 = 0.0008. The quantity being tested is the variance of the proportion, and its square root 0.028 is the standard error itself.",
+   "explanation": "`p1_hat <- 160/200` is 0.8, and the code computes p1_hat * (1 - p1_hat) / 200 = 0.8 * 0.2 / 200 = 0.0008. Note the misleading name: the quantity computed is a variance, not a standard error, and its square root 0.028 is the standard error itself.",
    "r_flavoured": true,
    "r_functions": [
     "<-",
@@ -5713,17 +5713,17 @@
    "lecture": 7,
    "type": "WA",
    "topic": "Working in R for a hypothesis test",
-   "stem": "Explain how this R output should be read: `t = 2.5, df = 29, p-value = 0.017`, `alternative hypothesis: true mean is not equal to 50`, `95 percent confidence interval: 51.2 58.8`, `mean of x 55`.",
+   "stem": "Explain how this R output should be read: `t = -1.1859, df = 9, p-value = 0.266`, `alternative hypothesis: true mean is not equal to 75`, `95 percent confidence interval: 66.27714 77.72286`, `mean of x 72`.",
    "points": 2,
-   "answer": "This is a one-sample t-test of the sample mean against a null value of 50, two-sided, statistic 2.5 on 29 df. The p-value 0.017 is below 0.05, so we reject H0; equivalently the 95% CI (51.2, 58.8) excludes 50. The mean is 55.",
+   "answer": "One-sample two-sided t-test of the sample mean against 75, statistic -1.1859 on 9 df. The p-value 0.266 is above 0.05, so we fail to reject H0; consistently, the 95% CI (66.28, 77.72) contains 75. The sample mean is 72.",
    "detail": "",
    "rubric": [
     {
-     "text": "Identifies the test as a one-sample t-test against a null value of 50",
+     "text": "Identifies the test as a one-sample t-test against a null value of 75",
      "elements": 2
     },
     {
-     "text": "States the alternative is two-sided, mean not equal to 50",
+     "text": "States the alternative is two-sided, mean not equal to 75",
      "elements": 1
     },
     {
@@ -5731,11 +5731,11 @@
      "elements": 1
     },
     {
-     "text": "Draws the correct decision at the 5% level from p = 0.017",
+     "text": "Draws the correct decision at the 5% level from p = 0.266",
      "elements": 2
     },
     {
-     "text": "Links the decision to the CI excluding 50",
+     "text": "Links the decision to the CI containing 75",
      "elements": 1
     }
    ],
@@ -5745,10 +5745,10 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.51"
+    "slide": "p.27"
    },
    "origin": "adapted_HT25",
-   "code": "t.test(x, mu = 50)"
+   "code": "t.test(sampl, mu = 75, alternative = \"two.sided\")"
   },
   {
    "id": "L7-WA-006",
@@ -6001,7 +6001,7 @@
     "a": "The sample correlation is about 0.62.",
     "b": "The test rejects H0: rho = 0 at the 5% level.",
     "c": "There is evidence that income and high-school graduation are positively correlated.",
-    "d": "The 95% confidence interval of about (0.41, 0.77) contains 0.",
+    "d": "The 95% confidence interval of about (0.41, 0.76) contains 0.",
     "e": "The test has 48 degrees of freedom."
    },
    "correct": [
@@ -6012,7 +6012,7 @@
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The 95% CI of (0.4128, 0.7661) excludes 0, so the statement that it contains 0 is false. That is also exactly why the test rejects, since a null value outside the interval means rejection at that level.",
+   "explanation": "The 95% CI of (0.4153, 0.7648) excludes 0, so the statement that it contains 0 is false. That is also exactly why the test rejects, since a null value outside the interval means rejection at that level.",
    "r_flavoured": true,
    "r_functions": [
     "cor.test",
@@ -6064,19 +6064,19 @@
    "options": {
     "a": "It is the Pearson correlation computed on the ranks of the variables.",
     "b": "It measures monotonic association rather than only linear association.",
-    "c": "It is robust to outliers.",
-    "d": "It is obtained in R with `cor.test(x, y, method = \"spearman\")`.",
-    "e": "It cannot detect a relationship where larger states are richer but not linearly."
+    "c": "It cannot detect a relationship where larger states are richer but not linearly.",
+    "d": "It is robust to outliers.",
+    "e": "It is obtained in R with `cor.test(x, y, method = \"spearman\")`."
    },
    "correct": [
     "a",
     "b",
-    "c",
-    "d"
+    "d",
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "Spearman's coefficient is specifically designed to capture monotonic patterns that Pearson misses, which is the whole point of the Alaska example where Pearson said yes and Spearman said no. So the final statement is false.",
+   "explanation": "Spearman's coefficient is specifically designed to capture monotonic patterns that Pearson misses, which is the whole point of the Alaska example where Pearson said yes and Spearman said no. So the claim that it cannot detect a relationship that is not linear is false.",
    "r_flavoured": true,
    "r_functions": [
     "cor.test",
@@ -6220,20 +6220,20 @@
    "stem": "Which statements are TRUE?",
    "options": {
     "a": "The chi-squared statistic compares observed counts to expected counts.",
-    "b": "A goodness-of-fit test checks whether one variable matches an expected distribution.",
-    "c": "A test for homogeneity checks whether a distribution is the same across groups.",
-    "d": "A test for independence checks whether two categorical variables are associated.",
-    "e": "The goodness-of-fit degrees of freedom is k, where k is the number of categories."
+    "b": "The goodness-of-fit degrees of freedom is k, where k is the number of categories.",
+    "c": "A goodness-of-fit test checks whether one variable matches an expected distribution.",
+    "d": "A test for homogeneity checks whether a distribution is the same across groups.",
+    "e": "A test for independence checks whether two categorical variables are associated."
    },
    "correct": [
     "a",
-    "b",
     "c",
-    "d"
+    "d",
+    "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "For a goodness-of-fit test the degrees of freedom are k - 1, because one parameter is used up fitting the total, so (e) is false.",
+   "explanation": "For a goodness-of-fit test the degrees of freedom are k - 1, because one parameter is used up fitting the total, so the claim that the degrees of freedom equal k is false.",
    "r_flavoured": true,
    "r_functions": [
     "chisq.test",
@@ -6252,21 +6252,21 @@
    "topic": "Reading R output",
    "stem": "Consider this R output. Which statements about it are true? `X-squared = 1, df = 5, p-value = 0.9626`",
    "options": {
-    "a": "X-squared = 1",
-    "b": "df = 5",
-    "c": "p-value = 0.9626",
-    "d": "The test provides evidence that the die is unfair",
+    "a": "The test provides evidence that the die is unfair",
+    "b": "X-squared = 1",
+    "c": "df = 5",
+    "d": "p-value = 0.9626",
     "e": "The expected count for each face is 10"
    },
    "correct": [
-    "a",
     "b",
     "c",
+    "d",
     "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 is far above any usual significance level, so we fail to reject the hypothesis that the die is fair and there is no evidence that it is unfair, which makes (d) false.",
+   "explanation": "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 is far above any usual significance level, so we fail to reject the hypothesis that the die is fair and there is no evidence that it is unfair, which makes the claim that the test provides such evidence false.",
    "r_flavoured": true,
    "r_functions": [
     "chisq.test",
@@ -6320,20 +6320,20 @@
    "stem": "Which statements about the following correlation output are true? `t = 5.4738, df = 48, p-value = 1.579e-06, cor = 0.6199323`.",
    "options": {
     "a": "The test statistic is 5.4738",
-    "b": "The degrees of freedom are 48",
+    "b": "We fail to reject H0 because the p-value is large",
     "c": "The sample correlation is 0.6199323",
-    "d": "We fail to reject H0 because the p-value is large",
+    "d": "The degrees of freedom are 48",
     "e": "The data provide evidence of a positive correlation"
    },
    "correct": [
     "a",
-    "b",
     "c",
+    "d",
     "e"
    ],
    "n_correct": 4,
    "points": 1,
-   "explanation": "The output reports t = 5.4738, df = 48, p-value = 1.579e-06 and cor = 0.6199323. The p-value is far below any usual significance level, not large, so we reject the hypothesis of no correlation and (d) is false. The reported correlation is positive, so (e) is true.",
+   "explanation": "The output reports t = 5.4738, df = 48, p-value = 1.579e-06 and cor = 0.6199323. The p-value is far below any usual significance level, not large, so we reject the hypothesis of no correlation and the claim that we fail to reject is false. The reported correlation is positive, so the data do provide evidence of a positive correlation.",
    "r_flavoured": true,
    "r_functions": [
     "cor.test"
@@ -6769,14 +6769,16 @@
    "r_functions": [
     "sample",
     "replace",
-    "median"
+    "median",
+    "numeric",
+    "for"
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
     "slide": "p.17"
    },
    "origin": "new",
-   "code": "boot_sample <- sample(x, length(x), replace = TRUE)\nboot_medians[i] <- median(boot_sample)"
+   "code": "income <- c(18, 21, 22, 24, 25, 26, 28, 29, 31, 34, 38, 95)\nN <- 10000\nboot_medians <- numeric(N)\nfor (i in 1:N) {\n  boot_sample <- sample(income, length(income), replace = TRUE)\n  boot_medians[i] <- median(boot_sample)\n}"
   },
   {
    "id": "L9-MC-006",

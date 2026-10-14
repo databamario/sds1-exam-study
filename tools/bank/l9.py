@@ -84,8 +84,14 @@ def questions():
         "data with replacement and recomputes the statistic each time, giving an estimated "
         "sampling distribution without assuming a parametric form.",
         PDF, "p.17",
-        code="boot_sample <- sample(x, length(x), replace = TRUE)\nboot_medians[i] <- median(boot_sample)",
-        r_functions=["sample", "replace", "median"]))
+        code="income <- c(18, 21, 22, 24, 25, 26, 28, 29, 31, 34, 38, 95)\n"
+             "N <- 10000\n"
+             "boot_medians <- numeric(N)\n"
+             "for (i in 1:N) {\n"
+             "  boot_sample <- sample(income, length(income), replace = TRUE)\n"
+             "  boot_medians[i] <- median(boot_sample)\n"
+             "}",
+        r_functions=["sample", "replace", "median", "numeric", "for"]))
 
     out.append(mc(
         "L9-MC-006", 9, "Bootstrapping",
