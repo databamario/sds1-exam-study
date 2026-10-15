@@ -3046,18 +3046,17 @@
    "options": {
     "a": "P(A) can never be negative.",
     "b": "P(A) = 0 means event A will never happen.",
-    "c": "P(A) = 1 means event A will always happen.",
+    "c": "P(A) = 1 means event A is impossible, and P(A) = 0 means it is certain.",
     "d": "P(A) can be greater than 1 if an event is very likely.",
     "e": "P(A) must be expressed as a percentage, not a decimal."
    },
    "correct": [
     "a",
-    "b",
-    "c"
+    "b"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "A probability lies between 0 and 1, so it can be written as a decimal such as 0.5 or as the equivalent 50%. It cannot exceed 1 however likely the event is.",
+   "explanation": "A probability lies between 0 and 1, so it can be written as a decimal such as 0.5 or as the equivalent 50%. A probability of 0 means the event never occurs and a probability of 1 means it always occurs, so the claim that 0 means certain is exactly backwards. It cannot exceed 1 however likely the event is.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3071,25 +3070,26 @@
    "lecture": 4,
    "type": "MC",
    "topic": "Disjoint and joint events",
-   "stem": "Drawing a red card and drawing a black card from a single draw. How are these events related?",
+   "stem": "Drawing a red card and drawing a black card from a single draw from a full 52-card deck. How are these events related?",
    "options": {
     "a": "Joint, because both are possible in a deck",
     "b": "Disjoint, because they cannot happen at the same time",
     "c": "Independent, because colour is unrelated to the draw",
-    "d": "Complementary, because they cover the sample space",
+    "d": "Complementary, because together they account for every card in the deck",
     "e": "Equally likely"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "They are disjoint (mutually exclusive) since one card cannot be both red and black, so the probability of the intersection is 0. They are not complementary, because they do not cover the whole sample space - there are also face cards that are neither.",
+   "explanation": "They are disjoint (mutually exclusive) since one card cannot be both red and black, so the probability of the intersection is 0. They are also complementary: every card in a deck is either red or black, because face cards are coloured too, so the two together cover the entire sample space. Disjoint and complementary are not exclusive of each other.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.14"
+    "slide": "p.17"
    },
    "origin": "new"
   },
@@ -3104,12 +3104,13 @@
     "b": "Because the two events are complementary: they are disjoint and together cover the whole sample space",
     "c": "Because every card has probability 1",
     "d": "Because red and black are joint events",
-    "e": "Because the deck has 52 equally likely cards"
+    "e": "Because the probability of the complement of an event is 1 minus that event"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Red and black are disjoint and their union is the entire deck, so they are complements. For disjoint events the addition rule reduces to simple addition, which is why the probabilities sum to exactly 1.",
    "r_flavoured": false,
@@ -3131,19 +3132,20 @@
     "b": "P(A or B) = P(A) + P(B) - P(A and B)",
     "c": "P(A or B) = P(A) + P(B)",
     "d": "P(A) = P(A or B) - P(B)",
-    "e": "P(A or B) = 1 - P(A and B)"
+    "e": "If A and B are disjoint the intersection is 0, so the rule collapses to P(A or B) = P(A) + P(B)"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The subtraction of the intersection is required whenever A and B are not disjoint, because the overlapping cases would otherwise be counted twice. For disjoint events the intersection is 0 and the rule collapses to (c).",
+   "explanation": "The subtraction of the intersection is required whenever A and B are not disjoint, because the overlapping cases would otherwise be counted twice. For disjoint events the intersection is 0 and the rule collapses to simple addition, which is why the third option is right only in that special case. Rearranging the rule gives P(A) = P(A or B) - P(B) + P(A and B), not what the fourth option says.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.22"
+    "slide": "p.21"
    },
    "origin": "adapted_HT25"
   },
@@ -3152,25 +3154,26 @@
    "lecture": 4,
    "type": "MC",
    "topic": "Addition rule",
-   "stem": "What is the probability of drawing a red jack or a black queen from a shuffled 52-card deck?",
+   "stem": "What is the probability of drawing a red jack or a black queen from a shuffled 52-card deck, and how are the two events related?",
    "options": {
     "a": "4/52",
     "b": "8/52",
     "c": "6/52",
     "d": "9/52",
-    "e": "It cannot be computed without knowing the deck order"
+    "e": "The events are disjoint, because no single card is both a red jack and a black queen"
    },
    "correct": [
-    "b"
+    "a",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "There are 4 red jacks and 4 black queens, and no card is both, so the events are disjoint and the probability is 4/52 + 4/52 = 8/52.",
+   "explanation": "A deck has two red jacks and two black queens, and no card is both, so the events are disjoint: 2/52 + 2/52 = 4/52. The 8/52 answer is what you would get for a jack or a queen of any colour, which is a different pair of events: a red jack and a black queen account for only four of the 52 cards.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.20"
+    "slide": "p.21"
    },
    "origin": "new"
   },
@@ -3184,20 +3187,21 @@
     "a": "P(A and B) / P(B)",
     "b": "P(A) / P(B)",
     "c": "P(A and B) x P(B)",
-    "d": "P(A) - P(B)",
+    "d": "The probability of A among the cases in which B is already known to hold",
     "e": "P(B) / P(A and B)"
    },
    "correct": [
-    "a"
+    "a",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "A conditional probability P(A|B) restricts the sample space to B, so it is the joint probability divided by P(B). Swapping numerator and denominator would instead give the reverse conditional probability.",
+   "explanation": "A conditional probability P(A|B) restricts the sample space to B, so it is the joint probability divided by P(B), which is the same as asking for the probability of A among the cases where B is known to hold. Swapping numerator and denominator would instead give the reverse conditional probability.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.25"
+    "slide": "p.44"
    },
    "origin": "new"
   },
@@ -3206,20 +3210,21 @@
    "lecture": 4,
    "type": "MC",
    "topic": "Conditional probability",
-   "stem": "In the MTO experiment, 72 teenagers were followed and 24 were enrolled in college. What is P(enrolled)?",
+   "stem": "In the MTO experiment, 72 teenagers were followed and 24 were enrolled in college. What is P(enrolled), and what kind of probability is it?",
    "options": {
     "a": "14/24",
     "b": "24/72",
     "c": "48/72",
     "d": "14/72",
-    "e": "24/48"
+    "e": "It is a marginal probability, because it does not condition on the treatment group"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The marginal probability of enrolment is the column total over the grand total, 24/72. Note this is different from P(enrolled | low-poverty voucher), which conditions on the row.",
+   "explanation": "The marginal probability of enrolment is the column total over the grand total, 24/72. It is marginal because it ignores which group the teenager was in. Note this is different from P(enrolled | low-poverty voucher), which conditions on the row and comes out much higher.",
    "r_flavoured": true,
    "r_functions": [
     "table",
@@ -3242,14 +3247,15 @@
     "b": "14/24",
     "c": "14/72",
     "d": "10/24",
-    "e": "48/72"
+    "e": "About 0.58, which is higher than the overall 0.33 because enrolment depended on which group the teenager was in"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Conditioning on the voucher restricts to the 24 teenagers who received one, of whom 14 enrolled, giving 14/24. This is the ratio (14/72)/(24/72), which simplifies to 14/24.",
+   "explanation": "Conditioning on the voucher restricts to the 24 teenagers who received one, of whom 14 enrolled, giving 14/24. This is the ratio (14/72)/(24/72), which simplifies to 14/24. It comes out well above the marginal 24/72, and that gap is the evidence that enrolment depended on the treatment.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3267,16 +3273,17 @@
    "options": {
     "a": "Walking to school and grade level are independent",
     "b": "Walking to school and grade level are dependent",
-    "c": "Walking to school has probability 0.50",
+    "c": "Because 0.50 and 0.10 differ from the overall 0.30, knowing the grade level changes the probability of walking",
     "d": "Grade level is a binary variable",
     "e": "The three probabilities must sum to 1"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "For independence the probability of walking would be the same whether or not B occurs. Since 0.50 and 0.10 differ from each other and from the overall 0.30, knowing the grade level changes the probability, so the variables are dependent.",
+   "explanation": "For independence the probability of walking would be the same whether or not B occurs. Since 0.50 and 0.10 differ from each other and from the overall 0.30, knowing the grade level changes the probability, so the variables are dependent. The three numbers are not meant to sum to 1: each is a probability of walking within a different group, and those groups overlap.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3292,20 +3299,19 @@
    "topic": "Independence",
    "stem": "Which statements are TRUE?",
    "options": {
-    "a": "Tossing a coin twice gives independent outcomes.",
+    "a": "Tossing a coin twice gives independent outcomes, because the two tosses cannot both happen at once.",
     "b": "Drawing two cards without replacement gives independent outcomes.",
     "c": "P(A) = P(A|B) = P(A|Bc) is the condition for independence.",
     "d": "For independent events, P(A and B) = P(A) x P(B).",
     "e": "Two events are independent whenever they are disjoint."
    },
    "correct": [
-    "a",
     "c",
     "d"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Drawing without replacement makes the second draw depend on the first, so (b) is false. Disjointness does not imply independence: for a fair coin the two tosses are independent yet the two heads/tails events are disjoint, whereas two disjoint events in an asymmetric deck can still be dependent. So (e) is false.",
+   "explanation": "Independence means the probability of A is the same whether or not B occurs, and it is equivalent to the joint probability being the product. Two coin tosses do give independent outcomes, but not because they cannot both happen at once: that is disjointness, and disjointness does not imply independence. For a fair coin the two tosses are independent yet the heads and tails events are disjoint, whereas two disjoint events in an asymmetric deck can still be dependent. Drawing without replacement makes the second draw depend on the first.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3324,13 +3330,14 @@
     "a": "3/10",
     "b": "2/9",
     "c": "2/10",
-    "d": "1/10",
+    "d": "This differs from the 3/10 chance on the first draw, which is exactly what makes the two draws dependent",
     "e": "9/100"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "With one blue removed there are 2 blue left out of 9 balls total, giving 2/9, which is not equal to the first-draw probability of 3/10. That inequality is precisely why draws without replacement are dependent.",
    "r_flavoured": false,
@@ -3377,20 +3384,18 @@
    "stem": "Which of the following are examples of random variables?",
    "options": {
     "a": "The outcome of rolling a six-sided die",
-    "b": "The number of heads in 10 tosses of a fair coin",
+    "b": "The average number of heads in 10 tosses, which is always 5",
     "c": "The height of a randomly chosen adult in Norrkoping",
-    "d": "The number of emails received in an hour",
+    "d": "The total size in bytes of every email currently in your inbox",
     "e": "The area of Sweden"
    },
    "correct": [
     "a",
-    "b",
-    "c",
-    "d"
+    "c"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "A random variable maps outcomes to a numerical value. Sweden's area is a fixed constant, not something that varies randomly, so it is not a random variable.",
+   "explanation": "A random variable is a numerical value that varies from one random outcome to the next, so a die roll and an adult's height both qualify. The other three are constants: the expected number of heads in 10 fair tosses is fixed at 5, and the size of a given inbox and the area of Sweden do not move between draws. The count of emails arriving in an hour would qualify, since that does vary.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3408,18 +3413,17 @@
    "options": {
     "a": "The number of heads in 10 coin tosses",
     "b": "The number of emails received in an hour",
-    "c": "The outcome of rolling a die",
+    "c": "The outcome of rolling a die, because the die is a physical object",
     "d": "The height of a randomly chosen adult",
     "e": "The time until a light bulb burns out"
    },
    "correct": [
     "a",
-    "b",
-    "c"
+    "b"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Heads, emails and die rolls take countable whole-number values. Height and burn-out time can take any real value in a range, so they are continuous.",
+   "explanation": "Heads and emails take countable whole-number values, so both are discrete. A die roll is discrete too, but not because the die is a physical object; that has nothing to do with whether the support is countable. Height and burn-out time can take any real value in a range, so they are continuous.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {

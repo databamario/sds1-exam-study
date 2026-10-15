@@ -13,29 +13,32 @@ def questions():
         "Which statements about a probability are TRUE?",
         ["P(A) can never be negative.",
          "P(A) = 0 means event A will never happen.",
-         "P(A) = 1 means event A will always happen.",
+         "P(A) = 1 means event A is impossible, and P(A) = 0 means it is certain.",
          "P(A) can be greater than 1 if an event is very likely.",
          "P(A) must be expressed as a percentage, not a decimal."],
-        ["a", "b", "c"],
+        ["a", "b"],
         "A probability lies between 0 and 1, so it can be written as a decimal such as "
-        "0.5 or as the equivalent 50%. It cannot exceed 1 however likely the event is.",
+        "0.5 or as the equivalent 50%. A probability of 0 means the event never occurs and "
+        "a probability of 1 means it always occurs, so the claim that 0 means certain is "
+        "exactly backwards. It cannot exceed 1 however likely the event is.",
         PDF, "p.11"))
 
     out.append(mc(
         "L4-MC-002", 4, "Disjoint and joint events",
-        "Drawing a red card and drawing a black card from a single draw. How are these "
-        "events related?",
+        "Drawing a red card and drawing a black card from a single draw from a full 52-card "
+        "deck. How are these events related?",
         ["Joint, because both are possible in a deck",
          "Disjoint, because they cannot happen at the same time",
          "Independent, because colour is unrelated to the draw",
-         "Complementary, because they cover the sample space",
+         "Complementary, because together they account for every card in the deck",
          "Equally likely"],
-        ["b"],
+        ["b", "d"],
         "They are disjoint (mutually exclusive) since one card cannot be both red and "
-        "black, so the probability of the intersection is 0. They are not complementary, "
-        "because they do not cover the whole sample space - there are also face cards "
-        "that are neither.",
-        PDF, "p.14"))
+        "black, so the probability of the intersection is 0. They are also complementary: "
+        "every card in a deck is either red or black, because face cards are coloured too, "
+        "so the two together cover the entire sample space. Disjoint and complementary are "
+        "not exclusive of each other.",
+        PDF, "p.17"))
 
     out.append(mc(
         "L4-MC-003", 4, "Disjoint and joint events",
@@ -59,8 +62,8 @@ def questions():
          "the whole sample space",
          "Because every card has probability 1",
          "Because red and black are joint events",
-         "Because the deck has 52 equally likely cards"],
-        ["b"],
+         "Because the probability of the complement of an event is 1 minus that event"],
+        ["b", "e"],
         "Red and black are disjoint and their union is the entire deck, so they are "
         "complements. For disjoint events the addition rule reduces to simple addition, "
         "which is why the probabilities sum to exactly 1.",
@@ -73,26 +76,32 @@ def questions():
          "P(A or B) = P(A) + P(B) - P(A and B)",
          "P(A or B) = P(A) + P(B)",
          "P(A) = P(A or B) - P(B)",
-         "P(A or B) = 1 - P(A and B)"],
-        ["b"],
+         "If A and B are disjoint the intersection is 0, so the rule collapses to "
+         "P(A or B) = P(A) + P(B)"],
+        ["b", "e"],
         "The subtraction of the intersection is required whenever A and B are not "
         "disjoint, because the overlapping cases would otherwise be counted twice. For "
-        "disjoint events the intersection is 0 and the rule collapses to (c).",
-        PDF, "p.22", origin="adapted_HT25"))
+        "disjoint events the intersection is 0 and the rule collapses to simple addition, "
+        "which is why the third option is right only in that special case. Rearranging the "
+        "rule gives P(A) = P(A or B) - P(B) + P(A and B), not what the fourth option says.",
+        PDF, "p.21", origin="adapted_HT25"))
 
     out.append(mc(
         "L4-MC-006", 4, "Addition rule",
         "What is the probability of drawing a red jack or a black queen from a shuffled "
-        "52-card deck?",
+        "52-card deck, and how are the two events related?",
         ["4/52",
          "8/52",
          "6/52",
          "9/52",
-         "It cannot be computed without knowing the deck order"],
-        ["b"],
-        "There are 4 red jacks and 4 black queens, and no card is both, so the events are "
-        "disjoint and the probability is 4/52 + 4/52 = 8/52.",
-        PDF, "p.20"))
+         "The events are disjoint, because no single card is both a red jack and a black "
+         "queen"],
+        ["a", "e"],
+        "A deck has two red jacks and two black queens, and no card is both, so the "
+        "events are disjoint: 2/52 + 2/52 = 4/52. The 8/52 answer is what you would get "
+        "for a jack or a queen of any colour, which is a different pair of events: a red "
+        "jack and a black queen account for only four of the 52 cards.",
+        PDF, "p.21"))
 
     out.append(mc(
         "L4-MC-007", 4, "Conditional probability",
@@ -100,27 +109,30 @@ def questions():
         ["P(A and B) / P(B)",
          "P(A) / P(B)",
          "P(A and B) x P(B)",
-         "P(A) - P(B)",
+         "The probability of A among the cases in which B is already known to hold",
          "P(B) / P(A and B)"],
-        ["a"],
+        ["a", "d"],
         "A conditional probability P(A|B) restricts the sample space to B, so it is the "
-        "joint probability divided by P(B). Swapping numerator and denominator would "
-        "instead give the reverse conditional probability.",
-        PDF, "p.25"))
+        "joint probability divided by P(B), which is the same as asking for the "
+        "probability of A among the cases where B is known to hold. Swapping numerator "
+        "and denominator would instead give the reverse conditional probability.",
+        PDF, "p.44"))
 
     out.append(mc(
         "L4-MC-008", 4, "Conditional probability",
         "In the MTO experiment, 72 teenagers were followed and 24 were enrolled in "
-        "college. What is P(enrolled)?",
+        "college. What is P(enrolled), and what kind of probability is it?",
         ["14/24",
          "24/72",
          "48/72",
          "14/72",
-         "24/48"],
-        ["b"],
+         "It is a marginal probability, because it does not condition on the treatment "
+         "group"],
+        ["b", "e"],
         "The marginal probability of enrolment is the column total over the grand total, "
-        "24/72. Note this is different from P(enrolled | low-poverty voucher), which "
-        "conditions on the row.",
+        "24/72. It is marginal because it ignores which group the teenager was in. Note "
+        "this is different from P(enrolled | low-poverty voucher), which conditions on "
+        "the row and comes out much higher.",
         PDF, "p.40", r_functions=["table", "prop.table"], origin="adapted_HT25"))
 
     out.append(mc(
@@ -130,11 +142,13 @@ def questions():
          "14/24",
          "14/72",
          "10/24",
-         "48/72"],
-        ["b"],
+         "About 0.58, which is higher than the overall 0.33 because enrolment depended "
+         "on which group the teenager was in"],
+        ["b", "e"],
         "Conditioning on the voucher restricts to the 24 teenagers who received one, of "
         "whom 14 enrolled, giving 14/24. This is the ratio (14/72)/(24/72), "
-        "which simplifies to 14/24.",
+        "which simplifies to 14/24. It comes out well above the marginal 24/72, and that "
+        "gap is the evidence that enrolment depended on the treatment.",
         PDF, "p.43", origin="adapted_HT25"))
 
     out.append(mc(
@@ -143,28 +157,35 @@ def questions():
         "0.10 for 12th graders. What does this show?",
         ["Walking to school and grade level are independent",
          "Walking to school and grade level are dependent",
-         "Walking to school has probability 0.50",
+         "Because 0.50 and 0.10 differ from the overall 0.30, knowing the grade level "
+         "changes the probability of walking",
          "Grade level is a binary variable",
          "The three probabilities must sum to 1"],
-        ["b"],
+        ["b", "c"],
         "For independence the probability of walking would be the same whether or not B "
         "occurs. Since 0.50 and 0.10 differ from each other and from the overall 0.30, "
-        "knowing the grade level changes the probability, so the variables are dependent.",
+        "knowing the grade level changes the probability, so the variables are dependent. "
+        "The three numbers are not meant to sum to 1: each is a probability of walking "
+        "within a different group, and those groups overlap.",
         PDF, "p.29"))
 
     out.append(mc(
         "L4-MC-011", 4, "Independence",
         "Which statements are TRUE?",
-        ["Tossing a coin twice gives independent outcomes.",
+        ["Tossing a coin twice gives independent outcomes, because the two tosses cannot "
+         "both happen at once.",
          "Drawing two cards without replacement gives independent outcomes.",
          "P(A) = P(A|B) = P(A|Bc) is the condition for independence.",
          "For independent events, P(A and B) = P(A) x P(B).",
          "Two events are independent whenever they are disjoint."],
-        ["a", "c", "d"],
-        "Drawing without replacement makes the second draw depend on the first, so (b) "
-        "is false. Disjointness does not imply independence: for a fair coin the two "
-        "tosses are independent yet the two heads/tails events are disjoint, whereas two "
-        "disjoint events in an asymmetric deck can still be dependent. So (e) is false.",
+        ["c", "d"],
+        "Independence means the probability of A is the same whether or not B occurs, and "
+        "it is equivalent to the joint probability being the product. Two coin tosses do "
+        "give independent outcomes, but not because they cannot both happen at once: that "
+        "is disjointness, and disjointness does not imply independence. For a fair coin the "
+        "two tosses are independent yet the heads and tails events are disjoint, whereas "
+        "two disjoint events in an asymmetric deck can still be dependent. Drawing without "
+        "replacement makes the second draw depend on the first.",
         PDF, "p.30"))
 
     out.append(mc(
@@ -174,9 +195,10 @@ def questions():
         ["3/10",
          "2/9",
          "2/10",
-         "1/10",
+         "This differs from the 3/10 chance on the first draw, which is exactly what "
+         "makes the two draws dependent",
          "9/100"],
-        ["b"],
+        ["b", "d"],
         "With one blue removed there are 2 blue left out of 9 balls total, giving 2/9, "
         "which is not equal to the first-draw probability of 3/10. That inequality is "
         "precisely why draws without replacement are dependent.",
@@ -201,13 +223,16 @@ def questions():
         "L4-MC-014", 4, "Random variables",
         "Which of the following are examples of random variables?",
         ["The outcome of rolling a six-sided die",
-         "The number of heads in 10 tosses of a fair coin",
+         "The average number of heads in 10 tosses, which is always 5",
          "The height of a randomly chosen adult in Norrkoping",
-         "The number of emails received in an hour",
+         "The total size in bytes of every email currently in your inbox",
          "The area of Sweden"],
-        ["a", "b", "c", "d"],
-        "A random variable maps outcomes to a numerical value. Sweden's area is a fixed "
-        "constant, not something that varies randomly, so it is not a random variable.",
+        ["a", "c"],
+        "A random variable is a numerical value that varies from one random outcome to "
+        "the next, so a die roll and an adult's height both qualify. The other three are "
+        "constants: the expected number of heads in 10 fair tosses is fixed at 5, and the "
+        "size of a given inbox and the area of Sweden do not move between draws. The count "
+        "of emails arriving in an hour would qualify, since that does vary.",
         PDF, "p.13"))
 
     out.append(mc(
@@ -216,12 +241,14 @@ def questions():
         "countable set of values?",
         ["The number of heads in 10 coin tosses",
          "The number of emails received in an hour",
-         "The outcome of rolling a die",
+         "The outcome of rolling a die, because the die is a physical object",
          "The height of a randomly chosen adult",
          "The time until a light bulb burns out"],
-        ["a", "b", "c"],
-        "Heads, emails and die rolls take countable whole-number values. Height and "
-        "burn-out time can take any real value in a range, so they are continuous.",
+        ["a", "b"],
+        "Heads and emails take countable whole-number values, so both are discrete. A die "
+        "roll is discrete too, but not because the die is a physical object; that has "
+        "nothing to do with whether the support is countable. Height and burn-out time can "
+        "take any real value in a range, so they are continuous.",
         PDF, "p.13"))
 
     # ----------------------------------------------------------------- written
