@@ -155,13 +155,15 @@ def questions():
         "L4-MC-010", 4, "Independence",
         "The probability of walking to school is 0.30 overall, 0.50 for 9th graders and "
         "0.10 for 12th graders. What does this show?",
-        ["Walking to school and grade level are independent",
-         "Walking to school and grade level are dependent",
-         "Because 0.50 and 0.10 differ from the overall 0.30, knowing the grade level "
-         "changes the probability of walking",
-         "Grade level is a binary variable",
-         "The three probabilities must sum to 1"],
-        ["b", "c"],
+        [
+        "Grade level is a binary variable",
+        "The three probabilities must sum to 1",
+        "Walking to school and grade level are independent",
+        "Walking to school and grade level are dependent",
+        "Because 0.50 and 0.10 differ from the overall 0.30, knowing the grade level "
+                 "changes the probability of walking",
+         ],
+        ["d", "e"],
         "For independence the probability of walking would be the same whether or not B "
         "occurs. Since 0.50 and 0.10 differ from each other and from the overall 0.30, "
         "knowing the grade level changes the probability, so the variables are dependent. "

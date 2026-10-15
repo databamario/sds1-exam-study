@@ -26,13 +26,15 @@ def questions():
         "L8-MC-002", 8, "Testing for correlation",
         "Consider this R output: `t = 5.4738, df = 48, p-value = 1.579e-06`, "
         "`cor = 0.6199323`. Which statements are TRUE?",
-        ["The sample correlation is about 0.41, the lower end of the interval.",
-         "The test rejects H0: rho = 0 at the 5% level.",
-         "There is evidence that income and high-school graduation are positively "
-         "correlated.",
-         "The 95% confidence interval of about (0.41, 0.76) contains 0.",
-         "The test has 49 degrees of freedom, one for each of the 50 states."],
-        ["b", "c"],
+        [
+        "The 95% confidence interval of about (0.41, 0.76) contains 0.",
+        "The test has 49 degrees of freedom, one for each of the 50 states.",
+        "The sample correlation is about 0.41, the lower end of the interval.",
+        "The test rejects H0: rho = 0 at the 5% level.",
+        "There is evidence that income and high-school graduation are positively "
+                 "correlated.",
+         ],
+        ["d", "e"],
         "The 95% CI of (0.4153, 0.7648) excludes 0, so the statement that it contains 0 is "
         "false. That is also exactly why the test rejects, since a null value outside the "
         "interval means rejection at that level.",
@@ -58,12 +60,14 @@ def questions():
     out.append(mc(
         "L8-MC-004", 8, "Spearman's correlation",
         "Which statements about Spearman's correlation are TRUE?",
-        ["It is the Pearson correlation computed on the values rather than on the ranks.",
-         "It measures monotonic association rather than only linear association.",
-         "It cannot detect a relationship where larger states are richer but not linearly.",
-         "It is robust to outliers.",
-         "It is obtained in R with `cor.test(x, y, method = \"kendall\")`."],
-        ["b", "d"],
+        [
+        "It is obtained in R with `cor.test(x, y, method = \"kendall\")`.",
+        "It is the Pearson correlation computed on the values rather than on the ranks.",
+        "It measures monotonic association rather than only linear association.",
+        "It cannot detect a relationship where larger states are richer but not linearly.",
+        "It is robust to outliers.",
+         ],
+        ["c", "e"],
         "Spearman's coefficient is specifically designed to capture monotonic patterns "
         "that Pearson misses, which is the whole point of the Alaska example where "
         "Pearson said yes and Spearman said no. So the claim that it cannot detect a "
@@ -123,13 +127,15 @@ def questions():
         "For alpha = 0.05 and m = 190 separate tests, the "
         "probability of at least one Type I error is about 99.3%. What is the consequence "
         "for practice?",
-        ["Each individual test should be run at a much smaller alpha.",
-         "We should use omnibus tests that make a single decision for all groups at once.",
-         "If the omnibus test is significant, a post hoc test such as Tukey is needed to "
-         "find out which groups differ.",
-         "More tests automatically increase the power of each test.",
-         "Type II errors disappear when many tests are performed."],
-        ["b", "c"],
+        [
+        "More tests automatically increase the power of each test.",
+        "Type II errors disappear when many tests are performed.",
+        "Each individual test should be run at a much smaller alpha.",
+        "We should use omnibus tests that make a single decision for all groups at once.",
+        "If the omnibus test is significant, a post hoc test such as Tukey is needed to "
+                 "find out which groups differ.",
+         ],
+        ["d", "e"],
         "Because repeated separate decisions accumulate false positives, the solution is a "
         "single omnibus test such as ANOVA, which controls the overall Type I error rate. "
         "Merely shrinking alpha for each test wastes power and does not fix the underlying "

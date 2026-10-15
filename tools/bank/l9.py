@@ -16,8 +16,8 @@ def questions():
          "The bootstrap permutation test",
          "Bagging",
          "Cross-validation",
-         "The jackknife confidence interval"],
-        ["a"],
+         "A method that does not assume a specific form for the population distribution"],
+        ["a", "e"],
         "Non-parametric methods assume no specific form "
         "for the population distribution, and states that it focuses on bootstrapping as the "
         "workable option, estimating standard errors, confidence intervals and p-values "
@@ -30,10 +30,11 @@ def questions():
         ["Collect real data, fit a model, test, report",
          "Define the data generating process and statistic, generate many random samples, "
          "compute the statistic for each",
-         "Simulate one sample, plot it, conclude",
+         "Generating random samples from a specified distribution to approximate the "
+         "sampling distribution of a statistic",
          "Choose alpha, compute the p-value, decide",
          "Generate samples, bootstrap them, report a confidence interval"],
-        ["b"],
+        ["b", "c"],
         "The three steps are to define the DGP and the statistic of interest, generate a "
         "large number of random samples from that DGP, and calculate the statistic for each "
         "sample so the resulting distribution approximates the sampling distribution.",
@@ -44,10 +45,11 @@ def questions():
         "What does a Monte-Carlo simulation rely on to become accurate?",
         ["The central limit theorem",
          "The law of large numbers",
-         "The fact that R is fast",
+         "It can estimate standard errors, confidence intervals and p-values when the "
+         "analytical solution is difficult or impossible to obtain",
          "The chi-squared approximation",
          "Having an exactly normal population"],
-        ["b"],
+        ["b", "c"],
         "Monte-Carlo works by repeated sampling, so its accuracy improves as the number of "
         "simulations grows, which is precisely the law of large numbers. The CLT is about "
         "the shape of a sampling distribution, a different statement.",
@@ -60,8 +62,8 @@ def questions():
          "The number of simulated draws where X is greater than Y",
          "The sum of X across all simulations",
          "The number of simulations, N",
-         "The mean of X"],
-        ["a"],
+         "Half of them, since a comparison that is true is not also false"],
+        ["a", "e"],
         "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N "
         "gives the simulated probability P(X < Y). This is used to "
         "estimate a probability that is analytically awkward, here for X normal and Y "
@@ -78,8 +80,9 @@ def questions():
          "errors, confidence intervals and p-values",
          "It splits the data into a training and a test set",
          "It computes the exact analytic solution",
-         "It removes outliers before analysing the data"],
-        ["b"],
+         "It needs only the observed sample, and works for any statistic including the "
+         "median"],
+        ["b", "e"],
         "Bootstrapping samples repeatedly from the empirical distribution of the observed "
         "data with replacement and recomputes the statistic each time, giving an estimated "
         "sampling distribution without assuming a parametric form.",
@@ -99,9 +102,10 @@ def questions():
         ["It makes the simulation run faster",
          "It makes the random numbers reproducible so results can be recovered",
          "It increases the number of simulations",
-         "It ensures the data are normally distributed",
+         "It sets the starting state of the pseudo-random generator, so the same seed "
+         "reproduces the same sequence of draws",
          "It removes the need for a bootstrap"],
-        ["b"],
+        ["b", "d"],
         "`set.seed()` fixes the starting state of the random number generator, so the same "
         "seed reproduces the same pseudo-random draws. That is essential when a result needs "
         "to be reported or checked by someone else.",
@@ -115,9 +119,10 @@ def questions():
          "To create an empty numeric vector of length N that will hold one bootstrap "
          "statistic per iteration",
          "To create a vector of N observations to resample",
-         "To pre-allocate a data.frame with N rows",
+         "To reserve the storage before the loop, so each iteration can write its result "
+         "into position i",
          "To set the random seed N times"],
-        ["b"],
+        ["b", "d"],
         "`numeric(N)` allocates an empty numeric vector of length N so R can store one "
         "bootstrap result in each position. Without pre-allocation R would have to grow the "
         "vector inside the loop, which is slower.",
@@ -132,11 +137,12 @@ def questions():
         "`N <- 100000; X <- rnorm(N, 3, 1); Y <- rexp(N, rate = 0.5); "
         "H <- sum(X < Y); H / N`",
         ["`N <- 100000` sets the number of simulations",
-         "`X <- rnorm(N, mean = 3, sd = 1)` draws N values from a normal distribution",
-         "`H <- sum(X < Y)` counts the draws where X is less than Y",
+         "`X <- rnorm(N, mean = 3, sd = 1)` draws N values from an exponential "
+         "distribution",
+         "`H <- sum(X < Y)` counts the draws where X is greater than Y",
          "`H / N` gives an estimate of P(X < Y)",
          "The result is the exact analytical probability of P(X < Y)"],
-        ["a", "b", "c", "d"],
+        ["a", "d"],
         "The code sets the number of simulations, draws N values from each distribution, "
         "counts the draws in which X is less than Y, and divides by N to estimate P(X < Y). "
         "The result is a simulation-based approximation that becomes more accurate as N "
@@ -150,11 +156,11 @@ def questions():
         "Which statements about the birthday problem simulation are true? "
         "`bdays <- sample(1:365, 30, replace = TRUE)`, repeated for `N` iterations.",
         ["`sample(1:365, 30, replace = TRUE)` simulates 30 people's birthdays",
-         "The replacement is appropriate because two people can share a birthday",
+         "The replacement is inappropriate, because two people cannot share a birthday",
          "The simulation estimates the probability of at least one shared birthday",
          "The simulation would be exact regardless of how large N is",
-         "Increasing N generally improves the accuracy of the estimate"],
-        ["a", "b", "c", "e"],
+         "Increasing N beyond some point makes the estimate exact"],
+        ["a", "c"],
         "Sampling 30 birthdays with replacement from 1 to 365 models birthdays as "
         "independent, which is what allows two people to share one. Repeating the simulation "
         "estimates the probability of at least one shared birthday, and raising N improves "

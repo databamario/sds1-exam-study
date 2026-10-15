@@ -358,6 +358,19 @@ falls, and say *what* is wrong in the explanation rather than naming a letter.
 An explanation that says "(d) is false" silently becomes a lie the moment the
 options are reordered.
 
+The bank is now in the right shape throughout: **127** five-option questions
+with exactly two correct, **20** four-option questions with one, and nothing
+with more than two correct anywhere. The most common key pair is 13.4% of the
+five-option questions, against an even spread of 12.7% across the ten
+possible pairs.
+
+`tools/rebalance_pairs.py` fixes a lopsided key distribution by rotating
+options, which moves the key without changing a word of the question. It
+refuses to touch any question that refers to a position ("the first plot") or a
+letter ("so (c) is false"), since rotating those would contradict their own
+text, and after writing it rebuilds the bank and checks that every question
+kept its options, its true options, its stem and its explanation.
+
 
 ---
 

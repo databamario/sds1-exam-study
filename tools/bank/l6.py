@@ -193,12 +193,14 @@ def questions():
         "L6-MC-011", 6, "Confidence intervals",
         "A 95% confidence interval computed from a population with mean 170 is "
         "(172.06, 177.94). Which statement is TRUE?",
-        ["The population mean is 175",
-         "The standard error of the sample mean is 1.5",
-         "The sample mean is 175",
-         "95% of the population falls inside this interval",
-         "The interval must contain the true mean because it is a 95% interval"],
-        ["b", "c"],
+        [
+        "95% of the population falls inside this interval",
+        "The interval must contain the true mean because it is a 95% interval",
+        "The population mean is 175",
+        "The standard error of the sample mean is 1.5",
+        "The sample mean is 175",
+         ],
+        ["d", "e"],
         "The half-width 2.94 equals 1.96 times the standard error, so the standard error is "
         "about 1.5. The interval is built as the point estimate plus or minus that "
         "half-width, so its centre, 175, is the sample mean rather than the population mean. "

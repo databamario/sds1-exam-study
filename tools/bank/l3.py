@@ -103,13 +103,15 @@ def questions():
     out.append(mc(
         "L3-MC-007", 3, "Measures of spread",
         "Why is the mean a poor measure of spread for a heavily right-skewed sample?",
-        ["Because the mean cannot be computed for skewed data",
-         "Because the extreme right tail contributes very large squared deviations",
-         "A spread measure that does not square its deviations, such as the "
-         "interquartile range, is not distorted by that same extreme value",
-         "Because the mean is always equal to the median",
-         "Because skewness only affects categorical data"],
-        ["b", "c"],
+        [
+        "Because the mean is always equal to the median",
+        "Because skewness only affects categorical data",
+        "Because the mean cannot be computed for skewed data",
+        "Because the extreme right tail contributes very large squared deviations",
+        "A spread measure that does not square its deviations, such as the "
+                 "interquartile range, is not distorted by that same extreme value",
+         ],
+        ["d", "e"],
         "Variance squares each deviation, so a single very large value is amplified and "
         "the variance becomes dominated by the tail. That is exactly why the "
         "interquartile range is preferred for skewed data: it is built from the quartiles "
@@ -181,13 +183,15 @@ def questions():
     out.append(mc(
         "L3-MC-012", 3, "Describing two variables",
         "Which plot is used to show the relationship between two numerical variables?",
-        ["A box plot",
-         "A scatterplot",
-         "In the GDP example the horizontal axis is on a log scale, so equal distances "
-         "along it mean equal ratios rather than equal differences",
-         "A contingency table",
-         "A frequency table"],
-        ["b", "c"],
+        [
+        "A contingency table",
+        "A frequency table",
+        "A box plot",
+        "A scatterplot",
+        "In the GDP example the horizontal axis is on a log scale, so equal distances "
+                 "along it mean equal ratios rather than equal differences",
+         ],
+        ["d", "e"],
         "A scatterplot places one numerical variable on each axis so you can see the "
         "direction, shape and strength of the relationship. Watch the axis scales: on a "
         "log scale the spacing between ticks is a ratio rather than a difference, so a "
@@ -295,13 +299,15 @@ def questions():
         "L3-MC-019", 3, "Merging data",
         "You need every row of `students` preserved, even if a student has no matching "
         "score. Which join do you use?",
-        ["`inner_join`",
-         "`left_join(students, scores, by = \"id\")`",
-         "To add the variables from one table onto the rows of another, enriching it "
-         "without recomputing anything",
-         "`right_join(students, scores, by = \"id\")`",
-         "`full_join(students, scores, by = \"id\")`"],
-        ["b", "c"],
+        [
+        "`full_join(students, scores, by = \"id\")`",
+        "`inner_join`",
+        "`left_join(students, scores, by = \"id\")`",
+        "To add the variables from one table onto the rows of another, enriching it "
+                 "without recomputing anything",
+        "`right_join(students, scores, by = \"id\")`",
+         ],
+        ["c", "d"],
         "A left join keeps every row of the left-hand table and fills unmatched columns "
         "with NA, which is what preserves a student who has no score. A right join would "
         "keep the scores side instead, and a full join would also pull in id 5, neither "

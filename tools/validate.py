@@ -54,9 +54,14 @@ MIN_SAMPLE_FOR_SPREAD = 20
 # rule is looser than it looks. When it reaches zero the allowance disappears
 # and the plain rule applies.
 #
-# Progress: 123 -> 108 after Lecture 1, which fixed 15 questions: 11 were given
-# a second true option, and 4 were reduced from three or four true options to two.
-FORMAT_MIGRATION_REMAINING = 9
+# Progress, one lecture per commit:
+#   123 -> 108 (L1, 15 questions) -> 88 (L2, 20) -> 71 (L3, 17) -> 58 (L4, 13)
+#   -> 45 (L5, 13) -> 34 (L6, 11) -> 21 (L7, 13) -> 9 (L8, 12) -> 0 (L9, 9)
+#
+# The allowance is now zero and stays here as a plain number: the pair-spread
+# gate below reads it to know the bank is finished, and a bank that grows a
+# violation again will fail on the rule rather than on the ratchet.
+FORMAT_MIGRATION_REMAINING = 0
 
 # Every R function the lectures actually teach. A lecture cannot be "covered"
 # unless at least one question references each of its functions.

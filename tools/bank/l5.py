@@ -11,12 +11,14 @@ def questions():
     out.append(mc(
         "L5-MC-001", 5, "Probability distributions",
         "Which phenomenon is the standard example of a BINOMIAL distribution?",
-        ["The height of a randomly chosen adult",
-         "The number of heads in 10 tosses of a fair coin",
-         "The number of yes answers in 10 yes/no survey questions",
-         "The waiting time for a bus",
-         "The outcome of a single die roll"],
-        ["b", "c"],
+        [
+        "The waiting time for a bus",
+        "The outcome of a single die roll",
+        "The height of a randomly chosen adult",
+        "The number of heads in 10 tosses of a fair coin",
+        "The number of yes answers in 10 yes/no survey questions",
+         ],
+        ["d", "e"],
         "Binomial counts successes across repeated Bernoulli trials with two outcomes. "
         "Heads in 10 tosses is exactly that, and so is the number of yes answers in 10 "
         "yes/no questions. Email counts per interval are Poisson, height is normal, and a "
@@ -107,13 +109,15 @@ def questions():
         "L5-MC-007", 5, "Estimand, estimator, estimate",
         "Match each term to the correct example for estimating the mean height of all "
         "Norrkoping residents. Which statement is TRUE?",
-        ["The estimand is 169.03 cm",
-         "The estimator is the sample mean formula",
-         "The estimate is the number obtained after applying that formula to one sample, "
-         "such as 169.03 cm",
-         "The estimand and the estimate are the same thing",
-         "The estimator is a fixed number, not a formula"],
-        ["b", "c"],
+        [
+        "The estimand and the estimate are the same thing",
+        "The estimator is a fixed number, not a formula",
+        "The estimand is 169.03 cm",
+        "The estimator is the sample mean formula",
+        "The estimate is the number obtained after applying that formula to one sample, "
+                 "such as 169.03 cm",
+         ],
+        ["d", "e"],
         "The estimand is the unknown population quantity mu, the estimator is the rule or "
         "formula used (here the sample mean), and the estimate is the particular number "
         "obtained from one sample, such as 169.03 cm.",

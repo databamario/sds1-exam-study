@@ -2177,15 +2177,15 @@
    "topic": "Measures of spread",
    "stem": "Why is the mean a poor measure of spread for a heavily right-skewed sample?",
    "options": {
-    "a": "Because the mean cannot be computed for skewed data",
-    "b": "Because the extreme right tail contributes very large squared deviations",
-    "c": "A spread measure that does not square its deviations, such as the interquartile range, is not distorted by that same extreme value",
-    "d": "Because the mean is always equal to the median",
-    "e": "Because skewness only affects categorical data"
+    "a": "Because the mean is always equal to the median",
+    "b": "Because skewness only affects categorical data",
+    "c": "Because the mean cannot be computed for skewed data",
+    "d": "Because the extreme right tail contributes very large squared deviations",
+    "e": "A spread measure that does not square its deviations, such as the interquartile range, is not distorted by that same extreme value"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -2298,15 +2298,15 @@
    "topic": "Describing two variables",
    "stem": "Which plot is used to show the relationship between two numerical variables?",
    "options": {
-    "a": "A box plot",
-    "b": "A scatterplot",
-    "c": "In the GDP example the horizontal axis is on a log scale, so equal distances along it mean equal ratios rather than equal differences",
-    "d": "A contingency table",
-    "e": "A frequency table"
+    "a": "A contingency table",
+    "b": "A frequency table",
+    "c": "A box plot",
+    "d": "A scatterplot",
+    "e": "In the GDP example the horizontal axis is on a log scale, so equal distances along it mean equal ratios rather than equal differences"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -2515,15 +2515,15 @@
    "topic": "Merging data",
    "stem": "You need every row of `students` preserved, even if a student has no matching score. Which join do you use?",
    "options": {
-    "a": "`inner_join`",
-    "b": "`left_join(students, scores, by = \"id\")`",
-    "c": "To add the variables from one table onto the rows of another, enriching it without recomputing anything",
-    "d": "`right_join(students, scores, by = \"id\")`",
-    "e": "`full_join(students, scores, by = \"id\")`"
+    "a": "`full_join(students, scores, by = \"id\")`",
+    "b": "`inner_join`",
+    "c": "`left_join(students, scores, by = \"id\")`",
+    "d": "To add the variables from one table onto the rows of another, enriching it without recomputing anything",
+    "e": "`right_join(students, scores, by = \"id\")`"
    },
    "correct": [
-    "b",
-    "c"
+    "c",
+    "d"
    ],
    "n_correct": 2,
    "points": 1,
@@ -3271,15 +3271,15 @@
    "topic": "Independence",
    "stem": "The probability of walking to school is 0.30 overall, 0.50 for 9th graders and 0.10 for 12th graders. What does this show?",
    "options": {
-    "a": "Walking to school and grade level are independent",
-    "b": "Walking to school and grade level are dependent",
-    "c": "Because 0.50 and 0.10 differ from the overall 0.30, knowing the grade level changes the probability of walking",
-    "d": "Grade level is a binary variable",
-    "e": "The three probabilities must sum to 1"
+    "a": "Grade level is a binary variable",
+    "b": "The three probabilities must sum to 1",
+    "c": "Walking to school and grade level are independent",
+    "d": "Walking to school and grade level are dependent",
+    "e": "Because 0.50 and 0.10 differ from the overall 0.30, knowing the grade level changes the probability of walking"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -3722,15 +3722,15 @@
    "topic": "Probability distributions",
    "stem": "Which phenomenon is the standard example of a BINOMIAL distribution?",
    "options": {
-    "a": "The height of a randomly chosen adult",
-    "b": "The number of heads in 10 tosses of a fair coin",
-    "c": "The number of yes answers in 10 yes/no survey questions",
-    "d": "The waiting time for a bus",
-    "e": "The outcome of a single die roll"
+    "a": "The waiting time for a bus",
+    "b": "The outcome of a single die roll",
+    "c": "The height of a randomly chosen adult",
+    "d": "The number of heads in 10 tosses of a fair coin",
+    "e": "The number of yes answers in 10 yes/no survey questions"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -3898,15 +3898,15 @@
    "topic": "Estimand, estimator, estimate",
    "stem": "Match each term to the correct example for estimating the mean height of all Norrkoping residents. Which statement is TRUE?",
    "options": {
-    "a": "The estimand is 169.03 cm",
-    "b": "The estimator is the sample mean formula",
-    "c": "The estimate is the number obtained after applying that formula to one sample, such as 169.03 cm",
-    "d": "The estimand and the estimate are the same thing",
-    "e": "The estimator is a fixed number, not a formula"
+    "a": "The estimand and the estimate are the same thing",
+    "b": "The estimator is a fixed number, not a formula",
+    "c": "The estimand is 169.03 cm",
+    "d": "The estimator is the sample mean formula",
+    "e": "The estimate is the number obtained after applying that formula to one sample, such as 169.03 cm"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -4724,15 +4724,15 @@
    "topic": "Confidence intervals",
    "stem": "A 95% confidence interval computed from a population with mean 170 is (172.06, 177.94). Which statement is TRUE?",
    "options": {
-    "a": "The population mean is 175",
-    "b": "The standard error of the sample mean is 1.5",
-    "c": "The sample mean is 175",
-    "d": "95% of the population falls inside this interval",
-    "e": "The interval must contain the true mean because it is a 95% interval"
+    "a": "95% of the population falls inside this interval",
+    "b": "The interval must contain the true mean because it is a 95% interval",
+    "c": "The population mean is 175",
+    "d": "The standard error of the sample mean is 1.5",
+    "e": "The sample mean is 175"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -5150,14 +5150,14 @@
    "topic": "One-sided vs two-sided tests",
    "stem": "How do one-sided and two-sided tests differ?",
    "options": {
-    "a": "A one-sided test has rejection regions in both tails; a two-sided test has only one.",
-    "b": "A two-sided test has rejection regions in both tails; a one-sided test has the rejection region in only one tail.",
-    "c": "They differ only in the sample size required.",
-    "d": "A one-sided test always uses the t-distribution; a two-sided test uses the normal.",
-    "e": "For a given alpha the confidence level of a one-sided test is 1 - alpha while that of a two-sided test is 1 - alpha over 2."
+    "a": "They differ only in the sample size required.",
+    "b": "A one-sided test always uses the t-distribution; a two-sided test uses the normal.",
+    "c": "For a given alpha the confidence level of a one-sided test is 1 - alpha while that of a two-sided test is 1 - alpha over 2.",
+    "d": "A one-sided test has rejection regions in both tails; a two-sided test has only one.",
+    "e": "A two-sided test has rejection regions in both tails; a one-sided test has the rejection region in only one tail."
    },
    "correct": [
-    "b",
+    "c",
     "e"
    ],
    "n_correct": 2,
@@ -5206,15 +5206,15 @@
    "topic": "Type I and Type II errors",
    "stem": "What is a Type I error?",
    "options": {
-    "a": "Failing to reject H0 when it is false",
-    "b": "Rejecting H0 when it is true",
-    "c": "It is also known as a false positive, since nothing is actually there",
-    "d": "Using the wrong critical value",
-    "e": "Choosing a one-sided test instead of a two-sided one"
+    "a": "Using the wrong critical value",
+    "b": "Choosing a one-sided test instead of a two-sided one",
+    "c": "Failing to reject H0 when it is false",
+    "d": "Rejecting H0 when it is true",
+    "e": "It is also known as a false positive, since nothing is actually there"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -5262,14 +5262,14 @@
    "topic": "Acceptance and rejection regions",
    "stem": "For a two-sided test at alpha = 0.05, within which values of the test statistic do you FAIL to reject H0?",
    "options": {
-    "a": "z < -1.96 or z > 1.96",
-    "b": "-1.96 <= z <= 1.96",
-    "c": "z < 1.645",
-    "d": "-1.645 <= z <= 1.645",
-    "e": "The rejection regions are the two tails beyond plus and minus 1.96, which leave the middle as the set of values that do not lead to rejection"
+    "a": "z < 1.645",
+    "b": "-1.645 <= z <= 1.645",
+    "c": "The rejection regions are the two tails beyond plus and minus 1.96, which leave the middle as the set of values that do not lead to rejection",
+    "d": "z < -1.96 or z > 1.96",
+    "e": "-1.96 <= z <= 1.96"
    },
    "correct": [
-    "b",
+    "c",
     "e"
    ],
    "n_correct": 2,
@@ -5378,15 +5378,15 @@
    "topic": "Proportions",
    "stem": "Which statements are TRUE?",
    "options": {
-    "a": "A confidence interval for a proportion is point estimate plus or minus critical value times the standard error of the proportion.",
-    "b": "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) over n).",
-    "c": "The standard error of a difference in proportions adds the two standard errors rather than the two variances.",
-    "d": "Proportions can only be used for continuous variables.",
-    "e": "A hypothesis test for a single proportion uses the t-distribution, because the population proportion is unknown."
+    "a": "Proportions can only be used for continuous variables.",
+    "b": "A hypothesis test for a single proportion uses the t-distribution, because the population proportion is unknown.",
+    "c": "A confidence interval for a proportion is point estimate plus or minus critical value times the standard error of the proportion.",
+    "d": "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) over n).",
+    "e": "The standard error of a difference in proportions adds the two standard errors rather than the two variances."
    },
    "correct": [
-    "a",
-    "b"
+    "c",
+    "d"
    ],
    "n_correct": 2,
    "points": 1,
@@ -5440,15 +5440,15 @@
    "topic": "Proportions",
    "stem": "Consider this R code. What is the value of `p1_hat_se`?",
    "options": {
-    "a": "0.0008",
-    "b": "Despite its name, the quantity stored in p1_hat_se is a variance, so its square root, about 0.028, is the standard error itself",
-    "c": "0.0016",
-    "d": "0.04",
-    "e": "0.08"
+    "a": "0.04",
+    "b": "0.08",
+    "c": "0.0008",
+    "d": "Despite its name, the quantity stored in p1_hat_se is a variance, so its square root, about 0.028, is the standard error itself",
+    "e": "0.0016"
    },
    "correct": [
-    "a",
-    "b"
+    "c",
+    "d"
    ],
    "n_correct": 2,
    "points": 1,
@@ -5472,15 +5472,15 @@
    "topic": "Choosing the right distribution",
    "stem": "When should a t-test be used rather than a z-test?",
    "options": {
-    "a": "Always, because R has no z-test function",
-    "b": "When the population standard deviation is unknown, so the sample standard deviation is substituted",
-    "c": "With an unknown population standard deviation the t-distribution has heavier tails, which absorb the extra uncertainty of estimating the standard deviation",
-    "d": "Only when testing a proportion",
-    "e": "When the null hypothesis is one-sided"
+    "a": "Only when testing a proportion",
+    "b": "When the null hypothesis is one-sided",
+    "c": "Always, because R has no z-test function",
+    "d": "When the population standard deviation is unknown, so the sample standard deviation is substituted",
+    "e": "With an unknown population standard deviation the t-distribution has heavier tails, which absorb the extra uncertainty of estimating the standard deviation"
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -6031,15 +6031,15 @@
    "topic": "Testing for correlation",
    "stem": "Consider this R output: `t = 5.4738, df = 48, p-value = 1.579e-06`, `cor = 0.6199323`. Which statements are TRUE?",
    "options": {
-    "a": "The sample correlation is about 0.41, the lower end of the interval.",
-    "b": "The test rejects H0: rho = 0 at the 5% level.",
-    "c": "There is evidence that income and high-school graduation are positively correlated.",
-    "d": "The 95% confidence interval of about (0.41, 0.76) contains 0.",
-    "e": "The test has 49 degrees of freedom, one for each of the 50 states."
+    "a": "The 95% confidence interval of about (0.41, 0.76) contains 0.",
+    "b": "The test has 49 degrees of freedom, one for each of the 50 states.",
+    "c": "The sample correlation is about 0.41, the lower end of the interval.",
+    "d": "The test rejects H0: rho = 0 at the 5% level.",
+    "e": "There is evidence that income and high-school graduation are positively correlated."
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -6094,15 +6094,15 @@
    "topic": "Spearman's correlation",
    "stem": "Which statements about Spearman's correlation are TRUE?",
    "options": {
-    "a": "It is the Pearson correlation computed on the values rather than on the ranks.",
-    "b": "It measures monotonic association rather than only linear association.",
-    "c": "It cannot detect a relationship where larger states are richer but not linearly.",
-    "d": "It is robust to outliers.",
-    "e": "It is obtained in R with `cor.test(x, y, method = \"kendall\")`."
+    "a": "It is obtained in R with `cor.test(x, y, method = \"kendall\")`.",
+    "b": "It is the Pearson correlation computed on the values rather than on the ranks.",
+    "c": "It measures monotonic association rather than only linear association.",
+    "d": "It cannot detect a relationship where larger states are richer but not linearly.",
+    "e": "It is robust to outliers."
    },
    "correct": [
-    "b",
-    "d"
+    "c",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -6220,15 +6220,15 @@
    "topic": "Omnibus tests and multiple testing",
    "stem": "For alpha = 0.05 and m = 190 separate tests, the probability of at least one Type I error is about 99.3%. What is the consequence for practice?",
    "options": {
-    "a": "Each individual test should be run at a much smaller alpha.",
-    "b": "We should use omnibus tests that make a single decision for all groups at once.",
-    "c": "If the omnibus test is significant, a post hoc test such as Tukey is needed to find out which groups differ.",
-    "d": "More tests automatically increase the power of each test.",
-    "e": "Type II errors disappear when many tests are performed."
+    "a": "More tests automatically increase the power of each test.",
+    "b": "Type II errors disappear when many tests are performed.",
+    "c": "Each individual test should be run at a much smaller alpha.",
+    "d": "We should use omnibus tests that make a single decision for all groups at once.",
+    "e": "If the omnibus test is significant, a post hoc test such as Tukey is needed to find out which groups differ."
    },
    "correct": [
-    "b",
-    "c"
+    "d",
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
@@ -6655,12 +6655,13 @@
     "b": "The bootstrap permutation test",
     "c": "Bagging",
     "d": "Cross-validation",
-    "e": "The jackknife confidence interval"
+    "e": "A method that does not assume a specific form for the population distribution"
    },
    "correct": [
-    "a"
+    "a",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Non-parametric methods assume no specific form for the population distribution, and states that it focuses on bootstrapping as the workable option, estimating standard errors, confidence intervals and p-values directly from the sample.",
    "r_flavoured": true,
@@ -6683,14 +6684,15 @@
    "options": {
     "a": "Collect real data, fit a model, test, report",
     "b": "Define the data generating process and statistic, generate many random samples, compute the statistic for each",
-    "c": "Simulate one sample, plot it, conclude",
+    "c": "Generating random samples from a specified distribution to approximate the sampling distribution of a statistic",
     "d": "Choose alpha, compute the p-value, decide",
     "e": "Generate samples, bootstrap them, report a confidence interval"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The three steps are to define the DGP and the statistic of interest, generate a large number of random samples from that DGP, and calculate the statistic for each sample so the resulting distribution approximates the sampling distribution.",
    "r_flavoured": true,
@@ -6714,14 +6716,15 @@
    "options": {
     "a": "The central limit theorem",
     "b": "The law of large numbers",
-    "c": "The fact that R is fast",
+    "c": "It can estimate standard errors, confidence intervals and p-values when the analytical solution is difficult or impossible to obtain",
     "d": "The chi-squared approximation",
     "e": "Having an exactly normal population"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Monte-Carlo works by repeated sampling, so its accuracy improves as the number of simulations grows, which is precisely the law of large numbers. The CLT is about the shape of a sampling distribution, a different statement.",
    "r_flavoured": true,
@@ -6746,12 +6749,13 @@
     "b": "The number of simulated draws where X is greater than Y",
     "c": "The sum of X across all simulations",
     "d": "The number of simulations, N",
-    "e": "The mean of X"
+    "e": "Half of them, since a comparison that is true is not also false"
    },
    "correct": [
-    "a"
+    "a",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N gives the simulated probability P(X < Y). This is used to estimate a probability that is analytically awkward, here for X normal and Y exponential.",
    "r_flavoured": true,
@@ -6778,12 +6782,13 @@
     "b": "It repeatedly resamples the observed data with replacement to estimate standard errors, confidence intervals and p-values",
     "c": "It splits the data into a training and a test set",
     "d": "It computes the exact analytic solution",
-    "e": "It removes outliers before analysing the data"
+    "e": "It needs only the observed sample, and works for any statistic including the median"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Bootstrapping samples repeatedly from the empirical distribution of the observed data with replacement and recomputes the statistic each time, giving an estimated sampling distribution without assuming a parametric form.",
    "r_flavoured": true,
@@ -6811,13 +6816,14 @@
     "a": "It makes the simulation run faster",
     "b": "It makes the random numbers reproducible so results can be recovered",
     "c": "It increases the number of simulations",
-    "d": "It ensures the data are normally distributed",
+    "d": "It sets the starting state of the pseudo-random generator, so the same seed reproduces the same sequence of draws",
     "e": "It removes the need for a bootstrap"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`set.seed()` fixes the starting state of the random number generator, so the same seed reproduces the same pseudo-random draws. That is essential when a result needs to be reported or checked by someone else.",
    "r_flavoured": true,
@@ -6841,13 +6847,14 @@
     "a": "To create N random numbers",
     "b": "To create an empty numeric vector of length N that will hold one bootstrap statistic per iteration",
     "c": "To create a vector of N observations to resample",
-    "d": "To pre-allocate a data.frame with N rows",
+    "d": "To reserve the storage before the loop, so each iteration can write its result into position i",
     "e": "To set the random seed N times"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`numeric(N)` allocates an empty numeric vector of length N so R can store one bootstrap result in each position. Without pre-allocation R would have to grow the vector inside the loop, which is slower.",
    "r_flavoured": true,
@@ -6872,18 +6879,16 @@
    "stem": "Consider this code. Which statements about it are true? `N <- 100000; X <- rnorm(N, 3, 1); Y <- rexp(N, rate = 0.5); H <- sum(X < Y); H / N`",
    "options": {
     "a": "`N <- 100000` sets the number of simulations",
-    "b": "`X <- rnorm(N, mean = 3, sd = 1)` draws N values from a normal distribution",
-    "c": "`H <- sum(X < Y)` counts the draws where X is less than Y",
+    "b": "`X <- rnorm(N, mean = 3, sd = 1)` draws N values from an exponential distribution",
+    "c": "`H <- sum(X < Y)` counts the draws where X is greater than Y",
     "d": "`H / N` gives an estimate of P(X < Y)",
     "e": "The result is the exact analytical probability of P(X < Y)"
    },
    "correct": [
     "a",
-    "b",
-    "c",
     "d"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The code sets the number of simulations, draws N values from each distribution, counts the draws in which X is less than Y, and divides by N to estimate P(X < Y). The result is a simulation-based approximation that becomes more accurate as N grows, not an exact closed-form answer, so (e) is false.",
    "r_flavoured": true,
@@ -6907,18 +6912,16 @@
    "stem": "Which statements about the birthday problem simulation are true? `bdays <- sample(1:365, 30, replace = TRUE)`, repeated for `N` iterations.",
    "options": {
     "a": "`sample(1:365, 30, replace = TRUE)` simulates 30 people's birthdays",
-    "b": "The replacement is appropriate because two people can share a birthday",
+    "b": "The replacement is inappropriate, because two people cannot share a birthday",
     "c": "The simulation estimates the probability of at least one shared birthday",
     "d": "The simulation would be exact regardless of how large N is",
-    "e": "Increasing N generally improves the accuracy of the estimate"
+    "e": "Increasing N beyond some point makes the estimate exact"
    },
    "correct": [
     "a",
-    "b",
-    "c",
-    "e"
+    "c"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Sampling 30 birthdays with replacement from 1 to 365 models birthdays as independent, which is what allows two people to share one. Repeating the simulation estimates the probability of at least one shared birthday, and raising N improves accuracy through the law of large numbers. No finite N gives an exact answer, so (d) is false.",
    "r_flavoured": true,

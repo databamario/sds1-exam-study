@@ -11,15 +11,17 @@ def questions():
     out.append(mc(
         "L7-MC-001", 7, "One-sided vs two-sided tests",
         "How do one-sided and two-sided tests differ?",
-        ["A one-sided test has rejection regions in both tails; a two-sided test has "
-         "only one.",
-         "A two-sided test has rejection regions in both tails; a one-sided test has the "
-         "rejection region in only one tail.",
-         "They differ only in the sample size required.",
-         "A one-sided test always uses the t-distribution; a two-sided test uses the normal.",
-         "For a given alpha the confidence level of a one-sided test is 1 - alpha while "
-         "that of a two-sided test is 1 - alpha over 2."],
-        ["b", "e"],
+        [
+        "They differ only in the sample size required.",
+        "A one-sided test always uses the t-distribution; a two-sided test uses the normal.",
+        "For a given alpha the confidence level of a one-sided test is 1 - alpha while "
+                 "that of a two-sided test is 1 - alpha over 2.",
+        "A one-sided test has rejection regions in both tails; a two-sided test has "
+                 "only one.",
+        "A two-sided test has rejection regions in both tails; a one-sided test has the "
+                 "rejection region in only one tail.",
+         ],
+        ["c", "e"],
         "The alternative hypothesis decides the shape: mu != mu0 needs both tails, while "
         "mu > mu0 or mu < mu0 needs one. Consequently the critical values and p-values "
         "differ between the two, and the confidence level that goes with a given alpha is "
@@ -63,12 +65,14 @@ def questions():
     out.append(mc(
         "L7-MC-004", 7, "Type I and Type II errors",
         "What is a Type I error?",
-        ["Failing to reject H0 when it is false",
-         "Rejecting H0 when it is true",
-         "It is also known as a false positive, since nothing is actually there",
-         "Using the wrong critical value",
-         "Choosing a one-sided test instead of a two-sided one"],
-        ["b", "c"],
+        [
+        "Using the wrong critical value",
+        "Choosing a one-sided test instead of a two-sided one",
+        "Failing to reject H0 when it is false",
+        "Rejecting H0 when it is true",
+        "It is also known as a false positive, since nothing is actually there",
+         ],
+        ["d", "e"],
         "A Type I error is a false positive: rejecting a null hypothesis that is actually "
         "true. Its probability is the significance level alpha. Failing to reject a false "
         "null is the Type II error.",
@@ -92,13 +96,15 @@ def questions():
         "L7-MC-006", 7, "Acceptance and rejection regions",
         "For a two-sided test at alpha = 0.05, within which values of the test statistic do "
         "you FAIL to reject H0?",
-        ["z < -1.96 or z > 1.96",
-         "-1.96 <= z <= 1.96",
-         "z < 1.645",
-         "-1.645 <= z <= 1.645",
-         "The rejection regions are the two tails beyond plus and minus 1.96, which leave "
-         "the middle as the set of values that do not lead to rejection"],
-        ["b", "e"],
+        [
+        "z < 1.645",
+        "-1.645 <= z <= 1.645",
+        "The rejection regions are the two tails beyond plus and minus 1.96, which leave "
+                 "the middle as the set of values that do not lead to rejection",
+        "z < -1.96 or z > 1.96",
+        "-1.96 <= z <= 1.96",
+         ],
+        ["c", "e"],
         "The rejection regions are the two tails beyond plus or minus 1.96, so the "
         "acceptance region is the interval from -1.96 to 1.96. Using 1.645 would be the "
         "region for a 90% two-sided interval, not 95%.",
@@ -157,16 +163,18 @@ def questions():
     out.append(mc(
         "L7-MC-010", 7, "Proportions",
         "Which statements are TRUE?",
-        ["A confidence interval for a proportion is point estimate plus or minus critical "
-         "value times the standard error of the proportion.",
-         "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) "
-         "over n).",
-         "The standard error of a difference in proportions adds the two standard errors "
-         "rather than the two variances.",
-         "Proportions can only be used for continuous variables.",
-         "A hypothesis test for a single proportion uses the t-distribution, because the "
-         "population proportion is unknown."],
-        ["a", "b"],
+        [
+        "Proportions can only be used for continuous variables.",
+        "A hypothesis test for a single proportion uses the t-distribution, because the "
+                 "population proportion is unknown.",
+        "A confidence interval for a proportion is point estimate plus or minus critical "
+                 "value times the standard error of the proportion.",
+        "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) "
+                 "over n).",
+        "The standard error of a difference in proportions adds the two standard errors "
+                 "rather than the two variances.",
+         ],
+        ["c", "d"],
         "The proportion machinery is built on the normal approximation to the binomial, "
         "which is why the SE has the familiar squaring form. The claim that proportions "
         "can only be used for continuous variables is false, because proportions are for "
@@ -192,13 +200,15 @@ def questions():
     out.append(mc(
         "L7-MC-012", 7, "Proportions",
         "Consider this R code. What is the value of `p1_hat_se`?",
-        ["0.0008",
-         "Despite its name, the quantity stored in p1_hat_se is a variance, so its square "
-         "root, about 0.028, is the standard error itself",
-         "0.0016",
-         "0.04",
-         "0.08"],
-        ["a", "b"],
+        [
+        "0.04",
+        "0.08",
+        "0.0008",
+        "Despite its name, the quantity stored in p1_hat_se is a variance, so its square "
+                 "root, about 0.028, is the standard error itself",
+        "0.0016",
+         ],
+        ["c", "d"],
         "`p1_hat <- 160/200` is 0.8, and the code computes p1_hat * (1 - p1_hat) / 200 = "
         "0.8 * 0.2 / 200 = 0.0008. Note the misleading name: the quantity computed is a "
         "variance, not a standard error, and its square root 0.028 is the standard error "
@@ -209,14 +219,16 @@ def questions():
     out.append(mc(
         "L7-MC-013", 7, "Choosing the right distribution",
         "When should a t-test be used rather than a z-test?",
-        ["Always, because R has no z-test function",
-"When the population standard deviation is unknown, so the sample standard "
-        "deviation is substituted",
-         "With an unknown population standard deviation the t-distribution has heavier "
-         "tails, which absorb the extra uncertainty of estimating the standard deviation",
-         "Only when testing a proportion",
-         "When the null hypothesis is one-sided"],
-        ["b", "c"],
+        [
+        "Only when testing a proportion",
+        "When the null hypothesis is one-sided",
+        "Always, because R has no z-test function",
+        "When the population standard deviation is unknown, so the sample standard "
+                "deviation is substituted",
+        "With an unknown population standard deviation the t-distribution has heavier "
+                 "tails, which absorb the extra uncertainty of estimating the standard deviation",
+         ],
+        ["d", "e"],
         "The z-test requires knowing the population sigma, which is rarely available, so "
         "substituting s leads to the t-test and its t-distribution. Neither sample size nor "
         "the direction of the alternative decides this.",
