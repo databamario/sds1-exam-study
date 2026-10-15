@@ -150,7 +150,7 @@ def questions():
         "The 95% refers to how often intervals computed across many samples cover the "
         "true parameter, not to the data or the sampling distribution, so (b) and (c) are "
         "both wrong. And a single interval still contains uncertainty, so (e) is wrong.",
-        PDF, "p.7"))
+        PDF, "p.34"))
 
     out.append(mc(
         "L6-MC-014", 6, "Working with the t-distribution",

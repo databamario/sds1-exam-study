@@ -213,7 +213,7 @@ def questions():
         "0.8 * 0.2 / 200 = 0.0008. Note the misleading name: the quantity computed is a "
         "variance, not a standard error, and its square root 0.028 is the standard error "
         "itself.",
-        PDF, "p.48", code="p1_hat <- 160 / 200\np1_hat_se <- p1_hat * (1 - p1_hat) / 200",
+        PDF, "p.64", code="p1_hat <- 160 / 200\np1_hat_se <- p1_hat * (1 - p1_hat) / 200",
         r_functions=["<-", "sqrt"], origin="adapted_HT25"))
 
     out.append(mc(
@@ -232,7 +232,7 @@ def questions():
         "The z-test requires knowing the population sigma, which is rarely available, so "
         "substituting s leads to the t-test and its t-distribution. Neither sample size nor "
         "the direction of the alternative decides this.",
-        PDF, "p.21", r_functions=["t.test", "pnorm", "qt"], origin="adapted_HT25"))
+        PDF, "p.20", r_functions=["t.test", "pnorm", "qt"], origin="adapted_HT25"))
 
     out.append(mc(
         "L7-MC-014", 7, "Computing p-values in R",

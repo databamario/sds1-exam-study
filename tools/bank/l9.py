@@ -86,7 +86,7 @@ def questions():
         "Bootstrapping samples repeatedly from the empirical distribution of the observed "
         "data with replacement and recomputes the statistic each time, giving an estimated "
         "sampling distribution without assuming a parametric form.",
-        PDF, "p.17",
+        PDF, "p.18",
         code="income <- c(18, 21, 22, 24, 25, 26, 28, 29, 31, 34, 38, 95)\n"
              "N <- 10000\n"
              "boot_medians <- numeric(N)\n"
@@ -109,7 +109,7 @@ def questions():
         "`set.seed()` fixes the starting state of the random number generator, so the same "
         "seed reproduces the same pseudo-random draws. That is essential when a result needs "
         "to be reported or checked by someone else.",
-        PDF, "p.15", code="set.seed(42)", r_functions=["set.seed"],
+        PDF, "p.16", code="set.seed(42)", r_functions=["set.seed"],
         origin="adapted_HT25"))
 
     out.append(mc(
@@ -227,7 +227,7 @@ def questions():
         [rb("Explains it fixes the random number generator state", 2),
          rb("States that the same seed reproduces the same draws", 2),
          rb("Explains results differ between runs without it", 2)],
-        1, PDF, "p.15", code="set.seed(42)", r_functions=["set.seed", "rnorm", "sample"]))
+        1, PDF, "p.16", code="set.seed(42)", r_functions=["set.seed", "rnorm", "sample"]))
 
     out.append(wa(
         "L9-WA-006", 9, "Comparing analytic and simulation approaches",
@@ -262,7 +262,7 @@ def questions():
         [rb("Identifies Monte-Carlo simulation as the addition", 2),
          rb("Identifies bootstrapping as the second addition", 2),
          rb("Correctly defers linear regression to SDS2", 2)],
-        1, PDF, "p.17", r_functions=["sample", "rnorm", "median"],
+        1, PDF, "p.18", r_functions=["sample", "rnorm", "median"],
         origin="adapted_HT25"))
 
     return out

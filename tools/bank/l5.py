@@ -3,6 +3,7 @@
 from .common import mc, rb, wa
 
 PDF = "lecture5_after.pdf"
+PDF3 = "lecture3.pdf"
 
 
 def questions():
@@ -237,7 +238,7 @@ def questions():
         PDF, "p.34"))
 
     out.append(mc(
-        "L5-MC-015", 5, "Shape of a distribution",
+        "L5-MC-015", 3, "Shape of a distribution",
         "A distribution is strongly right-skewed. Which statement is TRUE?",
         ["The mean is smaller than the median.",
          "The mean is larger than the median.",
@@ -251,7 +252,7 @@ def questions():
         "affected has it backwards. The mode is still perfectly well defined for a skewed "
         "distribution, and the mean and median coincide only in the symmetric case, which "
         "a right-skewed distribution is not.",
-        PDF, "p.23", r_functions=["mean", "median", "quantile"]))
+        PDF3, "p.21", r_functions=["mean", "median", "quantile"]))
 
     # ----------------------------------------------------------------- written
     out.append(wa(
@@ -367,5 +368,35 @@ def questions():
         "since a variable can have the same mean with a different spread, so "
         "(e) is wrong.",
         PDF, "p.39"))
+
+    # ---- the law of large numbers, L5 p.44-46. Lecture 5 used to reach its
+    # `median` coverage through a skew question that was never Lecture 5's:
+    # lecture 5 never mentions skew, and the mean-versus-median material is on
+    # L3 p.21. Moving that question to its real lecture left lecture 5 without
+    # the median, and p.46 is the slide that genuinely earns it.
+    out.append(mc(
+        "L5-MC-017", 5, "Law of large numbers",
+        "Which statements about the law of large numbers are true?",
+        ["As the sample size grows, the sample mean converges to the population "
+         "mean",
+         "The law of large numbers applies only to the sample mean and not to "
+         "medians",
+         "The law of large numbers extends to sample proportions, variances "
+         "and medians",
+         "The law of large numbers describes the distribution of the sample "
+         "mean for a finite sample size",
+         "With larger samples, the estimate of the population mean becomes "
+         "less accurate"],
+        ["a", "c"],
+        "As the sample size grows the sample mean settles onto the population "
+        "mean, so (a) is correct, and the law of large numbers is not confined "
+        "to the mean: it extends to sample proportions, variances and medians, "
+        "so (c) is correct and (b) is wrong. Describing the distribution of "
+        "the sample mean at a finite sample size is the central limit theorem's "
+        "job, not the law of large numbers, which rules out (d). Larger "
+        "samples make the estimate of the population mean more accurate, so "
+        "(e) is backwards.",
+        PDF, "p.46",
+        r_functions=["median"]))
 
     return out

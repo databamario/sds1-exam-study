@@ -405,7 +405,7 @@ def questions():
         [rb("Identifies right skew from mean exceeding median", 2),
          rb("Explains that a long right tail pulls the mean up", 2),
          rb("Names a suitable accompanying statistic and justifies it")],
-        1, PDF, "p.23", r_functions=["mean", "median", "sd", "IQR"],
+        1, PDF, "p.21", r_functions=["mean", "median", "sd", "IQR"],
         detail="The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population."))
 
     out.append(wa(
@@ -430,7 +430,7 @@ def questions():
         [rb("Bar plot treats categories as unordered labels", 2),
          rb("Histogram uses ordered bins with no gaps", 2),
          rb("Notes this reveals distribution shape, centre and skewness")],
-        1, PDF, "p.47", r_functions=["geom_histogram", "geom_bar"],
+        1, PDF, "p.24", r_functions=["geom_histogram", "geom_bar"],
         detail="The gap is the tell: if the axis could sensibly carry intermediate values, a histogram is the right choice. A histogram of a categorical variable is not meaningful because the bin edges would imply a numeric spacing that the categories do not have. The number of bins also controls how much detail you see, and it is a display choice rather than part of the data."))
 
     return out

@@ -2766,6 +2766,38 @@
    "origin": "new"
   },
   {
+   "id": "L5-MC-015",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Shape of a distribution",
+   "stem": "A distribution is strongly right-skewed. Which statement is TRUE?",
+   "options": {
+    "a": "The mean is smaller than the median.",
+    "b": "The mean is larger than the median.",
+    "c": "The mean and median are always equal for a symmetric distribution.",
+    "d": "The median is more affected by outliers than the mean.",
+    "e": "A right-skewed distribution is not a symmetric one, so it is not a case where the mean and median coincide."
+   },
+   "correct": [
+    "b",
+    "e"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "A long right tail pulls the mean upward, so the mean exceeds the median. The median is the more robust of the two, which is why the option claiming it is more affected has it backwards. The mode is still perfectly well defined for a skewed distribution, and the mean and median coincide only in the symmetric case, which a right-skewed distribution is not.",
+   "r_flavoured": true,
+   "r_functions": [
+    "mean",
+    "median",
+    "quantile"
+   ],
+   "source": {
+    "pdf": "lecture3.pdf",
+    "slide": "p.21"
+   },
+   "origin": "new"
+  },
+  {
    "id": "G-WA-001",
    "lecture": 3,
    "type": "WA",
@@ -3107,7 +3139,7 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.23"
+    "slide": "p.21"
    },
    "origin": "new"
   },
@@ -3180,7 +3212,7 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.47"
+    "slide": "p.24"
    },
    "origin": "new"
   },
@@ -3524,62 +3556,6 @@
    "origin": "new"
   },
   {
-   "id": "L4-MC-014",
-   "lecture": 4,
-   "type": "MC",
-   "topic": "Random variables",
-   "stem": "Which of the following are examples of random variables?",
-   "options": {
-    "a": "The outcome of rolling a six-sided die",
-    "b": "The average number of heads in 10 tosses, which is always 5",
-    "c": "The height of a randomly chosen adult in Norrkoping",
-    "d": "The total size in bytes of every email currently in your inbox",
-    "e": "The area of Sweden"
-   },
-   "correct": [
-    "a",
-    "c"
-   ],
-   "n_correct": 2,
-   "points": 1,
-   "explanation": "A random variable is a numerical value that varies from one random outcome to the next, so a die roll and an adult's height both qualify. The other three are constants: the expected number of heads in 10 fair tosses is fixed at 5, and the size of a given inbox and the area of Sweden do not move between draws. The count of emails arriving in an hour would qualify, since that does vary.",
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.13"
-   },
-   "origin": "new"
-  },
-  {
-   "id": "L4-MC-015",
-   "lecture": 4,
-   "type": "MC",
-   "topic": "Discrete vs continuous",
-   "stem": "Which random variables are DISCRETE, meaning their support is a finite or countable set of values?",
-   "options": {
-    "a": "The number of heads in 10 coin tosses",
-    "b": "The number of emails received in an hour",
-    "c": "The outcome of rolling a die, because the die is a physical object",
-    "d": "The height of a randomly chosen adult",
-    "e": "The time until a light bulb burns out"
-   },
-   "correct": [
-    "a",
-    "b"
-   ],
-   "n_correct": 2,
-   "points": 1,
-   "explanation": "Heads and emails take countable whole-number values, so both are discrete. A die roll is discrete too, but not because the die is a physical object; that has nothing to do with whether the support is countable. Height and burn-out time can take any real value in a range, so they are continuous.",
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.13"
-   },
-   "origin": "new"
-  },
-  {
    "id": "L4-WA-001",
    "lecture": 4,
    "type": "WA",
@@ -3769,37 +3745,6 @@
    "origin": "new"
   },
   {
-   "id": "L4-WA-007",
-   "lecture": 4,
-   "type": "WA",
-   "topic": "Random variables",
-   "stem": "Explain what makes a random variable discrete or continuous, and classify the time until a light bulb burns out.",
-   "points": 1,
-   "answer": "A random variable is discrete when its support is a finite or countable set of values, such as die rolls or counts per hour, and continuous when it can take any value in a range. The time until a bulb burns out is continuous.",
-   "detail": "The bulb lifetime could be 100 hours, 250.5 hours, or any other positive real number, so no value is excluded. A count of cars per hour is discrete because 4.5 cars is meaningless. The distinction matters because continuous variables can be described by density functions and their probabilities come from areas, whereas discrete ones use probability masses that sum to 1.",
-   "rubric": [
-    {
-     "text": "Discrete defined via finite or countable support",
-     "elements": 2
-    },
-    {
-     "text": "Continuous defined via any value in a range",
-     "elements": 2
-    },
-    {
-     "text": "Bulb burn-out time correctly classified as continuous with justification",
-     "elements": 1
-    }
-   ],
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.13"
-   },
-   "origin": "new"
-  },
-  {
    "id": "L4-WA-008",
    "lecture": 4,
    "type": "WA",
@@ -3827,6 +3772,62 @@
    "source": {
     "pdf": "lecture4_after.pdf",
     "slide": "p.37"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L4-MC-014",
+   "lecture": 5,
+   "type": "MC",
+   "topic": "Random variables",
+   "stem": "Which of the following are examples of random variables?",
+   "options": {
+    "a": "The outcome of rolling a six-sided die",
+    "b": "The average number of heads in 10 tosses, which is always 5",
+    "c": "The height of a randomly chosen adult in Norrkoping",
+    "d": "The total size in bytes of every email currently in your inbox",
+    "e": "The area of Sweden"
+   },
+   "correct": [
+    "a",
+    "c"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "A random variable is a numerical value that varies from one random outcome to the next, so a die roll and an adult's height both qualify. The other three are constants: the expected number of heads in 10 fair tosses is fixed at 5, and the size of a given inbox and the area of Sweden do not move between draws. The count of emails arriving in an hour would qualify, since that does vary.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.13"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L4-MC-015",
+   "lecture": 5,
+   "type": "MC",
+   "topic": "Discrete vs continuous",
+   "stem": "Which random variables are DISCRETE, meaning their support is a finite or countable set of values?",
+   "options": {
+    "a": "The number of heads in 10 coin tosses",
+    "b": "The number of emails received in an hour",
+    "c": "The outcome of rolling a die, because the die is a physical object",
+    "d": "The height of a randomly chosen adult",
+    "e": "The time until a light bulb burns out"
+   },
+   "correct": [
+    "a",
+    "b"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "Heads and emails take countable whole-number values, so both are discrete. A die roll is discrete too, but not because the die is a physical object; that has nothing to do with whether the support is countable. Height and burn-out time can take any real value in a range, so they are continuous.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.13"
    },
    "origin": "new"
   },
@@ -4179,38 +4180,6 @@
    "origin": "adapted_HT25"
   },
   {
-   "id": "L5-MC-015",
-   "lecture": 5,
-   "type": "MC",
-   "topic": "Shape of a distribution",
-   "stem": "A distribution is strongly right-skewed. Which statement is TRUE?",
-   "options": {
-    "a": "The mean is smaller than the median.",
-    "b": "The mean is larger than the median.",
-    "c": "The mean and median are always equal for a symmetric distribution.",
-    "d": "The median is more affected by outliers than the mean.",
-    "e": "A right-skewed distribution is not a symmetric one, so it is not a case where the mean and median coincide."
-   },
-   "correct": [
-    "b",
-    "e"
-   ],
-   "n_correct": 2,
-   "points": 1,
-   "explanation": "A long right tail pulls the mean upward, so the mean exceeds the median. The median is the more robust of the two, which is why the option claiming it is more affected has it backwards. The mode is still perfectly well defined for a skewed distribution, and the mean and median coincide only in the symmetric case, which a right-skewed distribution is not.",
-   "r_flavoured": true,
-   "r_functions": [
-    "mean",
-    "median",
-    "quantile"
-   ],
-   "source": {
-    "pdf": "lecture5_after.pdf",
-    "slide": "p.23"
-   },
-   "origin": "new"
-  },
-  {
    "id": "L5-MC-016",
    "lecture": 5,
    "type": "MC",
@@ -4235,6 +4204,36 @@
    "source": {
     "pdf": "lecture5_after.pdf",
     "slide": "p.39"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L5-MC-017",
+   "lecture": 5,
+   "type": "MC",
+   "topic": "Law of large numbers",
+   "stem": "Which statements about the law of large numbers are true?",
+   "options": {
+    "a": "As the sample size grows, the sample mean converges to the population mean",
+    "b": "The law of large numbers applies only to the sample mean and not to medians",
+    "c": "The law of large numbers extends to sample proportions, variances and medians",
+    "d": "The law of large numbers describes the distribution of the sample mean for a finite sample size",
+    "e": "With larger samples, the estimate of the population mean becomes less accurate"
+   },
+   "correct": [
+    "a",
+    "c"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "As the sample size grows the sample mean settles onto the population mean, so (a) is correct, and the law of large numbers is not confined to the mean: it extends to sample proportions, variances and medians, so (c) is correct and (b) is wrong. Describing the distribution of the sample mean at a finite sample size is the central limit theorem's job, not the law of large numbers, which rules out (d). Larger samples make the estimate of the population mean more accurate, so (e) is backwards.",
+   "r_flavoured": true,
+   "r_functions": [
+    "median"
+   ],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.46"
    },
    "origin": "new"
   },
@@ -4301,6 +4300,37 @@
    },
    "origin": "new",
    "image": "normal_shaded"
+  },
+  {
+   "id": "L4-WA-007",
+   "lecture": 5,
+   "type": "WA",
+   "topic": "Random variables",
+   "stem": "Explain what makes a random variable discrete or continuous, and classify the time until a light bulb burns out.",
+   "points": 1,
+   "answer": "A random variable is discrete when its support is a finite or countable set of values, such as die rolls or counts per hour, and continuous when it can take any value in a range. The time until a bulb burns out is continuous.",
+   "detail": "The bulb lifetime could be 100 hours, 250.5 hours, or any other positive real number, so no value is excluded. A count of cars per hour is discrete because 4.5 cars is meaningless. The distinction matters because continuous variables can be described by density functions and their probabilities come from areas, whereas discrete ones use probability masses that sum to 1.",
+   "rubric": [
+    {
+     "text": "Discrete defined via finite or countable support",
+     "elements": 2
+    },
+    {
+     "text": "Continuous defined via any value in a range",
+     "elements": 2
+    },
+    {
+     "text": "Bulb burn-out time correctly classified as continuous with justification",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.20"
+   },
+   "origin": "new"
   },
   {
    "id": "L5-WA-001",
@@ -4829,7 +4859,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.7"
+    "slide": "p.34"
    },
    "origin": "new"
   },
@@ -5631,7 +5661,7 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.48"
+    "slide": "p.64"
    },
    "origin": "adapted_HT25",
    "code": "p1_hat <- 160 / 200\np1_hat_se <- p1_hat * (1 - p1_hat) / 200"
@@ -5664,7 +5694,7 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.21"
+    "slide": "p.20"
    },
    "origin": "adapted_HT25"
   },
@@ -7156,7 +7186,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.17"
+    "slide": "p.18"
    },
    "origin": "new",
    "code": "income <- c(18, 21, 22, 24, 25, 26, 28, 29, 31, 34, 38, 95)\nN <- 10000\nboot_medians <- numeric(N)\nfor (i in 1:N) {\n  boot_sample <- sample(income, length(income), replace = TRUE)\n  boot_medians[i] <- median(boot_sample)\n}"
@@ -7187,7 +7217,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.15"
+    "slide": "p.16"
    },
    "origin": "adapted_HT25",
    "code": "set.seed(42)"
@@ -7475,7 +7505,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.15"
+    "slide": "p.16"
    },
    "origin": "new",
    "code": "set.seed(42)"
@@ -7592,7 +7622,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.17"
+    "slide": "p.18"
    },
    "origin": "adapted_HT25"
   }

@@ -3,6 +3,7 @@
 from .common import mc, rb, wa
 
 PDF = "lecture4_after.pdf"
+PDF5 = "lecture5_after.pdf"
 
 
 def questions():
@@ -222,7 +223,7 @@ def questions():
         PDF, "p.37"))
 
     out.append(mc(
-        "L4-MC-014", 4, "Random variables",
+        "L4-MC-014", 5, "Random variables",
         "Which of the following are examples of random variables?",
         ["The outcome of rolling a six-sided die",
          "The average number of heads in 10 tosses, which is always 5",
@@ -235,10 +236,10 @@ def questions():
         "constants: the expected number of heads in 10 fair tosses is fixed at 5, and the "
         "size of a given inbox and the area of Sweden do not move between draws. The count "
         "of emails arriving in an hour would qualify, since that does vary.",
-        PDF, "p.13"))
+        PDF5, "p.13"))
 
     out.append(mc(
-        "L4-MC-015", 4, "Discrete vs continuous",
+        "L4-MC-015", 5, "Discrete vs continuous",
         "Which random variables are DISCRETE, meaning their support is a finite or "
         "countable set of values?",
         ["The number of heads in 10 coin tosses",
@@ -251,7 +252,7 @@ def questions():
         "roll is discrete too, but not because the die is a physical object; that has "
         "nothing to do with whether the support is countable. Height and burn-out time can "
         "take any real value in a range, so they are continuous.",
-        PDF, "p.13"))
+        PDF5, "p.13"))
 
     # ----------------------------------------------------------------- written
     out.append(wa(
@@ -323,14 +324,14 @@ def questions():
         detail="The two differ, which is itself evidence of an association. A conditional probability is always read inside the given condition, so the denominator is the total for that condition rather than the grand total. This is the calculation behind a comparison of two conditional probabilities that produces a chi-squared test for independence."))
 
     out.append(wa(
-        "L4-WA-007", 4, "Random variables",
+        "L4-WA-007", 5, "Random variables",
         "Explain what makes a random variable discrete or continuous, and classify the "
         "time until a light bulb burns out.",
         "A random variable is discrete when its support is a finite or countable set of values, such as die rolls or counts per hour, and continuous when it can take any value in a range. The time until a bulb burns out is continuous.",
         [rb("Discrete defined via finite or countable support", 2),
          rb("Continuous defined via any value in a range", 2),
          rb("Bulb burn-out time correctly classified as continuous with justification")],
-        1, PDF, "p.13",
+        1, PDF5, "p.20",
         detail="The bulb lifetime could be 100 hours, 250.5 hours, or any other positive real number, so no value is excluded. A count of cars per hour is discrete because 4.5 cars is meaningless. The distinction matters because continuous variables can be described by density functions and their probabilities come from areas, whereas discrete ones use probability masses that sum to 1."))
 
     out.append(wa(
