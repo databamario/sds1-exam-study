@@ -4435,13 +4435,14 @@
     "a": "Compute the p-value, then reject H0, then state the hypotheses",
     "b": "Formulate H0, compute the test statistic, calculate the p-value, draw conclusions",
     "c": "Collect data, then choose the test, then report",
-    "d": "Compute a confidence interval, then reject H0, then conclude",
+    "d": "The standard error used is the standard deviation of the sampling distribution of the estimate",
     "e": "State Ha, compute the standard error, then stop"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The four steps are: formulate the null hypothesis, compute the test statistic which measures how far the estimate sits from what H0 predicts, compute the p-value of a statistic at least as extreme under H0, and then draw the conclusion.",
    "r_flavoured": false,
@@ -4463,12 +4464,13 @@
     "b": "test statistic = (point estimate - null value) / standard error of the estimate",
     "c": "test statistic = point estimate - null value",
     "d": "test statistic = standard error / point estimate",
-    "e": "test statistic = (null value - point estimate) / standard error"
+    "e": "Test statistics follow different distributions depending on the estimator and the sample size, for example normal, t or chi-squared"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The test statistic measures how many standard errors the estimate lies from the null value, so it is the difference divided by the standard error. Reversing the numerator, as in option (e), only flips the sign and breaks the usual right-tail convention.",
    "r_flavoured": false,
@@ -4488,14 +4490,15 @@
    "options": {
     "a": "z is about 0.05, so the sample mean is very close to the population mean",
     "b": "z is about 4.9, so the sample mean is about 4.9 standard errors above the population mean",
-    "c": "z is about 1.96, so the result is significant at 5%",
+    "c": "About 95% of sample means fall within 2 standard errors of the population mean",
     "d": "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
     "e": "z cannot be computed without knowing the standard deviation"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "z = (179 - 170)/1.83 is about 4.9. Because the statistic is in units of standard errors rather than centimetres, the number describes how many SE away the value sits, not a distance in cm.",
    "r_flavoured": true,
@@ -4521,13 +4524,14 @@
     "a": "0.0345",
     "b": "0.9655",
     "c": "4.37e-07",
-    "d": "179",
+    "d": "lower.tail = FALSE switches to the upper tail, so this is the probability of being at or above 179",
     "e": "1.83"
    },
    "correct": [
-    "c"
+    "c",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`lower.tail = FALSE` returns the upper-tail area beyond the value, which is the p-value here, about 4.37e-07. The value 0.9655 is the lower tail and 0.0345 belongs to the bottle example from Lecture 5.",
    "r_flavoured": true,
@@ -4552,13 +4556,14 @@
     "a": "There is a 4.4e-07 probability that the null hypothesis is true.",
     "b": "If the null hypothesis were true, the probability of a test statistic at least as extreme as the observed one is about 4.4e-07.",
     "c": "There is a 4.4e-07 probability that the result is a fluke.",
-    "d": "The null hypothesis has been proven false with certainty.",
+    "d": "Random sampling variability alone would very rarely produce a result this extreme if the null hypothesis were true.",
     "e": "4.4e-07 of the sample data are outliers."
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The p-value is always conditional on H0 being true and describes the observed or more extreme statistic. It is not the probability that H0 is true, and it never proves anything with certainty.",
    "r_flavoured": false,
@@ -4579,13 +4584,14 @@
     "a": "Bias(theta-hat) = E[theta-hat] + theta",
     "b": "Bias(theta-hat) = E[theta-hat] - theta",
     "c": "Bias(theta-hat) = theta - E[theta-hat] / n",
-    "d": "Bias(theta-hat) = Var(theta-hat)",
+    "d": "An estimator is unbiased when its expected value equals the true parameter, that is when its bias is 0",
     "e": "Bias(theta-hat) = p-value"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Bias is the expected value of the estimator minus the true parameter, so an unbiased estimator has Bias = 0. Note that option (c) has the opposite sign, which would just be a negated bias.",
    "r_flavoured": false,
@@ -4604,18 +4610,16 @@
    "stem": "Which statements are TRUE?",
    "options": {
     "a": "Missing data can introduce bias only if it is random.",
-    "b": "Sampling bias is a type of missing data problem.",
+    "b": "Sampling bias is a type of measurement error rather than of missing data.",
     "c": "Attrition means individuals drop out of a longitudinal study.",
     "d": "Item non-response means individuals skip certain questions in a survey.",
-    "e": "Missing data reduces the effective sample size, which increases the standard error."
+    "e": "Missing data reduces the effective sample size, which decreases the standard error."
    },
    "correct": [
-    "b",
     "c",
-    "d",
-    "e"
+    "d"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
    "explanation": "It is missing data that is NOT random that can introduce bias and invalidate inference, which is the opposite of the claim that bias arises only when missingness is random.",
    "r_flavoured": false,
@@ -4636,13 +4640,14 @@
     "a": "1.28",
     "b": "1.645",
     "c": "1.96",
-    "d": "2.576",
+    "d": "A 95% confidence level corresponds to alpha = 0.05",
     "e": "2.33"
    },
    "correct": [
-    "c"
+    "c",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The two-sided 95% critical value is the 97.5th percentile of the standard normal, 1.96. A common trap is 1.645, which is the 95th percentile and therefore the critical value for a 90% interval, not 95%.",
    "r_flavoured": true,
@@ -4694,21 +4699,21 @@
    "options": {
     "a": "A higher confidence level requires a smaller critical value",
     "b": "A higher confidence level requires a larger critical value, and the interval half-width is critical value times standard error",
-    "c": "A higher confidence level reduces the standard error",
-    "d": "A higher confidence level increases alpha",
-    "e": "A higher confidence level shrinks the sample size"
+    "c": "The standard error does not depend on the confidence level, so the widening comes entirely from the critical value",
+    "d": "A higher confidence level increases alpha"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The interval is point estimate plus or minus critical value times standard error, and a higher confidence level needs a larger critical value while the standard error is unchanged. This is the trade-off: a wider interval is more likely to contain the parameter but less informative.",
+   "explanation": "The interval is point estimate plus or minus critical value times standard error, and a higher confidence level needs a larger critical value while the standard error is unchanged. That is the whole reason the interval widens: the standard error is a property of the estimator and the sample size, and the confidence level never touches it. A higher confidence level lowers alpha, not raises it. This is the trade-off: a wider interval is more likely to contain the parameter but less informative.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.33"
+    "slide": "p.48"
    },
    "origin": "new"
   },
@@ -4726,11 +4731,12 @@
     "e": "The interval must contain the true mean because it is a 95% interval"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The half-width 2.94 equals 1.96 times the standard error, so the standard error is about 1.5. A confidence interval is an interval for the population parameter, not for the population values or the sample mean, and even then it is not a certainty.",
+   "explanation": "The half-width 2.94 equals 1.96 times the standard error, so the standard error is about 1.5. The interval is built as the point estimate plus or minus that half-width, so its centre, 175, is the sample mean rather than the population mean. A confidence interval is an interval for the population parameter, not for the population values or the sample mean, and even then it is not a certainty.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -4746,21 +4752,19 @@
    "topic": "Working with the t-distribution",
    "stem": "Which of the following are TRUE statements about the t-distribution functions in R?",
    "options": {
-    "a": "`dt()` gives the probability density function",
-    "b": "`pt()` can only be used for a normal distribution",
+    "a": "`dt()` gives quantiles of the t distribution",
+    "b": "`pt()` gives the probability of one exact t value rather than a cumulative one",
     "c": "`pt()` gives the cumulative distribution function",
     "d": "`qt()` gives quantiles",
-    "e": "`rt()` generates random samples"
+    "e": "`rt()` returns a fixed critical value rather than a random draw"
    },
    "correct": [
-    "a",
     "c",
-    "d",
-    "e"
+    "d"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The four functions mirror the normal set d/p/q/r but for the t distribution. The claim that `pt()` can only be used for a normal distribution is wrong: `pt()` is the t-distribution CDF. There are exactly these four.",
+   "explanation": "`pt()` and `qt()` are the two the code actually uses, and they are inverses of each other: `qt()` returns the t value at a given tail area, `pt()` returns the area at or below a given t value. `dt()` is a density and `rt()` draws random samples, so the claims about them are both wrong. `pt()` is the t-distribution CDF, not something reserved for the normal.",
    "r_flavoured": true,
    "r_functions": [
     "dt",
@@ -4770,7 +4774,7 @@
    ],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.22"
+    "slide": "p.49"
    },
    "origin": "new",
    "code": "pt(qt(0.975, df = 7 - 1), df = 7 - 1)"

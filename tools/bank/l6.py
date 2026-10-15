@@ -15,9 +15,10 @@ def questions():
          "Formulate H0, compute the test statistic, calculate the p-value, draw "
          "conclusions",
          "Collect data, then choose the test, then report",
-         "Compute a confidence interval, then reject H0, then conclude",
+         "The standard error used is the standard deviation of the sampling distribution "
+         "of the estimate",
          "State Ha, compute the standard error, then stop"],
-        ["b"],
+        ["b", "d"],
         "The four steps are: formulate the null hypothesis, compute the test statistic "
         "which measures how far the estimate sits from what H0 predicts, compute the "
         "p-value of a statistic at least as extreme under H0, and then draw the "
@@ -31,8 +32,9 @@ def questions():
          "test statistic = (point estimate - null value) / standard error of the estimate",
          "test statistic = point estimate - null value",
          "test statistic = standard error / point estimate",
-         "test statistic = (null value - point estimate) / standard error"],
-        ["b"],
+         "Test statistics follow different distributions depending on the estimator and "
+         "the sample size, for example normal, t or chi-squared"],
+        ["b", "e"],
         "The test statistic measures how many standard errors the estimate lies from the "
         "null value, so it is the difference divided by the standard error. Reversing the "
         "numerator, as in option (e), only flips the sign and breaks the usual "
@@ -46,10 +48,10 @@ def questions():
         ["z is about 0.05, so the sample mean is very close to the population mean",
          "z is about 4.9, so the sample mean is about 4.9 standard errors above the "
          "population mean",
-         "z is about 1.96, so the result is significant at 5%",
+         "About 95% of sample means fall within 2 standard errors of the population mean",
          "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
          "z cannot be computed without knowing the standard deviation"],
-        ["b"],
+        ["b", "c"],
         "z = (179 - 170)/1.83 is about 4.9. Because the statistic is in units of standard "
         "errors rather than centimetres, the number describes how many SE away the value "
         "sits, not a distance in cm.",
@@ -62,9 +64,10 @@ def questions():
         ["0.0345",
          "0.9655",
          "4.37e-07",
-         "179",
+         "lower.tail = FALSE switches to the upper tail, so this is the probability of "
+         "being at or above 179",
          "1.83"],
-        ["c"],
+        ["c", "d"],
         "`lower.tail = FALSE` returns the upper-tail area beyond the value, which is the "
         "p-value here, about 4.37e-07. The value 0.9655 is the lower tail and 0.0345 "
         "belongs to the bottle example from Lecture 5.",
@@ -79,9 +82,10 @@ def questions():
          "If the null hypothesis were true, the probability of a test statistic at least "
          "as extreme as the observed one is about 4.4e-07.",
          "There is a 4.4e-07 probability that the result is a fluke.",
-         "The null hypothesis has been proven false with certainty.",
+         "Random sampling variability alone would very rarely produce a result this "
+         "extreme if the null hypothesis were true.",
          "4.4e-07 of the sample data are outliers."],
-        ["b"],
+        ["b", "d"],
         "The p-value is always conditional on H0 being true and describes the observed or "
         "more extreme statistic. It is not the probability that H0 is true, and it never "
         "proves anything with certainty.",
@@ -93,9 +97,10 @@ def questions():
         ["Bias(theta-hat) = E[theta-hat] + theta",
          "Bias(theta-hat) = E[theta-hat] - theta",
          "Bias(theta-hat) = theta - E[theta-hat] / n",
-         "Bias(theta-hat) = Var(theta-hat)",
+         "An estimator is unbiased when its expected value equals the true parameter, "
+         "that is when its bias is 0",
          "Bias(theta-hat) = p-value"],
-        ["b"],
+        ["b", "d"],
         "Bias is the expected value of the estimator minus the true parameter, so an "
         "unbiased estimator has Bias = 0. Note that option (c) has the opposite sign, "
         "which would just be a negated bias.",
@@ -105,11 +110,12 @@ def questions():
         "L6-MC-007", 6, "Bias and missing data",
         "Which statements are TRUE?",
         ["Missing data can introduce bias only if it is random.",
-         "Sampling bias is a type of missing data problem.",
+         "Sampling bias is a type of measurement error rather than of missing data.",
          "Attrition means individuals drop out of a longitudinal study.",
          "Item non-response means individuals skip certain questions in a survey.",
-         "Missing data reduces the effective sample size, which increases the standard error."],
-        ["b", "c", "d", "e"],
+         "Missing data reduces the effective sample size, which decreases the standard "
+         "error."],
+        ["c", "d"],
         "It is missing data that is NOT random that can introduce bias and invalidate "
         "inference, which is the opposite of the claim that bias arises only when "
         "missingness is random.",
@@ -122,9 +128,9 @@ def questions():
         ["1.28",
          "1.645",
          "1.96",
-         "2.576",
+         "A 95% confidence level corresponds to alpha = 0.05",
          "2.33"],
-        ["c"],
+        ["c", "d"],
         "The two-sided 95% critical value is the 97.5th percentile of the standard normal, "
         "1.96. A common trap is 1.645, which is the 95th percentile and therefore the "
         "critical value for a 90% interval, not 95%.",
@@ -150,16 +156,18 @@ def questions():
         "L6-MC-014", 6, "Working with the t-distribution",
         "Which of the following are TRUE statements about the t-distribution functions in "
         "R?",
-        ["`dt()` gives the probability density function",
-         "`pt()` can only be used for a normal distribution",
+        ["`dt()` gives quantiles of the t distribution",
+         "`pt()` gives the probability of one exact t value rather than a cumulative one",
          "`pt()` gives the cumulative distribution function",
          "`qt()` gives quantiles",
-         "`rt()` generates random samples"],
-        ["a", "c", "d", "e"],
-        "The four functions mirror the normal set d/p/q/r but for the t distribution. The "
-        "claim that `pt()` can only be used for a normal distribution is wrong: `pt()` is "
-        "the t-distribution CDF. There are exactly these four.",
-        PDF, "p.22", code="pt(qt(0.975, df = 7 - 1), df = 7 - 1)",
+         "`rt()` returns a fixed critical value rather than a random draw"],
+        ["c", "d"],
+        "`pt()` and `qt()` are the two the code actually uses, and they are inverses of "
+        "each other: `qt()` returns the t value at a given tail area, `pt()` returns the "
+        "area at or below a given t value. `dt()` is a density and `rt()` draws random "
+        "samples, so the claims about them are both wrong. `pt()` is the t-distribution "
+        "CDF, not something reserved for the normal.",
+        PDF, "p.49", code="pt(qt(0.975, df = 7 - 1), df = 7 - 1)",
         r_functions=["dt", "pt", "qt", "rt"]))
 
     out.append(mc(
@@ -168,15 +176,18 @@ def questions():
         ["A higher confidence level requires a smaller critical value",
          "A higher confidence level requires a larger critical value, and the interval "
          "half-width is critical value times standard error",
-         "A higher confidence level reduces the standard error",
-         "A higher confidence level increases alpha",
-         "A higher confidence level shrinks the sample size"],
-        ["b"],
+         "The standard error does not depend on the confidence level, so the widening "
+         "comes entirely from the critical value",
+         "A higher confidence level increases alpha"],
+        ["b", "c"],
         "The interval is point estimate plus or minus critical value times standard "
         "error, and a higher confidence level needs a larger critical value while the "
-        "standard error is unchanged. This is the trade-off: a wider "
-        "interval is more likely to contain the parameter but less informative.",
-        PDF, "p.33"))
+        "standard error is unchanged. That is the whole reason the interval widens: the "
+        "standard error is a property of the estimator and the sample size, and the "
+        "confidence level never touches it. A higher confidence level lowers alpha, not "
+        "raises it. This is the trade-off: a wider interval is more likely to contain the "
+        "parameter but less informative.",
+        PDF, "p.48"))
 
     out.append(mc(
         "L6-MC-011", 6, "Confidence intervals",
@@ -187,10 +198,12 @@ def questions():
          "The sample mean is 175",
          "95% of the population falls inside this interval",
          "The interval must contain the true mean because it is a 95% interval"],
-        ["b"],
+        ["b", "c"],
         "The half-width 2.94 equals 1.96 times the standard error, so the standard error is "
-        "about 1.5. A confidence interval is an interval for the population parameter, not "
-        "for the population values or the sample mean, and even then it is not a certainty.",
+        "about 1.5. The interval is built as the point estimate plus or minus that "
+        "half-width, so its centre, 175, is the sample mean rather than the population mean. "
+        "A confidence interval is an interval for the population parameter, not for the "
+        "population values or the sample mean, and even then it is not a certainty.",
         PDF, "p.39"))
 
     out.append(mc(
