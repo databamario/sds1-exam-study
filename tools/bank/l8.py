@@ -296,4 +296,63 @@ def questions():
         1, PDF, "p.40",
         r_functions=["oneway.test", "chisq.test", "cor.test"]))
 
+    # ---- the correlation formula, L8 p.9, and the r = 0 caveat on the same
+    # slide. The bank asked about correlation output but never about the
+    # formula, so the two halves of r had no question attached to them.
+    out.append(mc(
+        "L8-MC-014", 8, "The correlation formula",
+        "In the formula for the Pearson correlation coefficient, which "
+        "statements are true?",
+        ["The numerator, Cov(X, Y), measures how the two variables vary "
+         "together",
+         "The denominator, SD(X) times SD(Y), standardizes the covariance so r "
+         "is unitless",
+         "The denominator converts the covariance into a percentage",
+         "The numerator is the product of the two standard deviations",
+         "The formula shows r measures any kind of relationship, not only "
+         "linear ones"],
+        ["a", "b"],
+        "The top of the formula is the covariance, which indicates how the two "
+        "variables vary together, and the bottom divides by the product of the "
+        "standard deviations, which makes r unitless and bounded between -1 and "
+        "1, so (a) and (b) are correct. Standardizing removes units, it does "
+        "not produce a percentage, so (c) is wrong. The product of the standard "
+        "deviations sits in the denominator, not the numerator, so (d) swaps "
+        "them. r captures linear relationships only, so (e) overstates it.",
+        PDF, "p.9"))
+
+    out.append(mc(
+        "L8-MC-015", 8, "What r can and cannot tell you",
+        "Which statements about the Pearson correlation coefficient are true?",
+        ["r = 0 does not rule out a strong relationship, such as a U-shaped one",
+         "r = 0 means the two variables are statistically independent",
+         "The Pearson correlation captures only linear relationships",
+         "A U-shaped relationship produces a large positive r",
+         "r = 1 shows that one variable causes the other"],
+        ["a", "c"],
+        "r measures the degree of linear association only, and a U-shape is "
+        "symmetric about its turning point, so the products of the deviations "
+        "cancel and r lands near zero even though the variables are tightly "
+        "related. That makes (a) and (c) correct and (d) wrong. No linear "
+        "association is not independence, which is what (b) claims. A perfect "
+        "correlation describes the data and says nothing about cause and "
+        "effect, so (e) is wrong.",
+        PDF, "p.9"))
+
+    out.append(wa(
+        "L8-WA-007", 8, "The correlation formula",
+        "In the formula for the Pearson correlation coefficient, state what the "
+        "numerator measures and what the denominator does.",
+        "The numerator is the covariance of the two variables, which measures "
+        "how they vary together. The denominator divides that covariance by the "
+        "product of the two standard deviations, standardizing it so r is "
+        "unitless and lies between -1 and 1.",
+        [rb("Identifies the numerator as the covariance"),
+         rb("Says the covariance measures how the two variables vary together"),
+         rb("Identifies the denominator as the product of the two standard "
+            "deviations"),
+         rb("Says the standardization makes r unitless and bounded between -1 "
+            "and 1")],
+        1, PDF, "p.9"))
+
     return out

@@ -20,8 +20,8 @@ from src.loader import (  # noqa: E402
 )
 from src.scoring import score_mc  # noqa: E402
 
-TARGET_MC = 148
-TARGET_WA = 82
+TARGET_MC = 154
+TARGET_WA = 84
 
 # ------------------------------------------------- citation page counts
 #
@@ -502,6 +502,20 @@ def main() -> int:
             if letter not in correct:
                 bad_refs.append("%s: explanation calls (%s) true but the key marks it false"
                                 % (q["id"], letter))
+        # "(a) and (b) are correct" names two letters at once, and the pattern
+        # above cannot see it because "and (b)" sits between the first letter
+        # and the verb. Reordering a question's options without reordering its
+        # explanation is how a key drifts away from its own reasoning: it
+        # happened while spreading the answer pairs, and this caught it.
+        for m in re.finditer(
+                r"\(([a-e])\)\s+and\s+\(([a-e])\)\s+(?:is|are)\s+(true|right|correct)",
+                expl, re.I):
+            named = {m.group(1), m.group(2)}
+            if named != correct:
+                bad_refs.append("%s: explanation calls %s correct but the key is %s"
+                                % (q["id"],
+                                   " and ".join("(%s)" % c for c in sorted(named)),
+                                   " and ".join("(%s)" % c for c in sorted(correct))))
     print("  explanations contradicting their own key: %d" % len(bad_refs))
     for b in bad_refs:
         print("    %s" % b)

@@ -342,4 +342,30 @@ def questions():
          rb("Explains that large variance at small n causes wide fluctuation")],
         1, PDF, "p.37", r_functions=["mean", "var"]))
 
+    # ---- i.i.d. random variables, stated explicitly on L5 p.39. The bank had
+    # no question on it: "i.i.d." appears in the sample-mean variance proof on
+    # p.38 and is then defined in an aside on p.39, so it was easy to read past.
+    out.append(mc(
+        "L5-MC-016", 5, "i.i.d. random variables",
+        "Which statements about i.i.d. random variables are true?",
+        ["Independent means the occurrence of one event does not affect the "
+         "probability of another",
+         "Identically distributed means all the random variables have the same "
+         "probability distribution",
+         "Independence by itself is enough for a sample to be i.i.d.",
+         "i.i.d. additionally requires the variables to be normally distributed",
+         "Identically distributed means sharing the same mean, even when the "
+         "spreads differ"],
+        ["a", "b"],
+        "Independence means the occurrence of one event does not affect the "
+        "probability of another, and identically distributed means the variables "
+        "share one probability distribution, so (a) and (b) are correct. "
+        "Independence alone is not enough: two coin tosses with coins of "
+        "different denominations are independent but not identically "
+        "distributed, so (c) and (d) fail, and nothing in the definition "
+        "requires normality. Sharing a mean is not sharing a distribution, "
+        "since a variable can have the same mean with a different spread, so "
+        "(e) is wrong.",
+        PDF, "p.39"))
+
     return out

@@ -351,4 +351,67 @@ def questions():
         1, PDF, "p.21", code="t.test(x, mu = 50)", r_functions=["t.test", "qt", "qnorm"],
         origin="adapted_HT25"))
 
+    # ---- paired data, L7 p.52. The bank had nothing on it: the two-sample
+    # interval and test that L7-WA-006 practises both rest on independence,
+    # and the slide that says so is a single paragraph later.
+    out.append(mc(
+        "L7-MC-015", 7, "Paired data and independence",
+        "Which statements about paired data and the independence assumption "
+        "are true?",
+        ["The confidence interval and the test for a difference in means assume "
+         "the two samples are independent",
+         "Two measurements taken from the same subject can be analysed as "
+         "independent samples",
+         "Taking two draws from the same population satisfies the independence "
+         "assumption",
+         "For before-and-after measurements on the same subjects, the pairing "
+         "must be accounted for",
+         "The sleep dataset is an example of two independent samples"],
+        ["a", "d"],
+        "Both the interval and the test rest on the two samples being "
+        "independent, and paired measurements on the same subjects break that, "
+        "so (a) and (d) are correct. Two values from one subject share "
+        "everything about that subject, which is exactly the mistake (b) makes. "
+        "Drawing twice from a single population says nothing about whether the "
+        "same individuals were measured twice, so (c) does not follow. The "
+        "sleep dataset is paired, not independent, so (e) is wrong.",
+        PDF, "p.52"))
+
+    out.append(mc(
+        "L7-MC-016", 7, "Analysing paired data",
+        "The samples are paired. What is the correct way to analyse them?",
+        ["Pass paired = TRUE to t.test()",
+         "Run two separate one-sample tests and compare their p-values",
+         "Count each pair as two observations to double the sample size",
+         "Compute the difference within each pair and analyse those differences "
+         "as a single sample",
+         "Discard one measurement from each pair so that the data become "
+         "independent"],
+        ["a", "d"],
+        "For paired data the differences within each pair are computed and then "
+        "analysed as a single sample, and paired = TRUE is what makes t.test() "
+        "do that, so (a) and (d) are correct. Two separate one-sample tests "
+        "never compare the two conditions against each other, so (b) does not "
+        "answer the question. Counting a pair as two observations pretends the "
+        "same subject contributes independent information twice, and discarding "
+        "a measurement simply throws data away; neither is what pairing "
+        "requires.",
+        PDF, "p.52"))
+
+    out.append(wa(
+        "L7-WA-009", 7, "Paired data",
+        "A study measures each subject's resting heart rate before and after a "
+        "training programme. Why is it wrong to treat the two sets of "
+        "measurements as independent samples, and what should be done instead?",
+        "The two samples are paired, not independent: each before value and "
+        "its after value come from the same subject. Compute the difference "
+        "within each pair and analyse those differences as a single sample, "
+        "using paired = TRUE in t.test().",
+        [rb("Identifies the two samples as paired rather than independent"),
+         rb("Explains that each pair comes from the same subject"),
+         rb("Says to compute the within-pair differences"),
+         rb("Says to analyse those differences as a single sample")],
+        1, PDF, "p.52",
+        r_functions=["t.test"]))
+
     return out

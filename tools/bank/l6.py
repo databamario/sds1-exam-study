@@ -316,4 +316,28 @@ def questions():
         code="pnorm(179, mean = 170, sd = 1.83, lower.tail = FALSE)",
         r_functions=["pnorm", "lower.tail"], origin="adapted_HT25"))
 
+    # ---- the critical values, from L6 p.39. The slide gives 1.96, 2.576 and
+    # 1.645. The exam's own table also carries 1.28 and 2.33, which are the
+    # one-sided bounds, so (c) below is the trap the slide does not set itself.
+    out.append(mc(
+        "L6-MC-015", 6, "Critical values for confidence intervals",
+        "Which statements about the critical value used for a confidence "
+        "interval for a population mean are true?",
+        ["A 95% interval uses z(alpha/2) approximately equal to 1.96",
+         "A 99% interval uses z(alpha/2) approximately equal to 2.576",
+         "A 90% interval uses z(alpha/2) approximately equal to 1.28",
+         "The critical value depends on the sample size, so a larger sample "
+         "needs a larger z",
+         "A higher confidence level requires a smaller multiplier"],
+        ["a", "b"],
+        "The 95% interval uses z(0.025) approximately equal to 1.96 and the 99% "
+        "interval uses z(0.005) approximately equal to 2.576, so (a) and (b) "
+        "are correct. The 90% interval uses z(0.05) approximately equal to "
+        "1.645; the 1.28 belongs to a one-sided 90% bound, so (c) is wrong. The "
+        "critical value is the alpha/2 quantile of the standard normal and "
+        "depends only on the confidence level, never on n, which rules out (d). "
+        "A higher confidence level has to produce a wider interval and so needs "
+        "a larger multiplier, making (e) backwards.",
+        PDF, "p.39"))
+
     return out

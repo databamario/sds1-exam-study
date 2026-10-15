@@ -4096,6 +4096,34 @@
    "origin": "new"
   },
   {
+   "id": "L5-MC-016",
+   "lecture": 5,
+   "type": "MC",
+   "topic": "i.i.d. random variables",
+   "stem": "Which statements about i.i.d. random variables are true?",
+   "options": {
+    "a": "Independent means the occurrence of one event does not affect the probability of another",
+    "b": "Identically distributed means all the random variables have the same probability distribution",
+    "c": "Independence by itself is enough for a sample to be i.i.d.",
+    "d": "i.i.d. additionally requires the variables to be normally distributed",
+    "e": "Identically distributed means sharing the same mean, even when the spreads differ"
+   },
+   "correct": [
+    "a",
+    "b"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "Independence means the occurrence of one event does not affect the probability of another, and identically distributed means the variables share one probability distribution, so (a) and (b) are correct. Independence alone is not enough: two coin tosses with coins of different denominations are independent but not identically distributed, so (c) and (d) fail, and nothing in the definition requires normality. Sharing a mean is not sharing a distribution, since a variable can have the same mean with a different spread, so (e) is wrong.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture5_after.pdf",
+    "slide": "p.39"
+   },
+   "origin": "new"
+  },
+  {
    "id": "G-WA-011",
    "lecture": 5,
    "type": "WA",
@@ -4778,6 +4806,34 @@
    },
    "origin": "new",
    "code": "pt(qt(0.975, df = 7 - 1), df = 7 - 1)"
+  },
+  {
+   "id": "L6-MC-015",
+   "lecture": 6,
+   "type": "MC",
+   "topic": "Critical values for confidence intervals",
+   "stem": "Which statements about the critical value used for a confidence interval for a population mean are true?",
+   "options": {
+    "a": "A 95% interval uses z(alpha/2) approximately equal to 1.96",
+    "b": "A 99% interval uses z(alpha/2) approximately equal to 2.576",
+    "c": "A 90% interval uses z(alpha/2) approximately equal to 1.28",
+    "d": "The critical value depends on the sample size, so a larger sample needs a larger z",
+    "e": "A higher confidence level requires a smaller multiplier"
+   },
+   "correct": [
+    "a",
+    "b"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "The 95% interval uses z(0.025) approximately equal to 1.96 and the 99% interval uses z(0.005) approximately equal to 2.576, so (a) and (b) are correct. The 90% interval uses z(0.05) approximately equal to 1.645; the 1.28 belongs to a one-sided 90% bound, so (c) is wrong. The critical value is the alpha/2 quantile of the standard normal and depends only on the confidence level, never on n, which rules out (d). A higher confidence level has to produce a wider interval and so needs a larger multiplier, making (e) backwards.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture6_after.pdf",
+    "slide": "p.39"
+   },
+   "origin": "new"
   },
   {
    "id": "L6-WA-001",
@@ -5531,6 +5587,62 @@
    "code": "p_value <- 2 * pt(t_stat, df = 9)"
   },
   {
+   "id": "L7-MC-015",
+   "lecture": 7,
+   "type": "MC",
+   "topic": "Paired data and independence",
+   "stem": "Which statements about paired data and the independence assumption are true?",
+   "options": {
+    "a": "The confidence interval and the test for a difference in means assume the two samples are independent",
+    "b": "Two measurements taken from the same subject can be analysed as independent samples",
+    "c": "Taking two draws from the same population satisfies the independence assumption",
+    "d": "For before-and-after measurements on the same subjects, the pairing must be accounted for",
+    "e": "The sleep dataset is an example of two independent samples"
+   },
+   "correct": [
+    "a",
+    "d"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "Both the interval and the test rest on the two samples being independent, and paired measurements on the same subjects break that, so (a) and (d) are correct. Two values from one subject share everything about that subject, which is exactly the mistake (b) makes. Drawing twice from a single population says nothing about whether the same individuals were measured twice, so (c) does not follow. The sleep dataset is paired, not independent, so (e) is wrong.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.52"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L7-MC-016",
+   "lecture": 7,
+   "type": "MC",
+   "topic": "Analysing paired data",
+   "stem": "The samples are paired. What is the correct way to analyse them?",
+   "options": {
+    "a": "Pass paired = TRUE to t.test()",
+    "b": "Run two separate one-sample tests and compare their p-values",
+    "c": "Count each pair as two observations to double the sample size",
+    "d": "Compute the difference within each pair and analyse those differences as a single sample",
+    "e": "Discard one measurement from each pair so that the data become independent"
+   },
+   "correct": [
+    "a",
+    "d"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "For paired data the differences within each pair are computed and then analysed as a single sample, and paired = TRUE is what makes t.test() do that, so (a) and (d) are correct. Two separate one-sample tests never compare the two conditions against each other, so (b) does not answer the question. Counting a pair as two observations pretends the same subject contributes independent information twice, and discarding a measurement simply throws data away; neither is what pairing requires.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.52"
+   },
+   "origin": "new"
+  },
+  {
    "id": "G-WA-003",
    "lecture": 7,
    "type": "WA",
@@ -5885,6 +5997,43 @@
    },
    "origin": "adapted_HT25",
    "code": "t.test(x, mu = 50)"
+  },
+  {
+   "id": "L7-WA-009",
+   "lecture": 7,
+   "type": "WA",
+   "topic": "Paired data",
+   "stem": "A study measures each subject's resting heart rate before and after a training programme. Why is it wrong to treat the two sets of measurements as independent samples, and what should be done instead?",
+   "points": 1,
+   "answer": "The two samples are paired, not independent: each before value and its after value come from the same subject. Compute the difference within each pair and analyse those differences as a single sample, using paired = TRUE in t.test().",
+   "detail": "",
+   "rubric": [
+    {
+     "text": "Identifies the two samples as paired rather than independent",
+     "elements": 1
+    },
+    {
+     "text": "Explains that each pair comes from the same subject",
+     "elements": 1
+    },
+    {
+     "text": "Says to compute the within-pair differences",
+     "elements": 1
+    },
+    {
+     "text": "Says to analyse those differences as a single sample",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": true,
+   "r_functions": [
+    "t.test"
+   ],
+   "source": {
+    "pdf": "lecture7_after.pdf",
+    "slide": "p.52"
+   },
+   "origin": "new"
   },
   {
    "id": "G-MC-010",
@@ -6367,6 +6516,62 @@
    "code": "cor.test(states$hs_grad, states$income)"
   },
   {
+   "id": "L8-MC-014",
+   "lecture": 8,
+   "type": "MC",
+   "topic": "The correlation formula",
+   "stem": "In the formula for the Pearson correlation coefficient, which statements are true?",
+   "options": {
+    "a": "The numerator, Cov(X, Y), measures how the two variables vary together",
+    "b": "The denominator, SD(X) times SD(Y), standardizes the covariance so r is unitless",
+    "c": "The denominator converts the covariance into a percentage",
+    "d": "The numerator is the product of the two standard deviations",
+    "e": "The formula shows r measures any kind of relationship, not only linear ones"
+   },
+   "correct": [
+    "a",
+    "b"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "The top of the formula is the covariance, which indicates how the two variables vary together, and the bottom divides by the product of the standard deviations, which makes r unitless and bounded between -1 and 1, so (a) and (b) are correct. Standardizing removes units, it does not produce a percentage, so (c) is wrong. The product of the standard deviations sits in the denominator, not the numerator, so (d) swaps them. r captures linear relationships only, so (e) overstates it.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.9"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L8-MC-015",
+   "lecture": 8,
+   "type": "MC",
+   "topic": "What r can and cannot tell you",
+   "stem": "Which statements about the Pearson correlation coefficient are true?",
+   "options": {
+    "a": "r = 0 does not rule out a strong relationship, such as a U-shaped one",
+    "b": "r = 0 means the two variables are statistically independent",
+    "c": "The Pearson correlation captures only linear relationships",
+    "d": "A U-shaped relationship produces a large positive r",
+    "e": "r = 1 shows that one variable causes the other"
+   },
+   "correct": [
+    "a",
+    "c"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "r measures the degree of linear association only, and a U-shape is symmetric about its turning point, so the products of the deviations cancel and r lands near zero even though the variables are tightly related. That makes (a) and (c) correct and (d) wrong. No linear association is not independence, which is what (b) claims. A perfect correlation describes the data and says nothing about cause and effect, so (e) is wrong.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.9"
+   },
+   "origin": "new"
+  },
+  {
    "id": "G-WA-005",
    "lecture": 8,
    "type": "WA",
@@ -6641,6 +6846,41 @@
    "source": {
     "pdf": "lecture8_after.pdf",
     "slide": "p.40"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L8-WA-007",
+   "lecture": 8,
+   "type": "WA",
+   "topic": "The correlation formula",
+   "stem": "In the formula for the Pearson correlation coefficient, state what the numerator measures and what the denominator does.",
+   "points": 1,
+   "answer": "The numerator is the covariance of the two variables, which measures how they vary together. The denominator divides that covariance by the product of the two standard deviations, standardizing it so r is unitless and lies between -1 and 1.",
+   "detail": "",
+   "rubric": [
+    {
+     "text": "Identifies the numerator as the covariance",
+     "elements": 1
+    },
+    {
+     "text": "Says the covariance measures how the two variables vary together",
+     "elements": 1
+    },
+    {
+     "text": "Identifies the denominator as the product of the two standard deviations",
+     "elements": 1
+    },
+    {
+     "text": "Says the standardization makes r unitless and bounded between -1 and 1",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture8_after.pdf",
+    "slide": "p.9"
    },
    "origin": "new"
   },
