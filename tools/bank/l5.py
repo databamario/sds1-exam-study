@@ -13,41 +13,46 @@ def questions():
         "Which phenomenon is the standard example of a BINOMIAL distribution?",
         ["The height of a randomly chosen adult",
          "The number of heads in 10 tosses of a fair coin",
-         "The number of emails received in an hour",
+         "The number of yes answers in 10 yes/no survey questions",
          "The waiting time for a bus",
          "The outcome of a single die roll"],
-        ["b"],
+        ["b", "c"],
         "Binomial counts successes across repeated Bernoulli trials with two outcomes. "
-        "Heads in 10 tosses is exactly that. Email counts per interval are Poisson, "
-        "height is normal, and a single die roll is a uniform distribution.",
+        "Heads in 10 tosses is exactly that, and so is the number of yes answers in 10 "
+        "yes/no questions. Email counts per interval are Poisson, height is normal, and a "
+        "single die roll is a uniform distribution.",
         PDF, "p.15"))
 
     out.append(mc(
         "L5-MC-002", 5, "Probability distributions",
         "Which statements are TRUE?",
         ["The number of emails received per hour follows a binomial distribution.",
-         "The normal distribution is also called the Gaussian distribution or bell curve.",
+         "The normal distribution is also called the Poisson distribution.",
          "The Poisson distribution counts events occurring in a fixed interval.",
          "The binomial distribution counts successes in repeated trials.",
-         "Heights and weights are typical examples of a normal distribution."],
-        ["b", "c", "d", "e"],
-        "Emails per hour is a Poisson example, not binomial, so the claim that it follows "
-        "a binomial distribution is false. The rest are correct as stated.",
+         "Heights and weights are typical examples of a binomial distribution."],
+        ["c", "d"],
+        "The two counting distributions are Poisson, for events in a fixed interval such "
+        "as emails per hour, and binomial, for successes across repeated trials with two "
+        "outcomes. The normal is the bell curve and is the one heights and weights follow, "
+        "not the binomial, and it is not another name for the Poisson.",
         PDF, "p.15"))
 
     out.append(mc(
         "L5-MC-003", 5, "PMF, PDF and CDF",
         "Which statements about the three ways of describing a distribution are TRUE?",
         ["A PMF gives the probability of each outcome for a discrete variable.",
-         "A PDF describes relative likelihood for a continuous variable.",
+         "A PDF gives the probability of a continuous variable taking one exact value.",
          "A CDF gives the probability that a variable is less than or equal to a value.",
          "A PMF can be used for continuous variables.",
          "A CDF is always a step function."],
-        ["a", "b", "c"],
+        ["a", "c"],
         "A PMF is only for discrete variables, and a CDF is a step function only for "
         "discrete variables such as a die; for a continuous variable the CDF is a smooth "
-        "curve. Both (d) and (e) are therefore false.",
-        PDF, "p.21"))
+        "curve. A PDF is a density rather than a probability, and the probability of a "
+        "continuous variable landing on one exact value is 0, which is why probabilities "
+        "are read off a PDF as an area over a range.",
+        PDF, "p.25"))
 
     out.append(mc(
         "L5-MC-004", 5, "PMF, PDF and CDF",
@@ -56,10 +61,12 @@ def questions():
          "4/6",
          "3/6",
          "5/6",
-         "1/4"],
-        ["b"],
+         "For a discrete variable the CDF is a step function that jumps at each possible "
+         "outcome"],
+        ["b", "e"],
         "The CDF adds the probabilities of every outcome up to 4, which is 4 * 1/6 = "
-        "4/6 = 2/3. Note this differs from P(X = 4) = 1/6, which is a common confusion.",
+        "4/6 = 2/3. Note this differs from P(X = 4) = 1/6, which is a common confusion, and "
+        "that 3/6 is the answer to P(X <= 3) rather than to this question.",
         PDF, "p.30", code="sum(rep(1/6, 6)[1:4])",
         r_functions=["rep", "sum", "dbinom"], origin="adapted_HT25"))
 
@@ -69,9 +76,10 @@ def questions():
         ["About 0.034, the probability that a bottle contains less than 35.8 mL",
          "About 0.966, the probability that a bottle contains more than 35.8 mL",
          "About 0.93, the probability that a bottle falls between the two fill bounds",
-         "36.2",
+         "The area under the density curve to the left of 35.8, which is the probability "
+         "of being at or below it",
          "An error, because sd must be a whole number"],
-        ["a"],
+        ["a", "d"],
         "`pnorm(x, mean, sd)` returns P(X <= x) for a normal variable, which here is the "
         "area under the PDF to the left of 35.8, about 0.0345. Note that the complementary "
         "value 0.9655 is what you would get from 1 minus this.",
@@ -84,12 +92,15 @@ def questions():
         ["A parameter describes a population characteristic.",
          "A statistic is calculated from a sample.",
          "A parameter changes from sample to sample.",
-         "The population mean is written mu and the sample mean with an x-bar.",
+         "The population mean is written x-bar and the sample mean with mu.",
          "A statistic is fixed once the population is defined."],
-        ["a", "b", "d"],
+        ["a", "b"],
         "Parameters are fixed population quantities while statistics vary with the "
-        "sample, so (c) and (e) are both wrong. The summary is that "
-        "parameters are what we want to know and statistics are what we can compute.",
+        "sample, so the claim that a parameter changes from sample to sample is wrong, as "
+        "is the claim that a statistic is fixed once the population is defined. The "
+        "notation goes the other way round: mu for the population mean, x-bar for the "
+        "sample mean. The summary is that parameters are what we want to know and "
+        "statistics are what we can compute.",
         PDF, "p.34", origin="adapted_HT25"))
 
     out.append(mc(
@@ -98,10 +109,11 @@ def questions():
         "Norrkoping residents. Which statement is TRUE?",
         ["The estimand is 169.03 cm",
          "The estimator is the sample mean formula",
-         "The estimate is mu",
+         "The estimate is the number obtained after applying that formula to one sample, "
+         "such as 169.03 cm",
          "The estimand and the estimate are the same thing",
          "The estimator is a fixed number, not a formula"],
-        ["b"],
+        ["b", "c"],
         "The estimand is the unknown population quantity mu, the estimator is the rule or "
         "formula used (here the sample mean), and the estimate is the particular number "
         "obtained from one sample, such as 169.03 cm.",
@@ -113,13 +125,15 @@ def questions():
         ["An estimator is a function of the data.",
          "An estimator is a random variable.",
          "An estimator is a single fixed number once defined.",
-         "The sample mean is an unbiased estimator of the population mean.",
-         "An estimator maps the sample space onto numerical values."],
-        ["a", "b", "d", "e"],
+         "The sample mean is a biased estimator of the population mean.",
+         "An estimator produces one fixed number that does not change between samples."],
+        ["a", "b"],
         "An estimator is a rule rather than a number, and precisely because it maps the "
-        "sample space onto values it is itself a random variable. That is what (c) gets "
-        "wrong.",
-        PDF, "p.35", origin="adapted_HT25"))
+        "sample space onto values it is itself a random variable. The sample mean is in "
+        "fact an unbiased estimator of the population mean, so the claim that it is biased "
+        "gets that backwards; and an estimator does not collapse to a fixed number, it "
+        "gives a different one for every sample.",
+        PDF, "p.37", origin="adapted_HT25"))
 
     out.append(mc(
         "L5-MC-009", 5, "Sampling distribution and variance",
@@ -127,13 +141,16 @@ def questions():
         "\"unbiased\" mean?",
         ["The sample mean always equals the population mean",
          "On average the sample mean hits the true population mean, i.e. E[Xbar] = mu",
-         "The sample mean has zero variance",
+         "It says where the estimator is centred, not how spread out it is, so an "
+         "unbiased estimator can still vary a lot from sample to sample",
          "The sample mean is normally distributed",
          "The sample mean is always smaller than the population mean"],
-        ["b"],
+        ["b", "c"],
         "Unbiasedness is a statement about expectation, not about any single sample: the "
         "sample mean can be above or below mu in a given sample, but its expected value "
-        "equals mu. The variance is sigma squared over n, which is not zero.",
+        "equals mu. It says nothing about the spread, so an unbiased estimator can still "
+        "vary a lot between samples. The variance is sigma squared over n, which is not "
+        "zero.",
         PDF, "p.37", origin="adapted_HT25"))
 
     out.append(mc(
@@ -142,13 +159,17 @@ def questions():
         ["It increases",
          "It decreases, because Var(Xbar) = sigma^2 / n",
          "It stays constant",
-         "It becomes equal to sigma^2",
+         "The standard deviation of the sample mean shrinks like 1 over the square root "
+         "of n, so it is divided by ten when n is multiplied by a hundred",
          "It becomes zero for any n"],
-        ["b"],
+        ["b", "d"],
         "The variance of the sample mean is sigma squared over n, so larger samples give a "
-        "more precise estimate. It approaches zero but only reaches it in the limit, so "
-        "(e) is false.",
-        PDF, "p.38", r_functions=["var", "sqrt", "length"]))
+        "more precise estimate. The standard deviation therefore falls like 1 over the "
+        "square root of n rather than like 1 over n, which is why going from 5 to 50 "
+        "observations cuts the spread by about three times and not ten. The variance "
+        "approaches zero but only reaches it in the limit, so the claim that it is zero "
+        "for any n is false.",
+        PDF, "p.40", r_functions=["var", "sqrt", "length"]))
 
     out.append(mc(
         "L5-MC-011", 5, "Law of large numbers",
@@ -156,13 +177,14 @@ def questions():
         ["As n grows, the sample mean converges to the population mean",
          "As n grows, the sample variance becomes exactly zero",
          "The sample mean is normally distributed for large n",
-         "The population is normally distributed",
+         "It does not require the population to be normally distributed",
          "The median always equals the mean for large n"],
-        ["a"],
+        ["a", "d"],
         "The LLN says the sample mean gets arbitrarily close to the population mean as n "
-        "grows. Making the sample mean approximately normal is the central limit theorem, "
-        "which is a separate and stronger claim, so (c) is not the LLN.",
-        PDF, "p.41"))
+        "grows, and it needs no assumption at all about the shape of the population. "
+        "Making the sample mean approximately normal is the central limit theorem, which "
+        "is a separate and stronger claim, so the normality option is not the LLN.",
+        PDF, "p.42"))
 
     out.append(mc(
         "L5-MC-012", 5, "Central limit theorem",
@@ -171,13 +193,14 @@ def questions():
          "For large n the sampling distribution of the sample mean is approximately "
          "normal, whatever the shape of the population",
          "The population must be normally distributed for inference to work",
-         "The standard deviation of the sample equals the population standard deviation",
+         "The standard deviation of that sampling distribution is sigma over the square "
+         "root of n",
          "The sample size must exceed the population size"],
-        ["b"],
+        ["b", "d"],
         "The CLT is what makes z-based inference possible without knowing the population "
         "shape: the sample mean is approximately normal for large n even when the "
-        "population itself is not. Approximate convergence of the mean is the LLN, so (a) "
-        "is not the CLT.",
+        "population itself is not, and its spread is sigma over the square root of n. "
+        "Approximate convergence of the mean is the LLN, so the first option is not the CLT.",
         PDF, "p.47", origin="adapted_HT25"))
 
     out.append(mc(
@@ -216,11 +239,14 @@ def questions():
          "The mean is larger than the median.",
          "The mean and median are always equal for a symmetric distribution.",
          "The median is more affected by outliers than the mean.",
-         "The mode cannot be identified for a skewed distribution."],
-        ["b"],
+         "A right-skewed distribution is not a symmetric one, so it is not a case where "
+         "the mean and median coincide."],
+        ["b", "e"],
         "A long right tail pulls the mean upward, so the mean exceeds the median. The "
-        "median is the more robust of the two, which is why the last two options have it "
-        "backwards.",
+        "median is the more robust of the two, which is why the option claiming it is more "
+        "affected has it backwards. The mode is still perfectly well defined for a skewed "
+        "distribution, and the mean and median coincide only in the symmetric case, which "
+        "a right-skewed distribution is not.",
         PDF, "p.23", r_functions=["mean", "median", "quantile"]))
 
     # ----------------------------------------------------------------- written
