@@ -757,58 +757,85 @@
    "origin": "new"
   },
   {
-   "id": "G-MC-012",
+   "id": "G-MC-016",
    "lecture": 2,
    "type": "MC",
-   "topic": "Comparing distributions",
-   "stem": "The plot shows the densities of two groups. Which statement is correct?",
+   "topic": "Reading a frequency table",
+   "stem": "The bar chart shows how many students read each number of books last year. How many students are there in total?",
    "options": {
-    "a": "Both groups have the same mean and the same spread",
-    "b": "Group A has the higher mean but the smaller spread",
-    "c": "Group B has the higher mean and the larger spread",
-    "d": "Group A has the higher mean and the larger spread"
+    "a": "30",
+    "b": "11",
+    "c": "20",
+    "d": "9"
    },
    "correct": [
-    "c"
+    "a"
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "Group B's curve peaks further to the right, so its values are typically larger, and it is much flatter and wider, so it is more spread out. Group A's curve is taller and narrower.",
+   "explanation": "Add the bar heights: 2 + 5 + 11 + 9 + 3 = 30. Reading only the tallest bar would give 11, which is just the modal group.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture2_after.pdf",
-    "slide": "p.8"
+    "pdf": "lecture2.pdf",
+    "slide": "p.28"
    },
    "origin": "new",
-   "image": "density_overlay"
+   "image": "freq_bars"
   },
   {
-   "id": "G-MC-013",
+   "id": "G-MC-017",
    "lecture": 2,
    "type": "MC",
-   "topic": "Comparing distributions",
-   "stem": "The area under a density curve for one group is much larger than the area for the other. What does that tell you?",
+   "topic": "Reading a frequency table",
+   "stem": "Using the same bar chart, what proportion of students read fewer than 20 books?",
    "options": {
-    "a": "That group has a larger total value",
-    "b": "That group has a higher variance",
-    "c": "That group's mean is larger",
-    "d": "That group contains more observations"
+    "a": "11/30",
+    "b": "2/30",
+    "c": "20/30",
+    "d": "7/30"
    },
    "correct": [
     "d"
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "Density curves are each normalised so the total area is 1 regardless of how many observations were collected. A larger area on the plot comes from a wider distribution, not a larger sample.",
+   "explanation": "Fewer than 20 books covers the first two bars, 2 + 5 = 7 students out of 30 in total, so the proportion is 7/30.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture2_after.pdf",
-    "slide": "p.8"
+    "pdf": "lecture2.pdf",
+    "slide": "p.29"
    },
    "origin": "new",
-   "image": "density_overlay"
+   "image": "freq_bars"
+  },
+  {
+   "id": "G-MC-018",
+   "lecture": 2,
+   "type": "MC",
+   "topic": "Reading a frequency table",
+   "stem": "The same bar chart shows books read per student. Which variable type and measurement level does it represent?",
+   "options": {
+    "a": "Quantitative discrete",
+    "b": "Quantitative continuous",
+    "c": "Categorical nominal",
+    "d": "Categorical ordinal"
+   },
+   "correct": [
+    "a"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Books is a count, so it is quantitative and discrete because you cannot read 2.5 books. It is not categorical, because the categories would have to be labels rather than numbers.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2.pdf",
+    "slide": "p.23"
+   },
+   "origin": "new",
+   "image": "freq_bars"
   },
   {
    "id": "L2-MC-001",
@@ -1485,36 +1512,36 @@
    "origin": "new"
   },
   {
-   "id": "G-WA-006",
+   "id": "G-WA-008",
    "lecture": 2,
    "type": "WA",
-   "topic": "Comparing distributions",
-   "stem": "The plot shows the densities of two groups. Compare their centres and their spreads.",
-   "points": 2,
-   "answer": "Group B is centred further right than group A, so it has the higher typical value. Group B is also flatter and wider, so it has the larger spread, while Group A's curve is taller and narrower.",
-   "detail": "A taller peak does not mean a larger total, because each density is normalised to have area 1. Height and width trade off: the curve that is spread out must be flatter for its area to stay the same. Overlapping curves like these indicate the groups are not perfectly separated, so some individuals could belong to either.",
+   "topic": "Reading a frequency table",
+   "stem": "Using the bar chart, state the total number of students, the modal number of books, and the proportion who read fewer than 20 books.",
+   "points": 3,
+   "answer": "There are 30 students, since the bars add to 2 + 5 + 11 + 9 + 3. The mode is 20 to 29 books, the tallest bar. Fewer than 20 books is (2 + 5) / 30 = 7/30, about 0.23.",
+   "detail": "The mode is the most frequent value and is read off the tallest bar, not off the axis. For the proportion, the denominator is the total across all bars, while the numerator sums only the bars below the cut-off. A cumulative frequency table answers the same question and is the more efficient way to do it once the cut-off moves.",
    "rubric": [
     {
-     "text": "States that group B has the higher centre or mean",
+     "text": "Gives the total as 30",
      "elements": 1
     },
     {
-     "text": "States that group B has the larger spread or variance",
+     "text": "Gives the mode as the 20 to 29 group",
      "elements": 1
     },
     {
-     "text": "Notes that group A's curve is narrower and more concentrated",
+     "text": "Computes the proportion as 7/30",
      "elements": 1
     }
    ],
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture2_after.pdf",
-    "slide": "p.8"
+    "pdf": "lecture2.pdf",
+    "slide": "p.28"
    },
    "origin": "new",
-   "image": "density_overlay"
+   "image": "freq_bars"
   },
   {
    "id": "G-WA-010",
@@ -1542,8 +1569,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture2_after.pdf",
-    "slide": "p.8"
+    "pdf": "lecture2.pdf",
+    "slide": "p.34"
    },
    "origin": "new",
    "image": "bar_stacked"
@@ -1646,7 +1673,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.134"
+    "slide": "p.54"
    },
    "origin": "new",
    "code": "titanic_data |>\n  group_by(class) |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE))"
@@ -1753,7 +1780,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.77"
+    "slide": "p.49"
    },
    "origin": "new",
    "code": "titanic_data |> dplyr::filter(class == \"3rd\" & survived == \"yes\")"
@@ -1827,7 +1854,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.139"
+    "slide": "p.54"
    },
    "origin": "new",
    "code": "titanic_data |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE), .by = class)"
@@ -1853,8 +1880,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.35"
    },
    "origin": "new",
    "image": "boxplots_h"
@@ -1880,8 +1907,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.35"
    },
    "origin": "new",
    "image": "boxplots_h"
@@ -1907,8 +1934,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.35"
    },
    "origin": "new",
    "image": "boxplots_h"
@@ -1934,8 +1961,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.21"
    },
    "origin": "new",
    "image": "hist_skewed"
@@ -1961,8 +1988,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.24"
    },
    "origin": "new",
    "image": "hist_skewed"
@@ -1988,11 +2015,65 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.27"
    },
    "origin": "new",
    "image": "hist_symmetric"
+  },
+  {
+   "id": "G-MC-012",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Comparing distributions",
+   "stem": "The plot shows the densities of two groups. Which statement is correct?",
+   "options": {
+    "a": "Both groups have the same mean and the same spread",
+    "b": "Group A has the higher mean but the smaller spread",
+    "c": "Group B has the higher mean and the larger spread",
+    "d": "Group A has the higher mean and the larger spread"
+   },
+   "correct": [
+    "c"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Group B's curve peaks further to the right, so its values are typically larger, and it is much flatter and wider, so it is more spread out. Group A's curve is taller and narrower.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3.pdf",
+    "slide": "p.25"
+   },
+   "origin": "new",
+   "image": "density_overlay"
+  },
+  {
+   "id": "G-MC-013",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Comparing distributions",
+   "stem": "The area under a density curve for one group is much larger than the area for the other. What does that tell you?",
+   "options": {
+    "a": "That group has a larger total value",
+    "b": "That group has a higher variance",
+    "c": "That group's mean is larger",
+    "d": "That group contains more observations"
+   },
+   "correct": [
+    "d"
+   ],
+   "n_correct": 1,
+   "points": 1,
+   "explanation": "Density curves are each normalised so the total area is 1 regardless of how many observations were collected. A larger area on the plot comes from a wider distribution, not a larger sample.",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3.pdf",
+    "slide": "p.25"
+   },
+   "origin": "new",
+   "image": "density_overlay"
   },
   {
    "id": "L3-MC-001",
@@ -2595,8 +2676,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.35"
    },
    "origin": "new",
    "image": "boxplots_h"
@@ -2627,11 +2708,43 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.21"
    },
    "origin": "new",
    "image": "hist_skewed"
+  },
+  {
+   "id": "G-WA-006",
+   "lecture": 3,
+   "type": "WA",
+   "topic": "Comparing distributions",
+   "stem": "The plot shows the densities of two groups. Compare their centres and their spreads.",
+   "points": 2,
+   "answer": "Group B is centred further right than group A, so it has the higher typical value. Group B is also flatter and wider, so it has the larger spread, while Group A's curve is taller and narrower.",
+   "detail": "A taller peak does not mean a larger total, because each density is normalised to have area 1. Height and width trade off: the curve that is spread out must be flatter for its area to stay the same. Overlapping curves like these indicate the groups are not perfectly separated, so some individuals could belong to either.",
+   "rubric": [
+    {
+     "text": "States that group B has the higher centre or mean",
+     "elements": 1
+    },
+    {
+     "text": "States that group B has the larger spread or variance",
+     "elements": 1
+    },
+    {
+     "text": "Notes that group A's curve is narrower and more concentrated",
+     "elements": 1
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture3.pdf",
+    "slide": "p.25"
+   },
+   "origin": "new",
+   "image": "density_overlay"
   },
   {
    "id": "G-WA-009",
@@ -2659,8 +2772,8 @@
    "r_flavoured": false,
    "r_functions": [],
    "source": {
-    "pdf": "lecture3_after.pdf",
-    "slide": "p.10"
+    "pdf": "lecture3.pdf",
+    "slide": "p.27"
    },
    "origin": "new",
    "image": "hist_symmetric"
@@ -2955,87 +3068,6 @@
     "slide": "p.47"
    },
    "origin": "new"
-  },
-  {
-   "id": "G-MC-016",
-   "lecture": 4,
-   "type": "MC",
-   "topic": "Reading a frequency table",
-   "stem": "The bar chart shows how many students read each number of books last year. How many students are there in total?",
-   "options": {
-    "a": "30",
-    "b": "11",
-    "c": "20",
-    "d": "9"
-   },
-   "correct": [
-    "a"
-   ],
-   "n_correct": 1,
-   "points": 1,
-   "explanation": "Add the bar heights: 2 + 5 + 11 + 9 + 3 = 30. Reading only the tallest bar would give 11, which is just the modal group.",
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.14"
-   },
-   "origin": "new",
-   "image": "freq_bars"
-  },
-  {
-   "id": "G-MC-017",
-   "lecture": 4,
-   "type": "MC",
-   "topic": "Reading a frequency table",
-   "stem": "Using the same bar chart, what proportion of students read fewer than 20 books?",
-   "options": {
-    "a": "11/30",
-    "b": "2/30",
-    "c": "20/30",
-    "d": "7/30"
-   },
-   "correct": [
-    "d"
-   ],
-   "n_correct": 1,
-   "points": 1,
-   "explanation": "Fewer than 20 books covers the first two bars, 2 + 5 = 7 students out of 30 in total, so the proportion is 7/30.",
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.14"
-   },
-   "origin": "new",
-   "image": "freq_bars"
-  },
-  {
-   "id": "G-MC-018",
-   "lecture": 4,
-   "type": "MC",
-   "topic": "Reading a frequency table",
-   "stem": "The same bar chart shows books read per student. Which variable type and measurement level does it represent?",
-   "options": {
-    "a": "Quantitative discrete",
-    "b": "Quantitative continuous",
-    "c": "Categorical nominal",
-    "d": "Categorical ordinal"
-   },
-   "correct": [
-    "a"
-   ],
-   "n_correct": 1,
-   "points": 1,
-   "explanation": "Books is a count, so it is quantitative and discrete because you cannot read 2.5 books. It is not categorical, because the categories would have to be labels rather than numbers.",
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.14"
-   },
-   "origin": "new",
-   "image": "freq_bars"
   },
   {
    "id": "L4-MC-001",
@@ -3431,38 +3463,6 @@
     "slide": "p.13"
    },
    "origin": "new"
-  },
-  {
-   "id": "G-WA-008",
-   "lecture": 4,
-   "type": "WA",
-   "topic": "Reading a frequency table",
-   "stem": "Using the bar chart, state the total number of students, the modal number of books, and the proportion who read fewer than 20 books.",
-   "points": 3,
-   "answer": "There are 30 students, since the bars add to 2 + 5 + 11 + 9 + 3. The mode is 20 to 29 books, the tallest bar. Fewer than 20 books is (2 + 5) / 30 = 7/30, about 0.23.",
-   "detail": "The mode is the most frequent value and is read off the tallest bar, not off the axis. For the proportion, the denominator is the total across all bars, while the numerator sums only the bars below the cut-off. A cumulative frequency table answers the same question and is the more efficient way to do it once the cut-off moves.",
-   "rubric": [
-    {
-     "text": "Gives the total as 30",
-     "elements": 1
-    },
-    {
-     "text": "Gives the mode as the 20 to 29 group",
-     "elements": 1
-    },
-    {
-     "text": "Computes the proportion as 7/30",
-     "elements": 1
-    }
-   ],
-   "r_flavoured": false,
-   "r_functions": [],
-   "source": {
-    "pdf": "lecture4_after.pdf",
-    "slide": "p.14"
-   },
-   "origin": "new",
-   "image": "freq_bars"
   },
   {
    "id": "L4-WA-001",
@@ -4122,7 +4122,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture5_after.pdf",
-    "slide": "p.6"
+    "slide": "p.28"
    },
    "origin": "new",
    "image": "normal_shaded"
@@ -4154,7 +4154,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture5_after.pdf",
-    "slide": "p.6"
+    "slide": "p.28"
    },
    "origin": "new",
    "image": "normal_shaded"
@@ -5084,7 +5084,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.12"
+    "slide": "p.10"
    },
    "origin": "new",
    "image": "ci_dotplot"
@@ -5111,7 +5111,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.12"
+    "slide": "p.10"
    },
    "origin": "new",
    "image": "ci_dotplot"
@@ -5138,7 +5138,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.12"
+    "slide": "p.10"
    },
    "origin": "new",
    "image": "ci_dotplot"
@@ -5561,7 +5561,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.12"
+    "slide": "p.10"
    },
    "origin": "new",
    "image": "ci_dotplot"
@@ -5593,7 +5593,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.12"
+    "slide": "p.10"
    },
    "origin": "new",
    "image": "ci_dotplot"
@@ -5908,7 +5908,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture8_after.pdf",
-    "slide": "p.20"
+    "slide": "p.12"
    },
    "origin": "new",
    "image": "scatter_trend"
@@ -5935,7 +5935,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture8_after.pdf",
-    "slide": "p.20"
+    "slide": "p.12"
    },
    "origin": "new",
    "image": "scatter_trend"
@@ -6393,7 +6393,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture8_after.pdf",
-    "slide": "p.20"
+    "slide": "p.12"
    },
    "origin": "new",
    "image": "scatter_trend"

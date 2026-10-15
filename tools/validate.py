@@ -23,6 +23,42 @@ from src.scoring import score_mc  # noqa: E402
 TARGET_MC = 148
 TARGET_WA = 82
 
+# ------------------------------------------------- citation page counts
+#
+# The page number in a citation is an index into the PDF, not the number printed
+# in the slide footer. Reading it as the footer scored 26% against the slides;
+# reading it as an index scores 78%. There is no systematic offset to correct
+# for either: the mode is 0 and the rest are +1, +2 and occasional jumps, so
+# there is nothing to shift in bulk and every page has to be read.
+#
+# These counts were measured from the PDFs in
+#   ...\data_statistics_1\Lectures\Lecture N\
+# and are kept in the repo so this gate also works on a machine that has no
+# lecture PDFs at all. The `_before` files are listed because the lectures were
+# revised mid-term and a question may legitimately cite either version; the
+# counts differ between them, which is why swapping one for the other silently
+# moves the page.
+#
+# A citation naming a file that is not in this map is a bug: it is a page the
+# student cannot open. That was true of 13 questions when this gate was added.
+KNOWN_PDFS = {
+    "lecture1.pdf": 55,
+    "lecture2.pdf": 58,
+    "lecture3.pdf": 68,
+    "lecture4_before.pdf": 51,
+    "lecture4_after.pdf": 49,
+    "lecture5_before.pdf": 55,
+    "lecture5_after.pdf": 55,
+    "lecture6_before.pdf": 47,
+    "lecture6_after.pdf": 50,
+    "lecture7_before.pdf": 65,
+    "lecture7_after.pdf": 66,
+    "lecture8_before.pdf": 40,
+    "lecture8_after.pdf": 41,
+    "lecture9_before.pdf": 23,
+    "lecture9_after.pdf": 26,
+}
+
 # Anti-guessing limits, as a share of the questions they apply to.
 #
 # With 129 five-option questions and ten possible pairs, a perfectly even spread
@@ -234,6 +270,40 @@ def main() -> int:
     print("  questions missing a pdf or slide reference: %d" % len(missing))
     if missing:
         failures.append("uncited questions: %s" % ", ".join(missing[:10]))
+
+    # Every citation has to name a file that exists and a page inside it. The
+    # source line is shown to the student in the review view, so a citation
+    # pointing at a page nobody can open is worse than no citation at all.
+    unknown_file, past_end, unparseable = [], [], []
+    for q in questions:
+        pdf = q["source"].get("pdf")
+        slide = q["source"].get("slide") or ""
+        if pdf not in KNOWN_PDFS:
+            unknown_file.append("%s -> %s" % (q["id"], pdf))
+            continue
+        try:
+            page = int(slide.lstrip("pP."))
+        except ValueError:
+            unparseable.append("%s -> %r" % (q["id"], slide))
+            continue
+        if not 1 <= page <= KNOWN_PDFS[pdf]:
+            past_end.append("%s -> %s %s, but that file has %d pages"
+                            % (q["id"], pdf, slide, KNOWN_PDFS[pdf]))
+    print("  citations naming a file that is not a known lecture PDF: %d"
+          % len(unknown_file))
+    print("  citations pointing past the end of that file: %d" % len(past_end))
+    if unknown_file:
+        failures.append("citation names a file that does not exist: %s"
+                        % ", ".join(unknown_file[:6]))
+    if past_end:
+        failures.append("citation page past the end of the file: %s"
+                        % ", ".join(past_end[:6]))
+    if unparseable:
+        failures.append("slide is not a page number: %s"
+                        % ", ".join(unparseable[:6]))
+    if not (unknown_file or past_end or unparseable):
+        print("  all %d citations name a known file and a page inside it"
+              % len(questions))
 
     hr("Written-answer rubrics")
     bad = [q["id"] for q in wa if not q.get("rubric")]

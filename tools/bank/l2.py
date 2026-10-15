@@ -411,7 +411,7 @@ def questions():
         [rb("`group_by(class)` used to split by class"),
          rb("`summarize()` with `mean(fare, na.rm = TRUE)` used for the mean"),
          rb("Pipe used to chain the steps")],
-        1, PDF, "p.134",
+        1, PDF, "p.54",
         code="titanic_data |>\n  group_by(class) |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE))",
         r_functions=["group_by", "summarize", "mean", "na.rm", "|>"]))
 
@@ -457,7 +457,7 @@ def questions():
         [rb("Base R logical indexing given"),
          rb("`subset()` given"),
          rb("`dplyr::filter()` given and identified as preferred")],
-        1, PDF, "p.77",
+        1, PDF, "p.49",
         code="titanic_data |> dplyr::filter(class == \"3rd\" & survived == \"yes\")",
         r_functions=["filter", "subset", "|>", "&", "$"],
         detail="All three return the same rows, but only `filter()` returns a data "
@@ -494,7 +494,7 @@ def questions():
         [rb("`group_by()` state persists and needs explicit `ungroup()`", 2),
          rb("`.by` scopes grouping to one call and returns ungrouped", 2),
          rb("`.by` correctly identified as the modern alternative")],
-        1, PDF, "p.139",
+        1, PDF, "p.54",
         code="titanic_data |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE), .by = class)",
         r_functions=[".by", "group_by", "ungroup", "summarize"],
         detail="A forgotten `ungroup()` is a common source of confusing output, because "

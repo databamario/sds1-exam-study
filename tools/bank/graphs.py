@@ -13,13 +13,30 @@ less emphasis.
 
 from .common import mc, rb, wa
 
-# Citations point at the lecture where the same skill is taught.
-L2 = ("lecture2_after.pdf", "p.8")
-L3 = ("lecture3_after.pdf", "p.10")
-L4 = ("lecture4_after.pdf", "p.14")
-L5 = ("lecture5_after.pdf", "p.6")
-L7 = ("lecture7_after.pdf", "p.12")
-L8 = ("lecture8_after.pdf", "p.20")
+# Citations point at the slide where the same skill is taught. A single figure
+# can carry more than one skill, so the citation is per question rather than per
+# figure or per lecture: the three histogram questions split across "the mean
+# reacts to skew" (SKEW_MM), "read the shape off a histogram" (SHAPE) and
+# "wider therefore larger variance" (SPREAD). One tuple per lecture is what
+# sent all of these to a single wrong page in the first place.
+#
+# Slide titles in the comment are the first line of that page, checked by hand
+# against the PDFs. tools/validate.py re-checks that the name is a real file
+# and that the page is inside it, and tools/audit_citations.py holds the
+# expected value for every question below.
+BOXPLOT = ("lecture3.pdf", "p.35")        # Quartiles and box plot
+SKEW_MM = ("lecture3.pdf", "p.21")        # Measures of central tendency
+SHAPE = ("lecture3.pdf", "p.24")          # Distribution and shape
+DENSITY = ("lecture3.pdf", "p.25")        # Distribution and shape (cont.)
+SPREAD = ("lecture3.pdf", "p.27")         # Variance and standard deviation
+VARTYPE = ("lecture2.pdf", "p.23")        # Types of variables
+FREQ = ("lecture2.pdf", "p.28")           # Frequency tables
+PROP = ("lecture2.pdf", "p.29")           # Proportions
+STACK = ("lecture2.pdf", "p.34")          # Grouped bar plots (position = "stack")
+NORMALQ = ("lecture5_after.pdf", "p.28")  # Normal-curve area practice
+CI = ("lecture7_after.pdf", "p.10")       # Sample distribution with 95% CI
+SCATTER = ("lecture8_after.pdf", "p.12")  # Correlation example (the scatterplot)
+CORR = ("lecture8_after.pdf", "p.20")     # Correlation matrix
 
 
 def questions():
@@ -37,7 +54,7 @@ def questions():
         "Group B has both the widest box, so the largest interquartile range, and "
         "the longest whiskers, so the widest overall spread. Group C is tightly "
         "clustered around 30 and therefore has by far the smallest variance.",
-        L3[0], L3[1], image="boxplots_h"))
+        BOXPLOT[0], BOXPLOT[1], image="boxplots_h"))
 
     out.append(mc(
         "G-MC-002", 3, "Reading a box plot",
@@ -51,7 +68,7 @@ def questions():
         "The dark line inside each box sits at 30 in all three groups, so the "
         "medians are equal even though the spreads differ. A box plot is built "
         "precisely so the median can be read off directly.",
-        L3[0], L3[1], image="boxplots_h"))
+        BOXPLOT[0], BOXPLOT[1], image="boxplots_h"))
 
     out.append(mc(
         "G-MC-003", 3, "Reading a box plot",
@@ -66,7 +83,7 @@ def questions():
         "25% of values lie above it. A range of 40 would mean 50 minus 10, but "
         "the whiskers are not necessarily the true extremes, and the standard "
         "deviation cannot be read off a box plot at all.",
-        L3[0], L3[1], image="boxplots_h"))
+        BOXPLOT[0], BOXPLOT[1], image="boxplots_h"))
 
     # ---- skew and centre
     out.append(mc(
@@ -82,7 +99,7 @@ def questions():
         "so the few large values pull it up, while the median only cares about the "
         "middle observation and stays lower. Here the mean sits around 4 while the "
         "median is near 2.3.",
-        L3[0], L3[1], image="hist_skewed"))
+        SKEW_MM[0], SKEW_MM[1], image="hist_skewed"))
 
     out.append(mc(
         "G-MC-005", 3, "Skew and centre",
@@ -96,7 +113,7 @@ def questions():
         "The first plot has its mass on the left and a tail stretching to the "
         "right. A symmetric histogram such as the second has its centre in the "
         "middle and no long tail on either side.",
-        L3[0], L3[1], image="hist_skewed"))
+        SHAPE[0], SHAPE[1], image="hist_skewed"))
 
     out.append(mc(
         "G-MC-006", 3, "Shape and spread",
@@ -110,7 +127,7 @@ def questions():
         "Variance measures how far values sit from the centre, so spreading the "
         "same shape out increases it. Identical shapes that differ only in width "
         "differ in variance and standard deviation but not in shape or centre.",
-        L3[0], L3[1], image="hist_symmetric"))
+        SPREAD[0], SPREAD[1], image="hist_symmetric"))
 
     # ---- confidence intervals
     out.append(mc(
@@ -123,7 +140,7 @@ def questions():
         "Group A's interval runs from about 48.6 to 56.2 and does not touch the "
         "reference line at 44, so the difference is significant. Group B's interval "
         "runs from about 41.3 to 48.9 and does contain 44, so it is not significant.",
-        L7[0], L7[1], image="ci_dotplot"))
+        CI[0], CI[1], image="ci_dotplot"))
 
     out.append(mc(
         "G-MC-008", 7, "Interpreting a confidence interval",
@@ -133,7 +150,7 @@ def questions():
         "The margin of error is half the width of the interval. Group A's spans "
         "about 7.6 units and Group B's about 3.8, so Group A's is larger and its "
         "estimate is less precise.",
-        L7[0], L7[1], image="ci_dotplot"))
+        CI[0], CI[1], image="ci_dotplot"))
 
     out.append(mc(
         "G-MC-009", 7, "Interpreting a confidence interval",
@@ -147,7 +164,7 @@ def questions():
         "An interval that contains the reference value means the data are "
         "compatible with no difference, so we cannot reject the null hypothesis at "
         "the 5% level. It is not a probability statement about the reference value.",
-        L7[0], L7[1], image="ci_dotplot"))
+        CI[0], CI[1], image="ci_dotplot"))
 
     # ---- scatter plot
     out.append(mc(
@@ -163,7 +180,7 @@ def questions():
         "higher scores, which is a positive association. The points are scattered "
         "around the trend rather than lying on a line, so the relationship is "
         "moderate rather than perfect.",
-        L8[0], L8[1], image="scatter_trend"))
+        SCATTER[0], SCATTER[1], image="scatter_trend"))
 
     out.append(mc(
         "G-MC-011", 8, "Reading a scatter plot",
@@ -177,11 +194,11 @@ def questions():
         "A correlation of 0 means no linear association, so the points form a "
         "cloud with no direction. A tight upward line would be a correlation near 1 "
         "and a tight downward line a correlation near -1.",
-        L8[0], L8[1], image="scatter_trend"))
+        SCATTER[0], SCATTER[1], image="scatter_trend"))
 
     # ---- densities
     out.append(mc(
-        "G-MC-012", 2, "Comparing distributions",
+        "G-MC-012", 3, "Comparing distributions",
         "The plot shows the densities of two groups. Which statement is correct?",
         ["Both groups have the same mean and the same spread",
          "Group A has the higher mean but the smaller spread",
@@ -191,10 +208,10 @@ def questions():
         "Group B's curve peaks further to the right, so its values are typically "
         "larger, and it is much flatter and wider, so it is more spread out. Group "
         "A's curve is taller and narrower.",
-        L2[0], L2[1], image="density_overlay"))
+        DENSITY[0], DENSITY[1], image="density_overlay"))
 
     out.append(mc(
-        "G-MC-013", 2, "Comparing distributions",
+        "G-MC-013", 3, "Comparing distributions",
         "The area under a density curve for one group is much larger than the "
         "area for the other. What does that tell you?",
         ["That group has a larger total value",
@@ -205,7 +222,7 @@ def questions():
         "Density curves are each normalised so the total area is 1 regardless of "
         "how many observations were collected. A larger area on the plot comes "
         "from a wider distribution, not a larger sample.",
-        L2[0], L2[1], image="density_overlay"))
+        DENSITY[0], DENSITY[1], image="density_overlay"))
 
     # ---- correlation matrix
     out.append(mc(
@@ -219,7 +236,7 @@ def questions():
         "in the matrix apart from the diagonal. Sleep and Stress is the strongest "
         "in absolute terms only by comparison with the other listed pairs at 0.33, "
         "which is still well below 0.62.",
-        L8[0], L8[1], image="corr_heatmap"))
+        CORR[0], CORR[1], image="corr_heatmap"))
 
     out.append(mc(
         "G-MC-015", 8, "Reading a correlation matrix",
@@ -233,31 +250,31 @@ def questions():
         "The sign is negative, so the two move in opposite directions, and the "
         "magnitude is only 0.28, so the linear association is weak. It is not zero, "
         "so the variables are not unrelated.",
-        L8[0], L8[1], image="corr_heatmap"))
+        CORR[0], CORR[1], image="corr_heatmap"))
 
     # ---- frequency bars
     out.append(mc(
-        "G-MC-016", 4, "Reading a frequency table",
+        "G-MC-016", 2, "Reading a frequency table",
         "The bar chart shows how many students read each number of books last "
         "year. How many students are there in total?",
         ["30", "11", "20", "9"],
         ["a"],
         "Add the bar heights: 2 + 5 + 11 + 9 + 3 = 30. Reading only the tallest "
         "bar would give 11, which is just the modal group.",
-        L4[0], L4[1], image="freq_bars"))
+        FREQ[0], FREQ[1], image="freq_bars"))
 
     out.append(mc(
-        "G-MC-017", 4, "Reading a frequency table",
+        "G-MC-017", 2, "Reading a frequency table",
         "Using the same bar chart, what proportion of students read fewer than 20 "
         "books?",
         ["11/30", "2/30", "20/30", "7/30"],
         ["d"],
         "Fewer than 20 books covers the first two bars, 2 + 5 = 7 students out of "
         "30 in total, so the proportion is 7/30.",
-        L4[0], L4[1], image="freq_bars"))
+        PROP[0], PROP[1], image="freq_bars"))
 
     out.append(mc(
-        "G-MC-018", 4, "Reading a frequency table",
+        "G-MC-018", 2, "Reading a frequency table",
         "The same bar chart shows books read per student. Which variable type and "
         "measurement level does it represent?",
         ["Quantitative discrete",
@@ -268,7 +285,7 @@ def questions():
         "Books is a count, so it is quantitative and discrete because you cannot "
         "read 2.5 books. It is not categorical, because the categories would have "
         "to be labels rather than numbers.",
-        L4[0], L4[1], image="freq_bars"))
+        VARTYPE[0], VARTYPE[1], image="freq_bars"))
 
     # ======================================================= written answers (12)
     out.append(wa(
@@ -279,7 +296,7 @@ def questions():
          rb("Refers to the width of the box or interquartile range"),
          rb("Refers to the length of the whiskers or the overall range",
             elements=2)],
-        2, L3[0], L3[1], image="boxplots_h",
+        2, BOXPLOT[0], BOXPLOT[1], image="boxplots_h",
         detail="The variance measures average squared distance from the mean, so a "
                "wider spread always gives a larger variance. Here the three medians "
                "are all 30, so the groups differ only in spread, which makes this a "
@@ -293,7 +310,7 @@ def questions():
         [rb("States that the mean is higher than the median"),
          rb("Identifies the distribution as right-skewed with a long right tail"),
          rb("Explains that the tail pulls the mean up but not the median")],
-        2, L3[0], L3[1], image="hist_skewed",
+        2, SKEW_MM[0], SKEW_MM[1], image="hist_skewed",
         detail="A quick way to read this off a histogram is to look for an "
                "asymmetry: a long thin tail on one side is what separates the mean "
                "from the median. The reverse happens for a left-skewed "
@@ -311,7 +328,7 @@ def questions():
          rb("Notes that group A's interval excludes the reference value"),
          rb("Notes that group B's interval contains the reference value"),
          rb("Links this to rejecting or not rejecting the null hypothesis")],
-        3, L7[0], L7[1], image="ci_dotplot",
+        3, CI[0], CI[1], image="ci_dotplot",
         detail="This is the whole logic of a hypothesis test expressed as a "
                "picture. A 95% interval that misses the value you are testing "
                "against corresponds to a p-value below 0.05, and one that contains "
@@ -327,7 +344,7 @@ def questions():
         [rb("Names group A as having the larger margin of error"),
          rb("Relates the margin of error to the width of the interval"),
          rb("Explains that group A's estimate is less precise")],
-        2, L7[0], L7[1], image="ci_dotplot",
+        2, CI[0], CI[1], image="ci_dotplot",
         detail="A wider interval usually means a larger standard error, which "
                "typically comes from a smaller sample size or more variability in "
                "the data. Precision and statistical significance are different "
@@ -342,7 +359,7 @@ def questions():
         [rb("Identifies the relationship as positive"),
          rb("Describes the strength as moderate or imperfect, not strong"),
          rb("Mentions that the points are scattered around the trend")],
-        2, L8[0], L8[1], image="scatter_trend",
+        2, SCATTER[0], SCATTER[1], image="scatter_trend",
         detail="Strength here refers to how tightly the points follow the trend, "
                "not to whether a trend exists at all. A visible upward drift with a "
                "wide cloud still counts as a positive association, and the "
@@ -351,7 +368,7 @@ def questions():
                "the study hours caused the scores."))
 
     out.append(wa(
-        "G-WA-006", 2, "Comparing distributions",
+        "G-WA-006", 3, "Comparing distributions",
         "The plot shows the densities of two groups. Compare their centres and "
         "their spreads.",
         "Group B is centred further right than group A, so it has the higher typical "
@@ -360,7 +377,7 @@ def questions():
         [rb("States that group B has the higher centre or mean"),
          rb("States that group B has the larger spread or variance"),
          rb("Notes that group A's curve is narrower and more concentrated")],
-        2, L2[0], L2[1], image="density_overlay",
+        2, DENSITY[0], DENSITY[1], image="density_overlay",
         detail="A taller peak does not mean a larger total, because each density is "
                "normalised to have area 1. Height and width trade off: the curve "
                "that is spread out must be flatter for its area to stay the same. "
@@ -378,7 +395,7 @@ def questions():
         [rb("Names Hours and Screen as the strongest positive pair at about 0.62"),
          rb("Names Sleep and Stress as the strongest negative pair at about -0.33"),
          rb("Explains that the signs give direction and the sizes give strength")],
-        3, L8[0], L8[1], image="corr_heatmap",
+        3, CORR[0], CORR[1], image="corr_heatmap",
         detail="The diagonal is always 1 because every variable is perfectly "
                "correlated with itself, so it is ignored when comparing. Note that "
                "-0.33 and 0.62 are both fairly weak to moderate linear "
@@ -386,14 +403,14 @@ def questions():
                "would look like a tight straight line in a scatter plot."))
 
     out.append(wa(
-        "G-WA-008", 4, "Reading a frequency table",
+        "G-WA-008", 2, "Reading a frequency table",
         "Using the bar chart, state the total number of students, the modal number "
         "of books, and the proportion who read fewer than 20 books.",
         "There are 30 students, since the bars add to 2 + 5 + 11 + 9 + 3. The mode is 20 to 29 books, the tallest bar. Fewer than 20 books is (2 + 5) / 30 = 7/30, about 0.23.",
         [rb("Gives the total as 30"),
          rb("Gives the mode as the 20 to 29 group"),
          rb("Computes the proportion as 7/30")],
-        3, L4[0], L4[1], image="freq_bars",
+        3, FREQ[0], FREQ[1], image="freq_bars",
         detail="The mode is the most frequent value and is read off the tallest bar, "
                "not off the axis. For the proportion, the denominator is the total "
                "across all bars, while the numerator sums only the bars below the "
@@ -411,7 +428,7 @@ def questions():
         [rb("States that the shape is the same in both"),
          rb("Identifies the more spread-out histogram as having the larger variance"),
          rb("Explains variance as distance from the centre")],
-        2, L3[0], L3[1], image="hist_symmetric",
+        2, SPREAD[0], SPREAD[1], image="hist_symmetric",
         detail="Shape, centre and spread are three separate properties of a "
                "distribution, and two histograms can agree on the first two while "
                "differing on the third. Keeping them apart is the point of "
@@ -425,7 +442,7 @@ def questions():
         [rb("Identifies that women report reading less often"),
          rb("Cites the contrast between the extreme categories"),
          rb("Notes that the middle categories are similar")],
-        2, L2[0], L2[1], image="bar_stacked",
+        2, STACK[0], STACK[1], image="bar_stacked",
         detail="A grouped bar chart with an ordered categorical variable like this "
                "is best read by looking at the shape of each group's profile rather "
                "than at individual bar heights. Note that this is an association "
@@ -441,7 +458,7 @@ def questions():
         [rb("Identifies the correct regions as a and b"),
          rb("States the answer as P(a) + P(b) or P(a and b)"),
          rb("Notes that the single boundary point adds no area")],
-        2, L5[0], L5[1], image="normal_shaded",
+        2, NORMALQ[0], NORMALQ[1], image="normal_shaded",
         detail="The rule for splitting an interval at an interior point is that "
                "the probabilities of the pieces add up, because the events are "
                "mutually exclusive. A single value has probability zero under a "
@@ -458,7 +475,7 @@ def questions():
         [rb("Identifies the region as P(X > 7.4) or P(c)"),
          rb("States that the mean and standard deviation are needed"),
          rb("Mentions standardising to a z-score and using the normal table")],
-        2, L5[0], L5[1], image="normal_shaded",
+        2, NORMALQ[0], NORMALQ[1], image="normal_shaded",
         detail="A picture tells you which region is meant but not its numerical "
                "value, because the drawing is not drawn to a measurable scale. That "
                "is the whole reason the normal table exists: it stores the area to "
