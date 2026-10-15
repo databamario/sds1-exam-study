@@ -209,13 +209,22 @@ Questions are weighted by how much material each lecture covers, not spread even
 Every question records the lecture slide it came from, shown in the answer key.
 
 `tools/validate.py` checks mechanically that every citation names a real lecture file and
-a page inside it — all 243 pass. That is not the same as being the *right* page, and a
-first pass of manual review put the honest figure at roughly 78% correct, with an
-estimated 15 to 25 questions still pointing at a neighbouring slide. That estimate comes
-from `tools/verify_citations.py`, which ranks questions by how badly the cited slide
-matches the question; its scores are a weak signal and about a third of its shortlist is
-false alarms, so it is a reading list rather than a verdict. If a source line looks wrong
-when you open the answer key, it is a real bug worth reporting.
+a page inside it — all 243 pass. That is not the same as being the *right* page.
+
+**The first hand pass found 13 citations pointing at the wrong lecture or the wrong
+slide**, out of the 40 worst-matched that `tools/verify_citations.py` produced; the other
+27 were false alarms. About a third of that shortlist is vocabulary the matcher cannot
+see, such as a slide saying "quantitative" where the question says "numerical". The
+remaining ~200 citations have *not* been read by hand, so 13 is a floor rather than an
+estimate, and the real number is not known.
+
+The dominant cause was structural: a question inherited its lecture's citation wholesale
+even when the content belonged somewhere else, so one wrong page silently mis-cited
+every question that shared it. Three questions about random variables sat in Lecture 4
+citing a slide about drawing cards, while Lecture 5 is where they are taught.
+
+So treat the source line in the answer key as the one part of this app that has not been
+fully checked, and report it if it looks wrong when you open the slide.
 
 Note that the page number is an **index into the PDF**, not the number printed in the
 slide footer. Reading it as the footer scores 26% against the slides; reading it as an
