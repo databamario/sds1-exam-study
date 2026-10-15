@@ -16,13 +16,15 @@ def questions():
         "statement is an INFERENTIAL claim?",
         ["In our sample, cat owners reported 20% lower stress than non-cat owners.",
          "Cat ownership is associated with a 20% reduction in stress among all adults.",
-         "The sample contained 1,500 adults.",
+         "The difference in average stress can be estimated for all adults, not only "
+         "for the 1,500 who were surveyed.",
          "The mean stress of cat owners was 2.5.",
          "The box plot of stress scores had two groups."],
-        ["b"],
-        "Descriptive statements stay inside the sample we observed. The inferential "
-        "statement generalises to the broader adult population, which is the whole "
-        "point of moving from the sample to the population.",
+        ["b", "c"],
+        "Descriptive statements stay inside the sample we observed: how many people "
+        "were surveyed, what their means were, what the plot looked like. Inferential "
+        "statements reach beyond it, to the broader adult population, which is the "
+        "whole point of moving from the sample to the population.",
         PDF, "p.7"))
 
     out.append(mc(
@@ -46,13 +48,14 @@ def questions():
         "places. Which of the following are listed as sources of uncertainty?",
         ["An incorrect sampling strategy.",
          "An incorrect measurement of stress.",
-         "A small sample size.",
+         "Reporting the results with a median instead of a mean.",
          "The use of decimals in the dataset.",
-         "Choosing to report a median instead of a mode."],
-        ["a", "b", "c"],
-        "The three sources named are an incorrect sampling strategy, incorrect "
-        "measurement, and small sample size. Cosmetic reporting choices do not "
-        "themselves create uncertainty about the population.",
+         "Presenting the data as a bar chart rather than a table."],
+        ["a", "b"],
+        "Two of the three sources named here apply: an incorrect sampling strategy "
+        "and an incorrect measurement of stress. A small sample size is the third "
+        "source of uncertainty, but it is not one of the options offered. Cosmetic "
+        "reporting choices do not themselves create uncertainty about the population.",
         PDF, "p.9"))
 
     # ------------------------------------------------------------- Literary Digest
@@ -66,27 +69,30 @@ def questions():
          "Depression were mostly wealthy Republicans.",
          "The poll was conducted before the election was decided.",
          "The responses were counted incorrectly by the magazine.",
-         "The poll used a random sampling method, which is unsuitable for elections."],
-        ["b"],
+         "The size of the poll was not the problem: a large sample cannot correct a "
+         "biased sampling strategy."],
+        ["b", "e"],
         "The poll was enormous but biased: it surveyed the magazine's own subscribers "
-        "and car owners, who were disproportionately wealthy Republicans. The lesson "
-        "is explicit: a large sample size does not fix a biased "
-        "sampling strategy.",
+        "and car owners, who were disproportionately wealthy Republicans. That is why "
+        "the size of the poll does not explain the failure, and why a large sample "
+        "size does not fix a biased sampling strategy.",
         PDF, "p.25"))
 
     out.append(mc(
         "L1-MC-005", 1, "Sampling bias",
         "Which statement about sample size and sampling bias is true?",
-        ["A large sample size can compensate for a biased sampling strategy.",
+        ["A poll of 2.4 million people was still off by about 19% because of how its "
+         "respondents were selected.",
          "A large sample size guarantees the sample is representative.",
          "A large sample size reduces random error but does not fix a biased "
          "sampling strategy.",
          "Sample size is irrelevant whenever probability sampling is used.",
          "Bias can only occur when the sample is smaller than the population."],
-        ["c"],
+        ["a", "c"],
         "Sample size reduces random error, i.e. sampling variability. It cannot "
         "repair a systematically unrepresentative sampling frame. The Literary "
-        "Digest poll is exactly this kind of example.",
+        "Digest poll is exactly this kind of example: 2.4 million respondents, and "
+        "still off by about 19%.",
         PDF, "p.25"))
 
     # ------------------------------------------------------ target/sampled/sample
@@ -98,29 +104,33 @@ def questions():
         ["The target population and the sampled population are different groups.",
          "The sampled population is a subset of the sample.",
          "The sample is the full group the researcher wants to generalise to.",
-         "The observation unit is the elderly care facility.",
+         "The observation unit is the unit that is actually studied.",
          "Target and sampled populations are identical unless the sample is random."],
-        ["a"],
+        ["a", "d"],
         "The target population is everyone you want to say something about (elderly "
         "women in Sweden); the sampled population is the group you could actually "
         "reach (those in care facilities). They are ideally the same but often are "
-        "not, because some individuals are unreachable.",
+        "not, because some individuals are unreachable. Separately, the observation "
+        "unit is whatever unit the study actually studies, not the unit that was "
+        "convenient to sample from.",
         PDF, "p.26"))
 
     out.append(mc(
         "L1-MC-007", 1, "Study design terminology",
         "Which of the following are TRUE statements about study design terminology?",
         ["The observation unit is the unit you actually study.",
-         "In the CSS programme the observation unit is most often the individual.",
+         "The sample is the subset of the population you actually observe.",
          "The sampled population is always larger than the sample.",
          "A sample is the full group you want to make claims about.",
-         "The target population and the sampled population may differ when some "
-         "individuals are unreachable."],
-        ["a", "b", "e"],
-        "The observation unit is what you study (usually individuals); target and "
-        "sampled populations can diverge because some people are unreachable; and "
-        "the sample is by definition a subset of the sampled population, so it is "
-        "smaller, not larger. A sample is never the full target group.",
+         "The target population and the sampled population are always identical when "
+         "the sample is random."],
+        ["a", "b"],
+        "The observation unit is what you study, and the sample is by definition the "
+        "subset of that population you end up observing, so it is smaller than the "
+        "sampled population rather than larger, and it is never the full target group. "
+        "Target and sampled populations can diverge for a reason that has nothing to do "
+        "with randomness: some people are simply unreachable, and random sampling cannot "
+        "reach them either.",
         PDF, "p.26"))
 
     out.append(mc(
@@ -131,11 +141,13 @@ def questions():
          "This is a random sample because each student has an equal chance of selection.",
          "This introduces sampling bias because 10 is a small number.",
          "The observation unit is the department rather than the student.",
-         "This is a convenience sample because the student chose the number 10."],
-        ["b"],
-        "A lottery over the complete list is random sampling, and the target and "
-        "sampled populations coincide. Small n causes imprecision, not bias. Choosing "
-        "n = 10 in advance is not what makes a sample a convenience sample.",
+         "The target population and the sampled population coincide here."],
+        ["b", "e"],
+        "A lottery over the complete list is random sampling, because every student "
+        "has an equal chance of being drawn, and because the list is the whole "
+        "population the target and sampled populations coincide. Small n causes "
+        "imprecision, not bias. Choosing n = 10 in advance is not what makes a sample "
+        "a convenience sample.",
         PDF, "p.28"))
 
     out.append(mc(
@@ -147,13 +159,15 @@ def questions():
          "This is a random sample because the student chose the participants personally.",
          "The target population is not equal to the sampled population, and sampling "
          "bias has been introduced.",
-         "The only problem is the small sample size, not who was selected.",
+         "Sampling bias of this kind will lead to incorrect conclusions about the "
+         "population.",
          "The observation unit becomes the department rather than the individual."],
-        ["c"],
+        ["c", "d"],
         "Picking your own friends and colleagues produces a non-representative "
         "sample and breaks the link between the sampled population and the target "
-        "population. Bias in sampling leads to incorrect conclusions about the "
-        "population.",
+        "population. The consequence is not just a bigger margin of error: bias in "
+        "sampling leads to incorrect conclusions about the population, which is the "
+        "failure mode that a large sample size cannot rescue.",
         PDF, "p.29"))
 
     # --------------------------------------------------------------- R: objects
@@ -162,12 +176,13 @@ def questions():
         "Consider the following R code. What is the value of `a` after the code runs?",
         ["2 + 2",
          "4",
-         "Hello",
-         "World",
+         "The `<-` operator assigns the result 4 to a new object called `a`.",
+         "`a` still holds the unevaluated expression `2 + 2` until it is printed.",
          "The code produces an error, because a is a reserved word."],
-        ["b"],
-        "R evaluates the right-hand side and stores the result. `a <- 2 + 2` stores 4 "
-        "in a, so printing `a` gives 4.",
+        ["b", "c"],
+        "R evaluates the right-hand side and stores the result, so `a <- 2 + 2` puts the "
+        "number 4 in a and printing `a` gives 4. The expression is not kept: an object "
+        "holds the evaluated value, not the code that produced it.",
         PDF, "p.41", code="a <- 2 + 2\na", r_functions=["<-", "+"]))
 
     out.append(mc(
@@ -176,11 +191,12 @@ def questions():
         ["Hello",
          "World",
          "Hello World",
-         "An error, because a is overwritten",
+         "The second assignment replaces the value of `a` without giving any warning.",
          "Nothing, because assignment does not print"],
-        ["b"],
+        ["b", "d"],
         "The second assignment replaces the contents of `a`. Assignment overwrites "
-        "without warning, so the object ends up holding \"World\".",
+        "silently, so the object ends up holding \"World\" and there is no error and "
+        "no message to warn that the earlier value is gone.",
         PDF, "p.41", code="a <- \"Hello\"\na <- \"World\"\na",
         r_functions=["<-"], origin="adapted_HT25"))
 
@@ -191,10 +207,12 @@ def questions():
          "4",
          "6",
          "2 4 6 8",
-         "An error, because a and b are numbers not vectors"],
-        ["a"],
-        "`d * 2` recycles the scalar 2 across the vector, giving 2 4 6 8, while "
-        "`a + b` is arithmetic on two single stored values, 4 + 6 = 10.",
+         "Both `a` and `b` hold a single stored value, so `a + b` is ordinary "
+         "arithmetic rather than vectorised addition."],
+        ["a", "e"],
+        "`a` holds 4 and `b` holds 6, both single values rather than vectors, so "
+        "`a + b` is 10. The sequence 2 4 6 8 comes from a different example, where a "
+        "vector is multiplied by a scalar and the scalar is recycled across it.",
         PDF, "p.42", code="a <- 2 + 2\nb <- 3 * 2\na + b",
         r_functions=["<-", "+", "*"]))
 
@@ -217,16 +235,18 @@ def questions():
         "Which of the following statements about R data types are TRUE?",
         ["`x <- 2L` creates an integer, because the L suffix forces integer type.",
          "`x <- 3.14` creates a numeric value.",
-         "`x <- 2L` creates a double-precision numeric value, because integers are stored "
-         "as a subset of numerics.",
-         "`x <- TRUE` creates a logical vector.",
-         "`x <- \"hello\"` creates a character vector."],
-        ["a", "b", "d", "e"],
+          "`x <- 2L` creates a double-precision numeric value, because integers are stored "
+          "as a subset of numerics.",
+          "`x <- TRUE` creates a numeric value, because TRUE is stored internally as 1.",
+          "`x <- \"hello\"` creates a factor, because character strings are stored as "
+          "factors in R."],
+        ["a", "b"],
         "The L suffix explicitly forces integer type, so the claim that `x <- 2L` creates a "
-        "double-precision numeric is false. Note the trap: `is.numeric(2L)` is TRUE, because "
-        "is.numeric() asks whether the value is a number rather than a character or logical, "
-        "and R will happily do arithmetic with integers. But 2L is stored as an integer, not a "
-        "double. The other four statements are true.",
+        "double-precision numeric is false, and a factor is a string with extra attributes "
+        "rather than the default for text. Note the trap worth knowing: `is.numeric(2L)` is "
+        "TRUE, because is.numeric() asks whether the value is a number rather than a "
+        "character or logical, and R will happily do arithmetic with integers. But 2L is "
+        "stored as an integer, not a double.",
         PDF, "p.52", code="x <- 2L\nclass(x)",
         r_functions=["<-", "class"]))
 
@@ -235,16 +255,17 @@ def questions():
         "Which of the following statements about R data structures are TRUE?",
         ["A data frame can only contain numeric columns.",
          "A vector is a one-dimensional list of elements of the same data type.",
-         "A matrix is a two-dimensional list of elements of the same data type.",
+         "A matrix is a two-dimensional list of vectors whose columns may have "
+         "different data types.",
          "A data frame is a two-dimensional list of vectors that may have different types.",
-         "A list may contain elements of different types."],
-        ["b", "c", "d", "e"],
-        "A vector is a one-dimensional list of elements of the same data type. A matrix "
-        "is a two-dimensional list of elements of the same data type. A data frame is a "
-        "two-dimensional list of vectors that may have different types, and a list may "
-        "contain elements of different types. Only the claim that a data frame holds "
-        "only numeric columns is false: it holds one column per vector, and those "
-        "columns can be numeric, character, logical or factor.",
+         "A list must contain elements of the same data type."],
+        ["b", "d"],
+        "A vector is a one-dimensional list of elements of a single data type, and a "
+        "data frame is a two-dimensional list of such vectors appended as columns, where "
+        "the columns are allowed to differ in type. Confusing a matrix with a data frame "
+        "is the trap: a matrix holds a single type throughout, which is exactly what its "
+        "columns may not do. A data frame is likewise not restricted to numeric columns, "
+        "and a list is the structure that is expected to hold mixed types and lengths.",
         PDF, "p.50", r_functions=["data.frame", "c", "matrix", "list", "factor"]))
 
     out.append(mc(
@@ -254,11 +275,13 @@ def questions():
          "9",
          "3",
          "An error, because f is not a built-in function",
-         "The function definition itself"],
-        ["b"],
+         "The right-hand side is evaluated before the assignment, so `f` becomes a "
+         "function object only after that line runs."],
+        ["b", "e"],
         "The assignment stores a function in `f`, so calling it applies `x^2` to the "
-        "argument. Note that the right-hand side is evaluated before the assignment, so "
-        "`f` exists as a function object only after that line runs.",
+        "argument and 3 squared is 9. A user-defined function behaves like any built-in "
+        "one once it exists; the only subtlety is that the right-hand side is evaluated "
+        "first, so `f` exists as a function object only after that line runs.",
         PDF, "p.43", code="f <- function(x) x^2\nf(3)",
         r_functions=["function", "<-", "^"]))
 
@@ -298,10 +321,14 @@ def questions():
          "factor(x) - it always sorts alphabetically, which is what we want",
          "levels(x) = c(\"Low\", \"Medium\", \"High\")",
          "as.character(x) <- c(\"Low\", \"Medium\", \"High\")",
-         "sort(x, levels = c(\"Low\", \"Medium\", \"High\"))"],
-        ["a"],
+         "A factor is a character string with extra attributes, such as an ordered set "
+         "of levels."],
+        ["a", "e"],
         "You set the level order by passing `levels` to `factor()`. Bare `factor(x)` "
-        "takes the levels in alphabetical order, which would give High, Low, Medium.",
+        "takes the levels in alphabetical order, which would give High, Low, Medium. "
+        "That ordering is not a property of the underlying text at all: it is the extra "
+        "attribute the factor carries, which is what makes factors different from plain "
+        "character vectors.",
         PDF, "p.46", r_functions=["factor", "levels"]))
 
     # -------------------------------------------------------------- written answers

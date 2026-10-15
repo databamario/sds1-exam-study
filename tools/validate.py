@@ -53,7 +53,10 @@ MIN_SAMPLE_FOR_SPREAD = 20
 # BELOW it is reported, because that means the constant is stale and the real
 # rule is looser than it looks. When it reaches zero the allowance disappears
 # and the plain rule applies.
-FORMAT_MIGRATION_REMAINING = 123
+#
+# Progress: 123 -> 108 after Lecture 1, which fixed 15 questions: 11 were given
+# a second true option, and 4 were reduced from three or four true options to two.
+FORMAT_MIGRATION_REMAINING = 108
 
 # Every R function the lectures actually teach. A lecture cannot be "covered"
 # unless at least one question references each of its functions.
