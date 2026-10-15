@@ -14,10 +14,9 @@ def questions():
         ["A correlation of 1 indicates a perfect positive linear relationship.",
          "A correlation of -1 indicates a perfect negative linear relationship.",
          "A correlation of 0 means the variables are unrelated.",
-         "Correlation is a specific measure of association between two continuous "
-         "variables.",
+         "A strong correlation establishes that one of the variables causes the other.",
          "Correlation requires the two variables to be categorical."],
-        ["a", "b", "d"],
+        ["a", "b"],
         "A correlation near 0 means no LINEAR relationship only, so it can still hide a "
         "strong non-linear pattern, which is why (c) is false. Correlation is defined for "
         "two continuous variables, so (e) is false.",
@@ -27,13 +26,13 @@ def questions():
         "L8-MC-002", 8, "Testing for correlation",
         "Consider this R output: `t = 5.4738, df = 48, p-value = 1.579e-06`, "
         "`cor = 0.6199323`. Which statements are TRUE?",
-        ["The sample correlation is about 0.62.",
+        ["The sample correlation is about 0.41, the lower end of the interval.",
          "The test rejects H0: rho = 0 at the 5% level.",
          "There is evidence that income and high-school graduation are positively "
          "correlated.",
          "The 95% confidence interval of about (0.41, 0.76) contains 0.",
-         "The test has 48 degrees of freedom."],
-        ["a", "b", "c", "e"],
+         "The test has 49 degrees of freedom, one for each of the 50 states."],
+        ["b", "c"],
         "The 95% CI of (0.4153, 0.7648) excludes 0, so the statement that it contains 0 is "
         "false. That is also exactly why the test rejects, since a null value outside the "
         "interval means rejection at that level.",
@@ -48,8 +47,8 @@ def questions():
          "SE(r) = sqrt(r^2/(n - 1)) with n - 1 degrees of freedom",
          "SE(r) = (1 - r^2)/n with n degrees of freedom",
          "SE(r) = sqrt((1 - r^2)/(n - 1)) with n - 1 degrees of freedom",
-         "SE(r) = r/sqrt(n) with n degrees of freedom"],
-        ["a"],
+         "The test is two-sided, with H0: rho = 0 against H1: rho not equal to 0"],
+        ["a", "e"],
         "The standard error of r is sqrt((1 - r squared)/(n - 2)) and the statistic follows "
         "a t distribution with n - 2 degrees of freedom, because r is built from two "
         "estimated means rather than one. This standard error is "
@@ -59,12 +58,12 @@ def questions():
     out.append(mc(
         "L8-MC-004", 8, "Spearman's correlation",
         "Which statements about Spearman's correlation are TRUE?",
-        ["It is the Pearson correlation computed on the ranks of the variables.",
+        ["It is the Pearson correlation computed on the values rather than on the ranks.",
          "It measures monotonic association rather than only linear association.",
          "It cannot detect a relationship where larger states are richer but not linearly.",
          "It is robust to outliers.",
-         "It is obtained in R with `cor.test(x, y, method = \"spearman\")`."],
-        ["a", "b", "d", "e"],
+         "It is obtained in R with `cor.test(x, y, method = \"kendall\")`."],
+        ["b", "d"],
         "Spearman's coefficient is specifically designed to capture monotonic patterns "
         "that Pearson misses, which is the whole point of the Alaska example where "
         "Pearson said yes and Spearman said no. So the claim that it cannot detect a "
@@ -80,8 +79,8 @@ def questions():
          "The strongest association in the states matrix is between income and high-school "
          "graduates.",
          "The strongest association in the states matrix is between murder and frost.",
-         "A correlation matrix can be computed in R with `select(...) |> cor() |> round(2)`."],
-        ["a", "b", "e"],
+         "A correlation matrix of k variables contains k distinct correlations."],
+        ["a", "b"],
         "Reading the matrix, the largest off-diagonal value in absolute terms is 0.78 "
         "between murder and life expectancy, so both (c) and (d) are wrong.",
         PDF, "p.20",
@@ -95,8 +94,9 @@ def questions():
          "The ratio of the variance within groups to the variance between groups",
          "The difference between the largest and smallest group means",
          "The total number of observations divided by the number of groups",
-         "The ratio of the between-group mean square to the overall mean"],
-        ["a"],
+         "It assumes the data are roughly normal within each group and that the variances "
+         "are equal across groups, an assumption Welch's ANOVA relaxes"],
+        ["a", "e"],
         "F is between-group variance over within-group variance. A large F means the group "
         "means differ a lot relative to the noise inside the groups, so the formula is "
         "definitely not the reverse as in (b).",
@@ -106,12 +106,12 @@ def questions():
         "L8-MC-007", 8, "Analysis of variance",
         "Which statements about ANOVA are TRUE?",
         ["ANOVA compares means across multiple groups.",
-         "The null hypothesis is that all group means are equal.",
-         "The alternative is that at least one group mean differs.",
+         "The null hypothesis is that the variances are equal across the groups.",
+         "The alternative is that all the group means are equal.",
          "Rejecting H0 tells you which specific groups differ.",
          "ANOVA with only two groups gives exactly the same p-value as the two-sample "
          "t-test with equal variances."],
-        ["a", "b", "c", "e"],
+        ["a", "e"],
         "ANOVA is an omnibus test: rejecting H0 only says something differs, not what. "
         "Identifying the differing pairs needs post-hoc tests such as `pairwise.t.test()`, "
         "which is not covered here, so (d) is false.",
@@ -125,10 +125,11 @@ def questions():
         "for practice?",
         ["Each individual test should be run at a much smaller alpha.",
          "We should use omnibus tests that make a single decision for all groups at once.",
-         "The probability of at least one Type I error is bounded by 0.05.",
+         "If the omnibus test is significant, a post hoc test such as Tukey is needed to "
+         "find out which groups differ.",
          "More tests automatically increase the power of each test.",
          "Type II errors disappear when many tests are performed."],
-        ["b"],
+        ["b", "c"],
         "Because repeated separate decisions accumulate false positives, the solution is a "
         "single omnibus test such as ANOVA, which controls the overall Type I error rate. "
         "Merely shrinking alpha for each test wastes power and does not fix the underlying "
@@ -140,11 +141,11 @@ def questions():
         "Which statements are TRUE?",
         ["The chi-squared statistic compares observed counts to expected counts.",
          "The goodness-of-fit degrees of freedom is k, where k is the number of categories.",
-         "A goodness-of-fit test checks whether one variable matches an expected "
+         "A goodness-of-fit test checks whether two categorical variables are associated.",
+         "A test for homogeneity checks whether one variable matches an expected "
          "distribution.",
-         "A test for homogeneity checks whether a distribution is the same across groups.",
          "A test for independence checks whether two categorical variables are associated."],
-        ["a", "c", "d", "e"],
+        ["a", "e"],
         "For a goodness-of-fit test the degrees of freedom are k - 1, because one parameter "
         "is used up fitting the total, so the claim that the degrees of freedom equal k is "
         "false.",
@@ -175,9 +176,9 @@ def questions():
         ["The test provides evidence that the die is unfair",
          "X-squared = 1",
          "df = 5",
-         "p-value = 0.9626",
+         "p-value = 0.9626, far above any usual significance level",
          "The expected count for each face is 10"],
-        ["b", "c", "d", "e"],
+        ["b", "e"],
         "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times "
         "over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 "
         "is far above any usual significance level, so we fail to reject the hypothesis that "
@@ -192,10 +193,10 @@ def questions():
         "true?",
         ["F = 13.915",
          "num df = 2 and denom df = 297",
-         "p-value = 1.673e-06",
+         "p-value = 1.673e-06, far below any usual significance level",
          "We accept the null hypothesis that all city means are equal",
          "There is significant evidence that average height differs between the cities"],
-        ["a", "b", "c", "e"],
+        ["b", "c"],
         "R reports F = 13.915 with numerator df 2 and denominator df 297, and a p-value of "
         "1.673e-06. That p-value is far below any usual significance level, so we reject the "
         "hypothesis that all city means are equal; we never accept the null, so (d) is false. "
@@ -207,12 +208,12 @@ def questions():
         "L8-MC-013", 8, "Reading R output",
         "Which statements about the following correlation output are true? "
         "`t = 5.4738, df = 48, p-value = 1.579e-06, cor = 0.6199323`.",
-        ["The test statistic is 5.4738",
+        ["The test statistic is 1.579e-06",
          "We fail to reject H0 because the p-value is large",
          "The sample correlation is 0.6199323",
-         "The degrees of freedom are 48",
+         "The degrees of freedom are 50",
          "The data provide evidence of a positive correlation"],
-        ["a", "c", "d", "e"],
+        ["c", "e"],
         "The output reports t = 5.4738, df = 48, p-value = 1.579e-06 and cor = 0.6199323. "
         "The p-value is far below any usual significance level, not large, so we reject the "
         "hypothesis of no correlation and the claim that we fail to reject is false. The "
