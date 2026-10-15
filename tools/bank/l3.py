@@ -16,12 +16,12 @@ def questions():
          "The median is 46.8",
          "The mean is pulled upward relative to the median by the value 104",
          "The mode is 42",
-         "The range is 82"],
-        ["a", "c", "e"],
+         "The standard deviation is 82"],
+        ["a", "c"],
         "Ordered, the values are 22, 23, 42, 43, 104, so the middle value and therefore "
         "the median is 42. The single large value 104 drags the mean (46.8) well above "
-        "the median, and the range is 104 - 22 = 82. There is no repeated value, so "
-        "there is no mode.",
+        "the median. 82 is the range, 104 - 22, not a standard deviation, and there is "
+        "no repeated value, so there is no mode.",
         PDF, "p.17", code="y <- c(43, 23, 22, 104, 42)\nmedian(y)",
         r_functions=["median", "mean", "range", "sort"], origin="adapted_HT25"))
 
@@ -30,13 +30,14 @@ def questions():
         "A distribution is strongly right-skewed. What does that imply?",
         ["mean is smaller than median",
          "mean is larger than median",
+         "the median is robust to extreme values and skewness",
          "mean and median are always equal",
-         "the mode cannot be identified",
-         "the variance must be zero"],
-        ["b"],
+         "the mode cannot be identified"],
+        ["b", "c"],
         "In a right-skewed distribution the long tail pulls the mean upward, so the mean "
-        "exceeds the median. The left-skewed case is the mirror image.",
-        PDF, "p.23"))
+        "exceeds the median, and the median is left where it is because only the middle of "
+        "the ordered data defines it. The left-skewed case is the mirror image.",
+        PDF, "p.21"))
 
     out.append(mc(
         "L3-MC-003", 3, "Measures of central tendency",
@@ -44,13 +45,15 @@ def questions():
         ["The mean is always reported with a standard deviation.",
          "The median is robust to extreme values.",
          "The mode is the only measure that works for categorical data.",
-         "The mode can be multimodal.",
-         "The mean uses every observation."],
-        ["b", "c", "d", "e"],
-        "The mean uses all values and the median resists outliers, but a standard "
-        "deviation is not a compulsory companion of the mean, so the claim that the mean "
-        "is always reported with a standard deviation is false.",
-        PDF, "p.19"))
+         "the mode can be multimodal.",
+         "The median is pulled towards extreme values in a skewed sample."],
+        ["b", "c"],
+        "The median resists outliers and skewness because it only looks at the middle of "
+        "the ordered data, and it is the mode that is meaningful for a categorical "
+        "variable, where taking an average of the categories would be meaningless. A mode "
+        "need not be unique, so a dataset can have more than one, and the median is not "
+        "what gets pulled towards extreme values; the mean is.",
+        PDF, "p.21"))
 
     out.append(mc(
         "L3-MC-004", 3, "Measures of central tendency",
@@ -59,11 +62,12 @@ def questions():
          "4",
          "5",
          "6",
-         "It cannot be determined without computing it"],
-        ["c"],
+         "The mean is the sum of the values divided by the number of observations"],
+        ["c", "e"],
         "The values are evenly spaced and symmetric around 5, and the formula "
         "`xbar = sum(x)/n = (2+4+6+8)/4` gives 20/4 = 5. You do not need to do the "
-        "arithmetic on the exam.",
+        "arithmetic on the exam, but you do need the formula: the mean is always the sum "
+        "divided by how many values there are.",
         PDF, "p.15", code="x <- c(2, 4, 6, 8)\nmean(x)",
         r_functions=["mean", "sum"], origin="adapted_HT25"))
 
@@ -89,27 +93,28 @@ def questions():
         ["`s^2 = (1/n) * sum((x_i - xbar)^2)`",
          "`s^2 = (1/(n-1)) * sum((x_i - xbar)^2)`",
          "`s^2 = (1/(n-1)) * sum(x_i^2)`",
-         "`s^2 = sum(x_i - xbar)`",
          "`s^2 = sqrt((1/(n-1)) * sum((x_i - xbar)^2))`"],
         ["b"],
         "The sample variance divides the sum of squared deviations by n - 1, an unbiased "
-        "correction. Option (a) is the population variance, (c) omits subtracting the "
-        "mean, and (e) is the standard deviation rather than the variance.",
-        PDF, "p.27", origin="adapted_HT25"))
+        "correction. The first is the population variance, the third omits subtracting the "
+        "mean, and the last is the standard deviation rather than the variance.",
+        PDF, "p.28", origin="adapted_HT25"))
 
     out.append(mc(
         "L3-MC-007", 3, "Measures of spread",
         "Why is the mean a poor measure of spread for a heavily right-skewed sample?",
         ["Because the mean cannot be computed for skewed data",
          "Because the extreme right tail contributes very large squared deviations",
+         "A spread measure that does not square its deviations, such as the "
+         "interquartile range, is not distorted by that same extreme value",
          "Because the mean is always equal to the median",
-         "Because skewness only affects categorical data",
-         "Because the standard deviation is undefined for skewed data"],
-        ["b"],
+         "Because skewness only affects categorical data"],
+        ["b", "c"],
         "Variance squares each deviation, so a single very large value is amplified and "
         "the variance becomes dominated by the tail. That is exactly why the "
-        "interquartile range is preferred for skewed data.",
-        PDF, "p.26"))
+        "interquartile range is preferred for skewed data: it is built from the quartiles "
+        "and never looks at how far the extreme value sits from the centre.",
+        PDF, "p.28"))
 
     out.append(mc(
         "L3-MC-008", 3, "Quantiles, quartiles and box plots",
@@ -118,10 +123,11 @@ def questions():
          "x_max - x_min",
          "Q2",
          "Q3 + Q1",
-         "The difference between the mean and the median"],
-        ["a"],
+         "The median is the second quartile, Q2"],
+        ["a", "e"],
         "The IQR spans the middle 50% of the data, from the first quartile to the third, "
-        "so it is Q3 - Q1. The range is the maximum minus the minimum.",
+        "so it is Q3 - Q1. The range is the maximum minus the minimum, Q2 is the median "
+        "rather than a spread, and the quartiles are cut points so the median is Q2.",
         PDF, "p.35", code="IQR(x)", r_functions=["IQR", "quantile"],
         origin="adapted_HT25"))
 
@@ -130,25 +136,30 @@ def questions():
         "Which statements about a standard box plot are TRUE?",
         ["The box spans Q1 to Q3.",
          "The line inside the box is the median.",
-         "The whiskers extend to the most extreme observed values by default.",
+         "The whiskers reach the smallest and largest observed values, so nothing is ever "
+         "plotted beyond them.",
          "Points beyond the whiskers are always errors in the data.",
          "A box plot shows the shape of the whole distribution."],
-        ["a", "b", "c"],
-        "Points plotted beyond the whiskers are flagged as potential outliers, not "
-        "declared errors, so (d) is false. A box plot summarises spread and centre but "
-        "does not reveal the shape of the distribution, so (e) is false too.",
+        ["a", "b"],
+        "The box covers the middle 50% of the data and the line inside it is the median, "
+        "which is the second of the five numbers a box plot is built from. The whiskers do "
+        "not necessarily reach the extremes: R stops them at 1.5 times the IQR by default "
+        "and plots anything further out on its own as a possible outlier. That is why a "
+        "claim that nothing ever falls beyond them is false, and also why points beyond "
+        "them are candidates for scrutiny rather than declared errors. A box plot "
+        "summarises centre and spread but not the shape of the distribution.",
         PDF, "p.35"))
 
     out.append(mc(
         "L3-MC-010", 3, "Quantiles, quartiles and box plots",
         "Consider `y <- c(43, 23, 22, 104, 42)`. Which statement is TRUE?",
-        ["The IQR is large, so the data are not skewed",
+        ["The middle 50% of the values lie between Q1 = 23 and Q3 = 43",
          "The IQR is 20, which is far smaller than the range of 82, indicating the "
          "spread is driven by the extreme value",
          "The IQR equals the range",
          "The IQR cannot be computed for a sample of 5",
          "The IQR is larger than the standard deviation"],
-        ["b"],
+        ["a", "b"],
         "Q1 = 23 and Q3 = 43, so IQR = 20, while the range is 104 - 22 = 82. The large "
         "gap is the signature of a single extreme value.",
         PDF, "p.34", code="y <- c(43, 23, 22, 104, 42)\nIQR(y)",
@@ -172,12 +183,15 @@ def questions():
         "Which plot is used to show the relationship between two numerical variables?",
         ["A box plot",
          "A scatterplot",
-         "A bar plot",
+         "In the GDP example the horizontal axis is on a log scale, so equal distances "
+         "along it mean equal ratios rather than equal differences",
          "A contingency table",
          "A frequency table"],
-        ["b"],
+        ["b", "c"],
         "A scatterplot places one numerical variable on each axis so you can see the "
-        "direction, shape and strength of the relationship.",
+        "direction, shape and strength of the relationship. Watch the axis scales: on a "
+        "log scale the spacing between ticks is a ratio rather than a difference, so a "
+        "relationship can look curved on a linear axis and nearly straight on a log one.",
         PDF, "p.41"))
 
     out.append(mc(
@@ -187,11 +201,14 @@ def questions():
         ["Side-by-side box plots grouped by the categorical variable",
          "A single box plot of the pooled data",
          "A bar plot of the means only",
-         "A scatterplot with colour",
-         "A contingency table"],
-        ["a"],
+         "Comparing the medians and the spreads of the groups, which is what the "
+         "side-by-side boxes are there to show",
+         "A scatterplot with colour"],
+        ["a", "d"],
         "Grouped box plots let you compare centre, spread and outliers across groups at "
-        "once, rather than only comparing summary numbers.",
+        "once, rather than only comparing summary numbers. Comparing the medians and the "
+        "spreads is exactly what those boxes are drawn to let you do, which a bar plot of "
+        "means alone cannot.",
         PDF, "p.45"))
 
     # ------------------------------------------------------------ type coercion
@@ -216,10 +233,14 @@ def questions():
          "TRUE can be coerced to 1 and FALSE to 0.",
          "Characters can be coerced to numbers implicitly.",
          "Integers and doubles can be coerced to characters.",
-         "Explicit conversion is needed to go from character back to numeric."],
-        ["a", "b", "d", "e"],
-        "Coercion only ever moves UP the hierarchy, never down, so (c) is false. Going "
-        "from character back to numeric requires an explicit `as.numeric()`.",
+         "Explicit conversion is never needed, because R coerces characters to numbers "
+         "automatically."],
+        ["a", "d"],
+        "Coercion only ever moves UP the hierarchy, never down, so the claim that "
+        "characters become numbers implicitly is false, and going back from character to "
+        "numeric needs an explicit `as.numeric()`. TRUE becoming 1 happens automatically "
+        "without that call, because a logical combined with a number is promoted to "
+        "numeric.",
         PDF, "p.56", code="class(c(TRUE, 2))",
         r_functions=["as.numeric", "class", "c"], origin="adapted_HT25"))
 
@@ -231,8 +252,8 @@ def questions():
          "for you",
          "An error that stops the script",
          "\"2\", a character result",
-         "1, because only the first element is numeric"],
-        ["b"],
+         "Converting with `as.numeric()` first makes the mean work and returns 2"],
+        ["b", "e"],
         "`c(1, 2, \"3\")` is coerced entirely to character, so mean() refuses it and "
         "returns NA with a warning rather than an error. The fix is "
         "`mean(as.numeric(x))`, which gives 2.",
@@ -245,12 +266,12 @@ def questions():
         "L3-MC-017", 3, "Merging data",
         "Consider `students` with ids 1-4 and `scores` with ids 2-5. What does "
         "`inner_join(students, scores, by = \"id\")` return?",
-        ["5 rows, covering ids 1 to 5",
+        ["Only the ids that appear in both tables are kept",
          "4 rows, covering ids 1 to 4",
          "3 rows, covering ids 2 to 4",
          "3 rows, covering ids 2 to 5",
          "4 rows, with NA scores for id 1"],
-        ["c"],
+        ["a", "c"],
         "An inner join keeps only ids present in BOTH tables, which here is 2, 3 and 4. "
         "Id 1 is missing from scores and id 5 from students, so both are dropped.",
         PDF, "p.61", r_functions=["inner_join", "dplyr"]))
@@ -259,15 +280,16 @@ def questions():
         "L3-MC-018", 3, "Merging data",
         "Consider the same tables. Which statements about the joins are TRUE?",
         ["`left_join(students, scores)` keeps all 4 students, giving Alice an NA score.",
-         "`right_join(students, scores)` keeps all 4 scores, giving id 5 an NA name.",
-         "`full_join(students, scores)` keeps all 5 rows.",
+         "`right_join(students, scores)` keeps all 4 students, giving Alice an NA score.",
+         "`full_join(students, scores)` keeps all 5 rows, filling the gaps with NA.",
          "`inner_join(students, scores)` keeps 5 rows.",
          "A left join and a right join return the same rows here."],
-        ["a", "b", "c"],
-        "The inner join keeps only the 3 overlapping ids, so (d) is false. A left join "
-        "keeps the 4 left rows and a right join keeps the 4 right rows, which differ, so "
-        "(e) is false.",
-        PDF, "p.62", r_functions=["left_join", "right_join", "full_join", "inner_join"]))
+        ["a", "c"],
+        "The inner join keeps only the 3 overlapping ids, so the claim that it keeps 5 rows "
+        "is false. A left join keeps the 4 left rows and a right join keeps the 4 right "
+        "rows, which differ here, so they are not interchangeable. A full join keeps every "
+        "row from both sides, 5 in total, filling the gaps with NA.",
+        PDF, "p.64", r_functions=["left_join", "right_join", "full_join", "inner_join"]))
 
     out.append(mc(
         "L3-MC-019", 3, "Merging data",
@@ -275,13 +297,15 @@ def questions():
         "score. Which join do you use?",
         ["`inner_join`",
          "`left_join(students, scores, by = \"id\")`",
+         "To add the variables from one table onto the rows of another, enriching it "
+         "without recomputing anything",
          "`right_join(students, scores, by = \"id\")`",
-         "`full_join(students, scores, by = \"id\")`",
-         "No join; filter the scores table first"],
-        ["b"],
+         "`full_join(students, scores, by = \"id\")`"],
+        ["b", "c"],
         "A left join keeps every row of the left-hand table and fills unmatched columns "
-        "with NA. A full join would also pull in id 5 from scores, which is not wanted "
-        "here.",
+        "with NA, which is what preserves a student who has no score. A right join would "
+        "keep the scores side instead, and a full join would also pull in id 5, neither "
+        "of which is wanted here.",
         PDF, "p.62", r_functions=["left_join"]))
 
     out.append(mc(
@@ -291,9 +315,9 @@ def questions():
          "To bring together information stored in different tables and align datasets "
          "collected from different sources",
          "To convert character columns to numbers",
-         "To remove duplicate rows",
+         "To enrich the data with new variables",
          "To compute a correlation coefficient"],
-        ["b"],
+        ["b", "d"],
         "The reasons are: combining information from different "
         "tables, enriching data with new variables, and aligning datasets from "
         "different sources. Merging neither adds observations nor changes types.",

@@ -1170,8 +1170,7 @@
     "b": "It lets you chain operations, passing the result forward, for more readable code",
     "c": "It avoids deeply nested function calls and intermediate variables",
     "d": "It automatically removes missing values",
-    "e": "It is required in order to load a package",
-    "f": "It converts a vector into a data.frame"
+    "e": "It is required in order to load a package"
    },
    "correct": [
     "b",
@@ -2006,16 +2005,15 @@
     "b": "The median is 46.8",
     "c": "The mean is pulled upward relative to the median by the value 104",
     "d": "The mode is 42",
-    "e": "The range is 82"
+    "e": "The standard deviation is 82"
    },
    "correct": [
     "a",
-    "c",
-    "e"
+    "c"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Ordered, the values are 22, 23, 42, 43, 104, so the middle value and therefore the median is 42. The single large value 104 drags the mean (46.8) well above the median, and the range is 104 - 22 = 82. There is no repeated value, so there is no mode.",
+   "explanation": "Ordered, the values are 22, 23, 42, 43, 104, so the middle value and therefore the median is 42. The single large value 104 drags the mean (46.8) well above the median. 82 is the range, 104 - 22, not a standard deviation, and there is no repeated value, so there is no mode.",
    "r_flavoured": true,
    "r_functions": [
     "median",
@@ -2039,21 +2037,22 @@
    "options": {
     "a": "mean is smaller than median",
     "b": "mean is larger than median",
-    "c": "mean and median are always equal",
-    "d": "the mode cannot be identified",
-    "e": "the variance must be zero"
+    "c": "the median is robust to extreme values and skewness",
+    "d": "mean and median are always equal",
+    "e": "the mode cannot be identified"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "In a right-skewed distribution the long tail pulls the mean upward, so the mean exceeds the median. The left-skewed case is the mirror image.",
+   "explanation": "In a right-skewed distribution the long tail pulls the mean upward, so the mean exceeds the median, and the median is left where it is because only the middle of the ordered data defines it. The left-skewed case is the mirror image.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.23"
+    "slide": "p.21"
    },
    "origin": "new"
   },
@@ -2067,23 +2066,21 @@
     "a": "The mean is always reported with a standard deviation.",
     "b": "The median is robust to extreme values.",
     "c": "The mode is the only measure that works for categorical data.",
-    "d": "The mode can be multimodal.",
-    "e": "The mean uses every observation."
+    "d": "the mode can be multimodal.",
+    "e": "The median is pulled towards extreme values in a skewed sample."
    },
    "correct": [
     "b",
-    "c",
-    "d",
-    "e"
+    "c"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The mean uses all values and the median resists outliers, but a standard deviation is not a compulsory companion of the mean, so the claim that the mean is always reported with a standard deviation is false.",
+   "explanation": "The median resists outliers and skewness because it only looks at the middle of the ordered data, and it is the mode that is meaningful for a categorical variable, where taking an average of the categories would be meaningless. A mode need not be unique, so a dataset can have more than one, and the median is not what gets pulled towards extreme values; the mean is.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.19"
+    "slide": "p.21"
    },
    "origin": "new"
   },
@@ -2098,14 +2095,15 @@
     "b": "4",
     "c": "5",
     "d": "6",
-    "e": "It cannot be determined without computing it"
+    "e": "The mean is the sum of the values divided by the number of observations"
    },
    "correct": [
-    "c"
+    "c",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The values are evenly spaced and symmetric around 5, and the formula `xbar = sum(x)/n = (2+4+6+8)/4` gives 20/4 = 5. You do not need to do the arithmetic on the exam.",
+   "explanation": "The values are evenly spaced and symmetric around 5, and the formula `xbar = sum(x)/n = (2+4+6+8)/4` gives 20/4 = 5. You do not need to do the arithmetic on the exam, but you do need the formula: the mean is always the sum divided by how many values there are.",
    "r_flavoured": true,
    "r_functions": [
     "mean",
@@ -2156,20 +2154,19 @@
     "a": "`s^2 = (1/n) * sum((x_i - xbar)^2)`",
     "b": "`s^2 = (1/(n-1)) * sum((x_i - xbar)^2)`",
     "c": "`s^2 = (1/(n-1)) * sum(x_i^2)`",
-    "d": "`s^2 = sum(x_i - xbar)`",
-    "e": "`s^2 = sqrt((1/(n-1)) * sum((x_i - xbar)^2))`"
+    "d": "`s^2 = sqrt((1/(n-1)) * sum((x_i - xbar)^2))`"
    },
    "correct": [
     "b"
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The sample variance divides the sum of squared deviations by n - 1, an unbiased correction. Option (a) is the population variance, (c) omits subtracting the mean, and (e) is the standard deviation rather than the variance.",
+   "explanation": "The sample variance divides the sum of squared deviations by n - 1, an unbiased correction. The first is the population variance, the third omits subtracting the mean, and the last is the standard deviation rather than the variance.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.27"
+    "slide": "p.28"
    },
    "origin": "adapted_HT25"
   },
@@ -2182,21 +2179,22 @@
    "options": {
     "a": "Because the mean cannot be computed for skewed data",
     "b": "Because the extreme right tail contributes very large squared deviations",
-    "c": "Because the mean is always equal to the median",
-    "d": "Because skewness only affects categorical data",
-    "e": "Because the standard deviation is undefined for skewed data"
+    "c": "A spread measure that does not square its deviations, such as the interquartile range, is not distorted by that same extreme value",
+    "d": "Because the mean is always equal to the median",
+    "e": "Because skewness only affects categorical data"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Variance squares each deviation, so a single very large value is amplified and the variance becomes dominated by the tail. That is exactly why the interquartile range is preferred for skewed data.",
+   "explanation": "Variance squares each deviation, so a single very large value is amplified and the variance becomes dominated by the tail. That is exactly why the interquartile range is preferred for skewed data: it is built from the quartiles and never looks at how far the extreme value sits from the centre.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.26"
+    "slide": "p.28"
    },
    "origin": "new"
   },
@@ -2211,14 +2209,15 @@
     "b": "x_max - x_min",
     "c": "Q2",
     "d": "Q3 + Q1",
-    "e": "The difference between the mean and the median"
+    "e": "The median is the second quartile, Q2"
    },
    "correct": [
-    "a"
+    "a",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The IQR spans the middle 50% of the data, from the first quartile to the third, so it is Q3 - Q1. The range is the maximum minus the minimum.",
+   "explanation": "The IQR spans the middle 50% of the data, from the first quartile to the third, so it is Q3 - Q1. The range is the maximum minus the minimum, Q2 is the median rather than a spread, and the quartiles are cut points so the median is Q2.",
    "r_flavoured": true,
    "r_functions": [
     "IQR",
@@ -2240,18 +2239,17 @@
    "options": {
     "a": "The box spans Q1 to Q3.",
     "b": "The line inside the box is the median.",
-    "c": "The whiskers extend to the most extreme observed values by default.",
+    "c": "The whiskers reach the smallest and largest observed values, so nothing is ever plotted beyond them.",
     "d": "Points beyond the whiskers are always errors in the data.",
     "e": "A box plot shows the shape of the whole distribution."
    },
    "correct": [
     "a",
-    "b",
-    "c"
+    "b"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Points plotted beyond the whiskers are flagged as potential outliers, not declared errors, so (d) is false. A box plot summarises spread and centre but does not reveal the shape of the distribution, so (e) is false too.",
+   "explanation": "The box covers the middle 50% of the data and the line inside it is the median, which is the second of the five numbers a box plot is built from. The whiskers do not necessarily reach the extremes: R stops them at 1.5 times the IQR by default and plots anything further out on its own as a possible outlier. That is why a claim that nothing ever falls beyond them is false, and also why points beyond them are candidates for scrutiny rather than declared errors. A box plot summarises centre and spread but not the shape of the distribution.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2267,16 +2265,17 @@
    "topic": "Quantiles, quartiles and box plots",
    "stem": "Consider `y <- c(43, 23, 22, 104, 42)`. Which statement is TRUE?",
    "options": {
-    "a": "The IQR is large, so the data are not skewed",
+    "a": "The middle 50% of the values lie between Q1 = 23 and Q3 = 43",
     "b": "The IQR is 20, which is far smaller than the range of 82, indicating the spread is driven by the extreme value",
     "c": "The IQR equals the range",
     "d": "The IQR cannot be computed for a sample of 5",
     "e": "The IQR is larger than the standard deviation"
    },
    "correct": [
+    "a",
     "b"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Q1 = 23 and Q3 = 43, so IQR = 20, while the range is 104 - 22 = 82. The large gap is the signature of a single extreme value.",
    "r_flavoured": true,
@@ -2301,16 +2300,17 @@
    "options": {
     "a": "A box plot",
     "b": "A scatterplot",
-    "c": "A bar plot",
+    "c": "In the GDP example the horizontal axis is on a log scale, so equal distances along it mean equal ratios rather than equal differences",
     "d": "A contingency table",
     "e": "A frequency table"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "A scatterplot places one numerical variable on each axis so you can see the direction, shape and strength of the relationship.",
+   "explanation": "A scatterplot places one numerical variable on each axis so you can see the direction, shape and strength of the relationship. Watch the axis scales: on a log scale the spacing between ticks is a ratio rather than a difference, so a relationship can look curved on a linear axis and nearly straight on a log one.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2329,15 +2329,16 @@
     "a": "Side-by-side box plots grouped by the categorical variable",
     "b": "A single box plot of the pooled data",
     "c": "A bar plot of the means only",
-    "d": "A scatterplot with colour",
-    "e": "A contingency table"
+    "d": "Comparing the medians and the spreads of the groups, which is what the side-by-side boxes are there to show",
+    "e": "A scatterplot with colour"
    },
    "correct": [
-    "a"
+    "a",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Grouped box plots let you compare centre, spread and outliers across groups at once, rather than only comparing summary numbers.",
+   "explanation": "Grouped box plots let you compare centre, spread and outliers across groups at once, rather than only comparing summary numbers. Comparing the medians and the spreads is exactly what those boxes are drawn to let you do, which a bar plot of means alone cannot.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2387,17 +2388,15 @@
     "b": "TRUE can be coerced to 1 and FALSE to 0.",
     "c": "Characters can be coerced to numbers implicitly.",
     "d": "Integers and doubles can be coerced to characters.",
-    "e": "Explicit conversion is needed to go from character back to numeric."
+    "e": "Explicit conversion is never needed, because R coerces characters to numbers automatically."
    },
    "correct": [
     "a",
-    "b",
-    "d",
-    "e"
+    "d"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Coercion only ever moves UP the hierarchy, never down, so (c) is false. Going from character back to numeric requires an explicit `as.numeric()`.",
+   "explanation": "Coercion only ever moves UP the hierarchy, never down, so the claim that characters become numbers implicitly is false, and going back from character to numeric needs an explicit `as.numeric()`. TRUE becoming 1 happens automatically without that call, because a logical combined with a number is promoted to numeric.",
    "r_flavoured": true,
    "r_functions": [
     "as.numeric",
@@ -2422,12 +2421,13 @@
     "b": "NA with a warning, because x is a character vector and R will not convert it for you",
     "c": "An error that stops the script",
     "d": "\"2\", a character result",
-    "e": "1, because only the first element is numeric"
+    "e": "Converting with `as.numeric()` first makes the mean work and returns 2"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`c(1, 2, \"3\")` is coerced entirely to character, so mean() refuses it and returns NA with a warning rather than an error. The fix is `mean(as.numeric(x))`, which gives 2.",
    "r_flavoured": true,
@@ -2451,16 +2451,17 @@
    "topic": "Merging data",
    "stem": "Consider `students` with ids 1-4 and `scores` with ids 2-5. What does `inner_join(students, scores, by = \"id\")` return?",
    "options": {
-    "a": "5 rows, covering ids 1 to 5",
+    "a": "Only the ids that appear in both tables are kept",
     "b": "4 rows, covering ids 1 to 4",
     "c": "3 rows, covering ids 2 to 4",
     "d": "3 rows, covering ids 2 to 5",
     "e": "4 rows, with NA scores for id 1"
    },
    "correct": [
+    "a",
     "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "An inner join keeps only ids present in BOTH tables, which here is 2, 3 and 4. Id 1 is missing from scores and id 5 from students, so both are dropped.",
    "r_flavoured": true,
@@ -2482,19 +2483,18 @@
    "stem": "Consider the same tables. Which statements about the joins are TRUE?",
    "options": {
     "a": "`left_join(students, scores)` keeps all 4 students, giving Alice an NA score.",
-    "b": "`right_join(students, scores)` keeps all 4 scores, giving id 5 an NA name.",
-    "c": "`full_join(students, scores)` keeps all 5 rows.",
+    "b": "`right_join(students, scores)` keeps all 4 students, giving Alice an NA score.",
+    "c": "`full_join(students, scores)` keeps all 5 rows, filling the gaps with NA.",
     "d": "`inner_join(students, scores)` keeps 5 rows.",
     "e": "A left join and a right join return the same rows here."
    },
    "correct": [
     "a",
-    "b",
     "c"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The inner join keeps only the 3 overlapping ids, so (d) is false. A left join keeps the 4 left rows and a right join keeps the 4 right rows, which differ, so (e) is false.",
+   "explanation": "The inner join keeps only the 3 overlapping ids, so the claim that it keeps 5 rows is false. A left join keeps the 4 left rows and a right join keeps the 4 right rows, which differ here, so they are not interchangeable. A full join keeps every row from both sides, 5 in total, filling the gaps with NA.",
    "r_flavoured": true,
    "r_functions": [
     "left_join",
@@ -2504,7 +2504,7 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.62"
+    "slide": "p.64"
    },
    "origin": "new"
   },
@@ -2517,16 +2517,17 @@
    "options": {
     "a": "`inner_join`",
     "b": "`left_join(students, scores, by = \"id\")`",
-    "c": "`right_join(students, scores, by = \"id\")`",
-    "d": "`full_join(students, scores, by = \"id\")`",
-    "e": "No join; filter the scores table first"
+    "c": "To add the variables from one table onto the rows of another, enriching it without recomputing anything",
+    "d": "`right_join(students, scores, by = \"id\")`",
+    "e": "`full_join(students, scores, by = \"id\")`"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "A left join keeps every row of the left-hand table and fills unmatched columns with NA. A full join would also pull in id 5 from scores, which is not wanted here.",
+   "explanation": "A left join keeps every row of the left-hand table and fills unmatched columns with NA, which is what preserves a student who has no score. A right join would keep the scores side instead, and a full join would also pull in id 5, neither of which is wanted here.",
    "r_flavoured": true,
    "r_functions": [
     "left_join"
@@ -2547,13 +2548,14 @@
     "a": "To increase the sample size",
     "b": "To bring together information stored in different tables and align datasets collected from different sources",
     "c": "To convert character columns to numbers",
-    "d": "To remove duplicate rows",
+    "d": "To enrich the data with new variables",
     "e": "To compute a correlation coefficient"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The reasons are: combining information from different tables, enriching data with new variables, and aligning datasets from different sources. Merging neither adds observations nor changes types.",
    "r_flavoured": true,

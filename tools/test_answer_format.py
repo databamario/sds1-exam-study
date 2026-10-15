@@ -44,7 +44,7 @@ def check(label: str, got, want) -> None:
 
 def mc(n_options: int, correct: list[str], qid: str = "Q") -> dict:
     """A minimal MC question, the shape the bank actually uses."""
-    letters = "abcde"
+    letters = "abcdefgh"
     return {
         "id": qid,
         "type": "MC",
@@ -90,6 +90,10 @@ check("0 correct options is rejected, and says why",
       "does not implement" in (mc_format_problems(mc(5, [])) or [""])[0], True)
 check("the message names the question",
       "Q-77" in (mc_format_problems(dict(mc(5, ["a"]), id="Q-77")) or [""])[0], True)
+check("5 options is allowed",
+      mc_format_problems(mc(5, ["a", "b"])), [])
+check("6 options is rejected, and says why",
+      "never goes beyond 5" in (mc_format_problems(mc(6, ["a", "b"])) or [""])[0], True)
 
 # ---------------------------------------------------------- spread rules
 

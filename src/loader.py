@@ -44,6 +44,13 @@ WA = "WA"
 FIVE_OPTION_CORRECT = 2
 MAX_CORRECT_OPTIONS = 2
 
+# The exam's questions run to five options and no further, so a longer list is not
+# a question the exam would ever ask. This limit was added after the answer-format
+# migration accidentally produced four six-option questions by adding a second
+# true option without dropping a distractor: nothing complained, because the rule
+# only ever spoke about questions with exactly five options.
+MAX_MC_OPTIONS = 5
+
 
 def mc_format_problems(q: dict) -> list[str]:
     """Return the reason(s) a multiple-choice question breaks the format rule.
@@ -58,6 +65,10 @@ def mc_format_problems(q: dict) -> list[str]:
     n_options = len(options)
     n_correct = len(correct)
     where = q.get("id", "<no id>")
+
+    if n_options > MAX_MC_OPTIONS:
+        return ["%s: %d options, the exam never goes beyond %d"
+                % (where, n_options, MAX_MC_OPTIONS)]
 
     if n_correct == 0:
         # The exam permits a question with no correct option, and scores an

@@ -195,8 +195,7 @@ def questions():
          "It lets you chain operations, passing the result forward, for more readable code",
          "It avoids deeply nested function calls and intermediate variables",
          "It automatically removes missing values",
-         "It is required in order to load a package",
-         "It converts a vector into a data.frame"],
+         "It is required in order to load a package"],
         ["b", "c"],
         "The pipe takes the value on its left and passes it as the first argument of the "
         "function on its right, which removes deeply nested parentheses and reads more "

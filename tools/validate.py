@@ -56,7 +56,7 @@ MIN_SAMPLE_FOR_SPREAD = 20
 #
 # Progress: 123 -> 108 after Lecture 1, which fixed 15 questions: 11 were given
 # a second true option, and 4 were reduced from three or four true options to two.
-FORMAT_MIGRATION_REMAINING = 88
+FORMAT_MIGRATION_REMAINING = 71
 
 # Every R function the lectures actually teach. A lecture cannot be "covered"
 # unless at least one question references each of its functions.
@@ -105,19 +105,14 @@ def position_spread_failures(mc: list[dict]) -> list[str]:
         pairs = collections.Counter("".join(sorted(q["correct"])) for q in five_two)
         worst_pair, worst_n = max(pairs.items(), key=lambda kv: kv[1])
         share = worst_n / float(len(five_two))
-        # A limit is meaningless on a sample too small to spread. During the
-        # migration only a handful of five-option questions have two correct
-        # answers, so report the distribution and hold the gate until there is
-        # enough of them for "no pair dominates" to mean anything.
-        armed = len(five_two) >= MIN_SAMPLE_FOR_SPREAD
-        print("  five-option questions with 2 correct: %d%s"
-              % (len(five_two),
-                 "" if armed else "  (gate not armed, needs %d)"
-                  % MIN_SAMPLE_FOR_SPREAD))
-        print("  correct pairs: %s"
-              % ", ".join("%s=%d" % kv for kv in sorted(pairs.items())))
-        print("  most common pair %s: %.1f%% of them (limit %.0f%%)"
-              % (worst_pair, share * 100, PAIR_LIMIT * 100))
+        # The pair distribution can only be judged on the finished population.
+        # While the migration is still running these questions are a biased
+        # sample of the five-option ones, because the ones converted so far are
+        # the lectures already reworked, not a random draw. Measuring 21% of a
+        # partial sample and calling it a leak would be reporting a number that
+        # the next commit invalidates.
+        armed = (len(five_two) >= MIN_SAMPLE_FOR_SPREAD
+                 and FORMAT_MIGRATION_REMAINING == 0)
         if share > PAIR_LIMIT and armed:
             failures.append(
                 "always ticking (%s) would score %.0f%% of five-option "
@@ -202,8 +197,8 @@ def main() -> int:
     for qid in sorted(by_id):
         print("    %s" % by_id[qid][0])
     if bad_format:
-        detail = ("%d MC questions break the answer-format rule "
-                  "(5 options => exactly 2 correct, never more than 2): %s"
+        detail = ("%d MC questions break the answer-format rule (at most 5 "
+                  "options; 5 options => exactly 2 correct, never more than 2): %s"
                   % (len(by_id), ", ".join(sorted(by_id)[:8])
                      + (" ..." if len(by_id) > 8 else "")))
         if len(by_id) > FORMAT_MIGRATION_REMAINING:
@@ -446,7 +441,13 @@ def main() -> int:
     if five_two:
         pairs = collections.Counter("".join(sorted(q["correct"])) for q in five_two)
         worst_pair, worst_n = max(pairs.items(), key=lambda kv: kv[1])
-        print("  five-option questions with 2 correct: %d" % len(five_two))
+        armed = (len(five_two) >= MIN_SAMPLE_FOR_SPREAD
+                 and FORMAT_MIGRATION_REMAINING == 0)
+        print("  five-option questions with 2 correct: %d%s"
+              % (len(five_two),
+                 "" if armed else "  (gate not armed until the migration is "
+                                  "finished and there are %d of them)"
+                                  % MIN_SAMPLE_FOR_SPREAD))
         print("  correct pairs: %s"
               % ", ".join("%s=%d" % kv for kv in sorted(pairs.items())))
         print("  most common pair %s: %.1f%% of them (limit %.0f%%)"
