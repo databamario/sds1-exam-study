@@ -1512,6 +1512,90 @@
    "origin": "new"
   },
   {
+   "id": "L2-MC-023",
+   "lecture": 2,
+   "type": "MC",
+   "topic": "Statistical type of a variable",
+   "stem": "In the titanic data, which variables have the statistical type nominal?",
+   "options": {
+    "a": "gender",
+    "b": "fare",
+    "c": "class",
+    "d": "survived",
+    "e": "country"
+   },
+   "correct": [
+    "a",
+    "e"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "gender and country are both nominal: each names a category with no inherent order among its values, so (a) and (e) are correct. fare is continuous, class is ordinal because first, second and third class do have an order, and survived is binary because it has exactly two levels, which rules out (b), (c) and (d).",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2.pdf",
+    "slide": "p.23"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L2-MC-024",
+   "lecture": 2,
+   "type": "MC",
+   "topic": "Programming type in R",
+   "stem": "Which statements about how these variables are stored in R are true?",
+   "options": {
+    "a": "`survived` is stored as a logical vector",
+    "b": "`fare` is stored as a factor",
+    "c": "`country` is stored as an integer",
+    "d": "`class` is stored as an ordered factor",
+    "e": "`age` in years is stored as a character vector"
+   },
+   "correct": [
+    "a",
+    "d"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "`survived` holds only TRUE and FALSE, so it is a logical vector, and `class` is an ordered factor because first, second and third class carry an order, so (a) and (d) are correct. `fare` is numeric rather than a factor, `country` is a character or factor rather than an integer, and `age` in years is an integer rather than a character, which rules out (b), (c) and (e).",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2.pdf",
+    "slide": "p.23"
+   },
+   "origin": "new"
+  },
+  {
+   "id": "L2-MC-025",
+   "lecture": 2,
+   "type": "MC",
+   "topic": "Functions and packages",
+   "stem": "Which statements about packages in R are true?",
+   "options": {
+    "a": "`mean()` and `sum()` come from R's base packages, so they need no installation",
+    "b": "`install.packages(\"ggplot2\")` has to be repeated in every new R session",
+    "c": "A package is a bundle of functions, and loading it makes those functions available",
+    "d": "`library(\"ggplot2\")` installs the package on the computer",
+    "e": "A package is a collection of data files rather than functions"
+   },
+   "correct": [
+    "a",
+    "c"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "`mean()` and `sum()` are basic functions that ship with R, so they work with nothing installed, and a package is an elaborated bundle of functions that becomes available once loaded, so (a) and (c) are correct. `install.packages` is run once per computer rather than once per session, `library` loads an already-installed package instead of installing it, and a package holds functions rather than data files, which rules out (b), (d) and (e).",
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2.pdf",
+    "slide": "p.41"
+   },
+   "origin": "new"
+  },
+  {
    "id": "G-WA-008",
    "lecture": 2,
    "type": "WA",
@@ -1858,6 +1942,37 @@
    },
    "origin": "new",
    "code": "titanic_data |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE), .by = class)"
+  },
+  {
+   "id": "L2-WA-009",
+   "lecture": 2,
+   "type": "WA",
+   "topic": "Statistical and programming types",
+   "stem": "For each of the variables gender, class and fare in the titanic data, give its statistical type and the type R uses to store it.",
+   "points": 1,
+   "answer": "gender is nominal and is stored as a factor. class is ordinal and is stored as an ordered factor. fare is continuous and is stored as numeric.",
+   "detail": "",
+   "rubric": [
+    {
+     "text": "gender: nominal, stored as a factor",
+     "elements": 2
+    },
+    {
+     "text": "class: ordinal, stored as an ordered factor",
+     "elements": 2
+    },
+    {
+     "text": "fare: continuous, stored as numeric",
+     "elements": 2
+    }
+   ],
+   "r_flavoured": false,
+   "r_functions": [],
+   "source": {
+    "pdf": "lecture2.pdf",
+    "slide": "p.23"
+   },
+   "origin": "new"
   },
   {
    "id": "G-MC-001",

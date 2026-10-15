@@ -20,8 +20,8 @@ from src.loader import (  # noqa: E402
 )
 from src.scoring import score_mc  # noqa: E402
 
-TARGET_MC = 154
-TARGET_WA = 84
+TARGET_MC = 157
+TARGET_WA = 85
 
 # ------------------------------------------------- citation page counts
 #

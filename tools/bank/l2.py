@@ -503,4 +503,75 @@ def questions():
                "supporting the more elaborate grouped operations. Both give the same "
                "numbers for this question."))
 
+    # ---- the statistical / programming type table, L2 p.22-23. The exam asks
+    # for exactly this twice, as two written questions, and the bank had nothing
+    # on it: no question used the words "statistical type" or "programming type".
+    # p.23 is the completed table, p.22 the empty skeleton, p.24 the summary.
+    out.append(mc(
+        "L2-MC-023", 2, "Statistical type of a variable",
+        "In the titanic data, which variables have the statistical type "
+        "nominal?",
+        ["gender", "fare", "class", "survived", "country"],
+        ["a", "e"],
+        "gender and country are both nominal: each names a category with no "
+        "inherent order among its values, so (a) and (e) are correct. fare is "
+        "continuous, class is ordinal because first, second and third class "
+        "do have an order, and survived is binary because it has exactly two "
+        "levels, which rules out (b), (c) and (d).",
+        PDF, "p.23"))
+
+    out.append(mc(
+        "L2-MC-024", 2, "Programming type in R",
+        "Which statements about how these variables are stored in R are true?",
+        ["`survived` is stored as a logical vector",
+         "`fare` is stored as a factor",
+         "`country` is stored as an integer",
+         "`class` is stored as an ordered factor",
+         "`age` in years is stored as a character vector"],
+        ["a", "d"],
+        "`survived` holds only TRUE and FALSE, so it is a logical vector, and "
+        "`class` is an ordered factor because first, second and third class "
+        "carry an order, so (a) and (d) are correct. `fare` is numeric rather "
+        "than a factor, `country` is a character or factor rather than an "
+        "integer, and `age` in years is an integer rather than a character, "
+        "which rules out (b), (c) and (e).",
+        PDF, "p.23"))
+
+    out.append(wa(
+        "L2-WA-009", 2, "Statistical and programming types",
+        "For each of the variables gender, class and fare in the titanic data, "
+        "give its statistical type and the type R uses to store it.",
+        "gender is nominal and is stored as a factor. class is ordinal and is "
+        "stored as an ordered factor. fare is continuous and is stored as "
+        "numeric.",
+        [rb("gender: nominal, stored as a factor", 2),
+         rb("class: ordinal, stored as an ordered factor", 2),
+         rb("fare: continuous, stored as numeric", 2)],
+        1, PDF, "p.23"))
+
+    # ---- functions and packages, L2 p.41-42. The exam also asks a question
+    # about reading a documentation page, which the slides never teach; what
+    # they do teach is that functions live in packages, which is the part of
+    # that question a student can actually learn here.
+    out.append(mc(
+        "L2-MC-025", 2, "Functions and packages",
+        "Which statements about packages in R are true?",
+        ["`mean()` and `sum()` come from R's base packages, so they need no "
+         "installation",
+         "`install.packages(\"ggplot2\")` has to be repeated in every new R "
+         "session",
+         "A package is a bundle of functions, and loading it makes those "
+         "functions available",
+         "`library(\"ggplot2\")` installs the package on the computer",
+         "A package is a collection of data files rather than functions"],
+        ["a", "c"],
+        "`mean()` and `sum()` are basic functions that ship with R, so they "
+        "work with nothing installed, and a package is an elaborated bundle of "
+        "functions that becomes available once loaded, so (a) and (c) are "
+        "correct. `install.packages` is run once per computer rather than once "
+        "per session, `library` loads an already-installed package instead of "
+        "installing it, and a package holds functions rather than data files, "
+        "which rules out (b), (d) and (e).",
+        PDF, "p.41"))
+
     return out

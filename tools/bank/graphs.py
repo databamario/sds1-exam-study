@@ -22,8 +22,9 @@ from .common import mc, rb, wa
 #
 # Slide titles in the comment are the first line of that page, checked by hand
 # against the PDFs. tools/validate.py re-checks that the name is a real file
-# and that the page is inside it, and tools/audit_citations.py holds the
-# expected value for every question below.
+# and that the page is inside it. tools/verify_citations.py --figures lists what
+# each question below is expected to cite, and --id puts a slide next to its
+# question.
 BOXPLOT = ("lecture3.pdf", "p.35")        # Quartiles and box plot
 SKEW_MM = ("lecture3.pdf", "p.21")        # Measures of central tendency
 SHAPE = ("lecture3.pdf", "p.24")          # Distribution and shape
