@@ -5154,14 +5154,15 @@
     "b": "A two-sided test has rejection regions in both tails; a one-sided test has the rejection region in only one tail.",
     "c": "They differ only in the sample size required.",
     "d": "A one-sided test always uses the t-distribution; a two-sided test uses the normal.",
-    "e": "They produce identical critical values for the same alpha."
+    "e": "For a given alpha the confidence level of a one-sided test is 1 - alpha while that of a two-sided test is 1 - alpha over 2."
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The alternative hypothesis decides the shape: mu != mu0 needs both tails, while mu > mu0 or mu < mu0 needs one. Consequently the critical values and p-values differ between the two, so (e) is false.",
+   "explanation": "The alternative hypothesis decides the shape: mu != mu0 needs both tails, while mu > mu0 or mu < mu0 needs one. Consequently the critical values and p-values differ between the two, and the confidence level that goes with a given alpha is not the same either: a one-sided test at alpha puts the whole of alpha in one tail, so it lines up with a confidence level of 1 - alpha, whereas a two-sided test splits it and lines up with 1 - alpha over 2.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -5181,12 +5182,13 @@
     "b": "One-sided, H0: mu <= 1000 versus Ha: mu > 1000",
     "c": "One-sided, H0: mu >= 1000 versus Ha: mu < 1000",
     "d": "Two-sided, H0: mu = 975 versus Ha: mu = 1000",
-    "e": "A chi-squared test, since two values are involved"
+    "e": "A one-sided test is right here because the claim being tested is a direction, at least 1000 hours, rather than an exact value"
    },
    "correct": [
-    "c"
+    "c",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The claim to be challenged is that the mean is at least 1000, so the null sets mu >= 1000 and the alternative is that the mean is lower. The observed 975 is below the claimed value, confirming the direction.",
    "r_flavoured": false,
@@ -5206,14 +5208,15 @@
    "options": {
     "a": "Failing to reject H0 when it is false",
     "b": "Rejecting H0 when it is true",
-    "c": "Rejecting Ha when it is true",
+    "c": "It is also known as a false positive, since nothing is actually there",
     "d": "Using the wrong critical value",
     "e": "Choosing a one-sided test instead of a two-sided one"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "A Type I error is a false positive: rejecting a null hypothesis that is actually true. Its probability is the significance level alpha. Failing to reject a false null is the Type II error.",
    "r_flavoured": false,
@@ -5232,18 +5235,16 @@
    "stem": "Which statements are TRUE?",
    "options": {
     "a": "The significance level alpha is the probability of making a Type I error.",
-    "b": "Beta is the probability of a Type II error.",
-    "c": "The power of a test is 1 - beta.",
+    "b": "Beta is the probability of a Type I error.",
+    "c": "The power of a test is beta rather than one minus beta.",
     "d": "Power is the probability of correctly rejecting H0 when it is false.",
     "e": "Reducing alpha always reduces beta, so power improves."
    },
    "correct": [
     "a",
-    "b",
-    "c",
     "d"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
    "explanation": "There is a trade-off: tightening alpha to reduce false positives typically makes it harder to reject, which raises beta and lowers power. So the final statement has the relationship backwards.",
    "r_flavoured": false,
@@ -5265,12 +5266,13 @@
     "b": "-1.96 <= z <= 1.96",
     "c": "z < 1.645",
     "d": "-1.645 <= z <= 1.645",
-    "e": "z > 0"
+    "e": "The rejection regions are the two tails beyond plus and minus 1.96, which leave the middle as the set of values that do not lead to rejection"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The rejection regions are the two tails beyond plus or minus 1.96, so the acceptance region is the interval from -1.96 to 1.96. Using 1.645 would be the region for a 90% two-sided interval, not 95%.",
    "r_flavoured": false,
@@ -5290,14 +5292,15 @@
    "options": {
     "a": "Reject H0, because 173.0 is below the interval",
     "b": "Fail to reject H0, because 173.0 lies inside the acceptance region",
-    "c": "Reject H0, because 175 lies inside the interval",
+    "c": "Fail to reject H0, because the null value 175 lies inside the interval",
     "d": "Fail to reject H0, because 175 lies inside the interval",
     "e": "The test cannot be performed without the standard error"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "For a two-sided test at alpha = 0.05 you fail to reject exactly when the observed estimate lies inside the corresponding 95% CI. Since 173.0 is between 172.06 and 177.94, H0 is not rejected, and equivalently 175 lies inside the CI.",
    "r_flavoured": false,
@@ -5317,14 +5320,15 @@
    "options": {
     "a": "A 95% CI always corresponds to a one-sided test at alpha = 0.05",
     "b": "Failing to reject H0 at level alpha is equivalent to the (1 - alpha) confidence interval containing the null value",
-    "c": "Rejecting H0 means the null value lies inside the (1 - alpha) CI",
+    "c": "The (1 - alpha) CI contains exactly those values of the null parameter that would not be rejected at the alpha level for this sample",
     "d": "They are unrelated quantities",
     "e": "A 99% CI corresponds to a test at alpha = 0.01 one-sided"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "This duality is the standard link: the null value falls outside the interval exactly when the test rejects at that level. So (b) and its logic are correct, while (c) states the opposite of the truth.",
    "r_flavoured": false,
@@ -5342,16 +5346,17 @@
    "topic": "Differences between means",
    "stem": "What is the standard error for the difference between two independent sample means?",
    "options": {
-    "a": "SE = s/sqrt(n)",
+    "a": "The two variances are added under the square root, so it is not the sum of the two standard errors",
     "b": "SE = sqrt(s1^2/n1) + sqrt(s2^2/n2)",
     "c": "SE = sqrt(s1^2/n1 + s2^2/n2)",
     "d": "SE = (s1 + s2)/n",
     "e": "SE = sqrt(s1^2 + s2^2)"
    },
    "correct": [
+    "a",
     "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The variances of the two independent sample means add, so the standard error is the square root of the sum of s1 squared over n1 and s2 squared over n2. Option (b) incorrectly adds the two standard errors rather than the two variances.",
    "r_flavoured": true,
@@ -5375,17 +5380,15 @@
    "options": {
     "a": "A confidence interval for a proportion is point estimate plus or minus critical value times the standard error of the proportion.",
     "b": "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) over n).",
-    "c": "The standard error of a difference in proportions adds the two variances under the square root.",
+    "c": "The standard error of a difference in proportions adds the two standard errors rather than the two variances.",
     "d": "Proportions can only be used for continuous variables.",
-    "e": "A hypothesis test for a single proportion uses the normal distribution rather than the binomial."
+    "e": "A hypothesis test for a single proportion uses the t-distribution, because the population proportion is unknown."
    },
    "correct": [
     "a",
-    "b",
-    "c",
-    "e"
+    "b"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The proportion machinery is built on the normal approximation to the binomial, which is why the SE has the familiar squaring form. The claim that proportions can only be used for continuous variables is false, because proportions are for categorical, binary-type variables.",
    "r_flavoured": true,
@@ -5409,13 +5412,14 @@
     "a": "To compute the sample proportions directly",
     "b": "To run a two-sample test for equality of proportions between the two groups",
     "c": "To compute a confidence interval for a single proportion",
-    "d": "To test whether a die is fair",
+    "d": "It takes the successes and the totals for each group and compares the resulting sample proportions",
     "e": "To compute a chi-squared test for independence"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`prop.test()` with two sets of successes and totals performs a two-sample test of equal proportions, which is the default alternative, whereas a single vector of successes and totals would test one proportion.",
    "r_flavoured": true,
@@ -5437,15 +5441,16 @@
    "stem": "Consider this R code. What is the value of `p1_hat_se`?",
    "options": {
     "a": "0.0008",
-    "b": "0.25",
+    "b": "Despite its name, the quantity stored in p1_hat_se is a variance, so its square root, about 0.028, is the standard error itself",
     "c": "0.0016",
     "d": "0.04",
     "e": "0.08"
    },
    "correct": [
-    "a"
+    "a",
+    "b"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`p1_hat <- 160/200` is 0.8, and the code computes p1_hat * (1 - p1_hat) / 200 = 0.8 * 0.2 / 200 = 0.0008. Note the misleading name: the quantity computed is a variance, not a standard error, and its square root 0.028 is the standard error itself.",
    "r_flavoured": true,
@@ -5469,14 +5474,15 @@
    "options": {
     "a": "Always, because R has no z-test function",
     "b": "When the population standard deviation is unknown, so the sample standard deviation is substituted",
-    "c": "Only when the sample size exceeds 30",
+    "c": "With an unknown population standard deviation the t-distribution has heavier tails, which absorb the extra uncertainty of estimating the standard deviation",
     "d": "Only when testing a proportion",
     "e": "When the null hypothesis is one-sided"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The z-test requires knowing the population sigma, which is rarely available, so substituting s leads to the t-test and its t-distribution. Neither sample size nor the direction of the alternative decides this.",
    "r_flavoured": true,
@@ -5500,14 +5506,15 @@
    "options": {
     "a": "A one-sided p-value from a z-statistic",
     "b": "A two-sided p-value for a t-test with 9 degrees of freedom",
-    "c": "A one-sided p-value for a t-test with 2 degrees of freedom",
+    "c": "It doubles the lower-tail probability so that both tails are counted, which is what makes the result two-sided",
     "d": "The critical value for a 95% t interval",
     "e": "The probability of a t statistic equal to t_stat"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`2 * pt(t_stat, df = 9)` takes the lower tail and doubles it, which is how you get a two-sided p-value from a t statistic, and `df = 9` fixes the degrees of freedom at 9. The normal equivalent would use `pnorm()` instead of `pt()`.",
    "r_flavoured": true,

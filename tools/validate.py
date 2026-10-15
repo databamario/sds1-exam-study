@@ -56,7 +56,7 @@ MIN_SAMPLE_FOR_SPREAD = 20
 #
 # Progress: 123 -> 108 after Lecture 1, which fixed 15 questions: 11 were given
 # a second true option, and 4 were reduced from three or four true options to two.
-FORMAT_MIGRATION_REMAINING = 34
+FORMAT_MIGRATION_REMAINING = 21
 
 # Every R function the lectures actually teach. A lecture cannot be "covered"
 # unless at least one question references each of its functions.

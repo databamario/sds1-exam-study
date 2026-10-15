@@ -17,11 +17,15 @@ def questions():
          "rejection region in only one tail.",
          "They differ only in the sample size required.",
          "A one-sided test always uses the t-distribution; a two-sided test uses the normal.",
-         "They produce identical critical values for the same alpha."],
-        ["b"],
+         "For a given alpha the confidence level of a one-sided test is 1 - alpha while "
+         "that of a two-sided test is 1 - alpha over 2."],
+        ["b", "e"],
         "The alternative hypothesis decides the shape: mu != mu0 needs both tails, while "
         "mu > mu0 or mu < mu0 needs one. Consequently the critical values and p-values "
-        "differ between the two, so (e) is false.",
+        "differ between the two, and the confidence level that goes with a given alpha is "
+        "not the same either: a one-sided test at alpha puts the whole of alpha in one "
+        "tail, so it lines up with a confidence level of 1 - alpha, whereas a two-sided "
+        "test splits it and lines up with 1 - alpha over 2.",
         PDF, "p.25", origin="adapted_HT25"))
 
     out.append(mc(
@@ -33,8 +37,9 @@ def questions():
          "One-sided, H0: mu <= 1000 versus Ha: mu > 1000",
          "One-sided, H0: mu >= 1000 versus Ha: mu < 1000",
          "Two-sided, H0: mu = 975 versus Ha: mu = 1000",
-         "A chi-squared test, since two values are involved"],
-        ["c"],
+         "A one-sided test is right here because the claim being tested is a direction, "
+         "at least 1000 hours, rather than an exact value"],
+        ["c", "e"],
         "The claim to be challenged is that the mean is at least 1000, so the null sets "
         "mu >= 1000 and the alternative is that the mean is lower. The observed 975 is "
         "below the claimed value, confirming the direction.",
@@ -60,10 +65,10 @@ def questions():
         "What is a Type I error?",
         ["Failing to reject H0 when it is false",
          "Rejecting H0 when it is true",
-         "Rejecting Ha when it is true",
+         "It is also known as a false positive, since nothing is actually there",
          "Using the wrong critical value",
          "Choosing a one-sided test instead of a two-sided one"],
-        ["b"],
+        ["b", "c"],
         "A Type I error is a false positive: rejecting a null hypothesis that is actually "
         "true. Its probability is the significance level alpha. Failing to reject a false "
         "null is the Type II error.",
@@ -73,11 +78,11 @@ def questions():
         "L7-MC-005", 7, "Type I and Type II errors",
         "Which statements are TRUE?",
         ["The significance level alpha is the probability of making a Type I error.",
-         "Beta is the probability of a Type II error.",
-         "The power of a test is 1 - beta.",
+         "Beta is the probability of a Type I error.",
+         "The power of a test is beta rather than one minus beta.",
          "Power is the probability of correctly rejecting H0 when it is false.",
          "Reducing alpha always reduces beta, so power improves."],
-        ["a", "b", "c", "d"],
+        ["a", "d"],
         "There is a trade-off: tightening alpha to reduce false positives typically makes "
         "it harder to reject, which raises beta and lowers power. So the final statement "
         "has the relationship backwards.",
@@ -91,8 +96,9 @@ def questions():
          "-1.96 <= z <= 1.96",
          "z < 1.645",
          "-1.645 <= z <= 1.645",
-         "z > 0"],
-        ["b"],
+         "The rejection regions are the two tails beyond plus and minus 1.96, which leave "
+         "the middle as the set of values that do not lead to rejection"],
+        ["b", "e"],
         "The rejection regions are the two tails beyond plus or minus 1.96, so the "
         "acceptance region is the interval from -1.96 to 1.96. Using 1.645 would be the "
         "region for a 90% two-sided interval, not 95%.",
@@ -105,10 +111,10 @@ def questions():
         "observed sample mean is 173.0?",
         ["Reject H0, because 173.0 is below the interval",
          "Fail to reject H0, because 173.0 lies inside the acceptance region",
-         "Reject H0, because 175 lies inside the interval",
+         "Fail to reject H0, because the null value 175 lies inside the interval",
          "Fail to reject H0, because 175 lies inside the interval",
          "The test cannot be performed without the standard error"],
-        ["b"],
+        ["b", "c"],
         "For a two-sided test at alpha = 0.05 you fail to reject exactly when the observed "
         "estimate lies inside the corresponding 95% CI. Since 173.0 is between 172.06 and "
         "177.94, H0 is not rejected, and equivalently 175 lies inside the CI.",
@@ -121,10 +127,11 @@ def questions():
         ["A 95% CI always corresponds to a one-sided test at alpha = 0.05",
          "Failing to reject H0 at level alpha is equivalent to the (1 - alpha) confidence "
          "interval containing the null value",
-         "Rejecting H0 means the null value lies inside the (1 - alpha) CI",
+         "The (1 - alpha) CI contains exactly those values of the null parameter that "
+         "would not be rejected at the alpha level for this sample",
          "They are unrelated quantities",
          "A 99% CI corresponds to a test at alpha = 0.01 one-sided"],
-        ["b"],
+        ["b", "c"],
         "This duality is the standard link: the null value falls outside the interval "
         "exactly when the test rejects at that level. So (b) and its logic are correct, "
         "while (c) states the opposite of the truth.",
@@ -134,12 +141,13 @@ def questions():
         "L7-MC-009", 7, "Differences between means",
         "What is the standard error for the difference between two independent sample "
         "means?",
-        ["SE = s/sqrt(n)",
+        ["The two variances are added under the square root, so it is not the sum of the "
+         "two standard errors",
          "SE = sqrt(s1^2/n1) + sqrt(s2^2/n2)",
          "SE = sqrt(s1^2/n1 + s2^2/n2)",
          "SE = (s1 + s2)/n",
          "SE = sqrt(s1^2 + s2^2)"],
-        ["c"],
+        ["a", "c"],
         "The variances of the two independent sample means add, so the standard error is "
         "the square root of the sum of s1 squared over n1 and s2 squared over n2. Option "
         "(b) incorrectly adds the two standard errors rather than the two variances.",
@@ -153,12 +161,12 @@ def questions():
          "value times the standard error of the proportion.",
          "The standard error of a sample proportion involves sqrt(p-hat times (1 - p-hat) "
          "over n).",
-         "The standard error of a difference in proportions adds the two variances under "
-         "the square root.",
+         "The standard error of a difference in proportions adds the two standard errors "
+         "rather than the two variances.",
          "Proportions can only be used for continuous variables.",
-         "A hypothesis test for a single proportion uses the normal distribution rather "
-         "than the binomial."],
-        ["a", "b", "c", "e"],
+         "A hypothesis test for a single proportion uses the t-distribution, because the "
+         "population proportion is unknown."],
+        ["a", "b"],
         "The proportion machinery is built on the normal approximation to the binomial, "
         "which is why the SE has the familiar squaring form. The claim that proportions "
         "can only be used for continuous variables is false, because proportions are for "
@@ -171,9 +179,10 @@ def questions():
         ["To compute the sample proportions directly",
          "To run a two-sample test for equality of proportions between the two groups",
          "To compute a confidence interval for a single proportion",
-         "To test whether a die is fair",
+         "It takes the successes and the totals for each group and compares the resulting "
+         "sample proportions",
          "To compute a chi-squared test for independence"],
-        ["b"],
+        ["b", "d"],
         "`prop.test()` with two sets of successes and totals performs a two-sample test of "
         "equal proportions, which is the default alternative, whereas a single vector of "
         "successes and totals would test one proportion.",
@@ -184,11 +193,12 @@ def questions():
         "L7-MC-012", 7, "Proportions",
         "Consider this R code. What is the value of `p1_hat_se`?",
         ["0.0008",
-         "0.25",
+         "Despite its name, the quantity stored in p1_hat_se is a variance, so its square "
+         "root, about 0.028, is the standard error itself",
          "0.0016",
          "0.04",
          "0.08"],
-        ["a"],
+        ["a", "b"],
         "`p1_hat <- 160/200` is 0.8, and the code computes p1_hat * (1 - p1_hat) / 200 = "
         "0.8 * 0.2 / 200 = 0.0008. Note the misleading name: the quantity computed is a "
         "variance, not a standard error, and its square root 0.028 is the standard error "
@@ -202,10 +212,11 @@ def questions():
         ["Always, because R has no z-test function",
 "When the population standard deviation is unknown, so the sample standard "
         "deviation is substituted",
-         "Only when the sample size exceeds 30",
+         "With an unknown population standard deviation the t-distribution has heavier "
+         "tails, which absorb the extra uncertainty of estimating the standard deviation",
          "Only when testing a proportion",
          "When the null hypothesis is one-sided"],
-        ["b"],
+        ["b", "c"],
         "The z-test requires knowing the population sigma, which is rarely available, so "
         "substituting s leads to the t-test and its t-distribution. Neither sample size nor "
         "the direction of the alternative decides this.",
@@ -216,10 +227,11 @@ def questions():
         "Consider the code below. What does it compute?",
         ["A one-sided p-value from a z-statistic",
          "A two-sided p-value for a t-test with 9 degrees of freedom",
-         "A one-sided p-value for a t-test with 2 degrees of freedom",
+         "It doubles the lower-tail probability so that both tails are counted, which is "
+         "what makes the result two-sided",
          "The critical value for a 95% t interval",
          "The probability of a t statistic equal to t_stat"],
-        ["b"],
+        ["b", "c"],
         "`2 * pt(t_stat, df = 9)` takes the lower tail and doubles it, which is how you get "
         "a two-sided p-value from a t statistic, and `df = 9` fixes the degrees of freedom "
         "at 9. The normal equivalent would use `pnorm()` instead of `pt()`.",
