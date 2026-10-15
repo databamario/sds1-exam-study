@@ -849,14 +849,15 @@
     "b": "The proportions 0.25 and 0.75",
     "c": "The percentages 1 and 3",
     "d": "The counts divided by the number of columns",
-    "e": "A cumulative distribution"
+    "e": "The proportion for each category, obtained by dividing its count by the total"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`table()` gives counts; `prop.table()` converts them to proportions that sum to 1, so here 1/4 = 0.25 and 3/4 = 0.75.",
+   "explanation": "`table()` gives counts; `prop.table()` converts them to proportions that sum to 1, so here 1/4 = 0.25 and 3/4 = 0.75. The conversion is count over total, which is why the output is a proportion rather than a count or a percentage.",
    "r_flavoured": true,
    "r_functions": [
     "table",
@@ -880,14 +881,15 @@
     "b": "To display the counts of two categorical variables crossed against each other",
     "c": "To compute the variance of a sample",
     "d": "To plot two continuous variables",
-    "e": "To store the levels of a factor in a specific order"
+    "e": "It lets you compare how one categorical variable splits across another, once the counts are turned into proportions"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "A contingency table crosses two categorical variables so you can see how their counts co-occur. In R you build one with a two-argument table(), e.g. `table(x$class, x$survived)`.",
+   "explanation": "A contingency table crosses two categorical variables so you can see how their counts co-occur. In R you build one with a two-argument table(), e.g. `table(x$class, x$survived)`. The counts are the starting point; converting them to row proportions is what turns the table into a comparison, such as the share surviving in each class.",
    "r_flavoured": true,
    "r_functions": [
     "table"
@@ -910,14 +912,15 @@
     "b": "It computes column proportions for each group",
     "c": "It computes overall proportions for each group",
     "d": "It computes the difference in proportions between groups",
-    "e": "It computes a chi-squared statistic"
+    "e": "With `margin = 1` the proportions inside each row sum to 1"
    },
    "correct": [
-    "a"
+    "a",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`prop.table(x, margin = 1)` normalises each row so it sums to 1, giving the proportions within each group. margin = 2 would instead normalise columns.",
+   "explanation": "`prop.table(x, margin = 1)` normalises each row so it sums to 1, giving the proportions within each group. margin = 2 would instead normalise columns. So the survival rate for a class is that row's 'yes' share, and the rows each add up to 100% rather than the columns doing so.",
    "r_flavoured": true,
    "r_functions": [
     "table",
@@ -940,16 +943,17 @@
    "options": {
     "a": "A histogram",
     "b": "A bar plot",
-    "c": "A scatterplot",
+    "c": "The categories run along the x-axis and the bar height gives the count",
     "d": "A density plot",
     "e": "A box plot"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Bar plots compare counts or proportions across discrete categories. Histograms, density plots, scatterplots and box plots are all for numerical data.",
+   "explanation": "Bar plots compare counts or proportions across discrete categories, with one bar per category and the height giving the count. Histograms, density plots, scatterplots and box plots are all for numerical data.",
    "r_flavoured": true,
    "r_functions": [
     "geom_bar",
@@ -970,16 +974,17 @@
    "options": {
     "a": "The variable whose categories become the different bar colours",
     "b": "The size of the bars",
-    "c": "The statistical significance of the comparison",
+    "c": "With `geom_bar(position = 'stack')` each bar's coloured segments add up to the class total",
     "d": "The order of the x-axis",
     "e": "The missing values in the data"
    },
    "correct": [
-    "a"
+    "a",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "You map one variable to `aes(x = ...)` for the axis and another to `fill = ...` so the categories of the second variable become the bar colours.",
+   "explanation": "You map one variable to `aes(x = ...)` for the axis and another to `fill = ...` so the categories of the second variable become the bar colours. With the bars stacked, the segments within each bar sum to that class's total, which is why the plot shows both the class sizes and the survival split at once.",
    "r_flavoured": true,
    "r_functions": [
     "ggplot",
@@ -1002,19 +1007,18 @@
    "stem": "Consider `calc_percent <- function(x, total) (x / total) * 100`. Which statements about calling it are TRUE?",
    "options": {
     "a": "`calc_percent(25, 100)` passes arguments by position",
-    "b": "`calc_percent(total = 100, x = 25)` passes arguments by name",
+    "b": "Only one of `x` and `total` can be supplied; the other has to be defined outside the function",
     "c": "The arguments must always be given in the order they are defined",
     "d": "`calc_percent(25)` works because `x` defaults to 25",
     "e": "The function returns 25 in both of the first two calls"
    },
    "correct": [
     "a",
-    "b",
     "e"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "R allows arguments to be passed positionally or by name, so the first two are both valid and give the same result of 25. Order is not forced, and `x` has no default, so the fourth claim is false.",
+   "explanation": "R allows arguments to be passed positionally or by name, so the first two calls are both valid and both give 25. Order is not forced and both arguments are required, so the fourth claim is false.",
    "r_flavoured": true,
    "r_functions": [
     "function",
@@ -1037,13 +1041,14 @@
     "a": "An error, because `total` is missing",
     "b": "0.25",
     "c": "25",
-    "d": "2500",
+    "d": "`total` has a default of 100, so it does not have to be supplied",
     "e": "NA"
    },
    "correct": [
-    "c"
+    "c",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`total = 100` is a default, so it fills in automatically: 25/100 * 100 = 25.",
    "r_flavoured": true,
@@ -1068,12 +1073,13 @@
     "b": "They are exact synonyms for each other.",
     "c": "`install.packages()` attaches the package; `library()` installs it.",
     "d": "`library()` can only be run once per year.",
-    "e": "Neither line is needed if ggplot2 is already installed."
+    "e": "Installing is done once per computer, but `library()` has to be run again in each new session."
    },
    "correct": [
-    "a"
+    "a",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "Installation puts the package on disk so it persists; library() merely makes it available in the session you are working in, and must be run again in each new session.",
    "r_flavoured": true,
@@ -1083,7 +1089,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.43"
+    "slide": "p.42"
    },
    "origin": "new",
    "code": "install.packages(\"ggplot2\")\nlibrary(ggplot2)"
@@ -1095,21 +1101,19 @@
    "topic": "Subsetting a data.frame",
    "stem": "Which of the following are TRUE statements about subsetting?",
    "options": {
-    "a": "`df$age` accesses the single column `age`",
-    "b": "`df[1, ]` returns the first row",
+    "a": "`df$age` returns a one-column data.frame",
+    "b": "`df[1, ]` returns the first column",
     "c": "`df[, 3]` returns the third column",
     "d": "`df[, 3]` returns the third row",
     "e": "`df[4:9, 2]` returns rows 4 to 9 of column 2"
    },
    "correct": [
-    "a",
-    "b",
     "c",
     "e"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "The first index is the row and the second is the column, so `[, 3]` is a column, not a row. Only (d) is false.",
+   "explanation": "The first index is the row and the second is the column, so `[, 3]` is a column, not a row. A single index after a comma drops the result to a vector rather than keeping it as a data.frame.",
    "r_flavoured": true,
    "r_functions": [
     "[",
@@ -1136,11 +1140,12 @@
     "e": "`c(1, 3, 3)[-1]`"
    },
    "correct": [
-    "a"
+    "a",
+    "b"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`[2]` returns the single element 3. `[3]` also returns 3 but that is not among the options here, the logical selection returns TWO elements (3 and 3), `== 3` returns a logical vector, and `[-1]` drops the first element.",
+   "explanation": "Both `[2]` and `[3]` return a single 3, because the vector holds 3 in both of those positions. The logical selection returns TWO elements (3 and 3), `== 3` returns a logical vector, and `[-1]` drops the first element.",
    "r_flavoured": true,
    "r_functions": [
     "c",
@@ -1163,14 +1168,16 @@
    "options": {
     "a": "It makes R run faster",
     "b": "It lets you chain operations, passing the result forward, for more readable code",
-    "c": "It automatically removes missing values",
-    "d": "It is required in order to load a package",
-    "e": "It converts a vector into a data.frame"
+    "c": "It avoids deeply nested function calls and intermediate variables",
+    "d": "It automatically removes missing values",
+    "e": "It is required in order to load a package",
+    "f": "It converts a vector into a data.frame"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "The pipe takes the value on its left and passes it as the first argument of the function on its right, which removes deeply nested parentheses and reads more like a sequence of steps. It does not change speed, missing values, or data types.",
    "r_flavoured": true,
@@ -1193,16 +1200,17 @@
    "options": {
     "a": "`select(titanic_data, class == \"3rd\")`",
     "b": "`titanic_data |> filter(class == \"3rd\")`",
-    "c": "`titanic_data |> arrange(class == \"3rd\")`",
+    "c": "`subset(titanic_data, class == \"3rd\")` selects the same rows in base R",
     "d": "`titanic_data |> summarise(class == \"3rd\")`",
     "e": "`titanic_data |> mutate(class == \"3rd\")`"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "filter() keeps or drops ROWS. select() chooses columns, arrange() sorts rows, summarise() collapses the data, and mutate() adds or changes columns.",
+   "explanation": "filter() keeps or drops ROWS. select() chooses columns, arrange() sorts rows, summarise() collapses the data, and mutate() adds or changes columns. The base R `subset()` does the same row selection.",
    "r_flavoured": true,
    "r_functions": [
     "filter",
@@ -1211,7 +1219,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.79"
+    "slide": "p.49"
    },
    "origin": "new",
    "code": "titanic_data |> dplyr::filter(class == \"3rd\")"
@@ -1225,19 +1233,17 @@
    "options": {
     "a": "`select()` picks out columns",
     "b": "`arrange(desc(fare))` sorts from smallest to largest",
-    "c": "`arrange()` sorts rows",
+    "c": "`arrange()` sorts columns, not rows",
     "d": "`arrange(desc(fare))` sorts from largest to smallest",
-    "e": "`mutate()` adds or modifies columns"
+    "e": "`mutate()` removes the columns that are not needed"
    },
    "correct": [
     "a",
-    "c",
-    "d",
-    "e"
+    "d"
    ],
-   "n_correct": 4,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`desc()` requests descending order, so sorting from largest to smallest is right and the claim that it sorts from smallest to largest is wrong. A bare `arrange(fare)` would sort ascending.",
+   "explanation": "`desc()` requests descending order, so sorting from largest to smallest is right and the claim that it sorts from smallest to largest is wrong. A bare `arrange(fare)` would sort ascending. `arrange()` reorders the rows of the frame and does not touch its columns, and `mutate()` adds or overwrites rather than dropping anything.",
    "r_flavoured": true,
    "r_functions": [
     "arrange",
@@ -1247,7 +1253,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.109"
+    "slide": "p.53"
    },
    "origin": "new",
    "code": "titanic_data |>\n  arrange(desc(fare))"
@@ -1260,17 +1266,18 @@
    "stem": "Consider the following code. What does it return?",
    "options": {
     "a": "One mean fare for the whole dataset",
-    "b": "One mean fare per class, plus a grouped object",
+    "b": "One mean fare per class, in a small table with one row per class",
     "c": "One mean fare per class, ungrouped, in one row",
-    "d": "A new column on every row",
+    "d": "The `ungroup()` at the end means the result is not still grouped by class",
     "e": "A contingency table of class by survival"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`group_by(class) |> summarize(...) |> ungroup()` produces one row per class AND leaves the result grouped, because `ungroup()` is applied afterwards. Dropping the trailing `ungroup()` gives the ungrouped one-row-per-class answer.",
+   "explanation": "`group_by(class) |> summarize(...)` collapses the data to one row per group, and the trailing `ungroup()` removes the grouping, so what comes back is an ordinary ungrouped table with one row per class. Without that `ungroup()` the result would still carry the grouping. Note it is one row per class, not a single row.",
    "r_flavoured": true,
    "r_functions": [
     "group_by",
@@ -1281,7 +1288,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.134"
+    "slide": "p.54"
    },
    "origin": "new",
    "code": "titanic_data |>\n  group_by(class) |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE)) |>\n  ungroup()"
@@ -1295,16 +1302,17 @@
    "options": {
     "a": "`.by` only works inside summarise(), never mutate()",
     "b": "`.by` performs the grouping for that one call without leaving the result grouped",
-    "c": "`group_by()` is faster than `.by`",
+    "c": "With `group_by()` the grouping persists into later operations until you call `ungroup()`",
     "d": "`.by` ignores missing values",
     "e": "There is no difference; they are exactly the same"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`.by` groups only for the duration of that call and returns an ungrouped object, which avoids the extra ungroup() step and the risk of forgetting it.",
+   "explanation": "`.by` groups only for the duration of that call and returns an ungrouped object, which avoids the extra ungroup() step and the risk of forgetting it. `group_by()` instead sets a grouping that carries over into whatever you do next, which is why it has to be undone explicitly.",
    "r_flavoured": true,
    "r_functions": [
     "mutate",
@@ -1313,7 +1321,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.139"
+    "slide": "p.55"
    },
    "origin": "new",
    "code": "titanic_data |>\n  mutate(mean_fare = mean(fare, na.rm = TRUE), .by = class)"
@@ -1327,18 +1335,17 @@
    "options": {
     "a": "`str()` summarises the structure of a data.frame, showing column types",
     "b": "`summary()` gives distributional summaries such as mean and median",
-    "c": "`dim()` returns the number of rows and columns",
+    "c": "`dim()` returns the number of columns only",
     "d": "`str()` returns the arithmetic mean of a column",
     "e": "`dim()` returns the column names"
    },
    "correct": [
     "a",
-    "b",
-    "c"
+    "b"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "`str()` shows structure rather than statistics, so (d) is false. `dim()` gives the two dimensions, and the column names come from `names()` or `colnames()`.",
+   "explanation": "`str()` shows structure rather than statistics, so the claim that it returns a mean is false. `dim()` gives both dimensions at once, and the column names come from `names()` or `colnames()`.",
    "r_flavoured": true,
    "r_functions": [
     "str",
@@ -1363,14 +1370,15 @@
     "b": "Set the order of the levels explicitly with `factor(levels = ...)`",
     "c": "Use `arrange()` on the plotting data",
     "d": "Convert the factor to character",
-    "e": "Use `mutate()` to rename each value"
+    "e": "An ordered factor is one whose levels carry a meaningful order, such as passenger class"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. The education variable is a case where this matters.",
+   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. That order is stored on the factor as an attribute, which is why the fix belongs in the data rather than in the plot call.",
    "r_flavoured": true,
    "r_functions": [
     "factor",
@@ -1379,7 +1387,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.66"
+    "slide": "p.23"
    },
    "origin": "new"
   },
@@ -1392,14 +1400,15 @@
    "options": {
     "a": "`arrange(titanic_data, fare)`",
     "b": "`titanic_data[order(titanic_data$fare, decreasing = TRUE), ]`",
-    "c": "`titanic_data[order(titanic_data$fare), ]`",
+    "c": "`order()` returns the row positions that would put the values in order, and `decreasing = TRUE` reverses them",
     "d": "`select(titanic_data, order(fare))`",
     "e": "`sort(titanic_data$fare)`"
    },
    "correct": [
-    "b"
+    "b",
+    "c"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`order()` returns the positions that would put the values in order, and `decreasing = TRUE` reverses it. Using the result as a row index returns the sorted rows. A bare `sort()` returns only the sorted fares, losing every other column.",
    "r_flavoured": true,
@@ -1411,7 +1420,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.89"
+    "slide": "p.50"
    },
    "origin": "new",
    "code": "titanic_data[order(titanic_data$fare, decreasing = TRUE), ]"
@@ -1426,13 +1435,14 @@
     "a": "Counts a = 1, b = 1, and NA = 1",
     "b": "Counts a = 2, b = 1, and does not include NA by default",
     "c": "Counts a = 2, b = 1, and includes NA = 1",
-    "d": "Returns the proportions directly",
+    "d": "`table()` returns the number of observations in each category",
     "e": "Returns an error because of the missing value"
    },
    "correct": [
-    "b"
+    "b",
+    "d"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
    "explanation": "`table()` ignores missing values unless you ask for them with `useNA = \"ifany\"`. So a = 2 and b = 1, and the NA is silently dropped.",
    "r_flavoured": true,
@@ -1456,18 +1466,17 @@
    "options": {
     "a": "A graph's title states what is being shown",
     "b": "The x-axis and y-axis name the variables and their units",
-    "c": "A legend explains what colours or shapes mean",
+    "c": "A legend is optional, because the reader can infer the colours from the bars",
     "d": "A graph should never include a source note",
     "e": "Axis labels should be omitted when the variable names are obvious"
    },
    "correct": [
     "a",
-    "b",
-    "c"
+    "b"
    ],
-   "n_correct": 3,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "Title, labelled axes with units, and a legend are the standard elements to include. Citing the source is good practice rather than something to omit, so (d) is false; and omitting axis labels is never right.",
+   "explanation": "Title, labelled axes with units, and a legend are the standard elements to include. A legend is what tells the reader which colour means which category, so it cannot be left to inference. Citing the source is good practice rather than something to omit, and omitting axis labels is never right.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {

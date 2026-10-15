@@ -31,10 +31,11 @@ def questions():
          "The proportions 0.25 and 0.75",
          "The percentages 1 and 3",
          "The counts divided by the number of columns",
-         "A cumulative distribution"],
-        ["b"],
+         "The proportion for each category, obtained by dividing its count by the total"],
+        ["b", "e"],
         "`table()` gives counts; `prop.table()` converts them to proportions that sum "
-        "to 1, so here 1/4 = 0.25 and 3/4 = 0.75.",
+        "to 1, so here 1/4 = 0.25 and 3/4 = 0.75. The conversion is count over total, "
+        "which is why the output is a proportion rather than a count or a percentage.",
         PDF, "p.29", code="x <- c(\"yes\", \"no\", \"no\", \"no\")\nprop.table(table(x))",
         r_functions=["table", "prop.table"]))
 
@@ -45,11 +46,14 @@ def questions():
          "To display the counts of two categorical variables crossed against each other",
          "To compute the variance of a sample",
          "To plot two continuous variables",
-         "To store the levels of a factor in a specific order"],
-        ["b"],
+         "It lets you compare how one categorical variable splits across another, once "
+         "the counts are turned into proportions"],
+        ["b", "e"],
         "A contingency table crosses two categorical variables so you can see how their "
         "counts co-occur. In R you build one with a two-argument table(), e.g. "
-        "`table(x$class, x$survived)`.",
+        "`table(x$class, x$survived)`. The counts are the starting point; converting "
+        "them to row proportions is what turns the table into a comparison, such as the "
+        "share surviving in each class.",
         PDF, "p.30", code="table(titanic_data$class, titanic_data$survived)",
         r_functions=["table"]))
 
@@ -60,10 +64,12 @@ def questions():
          "It computes column proportions for each group",
          "It computes overall proportions for each group",
          "It computes the difference in proportions between groups",
-         "It computes a chi-squared statistic"],
-        ["a"],
+         "With `margin = 1` the proportions inside each row sum to 1"],
+        ["a", "e"],
         "`prop.table(x, margin = 1)` normalises each row so it sums to 1, giving the "
-        "proportions within each group. margin = 2 would instead normalise columns.",
+        "proportions within each group. margin = 2 would instead normalise columns. So "
+        "the survival rate for a class is that row's 'yes' share, and the rows each add "
+        "up to 100% rather than the columns doing so.",
         PDF, "p.31", code="table(titanic_data$class, titanic_data$survived) |>\n  prop.table(margin = 1)",
         r_functions=["table", "prop.table", "|>"]))
 
@@ -73,13 +79,13 @@ def questions():
         "variable?",
         ["A histogram",
          "A bar plot",
-         "A scatterplot",
+         "The categories run along the x-axis and the bar height gives the count",
          "A density plot",
          "A box plot"],
-        ["b"],
-        "Bar plots compare counts or proportions across discrete categories. "
-        "Histograms, density plots, scatterplots and box plots are all for numerical "
-        "data.",
+        ["b", "c"],
+        "Bar plots compare counts or proportions across discrete categories, with one "
+        "bar per category and the height giving the count. Histograms, density plots, "
+        "scatterplots and box plots are all for numerical data.",
         PDF, "p.32", r_functions=["geom_bar", "ggplot"]))
 
     out.append(mc(
@@ -88,12 +94,15 @@ def questions():
         "naturally encode?",
         ["The variable whose categories become the different bar colours",
          "The size of the bars",
-         "The statistical significance of the comparison",
+         "With `geom_bar(position = 'stack')` each bar's coloured segments add up to "
+         "the class total",
          "The order of the x-axis",
          "The missing values in the data"],
-        ["a"],
+        ["a", "c"],
         "You map one variable to `aes(x = ...)` for the axis and another to `fill = ...` "
-        "so the categories of the second variable become the bar colours.",
+        "so the categories of the second variable become the bar colours. With the bars "
+        "stacked, the segments within each bar sum to that class's total, which is why "
+        "the plot shows both the class sizes and the survival split at once.",
         PDF, "p.34",
         code="ggplot(titanic_data, aes(x = class, fill = survived)) +\n  geom_bar()",
         r_functions=["ggplot", "aes", "fill", "geom_bar"]))
@@ -104,14 +113,15 @@ def questions():
         "Consider `calc_percent <- function(x, total) (x / total) * 100`. Which "
         "statements about calling it are TRUE?",
         ["`calc_percent(25, 100)` passes arguments by position",
-         "`calc_percent(total = 100, x = 25)` passes arguments by name",
+         "Only one of `x` and `total` can be supplied; the other has to be defined "
+         "outside the function",
          "The arguments must always be given in the order they are defined",
          "`calc_percent(25)` works because `x` defaults to 25",
          "The function returns 25 in both of the first two calls"],
-        ["a", "b", "e"],
-        "R allows arguments to be passed positionally or by name, so the first two are "
-        "both valid and give the same result of 25. Order is not forced, and `x` has no "
-        "default, so the fourth claim is false.",
+        ["a", "e"],
+        "R allows arguments to be passed positionally or by name, so the first two calls "
+        "are both valid and both give 25. Order is not forced and both arguments are "
+        "required, so the fourth claim is false.",
         PDF, "p.44", code="calc_percent <- function(x, total) (x / total) * 100",
         r_functions=["function", "<-"], origin="adapted_HT25"))
 
@@ -122,9 +132,9 @@ def questions():
         ["An error, because `total` is missing",
          "0.25",
          "25",
-         "2500",
+         "`total` has a default of 100, so it does not have to be supplied",
          "NA"],
-        ["c"],
+        ["c", "d"],
         "`total = 100` is a default, so it fills in automatically: 25/100 * 100 = 25.",
         PDF, "p.44",
         code="calc_percent_default <- function(x, total = 100) (x / total) * 100\ncalc_percent_default(25)",
@@ -138,26 +148,28 @@ def questions():
          "They are exact synonyms for each other.",
          "`install.packages()` attaches the package; `library()` installs it.",
          "`library()` can only be run once per year.",
-         "Neither line is needed if ggplot2 is already installed."],
-        ["a"],
+         "Installing is done once per computer, but `library()` has to be run again in "
+         "each new session."],
+        ["a", "e"],
         "Installation puts the package on disk so it persists; library() merely makes it "
         "available in the session you are working in, and must be run again in each new "
         "session.",
-        PDF, "p.43",
+        PDF, "p.42",
         code="install.packages(\"ggplot2\")\nlibrary(ggplot2)",
         r_functions=["install.packages", "library"]))
 
     out.append(mc(
         "L2-MC-010", 2, "Subsetting a data.frame",
         "Which of the following are TRUE statements about subsetting?",
-        ["`df$age` accesses the single column `age`",
-         "`df[1, ]` returns the first row",
+        ["`df$age` returns a one-column data.frame",
+         "`df[1, ]` returns the first column",
          "`df[, 3]` returns the third column",
          "`df[, 3]` returns the third row",
          "`df[4:9, 2]` returns rows 4 to 9 of column 2"],
-        ["a", "b", "c", "e"],
+        ["c", "e"],
         "The first index is the row and the second is the column, so `[, 3]` is a column, "
-        "not a row. Only (d) is false.",
+        "not a row. A single index after a comma drops the result to a vector rather than "
+        "keeping it as a data.frame.",
         PDF, "p.48", code="titanic_data[1, ]\ntitanic_data[, 3]\ntitanic_data[4:9, 2]",
         r_functions=["[", "$"]))
 
@@ -169,9 +181,9 @@ def questions():
          "`c(1, 3, 3)[c(1, 3, 3) == 3]`",
          "`c(1, 3, 3) == 3`",
          "`c(1, 3, 3)[-1]`"],
-        ["a"],
-        "`[2]` returns the single element 3. `[3]` also returns 3 but that is not among "
-        "the options here, the logical selection returns TWO elements (3 and 3), "
+        ["a", "b"],
+        "Both `[2]` and `[3]` return a single 3, because the vector holds 3 in both of "
+        "those positions. The logical selection returns TWO elements (3 and 3), "
         "`== 3` returns a logical vector, and `[-1]` drops the first element.",
         PDF, "p.49", code="x <- c(1, 3, 3)\nx[2]",
         r_functions=["c", "[", "=="], origin="adapted_HT25"))
@@ -181,10 +193,11 @@ def questions():
         "What is the main advantage of the pipe `|>`?",
         ["It makes R run faster",
          "It lets you chain operations, passing the result forward, for more readable code",
+         "It avoids deeply nested function calls and intermediate variables",
          "It automatically removes missing values",
          "It is required in order to load a package",
          "It converts a vector into a data.frame"],
-        ["b"],
+        ["b", "c"],
         "The pipe takes the value on its left and passes it as the first argument of the "
         "function on its right, which removes deeply nested parentheses and reads more "
         "like a sequence of steps. It does not change speed, missing values, or data "
@@ -214,13 +227,14 @@ def questions():
         "dplyr way?",
         ["`select(titanic_data, class == \"3rd\")`",
          "`titanic_data |> filter(class == \"3rd\")`",
-         "`titanic_data |> arrange(class == \"3rd\")`",
+         "`subset(titanic_data, class == \"3rd\")` selects the same rows in base R",
          "`titanic_data |> summarise(class == \"3rd\")`",
          "`titanic_data |> mutate(class == \"3rd\")`"],
-        ["b"],
+        ["b", "c"],
         "filter() keeps or drops ROWS. select() chooses columns, arrange() sorts rows, "
-        "summarise() collapses the data, and mutate() adds or changes columns.",
-        PDF, "p.79",
+        "summarise() collapses the data, and mutate() adds or changes columns. The base R "
+        "`subset()` does the same row selection.",
+        PDF, "p.49",
         code="titanic_data |> dplyr::filter(class == \"3rd\")",
         r_functions=["filter", "|>", "dplyr"]))
 
@@ -229,14 +243,16 @@ def questions():
         "Which statements about these verbs are TRUE?",
         ["`select()` picks out columns",
          "`arrange(desc(fare))` sorts from smallest to largest",
-         "`arrange()` sorts rows",
+         "`arrange()` sorts columns, not rows",
          "`arrange(desc(fare))` sorts from largest to smallest",
-         "`mutate()` adds or modifies columns"],
-        ["a", "c", "d", "e"],
+         "`mutate()` removes the columns that are not needed"],
+        ["a", "d"],
         "`desc()` requests descending order, so sorting from largest to smallest is right "
         "and the claim that it sorts from smallest to largest is wrong. A bare "
-        "`arrange(fare)` would sort ascending.",
-        PDF, "p.109",
+        "`arrange(fare)` would sort ascending. `arrange()` reorders the rows of the frame "
+        "and does not touch its columns, and `mutate()` adds or overwrites rather than "
+        "dropping anything.",
+        PDF, "p.53",
         code="titanic_data |>\n  arrange(desc(fare))",
         r_functions=["arrange", "desc", "select", "mutate"]))
 
@@ -244,16 +260,16 @@ def questions():
         "L2-MC-016", 2, "Grouped operations",
         "Consider the following code. What does it return?",
         ["One mean fare for the whole dataset",
-         "One mean fare per class, plus a grouped object",
+         "One mean fare per class, in a small table with one row per class",
          "One mean fare per class, ungrouped, in one row",
-         "A new column on every row",
+         "The `ungroup()` at the end means the result is not still grouped by class",
          "A contingency table of class by survival"],
-        ["b"],
-        "`group_by(class) |> summarize(...) |> ungroup()` produces one row per class "
-        "AND leaves the result grouped, because `ungroup()` is applied afterwards. "
-        "Dropping the trailing `ungroup()` gives the ungrouped one-row-per-class "
-        "answer.",
-        PDF, "p.134",
+        ["b", "d"],
+        "`group_by(class) |> summarize(...)` collapses the data to one row per group, and "
+        "the trailing `ungroup()` removes the grouping, so what comes back is an ordinary "
+        "ungrouped table with one row per class. Without that `ungroup()` the result would "
+        "still carry the grouping. Note it is one row per class, not a single row.",
+        PDF, "p.54",
         code="titanic_data |>\n  group_by(class) |>\n  summarize(mean_fare = mean(fare, na.rm = TRUE)) |>\n  ungroup()",
         r_functions=["group_by", "summarize", "ungroup", "mean", "na.rm"]))
 
@@ -264,13 +280,16 @@ def questions():
         ["`.by` only works inside summarise(), never mutate()",
          "`.by` performs the grouping for that one call without leaving the result "
          "grouped",
-         "`group_by()` is faster than `.by`",
+         "With `group_by()` the grouping persists into later operations until you call "
+         "`ungroup()`",
          "`.by` ignores missing values",
          "There is no difference; they are exactly the same"],
-        ["b"],
+        ["b", "c"],
         "`.by` groups only for the duration of that call and returns an ungrouped "
-        "object, which avoids the extra ungroup() step and the risk of forgetting it.",
-        PDF, "p.139",
+        "object, which avoids the extra ungroup() step and the risk of forgetting it. "
+        "`group_by()` instead sets a grouping that carries over into whatever you do next, "
+        "which is why it has to be undone explicitly.",
+        PDF, "p.55",
         code="titanic_data |>\n  mutate(mean_fare = mean(fare, na.rm = TRUE), .by = class)",
         r_functions=["mutate", ".by", "group_by"]))
 
@@ -280,12 +299,13 @@ def questions():
         "Which statements about these functions are TRUE?",
         ["`str()` summarises the structure of a data.frame, showing column types",
          "`summary()` gives distributional summaries such as mean and median",
-         "`dim()` returns the number of rows and columns",
+         "`dim()` returns the number of columns only",
          "`str()` returns the arithmetic mean of a column",
          "`dim()` returns the column names"],
-        ["a", "b", "c"],
-        "`str()` shows structure rather than statistics, so (d) is false. `dim()` gives "
-        "the two dimensions, and the column names come from `names()` or `colnames()`.",
+        ["a", "b"],
+        "`str()` shows structure rather than statistics, so the claim that it returns a "
+        "mean is false. `dim()` gives both dimensions at once, and the column names come "
+        "from `names()` or `colnames()`.",
         PDF, "p.47",
         code="str(titanic_data)\nsummary(titanic_data)\ndim(titanic_data)",
         r_functions=["str", "summary", "dim"]))
@@ -299,27 +319,29 @@ def questions():
          "Set the order of the levels explicitly with `factor(levels = ...)`",
          "Use `arrange()` on the plotting data",
          "Convert the factor to character",
-         "Use `mutate()` to rename each value"],
-        ["b"],
+         "An ordered factor is one whose levels carry a meaningful order, such as "
+         "passenger class"],
+        ["b", "e"],
         "ggplot2 sorts a factor by its level order, not alphabetically, so setting the "
-        "levels explicitly is the direct fix. The education variable is a "
-            "case where this matters.",
-        PDF, "p.66", r_functions=["factor", "levels", "ggplot"]))
+        "levels explicitly is the direct fix. That order is stored on the factor as an "
+        "attribute, which is why the fix belongs in the data rather than in the plot call.",
+        PDF, "p.23", r_functions=["factor", "levels", "ggplot"]))
 
     out.append(mc(
         "L2-MC-020", 2, "Ordering data",
         "Which R code sorts `titanic_data` by fare from largest to smallest?",
         ["`arrange(titanic_data, fare)`",
          "`titanic_data[order(titanic_data$fare, decreasing = TRUE), ]`",
-         "`titanic_data[order(titanic_data$fare), ]`",
+         "`order()` returns the row positions that would put the values in order, and "
+         "`decreasing = TRUE` reverses them",
          "`select(titanic_data, order(fare))`",
          "`sort(titanic_data$fare)`"],
-        ["b"],
+        ["b", "c"],
         "`order()` returns the positions that would put the values in order, and "
         "`decreasing = TRUE` reverses it. Using the result as a row index returns the "
         "sorted rows. A bare `sort()` returns only the sorted fares, losing every other "
         "column.",
-        PDF, "p.89",
+        PDF, "p.50",
         code="titanic_data[order(titanic_data$fare, decreasing = TRUE), ]",
         r_functions=["order", "decreasing", "sort", "arrange"]))
 
@@ -330,9 +352,9 @@ def questions():
         ["Counts a = 1, b = 1, and NA = 1",
          "Counts a = 2, b = 1, and does not include NA by default",
          "Counts a = 2, b = 1, and includes NA = 1",
-         "Returns the proportions directly",
+         "`table()` returns the number of observations in each category",
          "Returns an error because of the missing value"],
-        ["b"],
+        ["b", "d"],
         "`table()` ignores missing values unless you ask for them with "
         "`useNA = \"ifany\"`. So a = 2 and b = 1, and the NA is silently dropped.",
         PDF, "p.28", code="x <- c(\"a\", \"b\", \"a\", NA)\ntable(x)",
@@ -343,13 +365,14 @@ def questions():
         "Which statements about graphs are TRUE?",
         ["A graph's title states what is being shown",
          "The x-axis and y-axis name the variables and their units",
-         "A legend explains what colours or shapes mean",
+         "A legend is optional, because the reader can infer the colours from the bars",
          "A graph should never include a source note",
          "Axis labels should be omitted when the variable names are obvious"],
-        ["a", "b", "c"],
+        ["a", "b"],
         "Title, labelled axes with units, and a legend are the standard elements to "
-            "include. Citing the source is good practice rather than something to "
-        "omit, so (d) is false; and omitting axis labels is never right.",
+        "include. A legend is what tells the reader which colour means which category, so "
+        "it cannot be left to inference. Citing the source is good practice rather than "
+        "something to omit, and omitting axis labels is never right.",
         PDF, "p.37"))
 
     # ------------------------------------------------------------ written answers
