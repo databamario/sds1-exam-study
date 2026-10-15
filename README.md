@@ -65,6 +65,34 @@ most 1 point.
 
 > Every question in this app has at least one correct option, so leaving the answer blank
 > never scores the full point. `tools/validate.py` enforces this.
+>
+> The real exam also permits a question with **no** correct option, and awards a full point
+> for leaving it blank. `src/scoring.py` does not implement that special case, so the bank
+> does not use it. If a question like that is ever added, `validate.py` will reject it with
+> a message saying so rather than let it be marked wrong.
+
+### How many options are correct
+
+The exam's own worked example is *"a multiple-choice question with 5 options (a, b, c, d, e),
+where a and b are correct"*, and its questions mix three, four and five options. The bank
+trains exactly that shape:
+
+| Options | Correct options |
+|---|---|
+| **5** | **exactly 2** |
+| 3 or 4 | 1 or 2 |
+| any | **never 3 or 4** |
+
+`tools/validate.py` enforces this. The reason it is a hard rule rather than a preference:
+a student who has only ever met questions with three or four correct options cannot be
+caught out by a question with three, so a bank that allows them teaches the wrong reflex.
+
+It also checks **where** the answers sit. With five options and two correct, the giveaway is
+a *pair* — a student who always ticks (a) and (b) is right on every question whose key
+happens to be {a,b}. With four options and one correct it is a single position. Neither may
+exceed 20% and 35% of the questions they apply to. An earlier version of the suite checked
+the position of the single *false* option instead, which is a different game entirely and
+left single-correct questions completely unguarded.
 
 ### Written-answer (WA)
 
@@ -259,6 +287,7 @@ sds1-exam-study/
     ├── test_scoring.py     regression tests vs the official marking table
     ├── verify_r.py         executes every R snippet in the bank
     ├── verify_numbers.py   checks every number a question asserts
+    ├── test_answer_format.py  proves the MC format rules can pass as well as fail
     └── bank/               question sources, one file per lecture, + graphs.py
 ```
 
@@ -273,14 +302,22 @@ python tools/validate.py       # check schema, counts, keys and R coverage
 python tools/verify_r.py       # run every R snippet
 python tools/verify_numbers.py # check every number a question asserts
 python tools/test_scoring.py   # re-run the grading regression tests
+python tools/test_answer_format.py  # re-run the MC format rules
 ```
 
-All five must pass before opening a pull request.
+All six must pass before opening a pull request.
 
 Two of these exist because the first version of the R gate was decorative: it
 turned each snippet into a string literal instead of running it, so invalid R
 reported PASS. Both are now proven to fail — each was run against the bank as it
 stood before these checks were added, and both reported the real problems.
+
+`test_answer_format.py` exists for the same reason, about the answer-format
+rules. A gate that can only fail is noise, and a gate that cannot fail is
+worse, so every rule in it is checked twice: once that it catches the violation
+it exists for, and once that a bank built to be correct passes it. It also
+prints the live bank's current pair and position spread, as a baseline to
+compare against as the format migration proceeds.
 
 - `verify_r.py` really executes every snippet. Because most snippets are
   fragments lifted out of the lecturer's session, it prepends a fixture holding
@@ -297,19 +334,29 @@ explanation contradicts its own answer key, if a written answer runs long, if a
 question refers to the course rather than to the statistics, or if a referenced
 figure file is missing.
 
-### Where the wrong option goes
+### Where the answers go
 
-In a multi-select question with exactly one wrong option, its position is a
-free guess for anyone who notices the pattern. This bank originally had 20 of its
-22 such questions with the wrong option at (d) or (e), which made "leave the
-last two boxes" worth 20 questions on its own. `validate.py` now fails when one
-position holds the wrong option for more than 30% of them; the bank sits at
-27.3%.
+Position is a free guess for anyone who notices the pattern, and the shape of
+that free guess depends on the question.
 
-So when you add a multi-select question, put the wrong option where it reads
-naturally rather than last, and say *what* is wrong in the explanation rather
-than naming a letter. An explanation that says "(d) is false" silently becomes a
-lie the moment the options are reordered.
+With **five options and two correct**, the giveaway is a *pair*: a student who
+always ticks (a) and (b) is right on every question whose key happens to be
+{a,b}. With **four options and one correct**, it is a single position.
+`validate.py` fails when one pair holds more than 20% of the five-option
+questions, or one position more than 35% of the single-correct four-option ones.
+Both limits come from the sample size, not from whatever the bank happens to do.
+
+This replaced an earlier check that watched the position of the single **false**
+option instead. That was checking a different game, and it had a blind spot: it
+only looked at questions with more than one correct option, so the
+single-correct ones went entirely unchecked. Fifteen of the nineteen four-option
+questions in the bank had the answer at (a) — "tick the first box" was worth 79%
+of them — and nothing reported it.
+
+So when you add a question, spread the key rather than letting it fall where it
+falls, and say *what* is wrong in the explanation rather than naming a letter.
+An explanation that says "(d) is false" silently becomes a lie the moment the
+options are reordered.
 
 
 ---

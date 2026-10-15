@@ -27,6 +27,59 @@ LECTURES = {
 MC = "MC"
 WA = "WA"
 
+# The shape of a multiple-choice question, as the exam actually uses it.
+#
+# The mock exam's own worked example is "a multiple-choice question with 5
+# options (a, b, c, d, e), where a and b are correct", and the questions in it
+# mix three, four and five options. So the bank trains exactly that:
+#
+#   five options  -> exactly two correct
+#   three or four -> one or two correct
+#   never more than two correct, at any option count
+#
+# The last line is the load-bearing one. A student who has only ever met
+# questions with three or four correct options can be caught out by a single
+# question with three, and a bank that lets that happen teaches the wrong
+# reflex.
+FIVE_OPTION_CORRECT = 2
+MAX_CORRECT_OPTIONS = 2
+
+
+def mc_format_problems(q: dict) -> list[str]:
+    """Return the reason(s) a multiple-choice question breaks the format rule.
+
+    Empty list means the question is the right shape. Kept here rather than in
+    the validator so that the rule has one definition, and so that a bank which
+    is mid-migration still loads: the app runs against a half-converted bank
+    without the schema check refusing to open it.
+    """
+    options = q.get("options") or {}
+    correct = q.get("correct") or []
+    n_options = len(options)
+    n_correct = len(correct)
+    where = q.get("id", "<no id>")
+
+    if n_correct == 0:
+        # The exam permits a question with no correct option, and scores an
+        # unmarked answer as a full point in that case. src/scoring.py does not
+        # implement that special case, so the bank does not use it.
+        return ["%s: 0 correct options; the exam allows this but scoring.py "
+                "does not implement the 'mark nothing' rule" % where]
+
+    if n_correct > MAX_CORRECT_OPTIONS:
+        return ["%s: %d correct options, the exam never uses more than %d"
+                % (where, n_correct, MAX_CORRECT_OPTIONS)]
+
+    if n_options == 5 and n_correct != FIVE_OPTION_CORRECT:
+        return ["%s: 5 options but %d correct; a five-option question must "
+                "have exactly %d" % (where, n_correct, FIVE_OPTION_CORRECT)]
+
+    if n_options < 5 and n_correct not in (1, 2):
+        return ["%s: %d options with %d correct; a question with fewer than "
+                "five options has one or two" % (where, n_options, n_correct)]
+
+    return []
+
 
 class QuestionBankError(ValueError):
     """Raised when questions.json violates the schema."""

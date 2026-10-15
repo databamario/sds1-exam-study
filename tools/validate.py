@@ -15,12 +15,45 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.loader import LECTURES, MC, WA, load_bank, validate_bank  # noqa: E402
+from src.loader import (  # noqa: E402
+    LECTURES, MC, WA, load_bank, mc_format_problems, validate_bank,
+)
 from src.scoring import score_mc  # noqa: E402
 
 TARGET_MC = 148
 TARGET_WA = 82
-MIN_ZERO_CORRECT = 0
+
+# Anti-guessing limits, as a share of the questions they apply to.
+#
+# With 129 five-option questions and ten possible pairs, a perfectly even spread
+# is 12.9% per pair, so 20% allows about one and a half times even. With 19
+# four-option single-correct questions an even spread is 25% per position, so
+# 35% is a little under one and a half times even. Both are set from the actual
+# sample sizes rather than picked to make the current bank pass.
+PAIR_LIMIT = 0.20
+POSITION_LIMIT = 0.35
+
+# Below this many questions, "no single answer dominates" is not a statement
+# worth failing a commit over: with 6 questions the most common of 10 pairs is
+# 33% by arithmetic alone.
+MIN_SAMPLE_FOR_SPREAD = 20
+
+# --------------------------------------------------------------- ratchet
+#
+# The rule above is a hard gate, but 123 of the 148 MC questions broke it when
+# it was written, and the migration that fixes them happens one lecture per
+# commit. A hard gate on a bank that is knowingly mid-migration would make
+# every one of those commits red, and a red suite is a suite people stop
+# reading.
+#
+# So the migration is a ratchet. This number is how many violations are still
+# allowed to exist. It only ever goes down, one lecture at a time, and it is
+# deliberately a bare constant so that lowering it is a visible, reviewable
+# edit in the diff rather than a side effect of running something. Going
+# BELOW it is reported, because that means the constant is stale and the real
+# rule is looser than it looks. When it reaches zero the allowance disappears
+# and the plain rule applies.
+FORMAT_MIGRATION_REMAINING = 123
 
 # Every R function the lectures actually teach. A lecture cannot be "covered"
 # unless at least one question references each of its functions.
@@ -43,6 +76,64 @@ LECTURE_R_FUNCTIONS = {
 def hr(title):
     print("\n" + title)
     print("-" * len(title))
+
+
+def position_spread_failures(mc: list[dict]) -> list[str]:
+    """Failures describing a guessable answer layout.
+
+    A student who spots that the answer is almost always in the same slot can
+    stop reading. With five options and two correct, the leak is a PAIR: a
+    student who always ticks (a) and (b) is right on every question whose key
+    happens to be {a,b}. With four options and one correct it is a single
+    position. Both are checked here.
+
+    A previous version of this file checked the position of the single FALSE
+    option instead. That was checking a different game entirely, and it left
+    single-correct four-option questions completely unguarded.
+
+    Split out from main() so the test suite can check that a well spread bank
+    passes, not only that a bad one fails.
+    """
+    failures: list[str] = []
+
+    five_two = [q for q in mc if len(q.get("options") or {}) == 5
+                and len(q.get("correct") or []) == 2]
+    if five_two:
+        pairs = collections.Counter("".join(sorted(q["correct"])) for q in five_two)
+        worst_pair, worst_n = max(pairs.items(), key=lambda kv: kv[1])
+        share = worst_n / float(len(five_two))
+        # A limit is meaningless on a sample too small to spread. During the
+        # migration only a handful of five-option questions have two correct
+        # answers, so report the distribution and hold the gate until there is
+        # enough of them for "no pair dominates" to mean anything.
+        armed = len(five_two) >= MIN_SAMPLE_FOR_SPREAD
+        print("  five-option questions with 2 correct: %d%s"
+              % (len(five_two),
+                 "" if armed else "  (gate not armed, needs %d)"
+                  % MIN_SAMPLE_FOR_SPREAD))
+        print("  correct pairs: %s"
+              % ", ".join("%s=%d" % kv for kv in sorted(pairs.items())))
+        print("  most common pair %s: %.1f%% of them (limit %.0f%%)"
+              % (worst_pair, share * 100, PAIR_LIMIT * 100))
+        if share > PAIR_LIMIT and armed:
+            failures.append(
+                "always ticking (%s) would score %.0f%% of five-option "
+                "questions; spread the correct pairs further"
+                % (",".join(worst_pair), share * 100))
+
+    four_one = [q for q in mc if len(q.get("options") or {}) == 4
+                and len(q.get("correct") or []) == 1]
+    if four_one:
+        pos = collections.Counter(q["correct"][0] for q in four_one)
+        worst_pos, worst_n = max(pos.items(), key=lambda kv: kv[1])
+        share = worst_n / float(len(four_one))
+        if share > POSITION_LIMIT:
+            failures.append(
+                "the correct option sits in (%s) for %.0f%% of single-correct "
+                "four-option questions; move some of them"
+                % (worst_pos, share * 100))
+
+    return failures
 
 
 def main() -> int:
@@ -93,14 +184,39 @@ def main() -> int:
     if not ok:
         failures.append("blank answer must never score the full point")
 
-    hr("Every MC has at least one correct option")
-    zero = [q for q in mc if q["n_correct"] == 0]
-    print("  found %d (must be 0)" % len(zero))
-    for q in zero:
-        print("    %s  %s" % (q["id"], q["topic"][:48]))
-    if zero:
-        failures.append("%d MC questions have 0 correct options: %s"
-                        % (len(zero), ", ".join(q["id"] for q in zero)))
+    hr("Multiple-choice answer format")
+    # The exam's own worked example is a five-option question with two correct
+    # options, and three or four correct options never appear. See
+    # mc_format_problems for the rule; this is the gate that enforces it.
+    bad_format = []
+    for q in mc:
+        bad_format.extend(mc_format_problems(q))
+    by_id = collections.defaultdict(list)
+    for msg in bad_format:
+        by_id[msg.split(":")[0]].append(msg)
+    print("  MC questions breaking the format rule: %d of %d"
+          % (len(by_id), len(mc)))
+    for qid in sorted(by_id):
+        print("    %s" % by_id[qid][0])
+    if bad_format:
+        detail = ("%d MC questions break the answer-format rule "
+                  "(5 options => exactly 2 correct, never more than 2): %s"
+                  % (len(by_id), ", ".join(sorted(by_id)[:8])
+                     + (" ..." if len(by_id) > 8 else "")))
+        if len(by_id) > FORMAT_MIGRATION_REMAINING:
+            failures.append(
+                "format migration REGRESSED: %d questions break the rule but "
+                "only %d are allowed to remain. %s"
+                % (len(by_id), FORMAT_MIGRATION_REMAINING, detail))
+        else:
+            if len(by_id) < FORMAT_MIGRATION_REMAINING:
+                warnings.append(
+                    "FORMAT_MIGRATION_REMAINING is %d but only %d questions "
+                    "still break the rule; tighten it"
+                    % (FORMAT_MIGRATION_REMAINING, len(by_id)))
+            else:
+                print("  migration ratchet: %d remaining of the %d allowed"
+                      % (len(by_id), FORMAT_MIGRATION_REMAINING))
 
     hr("n_correct distribution")
     dist = collections.Counter(q["n_correct"] for q in mc)
@@ -319,28 +435,36 @@ def main() -> int:
     if bad_refs:
         failures.extend(bad_refs)
 
-    hr("False-option position spread")
-    # In a multi-select question with exactly one wrong option, a student who
-    # noticed the wrong one is always in the same position could skip the
-    # question entirely. No single position may dominate.
-    single = [q for q in questions if q["type"] == "MC"
-              and len(q.get("correct") or []) > 1
-              and sum(1 for k in LETTERS
-                      if k in (q.get("options") or {}) and k not in q["correct"]) == 1]
-    tally = {}
-    for q in single:
-        tally.setdefault([k for k in LETTERS if k not in q["correct"]][0], 0)
-        tally[[k for k in LETTERS if k not in q["correct"]][0]] += 1
-    if single:
-        worst = max(tally.values())
-        share = worst / float(len(single))
-        print("  single-false multi-select questions: %d" % len(single))
-        print("  false option by position: %s"
-              % ", ".join("%s=%d" % kv for kv in sorted(tally.items())))
-        print("  most common position: %.1f%% (limit 30%%)" % (share * 100))
-        if share > 0.30:
-            failures.append("false option sits in one position for %.0f%% of "
-                            "single-false multi-select questions" % (share * 100))
+    hr("Where the correct answer sits")
+    spread_failures = position_spread_failures(mc)
+
+    five_two = [q for q in mc if len(q.get("options") or {}) == 5
+                and len(q.get("correct") or []) == 2]
+    if five_two:
+        pairs = collections.Counter("".join(sorted(q["correct"])) for q in five_two)
+        worst_pair, worst_n = max(pairs.items(), key=lambda kv: kv[1])
+        print("  five-option questions with 2 correct: %d" % len(five_two))
+        print("  correct pairs: %s"
+              % ", ".join("%s=%d" % kv for kv in sorted(pairs.items())))
+        print("  most common pair %s: %.1f%% of them (limit %.0f%%)"
+              % (worst_pair, worst_n / float(len(five_two)) * 100, PAIR_LIMIT * 100))
+
+    four_one = [q for q in mc if len(q.get("options") or {}) == 4
+                and len(q.get("correct") or []) == 1]
+    if four_one:
+        pos = collections.Counter(q["correct"][0] for q in four_one)
+        worst_pos, worst_n = max(pos.items(), key=lambda kv: kv[1])
+        share = worst_n / float(len(four_one))
+        print("  four-option questions with 1 correct: %d" % len(four_one))
+        print("  correct position: %s"
+              % ", ".join("%s=%d" % kv for kv in sorted(pos.items())))
+        print("  most common position %s: %.1f%% of them (limit %.0f%%)"
+              % (worst_pos, share * 100, POSITION_LIMIT * 100))
+        if share > POSITION_LIMIT:
+            offenders = [q["id"] for q in four_one if q["correct"][0] == worst_pos]
+            print("      offenders: %s" % ", ".join(sorted(offenders)[:20]))
+
+    failures.extend(spread_failures)
 
     hr("Result")
     for wmsg in warnings:

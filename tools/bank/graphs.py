@@ -73,11 +73,11 @@ def questions():
         "G-MC-004", 3, "Skew and centre",
         "Based on the shape of the histogram, would you expect the mean of this "
         "variable to be higher or lower than the median?",
-        ["Higher, because the long right tail pulls the mean up",
+        ["The mean is always higher for any right-skewed distribution",
+         "Higher, because the long right tail pulls the mean up",
          "Lower, because the long right tail pulls the mean down",
-         "They are always equal for this shape",
-         "The mean is always higher for any right-skewed distribution"],
-        ["a"],
+         "They are always equal for this shape"],
+        ["b"],
         "The distribution has a long tail to the right. The mean uses every value, "
         "so the few large values pull it up, while the median only cares about the "
         "middle observation and stays lower. Here the mean sits around 4 while the "
@@ -118,8 +118,8 @@ def questions():
         "The plot shows a mean and a 95% confidence interval for two groups "
         "against a reference value. Which group differs significantly from the "
         "reference at the 5% level?",
-        ["Group A only", "Group B only", "Both groups", "Neither group"],
-        ["a"],
+        ["Neither group", "Group A only", "Group B only", "Both groups"],
+        ["b"],
         "Group A's interval runs from about 48.6 to 56.2 and does not touch the "
         "reference line at 44, so the difference is significant. Group B's interval "
         "runs from about 41.3 to 48.9 and does contain 44, so it is not significant.",
@@ -128,9 +128,8 @@ def questions():
     out.append(mc(
         "G-MC-008", 7, "Interpreting a confidence interval",
         "Based on the plot, which group has the larger margin of error?",
-        ["Group A", "Group B",
-         "They are equal", "This cannot be determined"],
-        ["a"],
+        ["They are equal", "This cannot be determined", "Group A", "Group B"],
+        ["c"],
         "The margin of error is half the width of the interval. Group A's spans "
         "about 7.6 units and Group B's about 3.8, so Group A's is larger and its "
         "estimate is less precise.",
@@ -140,11 +139,11 @@ def questions():
         "G-MC-009", 7, "Interpreting a confidence interval",
         "What does it mean when a 95% confidence interval contains the reference "
         "value, as it does for group B?",
-        ["The difference from the reference is not significant at the 5% level",
-         "There is a 95% probability the reference value is wrong",
+        ["There is a 95% probability the reference value is wrong",
          "The estimate is definitely equal to the reference value",
-         "The sample size was too small to compute the interval"],
-        ["a"],
+         "The sample size was too small to compute the interval",
+         "The difference from the reference is not significant at the 5% level"],
+        ["d"],
         "An interval that contains the reference value means the data are "
         "compatible with no difference, so we cannot reject the null hypothesis at "
         "the 5% level. It is not a probability statement about the reference value.",
@@ -170,11 +169,11 @@ def questions():
         "G-MC-011", 8, "Reading a scatter plot",
         "If the correlation between the two variables were exactly 0, what would "
         "the scatter plot look like?",
-        ["A diffuse cloud with no upward or downward trend",
+        ["A set of distinct parallel groups",
+         "A diffuse cloud with no upward or downward trend",
          "A tight upward-sloping line",
-         "A tight downward-sloping line",
-         "A set of distinct parallel groups"],
-        ["a"],
+         "A tight downward-sloping line"],
+        ["b"],
         "A correlation of 0 means no linear association, so the points form a "
         "cloud with no direction. A tight upward line would be a correlation near 1 "
         "and a tight downward line a correlation near -1.",
@@ -184,11 +183,11 @@ def questions():
     out.append(mc(
         "G-MC-012", 2, "Comparing distributions",
         "The plot shows the densities of two groups. Which statement is correct?",
-        ["Group B has the higher mean and the larger spread",
-         "Group A has the higher mean and the larger spread",
-         "Both groups have the same mean and the same spread",
-         "Group A has the higher mean but the smaller spread"],
-        ["a"],
+        ["Both groups have the same mean and the same spread",
+         "Group A has the higher mean but the smaller spread",
+         "Group B has the higher mean and the larger spread",
+         "Group A has the higher mean and the larger spread"],
+        ["c"],
         "Group B's curve peaks further to the right, so its values are typically "
         "larger, and it is much flatter and wider, so it is more spread out. Group "
         "A's curve is taller and narrower.",
@@ -198,11 +197,11 @@ def questions():
         "G-MC-013", 2, "Comparing distributions",
         "The area under a density curve for one group is much larger than the "
         "area for the other. What does that tell you?",
-        ["That group contains more observations",
-         "That group has a larger total value",
+        ["That group has a larger total value",
          "That group has a higher variance",
-         "That group's mean is larger"],
-        ["a"],
+         "That group's mean is larger",
+         "That group contains more observations"],
+        ["d"],
         "Density curves are each normalised so the total area is 1 regardless of "
         "how many observations were collected. A larger area on the plot comes "
         "from a wider distribution, not a larger sample.",
@@ -226,11 +225,11 @@ def questions():
         "G-MC-015", 8, "Reading a correlation matrix",
         "Which statement about the Hours and Sleep correlation of -0.28 is "
         "correct?",
-        ["It is weak and negative",
+        ["It is zero, so the variables are unrelated",
+         "It is weak and negative",
          "It is strong and negative",
-         "It is strong and positive",
-         "It is zero, so the variables are unrelated"],
-        ["a"],
+         "It is strong and positive"],
+        ["b"],
         "The sign is negative, so the two move in opposite directions, and the "
         "magnitude is only 0.28, so the linear association is weak. It is not zero, "
         "so the variables are not unrelated.",
@@ -251,8 +250,8 @@ def questions():
         "G-MC-017", 4, "Reading a frequency table",
         "Using the same bar chart, what proportion of students read fewer than 20 "
         "books?",
-        ["7/30", "11/30", "2/30", "20/30"],
-        ["a"],
+        ["11/30", "2/30", "20/30", "7/30"],
+        ["d"],
         "Fewer than 20 books covers the first two bars, 2 + 5 = 7 students out of "
         "30 in total, so the proportion is 7/30.",
         L4[0], L4[1], image="freq_bars"))

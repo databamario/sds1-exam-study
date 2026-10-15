@@ -758,13 +758,13 @@
    "topic": "Comparing distributions",
    "stem": "The plot shows the densities of two groups. Which statement is correct?",
    "options": {
-    "a": "Group B has the higher mean and the larger spread",
-    "b": "Group A has the higher mean and the larger spread",
-    "c": "Both groups have the same mean and the same spread",
-    "d": "Group A has the higher mean but the smaller spread"
+    "a": "Both groups have the same mean and the same spread",
+    "b": "Group A has the higher mean but the smaller spread",
+    "c": "Group B has the higher mean and the larger spread",
+    "d": "Group A has the higher mean and the larger spread"
    },
    "correct": [
-    "a"
+    "c"
    ],
    "n_correct": 1,
    "points": 1,
@@ -785,13 +785,13 @@
    "topic": "Comparing distributions",
    "stem": "The area under a density curve for one group is much larger than the area for the other. What does that tell you?",
    "options": {
-    "a": "That group contains more observations",
-    "b": "That group has a larger total value",
-    "c": "That group has a higher variance",
-    "d": "That group's mean is larger"
+    "a": "That group has a larger total value",
+    "b": "That group has a higher variance",
+    "c": "That group's mean is larger",
+    "d": "That group contains more observations"
    },
    "correct": [
-    "a"
+    "d"
    ],
    "n_correct": 1,
    "points": 1,
@@ -1907,13 +1907,13 @@
    "topic": "Skew and centre",
    "stem": "Based on the shape of the histogram, would you expect the mean of this variable to be higher or lower than the median?",
    "options": {
-    "a": "Higher, because the long right tail pulls the mean up",
-    "b": "Lower, because the long right tail pulls the mean down",
-    "c": "They are always equal for this shape",
-    "d": "The mean is always higher for any right-skewed distribution"
+    "a": "The mean is always higher for any right-skewed distribution",
+    "b": "Higher, because the long right tail pulls the mean up",
+    "c": "Lower, because the long right tail pulls the mean down",
+    "d": "They are always equal for this shape"
    },
    "correct": [
-    "a"
+    "b"
    ],
    "n_correct": 1,
    "points": 1,
@@ -2974,13 +2974,13 @@
    "topic": "Reading a frequency table",
    "stem": "Using the same bar chart, what proportion of students read fewer than 20 books?",
    "options": {
-    "a": "7/30",
-    "b": "11/30",
-    "c": "2/30",
-    "d": "20/30"
+    "a": "11/30",
+    "b": "2/30",
+    "c": "20/30",
+    "d": "7/30"
    },
    "correct": [
-    "a"
+    "d"
    ],
    "n_correct": 1,
    "points": 1,
@@ -5042,13 +5042,13 @@
    "topic": "Interpreting a confidence interval",
    "stem": "The plot shows a mean and a 95% confidence interval for two groups against a reference value. Which group differs significantly from the reference at the 5% level?",
    "options": {
-    "a": "Group A only",
-    "b": "Group B only",
-    "c": "Both groups",
-    "d": "Neither group"
+    "a": "Neither group",
+    "b": "Group A only",
+    "c": "Group B only",
+    "d": "Both groups"
    },
    "correct": [
-    "a"
+    "b"
    ],
    "n_correct": 1,
    "points": 1,
@@ -5069,13 +5069,13 @@
    "topic": "Interpreting a confidence interval",
    "stem": "Based on the plot, which group has the larger margin of error?",
    "options": {
-    "a": "Group A",
-    "b": "Group B",
-    "c": "They are equal",
-    "d": "This cannot be determined"
+    "a": "They are equal",
+    "b": "This cannot be determined",
+    "c": "Group A",
+    "d": "Group B"
    },
    "correct": [
-    "a"
+    "c"
    ],
    "n_correct": 1,
    "points": 1,
@@ -5096,13 +5096,13 @@
    "topic": "Interpreting a confidence interval",
    "stem": "What does it mean when a 95% confidence interval contains the reference value, as it does for group B?",
    "options": {
-    "a": "The difference from the reference is not significant at the 5% level",
-    "b": "There is a 95% probability the reference value is wrong",
-    "c": "The estimate is definitely equal to the reference value",
-    "d": "The sample size was too small to compute the interval"
+    "a": "There is a 95% probability the reference value is wrong",
+    "b": "The estimate is definitely equal to the reference value",
+    "c": "The sample size was too small to compute the interval",
+    "d": "The difference from the reference is not significant at the 5% level"
    },
    "correct": [
-    "a"
+    "d"
    ],
    "n_correct": 1,
    "points": 1,
@@ -5886,13 +5886,13 @@
    "topic": "Reading a scatter plot",
    "stem": "If the correlation between the two variables were exactly 0, what would the scatter plot look like?",
    "options": {
-    "a": "A diffuse cloud with no upward or downward trend",
-    "b": "A tight upward-sloping line",
-    "c": "A tight downward-sloping line",
-    "d": "A set of distinct parallel groups"
+    "a": "A set of distinct parallel groups",
+    "b": "A diffuse cloud with no upward or downward trend",
+    "c": "A tight upward-sloping line",
+    "d": "A tight downward-sloping line"
    },
    "correct": [
-    "a"
+    "b"
    ],
    "n_correct": 1,
    "points": 1,
@@ -5940,13 +5940,13 @@
    "topic": "Reading a correlation matrix",
    "stem": "Which statement about the Hours and Sleep correlation of -0.28 is correct?",
    "options": {
-    "a": "It is weak and negative",
-    "b": "It is strong and negative",
-    "c": "It is strong and positive",
-    "d": "It is zero, so the variables are unrelated"
+    "a": "It is zero, so the variables are unrelated",
+    "b": "It is weak and negative",
+    "c": "It is strong and negative",
+    "d": "It is strong and positive"
    },
    "correct": [
-    "a"
+    "b"
    ],
    "n_correct": 1,
    "points": 1,
