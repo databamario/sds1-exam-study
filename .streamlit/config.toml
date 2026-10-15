@@ -1,0 +1,4 @@
+# Streamlit serves ./static/ at /app/static/ only when this is on, and it is off
+# by default. The app needs it for the interface sounds in static/sfx/.
+[server]
+enableStaticServing = true

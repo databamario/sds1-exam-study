@@ -27,6 +27,11 @@ CREATE TABLE IF NOT EXISTS attempts (
 );
 CREATE INDEX IF NOT EXISTS idx_attempts_qid ON attempts(question_id);
 CREATE INDEX IF NOT EXISTS idx_attempts_lecture ON attempts(lecture);
+
+CREATE TABLE IF NOT EXISTS prefs (
+    name  TEXT PRIMARY KEY,
+    value TEXT NOT NULL
+);
 """
 
 
@@ -102,3 +107,19 @@ def export_rows(conn: sqlite3.Connection) -> list[dict]:
         " FROM attempts ORDER BY created_at"
     ).fetchall()
     return [dict(r) for r in rows]
+
+
+def get_pref(conn: sqlite3.Connection, name: str, default: str) -> str:
+    """Read a setting. Preferences live here so they survive a restart, which
+    session_state does not."""
+    row = conn.execute("SELECT value FROM prefs WHERE name = ?", (name,)).fetchone()
+    return row["value"] if row else default
+
+
+def set_pref(conn: sqlite3.Connection, name: str, value: str) -> None:
+    conn.execute(
+        "INSERT INTO prefs (name, value) VALUES (?, ?)"
+        " ON CONFLICT(name) DO UPDATE SET value = excluded.value",
+        (name, str(value)),
+    )
+    conn.commit()

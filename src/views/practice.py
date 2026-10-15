@@ -56,9 +56,10 @@ def mc_practice(bank, conn):
 def wa_practice(bank, conn):
     st.subheader("Written-answer practice")
     st.caption(
-        "Write your answer first, then reveal the model answer and tap the points "
-        "you covered. The exam asks for at most 3 sentences and allows partial "
-        "credit."
+        "Write your answer, then mark yourself against the checklist. The model "
+        "answer stays hidden until you ask for it, which is the only way the "
+        "self-grading is worth anything. The exam asks for at most 3 sentences and "
+        "allows partial credit."
     )
     questions = loader.of_type(bank, loader.WA)
     if not questions:

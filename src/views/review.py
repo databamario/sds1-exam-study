@@ -41,23 +41,31 @@ def answer_key(bank):
         label = "%s %s  [%s]%s" % (
             q["id"], q["topic"][:44], q["type"], "  **FLAGGED**" if flagged else "")
         with st.expander(label):
+            # render_stem already draws the figure, so it is not drawn again here.
             ui.render_stem(q, show_source=True)
-            if q.get("image"):
-                ui.render_figure(q)
             if q["type"] == loader.MC:
-                for k, text in q["options"].items():
-                    mark = "**[x]**" if k in q["correct"] else "[ ]"
-                    st.markdown("%s **%s)** %s" % (mark, k, text))
-                st.markdown("**Explanation:** %s" % q["explanation"])
+                # Reuses the practice review list, so the answer key marks the
+                # correct options in exactly the same green.
+                ui.render_mc_review(q, [], context="key")
+                st.markdown(
+                    '<div class="sds-model" style="border-left-color:#2f6f9f;'
+                    'background:#f8fafc;color:#1e293b">'
+                    '<div class="sds-model-label" style="color:#2f6f9f">Why</div>%s'
+                    "</div>" % ui.md_inline(q["explanation"]),
+                    unsafe_allow_html=True,
+                )
             else:
-                st.markdown("**Model answer:**")
-                st.markdown(q["answer"])
+                ui.render_model_answer(q["answer"])
                 if q.get("detail"):
                     # Already inside an expander, so the detail has to be inline:
                     # Streamlit does not allow nested expanders.
-                    st.markdown("**Longer explanation:**")
-                    st.markdown(q["detail"])
-                st.markdown("**Checklist:**")
+                    st.markdown(
+                        '<div class="sds-exwrap">'
+                        '<div class="sds-exlabel">Longer explanation</div>'
+                        '<div class="sds-model">%s</div></div>' % ui.md_inline(q["detail"]),
+                        unsafe_allow_html=True,
+                    )
+                st.markdown("**Checklist**")
                 for item in q["rubric"]:
                     st.markdown("- %s" % item["text"])
             if st.button("Flag for correction", key="flag_%s" % q["id"]):

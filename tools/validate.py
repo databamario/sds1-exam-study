@@ -166,6 +166,28 @@ def main() -> int:
     if unused:
         print("  warn figures generated but unused: %s" % ", ".join(unused))
 
+    hr("Interface sounds")
+    sfx_dir = Path(__file__).resolve().parents[1] / "static" / "sfx"
+    needed = ["correct", "celebrate", "wrong", "tap"]
+    missing_sfx = [n for n in needed if not (sfx_dir / (n + ".wav")).exists()]
+    empty_sfx = [n for n in needed if (sfx_dir / (n + ".wav")).exists()
+                 and (sfx_dir / (n + ".wav")).stat().st_size < 1000]
+    for name in needed:
+        path = sfx_dir / (name + ".wav")
+        if path.exists():
+            print("  %-10s %6.1f KB" % (name, path.stat().st_size / 1024))
+    if missing_sfx:
+        failures.append("missing sound files: %s (run tools/make_sfx.py)"
+                        % ", ".join(missing_sfx))
+    elif empty_sfx:
+        failures.append("suspiciously small sound files: %s"
+                        % ", ".join(empty_sfx))
+    else:
+        print("  ok   all four sounds present")
+    if not (Path(__file__).resolve().parents[1] / ".streamlit" / "config.toml").exists():
+        failures.append(".streamlit/config.toml is missing, so Streamlit will not "
+                        "serve static/ and no sound will play")
+
     hr("No references to the course in student-facing text")
     meta = re.compile(
         r"\b(the (lecture|lectures|course|slides?|material|handout|deck|exam "

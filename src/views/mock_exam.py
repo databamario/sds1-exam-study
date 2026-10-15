@@ -6,7 +6,7 @@ import time
 
 import streamlit as st
 
-from .. import loader, progress, ui
+from .. import celebrate, loader, progress, ui
 from ..scoring import score_mc
 
 EXAM_MINUTES = 240
@@ -136,6 +136,11 @@ def mock_exam(bank, conn):
                            key=key):
                 opts.append(label)
             answers[q["id"]] = {l: (l in opts) for l in q["options"]}
+        # Same tick as in practice, so marking options feels the same on paper.
+        marked_key = "exam_marked_" + q["id"]
+        if set(opts) - set(st.session_state.get(marked_key, [])):
+            celebrate.play("tap", st.session_state.get("sound_on", True))
+        st.session_state[marked_key] = list(opts)
     else:
         key = "exam_wa_%s" % q["id"]
         val = answers.get(q["id"], "")
@@ -199,12 +204,15 @@ def render_result(bank):
         with st.expander("%s  (%d pt)" % (q["id"], q["points"])):
             st.markdown("**Your answer**")
             st.write(answers.get(q["id"]) or "_(not answered)_")
-            st.markdown("**Model answer**")
-            st.markdown(q["answer"])
+            ui.render_model_answer(q["answer"])
             if q.get("detail"):
                 # Inline, because Streamlit does not allow nested expanders.
-                st.markdown("**Longer explanation:**")
-                st.markdown(q["detail"])
+                st.markdown(
+                    '<div class="sds-exwrap">'
+                    '<div class="sds-exlabel">Longer explanation</div>'
+                    '<div class="sds-model">%s</div></div>' % ui.md_inline(q["detail"]),
+                    unsafe_allow_html=True,
+                )
             st.markdown("**What the marker is looking for**")
             for item in q["rubric"]:
                 st.markdown("- %s" % item["text"])

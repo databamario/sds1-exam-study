@@ -66,6 +66,19 @@ with st.sidebar:
         "MC: mark **all** correct options - there may be more than one.\n\n"
         "WA: short answer, max 3 sentences. Partial credit is possible."
     )
+    st.divider()
+    # Stored in the database rather than session_state, so turning the sound off
+    # sticks across restarts instead of coming back on next time.
+    sound_on = st.toggle(
+        "Sound and confetti",
+        value=progress.get_pref(conn, "sound", "1") == "1",
+        help=("A short sound on each answer, and confetti once you have five "
+              "correct in a row. If your system asks for reduced motion, the "
+              "confetti is suppressed automatically."),
+    )
+    st.session_state["sound_on"] = sound_on
+    if progress.get_pref(conn, "sound", "1") != ("1" if sound_on else "0"):
+        progress.set_pref(conn, "sound", "1" if sound_on else "0")
 
 target = PAGES[choice]
 
