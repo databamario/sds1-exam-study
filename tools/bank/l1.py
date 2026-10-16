@@ -362,7 +362,7 @@ def questions():
          rb("Matrix described as 2-dimensional, still single type", 2),
          rb("Data frame described as 2-dimensional columns that may differ in type", 2),
          rb("List described as a collection whose elements may differ in type", 2)],
-        1, PDF, "p.48",
+        1, PDF, "p.52",
         detail="The single-type rule is what separates the first two from the last "
                "two. A matrix is essentially a vector with a `dim` attribute, so it "
                "inherits the restriction that everything inside must share a type. A "

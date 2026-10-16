@@ -181,15 +181,16 @@ def questions():
         "`X-squared = 1, df = 5, p-value = 0.9626`",
         ["The test provides evidence that the die is unfair",
          "X-squared = 1",
-         "df = 5",
-         "p-value = 0.9626, far above any usual significance level",
+         "df = 6, one for each face",
+         "p-value = 0.9626, far below any usual significance level",
          "The expected count for each face is 10"],
         ["b", "e"],
         "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times "
-        "over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 "
-        "is far above any usual significance level, so we fail to reject the hypothesis that "
-        "the die is fair and there is no evidence that it is unfair, which makes the claim "
-        "that the test provides such evidence false.",
+        "over 6 faces, so the expected count for each face is 60/6 = 10, which is what "
+        "expected <- rep(10, 6) sets up. The degrees of freedom are k - 1 = 6 - 1 = 5, not "
+        "one per face, so (c) is wrong. A p-value of 0.96 is far *above* any usual "
+        "significance level, which is why we fail to reject the hypothesis that the die is "
+        "fair, so (d) has the comparison backwards and (a) is false as well.",
         PDF, "p.33", code="chisq.test(c(8, 10, 9, 12, 11, 10), p = rep(1/6, 6))",
         r_functions=["chisq.test", "rep"]))
 

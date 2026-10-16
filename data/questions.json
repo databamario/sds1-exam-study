@@ -575,7 +575,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture1.pdf",
-    "slide": "p.48"
+    "slide": "p.52"
    },
    "origin": "new"
   },
@@ -6575,8 +6575,8 @@
    "options": {
     "a": "The test provides evidence that the die is unfair",
     "b": "X-squared = 1",
-    "c": "df = 5",
-    "d": "p-value = 0.9626, far above any usual significance level",
+    "c": "df = 6, one for each face",
+    "d": "p-value = 0.9626, far below any usual significance level",
     "e": "The expected count for each face is 10"
    },
    "correct": [
@@ -6585,7 +6585,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times over 6 faces, so the expected count for each face is 60/6 = 10. A p-value of 0.96 is far above any usual significance level, so we fail to reject the hypothesis that the die is fair and there is no evidence that it is unfair, which makes the claim that the test provides such evidence false.",
+   "explanation": "R reports X-squared = 1, df = 5 and p-value = 0.9626. The die was rolled 60 times over 6 faces, so the expected count for each face is 60/6 = 10, which is what expected <- rep(10, 6) sets up. The degrees of freedom are k - 1 = 6 - 1 = 5, not one per face, so (c) is wrong. A p-value of 0.96 is far *above* any usual significance level, which is why we fail to reject the hypothesis that the die is fair, so (d) has the comparison backwards and (a) is false as well.",
    "r_flavoured": true,
    "r_functions": [
     "chisq.test",
