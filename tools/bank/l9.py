@@ -129,7 +129,7 @@ def questions():
         "`numeric(N)` allocates an empty numeric vector of length N so R can store one "
         "bootstrap result in each position. Without pre-allocation R would have to grow the "
         "vector inside the loop, which is slower.",
-        PDF, "p.18",
+        PDF, "p.19",
         code="boot_medians <- numeric(N)\nfor (i in 1:N) {\n  boot_sample <- sample(x, length(x), replace = TRUE)\n  boot_medians[i] <- median(boot_sample)\n}",
         r_functions=["numeric", "sample", "median", "for"]))
 
@@ -254,7 +254,7 @@ def questions():
          rb("Describes detecting a repeated day and averaging over iterations", 2),
          rb("Justifies replacement by independence of different people", 2),
          rb("Notes without replacement a match would be impossible", 2)],
-        1, PDF, "p.15", code="bdays <- sample(1:365, 30, replace = TRUE)",
+        1, PDF, "p.16", code="bdays <- sample(1:365, 30, replace = TRUE)",
         r_functions=["sample", "replace", "any", "duplicated"]))
 
     out.append(wa(

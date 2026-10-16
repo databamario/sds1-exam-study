@@ -329,7 +329,7 @@ def questions():
         "That ordering is not a property of the underlying text at all: it is the extra "
         "attribute the factor carries, which is what makes factors different from plain "
         "character vectors.",
-        PDF, "p.46", r_functions=["factor", "levels"]))
+        PDF, "p.52", r_functions=["factor", "levels"]))
 
     # -------------------------------------------------------------- written answers
     out.append(wa(

@@ -472,7 +472,7 @@
    ],
    "source": {
     "pdf": "lecture1.pdf",
-    "slide": "p.46"
+    "slide": "p.52"
    },
    "origin": "new"
   },
@@ -1371,7 +1371,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "`str()` shows structure rather than statistics, so the claim that it returns a mean is false. `dim()` gives both dimensions at once, and the column names come from `names()` or `colnames()`.",
+   "explanation": "`str()` shows structure rather than statistics, so the claim that it returns a mean is false. `summary()` is its counterpart for statistics: it reports mean, median and quartiles per column, which is why (b) is correct. `dim()` gives both dimensions at once, and the column names come from `names()` or `colnames()`.",
    "r_flavoured": true,
    "r_functions": [
     "str",
@@ -2336,7 +2336,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.27"
+    "slide": "p.28"
    },
    "origin": "new"
   },
@@ -2482,7 +2482,7 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.34"
+    "slide": "p.38"
    },
    "origin": "new",
    "code": "y <- c(43, 23, 22, 104, 42)\nIQR(y)"
@@ -2956,7 +2956,7 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.27"
+    "slide": "p.38"
    },
    "origin": "adapted_HT25",
    "code": "x <- c(2, 4, 6, 8)"
@@ -5629,7 +5629,7 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.58"
+    "slide": "p.64"
    },
    "origin": "adapted_HT25",
    "code": "prop.test(c(160, 90), c(200, 150))"
@@ -6036,7 +6036,7 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.27"
+    "slide": "p.31"
    },
    "origin": "adapted_HT25",
    "code": "t.test(sampl, mu = 75, alternative = \"two.sided\")"
@@ -7251,7 +7251,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.18"
+    "slide": "p.19"
    },
    "origin": "new",
    "code": "boot_medians <- numeric(N)\nfor (i in 1:N) {\n  boot_sample <- sample(x, length(x), replace = TRUE)\n  boot_medians[i] <- median(boot_sample)\n}"
@@ -7586,7 +7586,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.15"
+    "slide": "p.16"
    },
    "origin": "new",
    "code": "bdays <- sample(1:365, 30, replace = TRUE)"

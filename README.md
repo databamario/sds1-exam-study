@@ -211,27 +211,32 @@ Every question records the lecture slide it came from, shown in the answer key.
 `tools/validate.py` checks mechanically that every citation names a real lecture file and
 a page inside it — all 243 pass. That is not the same as being the *right* page.
 
-**22 citations pointing at the wrong lecture or the wrong slide have been found and
-fixed**, out of the 63 read by hand. The remaining ~165 have not been, so 22 is a floor
+**34 citations pointing at the wrong lecture or the wrong slide have been found and
+fixed**, out of the 113 read by hand. The remaining ~130 have not been, so 34 is a floor
 rather than an estimate.
 
 The reading was done in score bands using `tools/verify_citations.py`, and the hit rate
 was measured rather than assumed: 67% in the worst band, 28% in the next, then 0% in the
-band after that, then 38% on a probe of the band below it. That last number is why the
-reading did not stop at the zero — one empty band was a gap in the signal, not the end
-of it. About a third of any shortlist is false alarm, where the slide says
-"quantitative" and the question says "numerical".
+band after that, then 38% on a probe of the band below it, and then 27% and 22% on the two
+batches that followed. The zero in the middle is the reason the reading did not stop
+there: one empty band was a gap in the signal, not the end of it, and the bands on either
+side of it both gave errors. About a third of any shortlist is false alarm, where the
+slide says "quantitative" and the question says "numerical".
 
 `tools/show_citation.py` prints a question beside the text of the slide it cites, which
 is the only thing that has found these. `validate.py` reports every one of them as
-perfectly formed.
+perfectly formed. The dominant cause is structural: a question inherits its lecture's
+citation wholesale even when the content belongs elsewhere, so one wrong page silently
+mis-cites every question sharing it. Three questions about random variables sat in
+Lecture 4 citing a slide about drawing cards.
 
-The dominant cause is structural: a question inherits its lecture's citation wholesale
-even when the content belongs elsewhere, so one wrong page silently mis-cites every
-question sharing it. Three questions about random variables sat in Lecture 4 citing a
-slide about drawing cards. Others sat on a slide that is a bare title — "Anatomy of
-functions", "Bootstrapping", "Which distribution to use?" — where the teaching is on the
-next page.
+The commonest single cause is narrower than that, though, and it is mechanically
+avoidable: the slide is split across two PDF pages, and the cited one holds the statement
+of the problem while the *next* one holds the code, the formula or the worked numbers.
+Forty-one questions now sit on the first page of such a pair — a question asking for R
+code cited the page that explains the idea; a question about a variance definition cited
+the page that introduces variance; a question asking for three formulas cited a page
+that contains none of them.
 
 So treat the source line in the answer key as the one part of this app that is not fully
 checked, and report it if it looks wrong when you open the slide.

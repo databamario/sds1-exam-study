@@ -85,7 +85,7 @@ def questions():
         "the standard deviation shares the data's units and the variance has squared "
         "units. The standard deviation is usually the smaller of the two, and the sample "
         "variance divides by n - 1.",
-        PDF, "p.27"))
+        PDF, "p.28"))
 
     out.append(mc(
         "L3-MC-006", 3, "Measures of spread",
@@ -164,7 +164,7 @@ def questions():
         ["a", "b"],
         "Q1 = 23 and Q3 = 43, so IQR = 20, while the range is 104 - 22 = 82. The large "
         "gap is the signature of a single extreme value.",
-        PDF, "p.34", code="y <- c(43, 23, 22, 104, 42)\nIQR(y)",
+        PDF, "p.38", code="y <- c(43, 23, 22, 104, 42)\nIQR(y)",
         r_functions=["IQR", "quantile", "range"]))
 
     out.append(mc(
@@ -342,7 +342,7 @@ def questions():
         [rb("Mean formula written as sum(x)/n with the values substituted"),
          rb("Sample variance formula written with 1/(n-1) and deviations from the mean"),
          rb("Standard deviation given as the square root of the variance")],
-        1, PDF, "p.27", code="x <- c(2, 4, 6, 8)",
+        1, PDF, "p.38", code="x <- c(2, 4, 6, 8)",
         r_functions=["mean", "var", "sd"], origin="adapted_HT25"))
 
     out.append(wa(

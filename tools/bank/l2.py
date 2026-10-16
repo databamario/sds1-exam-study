@@ -304,7 +304,9 @@ def questions():
          "`dim()` returns the column names"],
         ["a", "b"],
         "`str()` shows structure rather than statistics, so the claim that it returns a "
-        "mean is false. `dim()` gives both dimensions at once, and the column names come "
+        "mean is false. `summary()` is its counterpart for statistics: it reports mean, "
+        "median and quartiles per column, which is why (b) is correct. `dim()` gives both "
+        "dimensions at once, and the column names come "
         "from `names()` or `colnames()`.",
         PDF, "p.47",
         code="str(titanic_data)\nsummary(titanic_data)\ndim(titanic_data)",

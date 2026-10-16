@@ -194,7 +194,7 @@ def questions():
         "`prop.test()` with two sets of successes and totals performs a two-sample test of "
         "equal proportions, which is the default alternative, whereas a single vector of "
         "successes and totals would test one proportion.",
-        PDF, "p.58", code="prop.test(c(160, 90), c(200, 150))",
+        PDF, "p.64", code="prop.test(c(160, 90), c(200, 150))",
         r_functions=["prop.test"], origin="adapted_HT25"))
 
     out.append(mc(
@@ -309,7 +309,7 @@ def questions():
          rb("Reports the test statistic and degrees of freedom"),
          rb("Draws the correct decision at the 5% level from p = 0.266", 2),
          rb("Links the decision to the CI containing 75")],
-        2, PDF, "p.27", code="t.test(sampl, mu = 75, alternative = \"two.sided\")",
+        2, PDF, "p.31", code="t.test(sampl, mu = 75, alternative = \"two.sided\")",
         r_functions=["t.test"],
         origin="adapted_HT25"))
 
