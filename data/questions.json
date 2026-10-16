@@ -4571,7 +4571,7 @@
    "topic": "Unbiasedness",
    "stem": "Explain what it means to say the sample mean is an unbiased estimator of the population mean, and why small samples are still a problem even when the estimator is unbiased.",
    "points": 1,
-   "answer": "Unbiased means E[Xbar] = mu, so the estimator is on target in the long run even though a single sample can fall above or below mu. Small samples remain a problem because at small n the variance sigma squared over n is still large.",
+   "answer": "Unbiased means E[Xbar] = mu, so the estimator is on target in the long run even though a single sample can fall above or below mu. Small samples remain a problem because the estimate still varies a lot from sample to sample.",
    "detail": "",
    "rubric": [
     {
@@ -4583,7 +4583,7 @@
      "elements": 2
     },
     {
-     "text": "Explains that large variance at small n causes wide fluctuation",
+     "text": "Explains that small samples still leave the estimate highly variable",
      "elements": 1
     }
    ],

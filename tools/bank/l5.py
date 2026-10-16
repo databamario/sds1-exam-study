@@ -337,10 +337,15 @@ def questions():
         "Explain what it means to say the sample mean is an unbiased estimator of the "
         "population mean, and why small samples are still a problem even when the "
         "estimator is unbiased.",
-        "Unbiased means E[Xbar] = mu, so the estimator is on target in the long run even though a single sample can fall above or below mu. Small samples remain a problem because at small n the variance sigma squared over n is still large.",
+        "Unbiased means E[Xbar] = mu, so the estimator is on target in the long run even though a single sample can fall above or below mu. Small samples remain a problem because the estimate still varies a lot from sample to sample.",
         [rb("Unbiasedness explained via E[Xbar] = mu", 2),
          rb("Notes that a single sample may still deviate from mu", 2),
-         rb("Explains that large variance at small n causes wide fluctuation")],
+         rb("Explains that small samples still leave the estimate highly variable")],
+        # p.37 ends mid-sentence - "But exac[tly how much? We ...]" - and the
+        # Var(Xbar) = sigma^2/n derivation is overleaf on p.38. The answer used
+        # to quote that formula, so the cited page did not contain it. The
+        # formula is gone and the point is made the way p.37 makes it, as
+        # variability rather than as an expression.
         1, PDF, "p.37", r_functions=["mean", "var"]))
 
     # ---- i.i.d. random variables, stated explicitly on L5 p.39. The bank had
