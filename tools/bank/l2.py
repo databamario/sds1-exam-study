@@ -22,7 +22,7 @@ def questions():
         "Educational level and car ownership name categories rather than measuring a "
         "quantity. Siblings, height and age all take numeric values that can be "
         "meaningfully compared and averaged.",
-        PDF, "p.14"))
+        PDF, "p.13"))
 
     out.append(mc(
         "L2-MC-002", 2, "Frequency tables and proportions",
@@ -186,7 +186,7 @@ def questions():
         "Both `[2]` and `[3]` return a single 3, because the vector holds 3 in both of "
         "those positions. The logical selection returns TWO elements (3 and 3), "
         "`== 3` returns a logical vector, and `[-1]` drops the first element.",
-        PDF, "p.49", code="x <- c(1, 3, 3)\nx[2]",
+        PDF, "p.48", code="x <- c(1, 3, 3)\nx[2]",
         r_functions=["c", "[", "=="], origin="adapted_HT25"))
 
     out.append(mc(

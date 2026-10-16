@@ -166,7 +166,7 @@ def questions():
         "estimates the probability of at least one shared birthday, and raising N improves "
         "accuracy through the law of large numbers. No finite N gives an exact answer, so "
         "(d) is false.",
-        PDF, "p.15", code="bdays <- sample(1:365, 30, replace = TRUE)",
+        PDF, "p.16", code="bdays <- sample(1:365, 30, replace = TRUE)",
         r_functions=["sample", "replace"]))
 
     # ----------------------------------------------------------------- written
