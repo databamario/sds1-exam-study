@@ -45,7 +45,7 @@ def questions():
         ["The mean is always reported with a standard deviation.",
          "The median is robust to extreme values.",
          "The mode is the only measure that works for categorical data.",
-         "the mode can be multimodal.",
+         "a data set can have at most one mode, since the mode is a single value.",
          "The median is pulled towards extreme values in a skewed sample."],
         ["b", "c"],
         "The median resists outliers and skewness because it only looks at the middle of "

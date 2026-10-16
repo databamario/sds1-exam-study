@@ -2262,7 +2262,7 @@
     "a": "The mean is always reported with a standard deviation.",
     "b": "The median is robust to extreme values.",
     "c": "The mode is the only measure that works for categorical data.",
-    "d": "the mode can be multimodal.",
+    "d": "a data set can have at most one mode, since the mode is a single value.",
     "e": "The median is pulled towards extreme values in a skewed sample."
    },
    "correct": [
@@ -4529,7 +4529,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture5_after.pdf",
-    "slide": "p.47"
+    "slide": "p.46"
    },
    "origin": "new"
   },

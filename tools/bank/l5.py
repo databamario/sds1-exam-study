@@ -319,7 +319,7 @@ def questions():
         [rb("LLN stated as convergence of the sample mean to the population mean", 2),
          rb("CLT stated as approximate normality of the sampling distribution", 2),
          rb("Relationship between the two explained", 2)],
-        1, PDF, "p.47"))
+        1, PDF, "p.46"))
 
     out.append(wa(
         "L5-WA-007", 5, "Choosing a distribution",
