@@ -155,7 +155,7 @@ def questions():
         "For a goodness-of-fit test the degrees of freedom are k - 1, because one parameter "
         "is used up fitting the total, so the claim that the degrees of freedom equal k is "
         "false.",
-        PDF, "p.30", r_functions=["chisq.test", "pchisq"]))
+        PDF, "p.31", r_functions=["chisq.test", "pchisq"]))
 
     out.append(mc(
         "L8-MC-010", 8, "Chi-squared tests",

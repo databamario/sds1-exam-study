@@ -266,7 +266,7 @@ def questions():
         "is the trap: a matrix holds a single type throughout, which is exactly what its "
         "columns may not do. A data frame is likewise not restricted to numeric columns, "
         "and a list is the structure that is expected to hold mixed types and lengths.",
-        PDF, "p.50", r_functions=["data.frame", "c", "matrix", "list", "factor"]))
+        PDF, "p.52", r_functions=["data.frame", "c", "matrix", "list", "factor"]))
 
     out.append(mc(
         "L1-MC-019", 1, "Defining functions in R",

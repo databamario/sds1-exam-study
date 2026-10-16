@@ -141,7 +141,7 @@ def questions():
         "This duality is the standard link: the null value falls outside the interval "
         "exactly when the test rejects at that level. So (b) and its logic are correct, "
         "while (c) states the opposite of the truth.",
-        PDF, "p.43", origin="adapted_HT25"))
+        PDF, "p.41", origin="adapted_HT25"))
 
     out.append(mc(
         "L7-MC-009", 7, "Differences between means",

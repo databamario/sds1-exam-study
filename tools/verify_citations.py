@@ -226,6 +226,101 @@ def _page(slide: str) -> int:
         return 0
 
 
+def proximity(q: dict, slides: dict, idf: dict[str, float]) -> dict:
+    """Look for the failure that reading by hand kept finding.
+
+    The commonest wrong citation is not an unrelated slide. It is the *right*
+    slide split across two PDF pages: the cited page states the problem and the
+    page after it carries the code, the formula or the worked numbers. A
+    question asking for R code then cites the page that explains the idea.
+
+    Word overlap cannot see this, because the stated problem shares plenty with
+    the question. What separates the two is that the decisive terms are missing
+    here and present next door. So: take the question's distinctive terms, drop
+    the ones the cited page already explains, and see where the rest turn up.
+
+    Returns a verdict plus the terms that decided it.
+    """
+    want = expand(terms(question_text(q)))
+    if not want:
+        return {"verdict": "empty", "where": 0, "terms": [], "relieved": 0.0}
+
+    here = _page(q["source"].get("slide"))
+    pdf = q["source"].get("pdf")
+    if here <= 0:
+        return {"verdict": "no-page", "where": 0, "terms": [], "relieved": 0.0}
+
+    missing = want - expand(terms(slides.get((pdf, here), "")))
+    missing = {t for t in missing if idf.get(t, 0.0) > 0}
+    if not missing:
+        return {"verdict": "complete", "where": 0, "terms": [], "relieved": 0.0}
+
+    total = sum(idf.get(t, 0.0) for t in missing)
+    best_where, best_relieved, best_terms = 0, 0.0, []
+    for offset in (-2, -1, 1, 2):
+        neighbour = expand(terms(slides.get((pdf, here + offset), "")))
+        found = missing & neighbour
+        if not found:
+            continue
+        weight = sum(idf.get(t, 0.0) for t in found)
+        top = sorted(found, key=lambda t: -idf.get(t, 0.0))[:5]
+        if weight > best_relieved or (weight == best_relieved and top < best_terms):
+            best_where, best_relieved, best_terms = offset, weight, top
+
+    if best_relieved <= 0:
+        return {"verdict": "nowhere", "where": 0, "terms": [], "relieved": 0.0}
+
+    # How much of what the cited page failed to explain the neighbour supplies.
+    share = best_relieved / total if total else 0.0
+    if share >= 0.45 and best_where == 1:
+        verdict = "next-page"
+    elif share >= 0.30:
+        verdict = "neighbour"
+    else:
+        verdict = "weak"
+    return {"verdict": verdict, "where": best_where,
+            "terms": best_terms, "relieved": share}
+
+
+def report_proximity(questions: list[dict], slides: dict, idf: dict) -> int:
+    """List the citations whose missing terms turn up on the neighbouring page."""
+    rows = []
+    for q in questions:
+        p = proximity(q, slides, idf)
+        if p["verdict"] in ("next-page", "neighbour"):
+            rows.append((-p["relieved"], q["id"], q["source"], p))
+    rows.sort(key=lambda r: (r[0], r[1]))
+
+    print("Citations whose missing terms appear on an adjacent page")
+    print("=" * 74)
+    print("  %-11s %-11s %-22s %-6s %s"
+          % ("relieved", "verdict", "pdf", "slide", "id"))
+    for neg, qid, src, p in rows:
+        print("  %-11.0f%% %-11s %-22s %-6s %s"
+              % (-neg * 100, p["verdict"], src["pdf"], src["slide"], qid))
+        print("       found %+d: %s"
+              % (p["where"], ", ".join(p["terms"])))
+
+    counts = {"next-page": 0, "neighbour": 0, "weak": 0, "nowhere": 0,
+              "complete": 0, "empty": 0, "no-page": 0}
+    for q in questions:
+        counts[proximity(q, slides, idf)["verdict"]] += 1
+    print()
+    print("  every question, by verdict:")
+    for name in ("complete", "next-page", "neighbour", "weak", "nowhere"):
+        print("    %-11s %d" % (name, counts[name]))
+    print()
+    print("Read the top of this list by hand. 'next-page' is the split-slide")
+    print("failure that reading found most often, but this is a hint and not a")
+    print("verdict, and the false-positive rate is high. Two questions already")
+    print("confirmed correct by hand score above the cut here: L4-WA-001, whose")
+    print("question uses a card example while the slide it cites uses a student")
+    print("one, and L7-WA-005, fixed to p.31 and still flagged from p.30. The")
+    print("detector cannot tell an example's words appearing elsewhere from the")
+    print("teaching being elsewhere, so nothing here is settled until read.")
+    return 0
+
+
 def report_rankings(questions: list[dict], slides: dict, idf: dict,
                     limit: int) -> int:
     ranked = []
@@ -331,6 +426,8 @@ def main() -> int:
     ap.add_argument("--id", help="explain a single question")
     ap.add_argument("--figures", action="store_true",
                     help="group the figure questions by cited slide")
+    ap.add_argument("--proximity", action="store_true",
+                    help="flag citations whose missing terms appear next door")
     args = ap.parse_args()
 
     questions = load_bank()
@@ -357,6 +454,8 @@ def main() -> int:
         return report_one(questions, slides, idf, args.id)
     if args.figures:
         return report_figures(questions, slides, idf)
+    if args.proximity:
+        return report_proximity(questions, slides, idf)
     return report_rankings(questions, slides, idf, args.limit)
 
 
