@@ -98,21 +98,47 @@ rather than a rewrite.
 says *"``components.html`` renders a sandboxed iframe"*, which raises the
 question of whether an iframe can reach the parent's `localStorage`.
 
-- If it can, the storage layer can be written as `components.html` and stays
-  tiny.
-- If it cannot - a sandboxed iframe gets its own origin and therefore its own
-  empty `localStorage` - then we need
-  `components.declare_component(name, path=...)`, which registers a real
-  component and reaches the page's own storage.
+**Tested, 16 October 2025, against Streamlit 1.45.1 in a real browser.** The
+answer changes the plan, so it is worth recording exactly:
 
-I checked `declare_component`'s signature in the installed Streamlit
-(1.45.1) and it does take `path`, so the fallback exists. What I have **not**
-done is confirm empirically which one reaches the browser's real
-`localStorage`. Guessing here is the one way to ship something that silently
-stores nothing.
+- A throwaway Streamlit page rendered `components.html` whose script wrote a
+  marker to `window.localStorage`.
+- Read back from the **main** document: the marker was there.
+- After a full page reload: the marker was still there.
+- The iframe reported `window.parent !== window` and a *second* marker written
+  through `window.parent.localStorage` also appeared in the page's storage.
 
-**Therefore: before writing the layer, run the app locally and test it in a
-real browser.** A two-minute check that removes the guesswork.
+So `components.html` **is** same-origin and reaches the browser's real,
+persistent `localStorage`. The "sandboxed iframe" wording in the docstring does
+not prevent it. No `declare_component`, no webpack, no React, no build step on
+the cloud.
+
+### But reading it back needs a return channel
+
+One thing the probe settled only halfway. Writing *into* `localStorage` from
+`components.html` works. Getting data *out* to Python does not: `components.html`
+has no return value, and `src/progress.py` has to read as well as write -
+`attempts_for()`, `by_lecture()`, `overall()` and `export_rows()` all read, and
+the progress screen is built from those numbers.
+
+Python therefore needs a channel back from the browser, and only a declared
+component has one: `model.setComponentValue()` returns a value to the next
+script run.
+
+So the design is a small declared component for reads, and `components.html`
+would not have sufficed. Two consequences for the cloud deploy:
+
+- The component must be **built and its `dist/` committed**, so the deploy needs
+  no `npm install` and no build step. Node 22 and npm 10.9.2 are available
+  locally, so the bundle is produced here and checked in.
+- `components.html` stays in use for the sounds, where it already works and
+  where no return value is needed.
+
+Still to confirm by running the real thing, not the probe: whether the
+component's return arrives in time for the next question. A declared component
+returns on the *following* script run, so `record()` and `attempts_for()` must
+not be called in the same run or the screen would show one question stale.
+Worth checking against the practice loop before trusting it.
 
 ### What is involved
 
@@ -141,9 +167,11 @@ $env:GITHUB_TOKEN = $null     # a 93-char token in User scope shadows gh and 401
 gh repo create databamario/sds1-exam-study --public --source=. --remote=origin --push
 ```
 
-If `gh` objects that `origin` already exists, remove it first and let `gh`
-recreate it - the URL is identical, so nothing else changes. If the push fails
-on credentials while the repo was created, the repo exists and only the push is
+Two accounts are now registered in the `gh` keyring, `databamario` active, so
+the command runs as Mario's personal account and not as the company one. If
+`gh` objects that `origin` already exists, remove it first and let `gh` recreate
+it - the URL is identical, so nothing else changes. If the push fails on
+credentials while the repo was created, the repo exists and only the push is
 missing: do **not** re-run `create`, it will fail with "already exists".
 
 The pre-push check is already done: 57 files, 1.44 MB, no PDFs, no databases,
