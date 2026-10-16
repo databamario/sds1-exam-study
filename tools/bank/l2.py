@@ -3,6 +3,7 @@
 from .common import mc, rb, wa
 
 PDF = "lecture2.pdf"
+PDF3 = "lecture3.pdf"
 
 
 def questions():
@@ -136,7 +137,7 @@ def questions():
          "NA"],
         ["c", "d"],
         "`total = 100` is a default, so it fills in automatically: 25/100 * 100 = 25.",
-        PDF, "p.44",
+        PDF, "p.45",
         code="calc_percent_default <- function(x, total = 100) (x / total) * 100\ncalc_percent_default(25)",
         r_functions=["function"]))
 
@@ -251,7 +252,7 @@ def questions():
         "`arrange(fare)` would sort ascending. `arrange()` reorders the rows of the frame "
         "and does not touch its columns, and `mutate()` adds or overwrites rather than "
         "dropping anything.",
-        PDF, "p.53",
+        PDF, "p.52",
         code="titanic_data |>\n  arrange(desc(fare))",
         r_functions=["arrange", "desc", "select", "mutate"]))
 
@@ -310,7 +311,7 @@ def questions():
         r_functions=["str", "summary", "dim"]))
 
     out.append(mc(
-        "L2-MC-019", 2, "Factors and ordering",
+        "L2-MC-019", 3, "Factors and ordering",
         "A bar plot of a factor with levels High school, Bachelor, Master, PhD puts the "
         "categories in alphabetical order by default, which puts Bachelor first. What is "
         "the fix?",
@@ -324,7 +325,7 @@ def questions():
         "ggplot2 sorts a factor by its level order, not alphabetically, so setting the "
         "levels explicitly is the direct fix. That order is stored on the factor as an "
         "attribute, which is why the fix belongs in the data rather than in the plot call.",
-        PDF, "p.23", r_functions=["factor", "levels", "ggplot"]))
+        PDF3, "p.51", r_functions=["factor", "levels", "ggplot"]))
 
     out.append(mc(
         "L2-MC-020", 2, "Ordering data",
@@ -437,7 +438,7 @@ def questions():
         [rb("Position explained as order-based assignment", 2),
          rb("Name explained as explicit `name = value`", 2),
          rb("Default explained as `arg = value` in the definition", 2)],
-        1, PDF, "p.44",
+        1, PDF, "p.45",
         code="calc_percent <- function(x, total = 100) (x / total) * 100",
         r_functions=["function", "<-"],
         detail="Partial matching is allowed but deprecated, so naming arguments in full "

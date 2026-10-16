@@ -297,7 +297,7 @@ def questions():
         [rb("Independence defined via P(A|B) = P(A|Bc) = P(A)", 2),
          rb("Explains the first draw changes what remains", 2),
          rb("Uses the 3/10 versus 2/9 contrast as evidence")],
-        1, PDF, "p.30",
+        1, PDF, "p.29",
         detail="In the bag example the probability of a second blue drops from 3/10 to 2/9 once a blue is removed, so the second draw depends on the first. Independence is what allows the multiplication rule P(A and B) = P(A) * P(B) to be used; without it you need the conditional form instead."))
 
     out.append(wa(

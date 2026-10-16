@@ -1084,7 +1084,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.44"
+    "slide": "p.45"
    },
    "origin": "new",
    "code": "calc_percent_default <- function(x, total = 100) (x / total) * 100\ncalc_percent_default(25)"
@@ -1279,7 +1279,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.53"
+    "slide": "p.52"
    },
    "origin": "new",
    "code": "titanic_data |>\n  arrange(desc(fare))"
@@ -1384,38 +1384,6 @@
    },
    "origin": "new",
    "code": "str(titanic_data)\nsummary(titanic_data)\ndim(titanic_data)"
-  },
-  {
-   "id": "L2-MC-019",
-   "lecture": 2,
-   "type": "MC",
-   "topic": "Factors and ordering",
-   "stem": "A bar plot of a factor with levels High school, Bachelor, Master, PhD puts the categories in alphabetical order by default, which puts Bachelor first. What is the fix?",
-   "options": {
-    "a": "Rename the categories so they happen to sort in the intended order",
-    "b": "Set the order of the levels explicitly with `factor(levels = ...)`",
-    "c": "Use `arrange()` on the plotting data",
-    "d": "Convert the factor to character",
-    "e": "An ordered factor is one whose levels carry a meaningful order, such as passenger class"
-   },
-   "correct": [
-    "b",
-    "e"
-   ],
-   "n_correct": 2,
-   "points": 1,
-   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. That order is stored on the factor as an attribute, which is why the fix belongs in the data rather than in the plot call.",
-   "r_flavoured": true,
-   "r_functions": [
-    "factor",
-    "levels",
-    "ggplot"
-   ],
-   "source": {
-    "pdf": "lecture2.pdf",
-    "slide": "p.23"
-   },
-   "origin": "new"
   },
   {
    "id": "L2-MC-020",
@@ -1826,7 +1794,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.44"
+    "slide": "p.45"
    },
    "origin": "new",
    "code": "calc_percent <- function(x, total = 100) (x / total) * 100"
@@ -2189,6 +2157,38 @@
    },
    "origin": "new",
    "image": "density_overlay"
+  },
+  {
+   "id": "L2-MC-019",
+   "lecture": 3,
+   "type": "MC",
+   "topic": "Factors and ordering",
+   "stem": "A bar plot of a factor with levels High school, Bachelor, Master, PhD puts the categories in alphabetical order by default, which puts Bachelor first. What is the fix?",
+   "options": {
+    "a": "Rename the categories so they happen to sort in the intended order",
+    "b": "Set the order of the levels explicitly with `factor(levels = ...)`",
+    "c": "Use `arrange()` on the plotting data",
+    "d": "Convert the factor to character",
+    "e": "An ordered factor is one whose levels carry a meaningful order, such as passenger class"
+   },
+   "correct": [
+    "b",
+    "e"
+   ],
+   "n_correct": 2,
+   "points": 1,
+   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. That order is stored on the factor as an attribute, which is why the fix belongs in the data rather than in the plot call.",
+   "r_flavoured": true,
+   "r_functions": [
+    "factor",
+    "levels",
+    "ggplot"
+   ],
+   "source": {
+    "pdf": "lecture3.pdf",
+    "slide": "p.51"
+   },
+   "origin": "new"
   },
   {
    "id": "L3-MC-001",
@@ -3678,7 +3678,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.30"
+    "slide": "p.29"
    },
    "origin": "new"
   },
