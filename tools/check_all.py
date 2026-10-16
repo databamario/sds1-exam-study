@@ -82,6 +82,69 @@ def bank_is_stale() -> bool:
     return proc.returncode == 1
 
 
+def declared_streamlit() -> str:
+    """The Streamlit requirement exactly as written in requirements.txt."""
+    req = REPO / "requirements.txt"
+    if not req.exists():
+        return ""
+    for line in req.read_text(encoding="utf-8").splitlines():
+        line = line.split("#", 1)[0].strip()
+        if line.lower().startswith("streamlit"):
+            return line
+    return ""
+
+
+def version_mismatch() -> str | None:
+    """A complaint when the deployed Streamlit is not the one being tested.
+
+    The deployed app served a blank page for an hour because ``requirements.txt``
+    said ``streamlit>=1.40``: a floor and no ceiling, so the cloud took 1.66.0
+    while every test on this machine had run against 1.45.1. A component written
+    for one version simply did not load on the other, and because nothing anywhere
+    compared the two, "it works here" and "it works there" quietly stopped being
+    the same claim.
+
+    That is the whole reason this check exists. ``test_progress.py`` passes against
+    whatever Streamlit is installed locally and says nothing about what the cloud
+    resolves, so the suite was green and the deployed app was broken at the same
+    time. A loose floor is a promise nobody checks.
+
+    So the rule is narrow on purpose: if the requirement would accept a version
+    other than the one installed, fail. An exact pin always passes. A range fails
+    only when the installed version falls outside it.
+    """
+    import re
+
+    declared = declared_streamlit()
+    if not declared:
+        return None
+
+    try:
+        import streamlit
+        installed = streamlit.__version__
+    except Exception:
+        return None
+
+    bounds = re.findall(r"(\d+(?:\.\d+)*)", declared)
+    if len(bounds) < 2:
+        # "streamlit>=1.45" with no upper bound: same trap as before, closed.
+        return (
+            "requirements.txt says %r, which accepts any version >= %s. The "
+            "cloud resolved a different Streamlit from this machine and the app "
+            "did not start. Pin it (for example ==%s) or add a ceiling."
+            % (declared, bounds[0] if bounds else "?", installed)
+        )
+
+    low, high = bounds[0], bounds[-1]
+    if low != high and not (low <= installed < high):
+        return (
+            "Streamlit %s is installed here but requirements.txt (%r) would let "
+            "the cloud deploy something else. Tests pass locally and the "
+            "deployed app can still be broken." % (installed, declared)
+        )
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("-v", "--verbose", action="store_true",
@@ -111,6 +174,18 @@ def main() -> int:
         print("%-28s STALE" % "data/questions.json")
     else:
         print("%-28s ok" % "data/questions.json up to date")
+
+    complaint = version_mismatch()
+    if complaint:
+        failures.append(complaint)
+        print("%-28s MISMATCH" % "requirements.txt streamlit")
+    else:
+        try:
+            import streamlit
+            ver = streamlit.__version__
+        except Exception:
+            ver = "?"
+        print("%-28s ok" % ("streamlit %s pinned" % ver))
 
     for gate in GATES:
         ok, out = run(gate, args.verbose)
