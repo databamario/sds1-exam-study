@@ -247,7 +247,7 @@ def questions():
         "`2 * pt(t_stat, df = 9)` takes the lower tail and doubles it, which is how you get "
         "a two-sided p-value from a t statistic, and `df = 9` fixes the degrees of freedom "
         "at 9. The normal equivalent would use `pnorm()` instead of `pt()`.",
-        PDF, "p.58",
+        PDF, "p.31",
         code="p_value <- 2 * pt(t_stat, df = 9)",
         r_functions=["pt", "pnorm", "t_stat"]))
 

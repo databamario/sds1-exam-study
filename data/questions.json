@@ -2099,7 +2099,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.27"
+    "slide": "p.28"
    },
    "origin": "new",
    "image": "hist_symmetric"
@@ -2920,7 +2920,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.27"
+    "slide": "p.28"
    },
    "origin": "new",
    "image": "hist_symmetric"
@@ -5726,7 +5726,7 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.58"
+    "slide": "p.31"
    },
    "origin": "new",
    "code": "p_value <- 2 * pt(t_stat, df = 9)"
