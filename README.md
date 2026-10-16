@@ -211,20 +211,30 @@ Every question records the lecture slide it came from, shown in the answer key.
 `tools/validate.py` checks mechanically that every citation names a real lecture file and
 a page inside it — all 243 pass. That is not the same as being the *right* page.
 
-**The first hand pass found 13 citations pointing at the wrong lecture or the wrong
-slide**, out of the 40 worst-matched that `tools/verify_citations.py` produced; the other
-27 were false alarms. About a third of that shortlist is vocabulary the matcher cannot
-see, such as a slide saying "quantitative" where the question says "numerical". The
-remaining ~200 citations have *not* been read by hand, so 13 is a floor rather than an
-estimate, and the real number is not known.
+**22 citations pointing at the wrong lecture or the wrong slide have been found and
+fixed**, out of the 63 read by hand. The remaining ~165 have not been, so 22 is a floor
+rather than an estimate.
 
-The dominant cause was structural: a question inherited its lecture's citation wholesale
-even when the content belonged somewhere else, so one wrong page silently mis-cited
-every question that shared it. Three questions about random variables sat in Lecture 4
-citing a slide about drawing cards, while Lecture 5 is where they are taught.
+The reading was done in score bands using `tools/verify_citations.py`, and the hit rate
+was measured rather than assumed: 67% in the worst band, 28% in the next, then 0% in the
+band after that, then 38% on a probe of the band below it. That last number is why the
+reading did not stop at the zero — one empty band was a gap in the signal, not the end
+of it. About a third of any shortlist is false alarm, where the slide says
+"quantitative" and the question says "numerical".
 
-So treat the source line in the answer key as the one part of this app that has not been
-fully checked, and report it if it looks wrong when you open the slide.
+`tools/show_citation.py` prints a question beside the text of the slide it cites, which
+is the only thing that has found these. `validate.py` reports every one of them as
+perfectly formed.
+
+The dominant cause is structural: a question inherits its lecture's citation wholesale
+even when the content belongs elsewhere, so one wrong page silently mis-cites every
+question sharing it. Three questions about random variables sat in Lecture 4 citing a
+slide about drawing cards. Others sat on a slide that is a bare title — "Anatomy of
+functions", "Bootstrapping", "Which distribution to use?" — where the teaching is on the
+next page.
+
+So treat the source line in the answer key as the one part of this app that is not fully
+checked, and report it if it looks wrong when you open the slide.
 
 Note that the page number is an **index into the PDF**, not the number printed in the
 slide footer. Reading it as the footer scores 26% against the slides; reading it as an
@@ -342,6 +352,9 @@ sds1-exam-study/
     ├── verify_numbers.py   checks every number a question asserts
     ├── test_answer_format.py  proves the MC format rules can pass as well as fail
     ├── verify_citations.py  reading list for citations that may point at the wrong slide
+    ├── show_citation.py    prints a question next to the slide it cites, for checking by hand
+    ├── rebalance_pairs.py  rotates options when the answer key piles onto one pair
+    ├── audit_migration.py  prints the keyed text of questions changed since a given commit
     └── bank/               question sources, one file per lecture, + graphs.py
 ```
 
