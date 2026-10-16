@@ -378,6 +378,7 @@ python tools/validate.py       # check schema, counts, keys and R coverage
 python tools/verify_r.py       # run every R snippet
 python tools/verify_numbers.py # check every number a question asserts
 python tools/test_scoring.py   # re-run the grading regression tests
+python tools/check_all.py             # build + all gates, in the right order
 python tools/test_answer_format.py  # re-run the MC format rules
 python tools/test_progress.py       # the browser-stored progress layer
 ```
