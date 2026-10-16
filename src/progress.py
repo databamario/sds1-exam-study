@@ -1,125 +1,271 @@
-"""Local progress tracking.
+"""Progress tracking, kept in the browser rather than in a file.
 
-Everything is stored in a SQLite file next to the app so that progress
-survives restarts without needing any server or account. The file is
-gitignored.
+This used to be a SQLite database next to the app, which is right on one
+machine and wrong on a deployed one. The file belongs to the app, not to the
+person using it, so on a shared deployment everyone's history lands in the same
+table and the progress screen shows numbers that are not yours. And the cloud
+disk is ephemeral, so the history disappears at the next deploy.
+
+Local storage in the browser fixes both. There is no server, no account, and
+nothing to sign in to. The price is that progress belongs to one browser: study
+on the laptop and it is there, and it does not follow you to the phone.
+
+Two mechanisms are used, because they are good at different things.
+
+``components.html`` writes. It renders an iframe, and that iframe turned out to
+be same-origin and able to reach the page's real, persistent local storage -
+tested rather than assumed, after the docstring calling it "sandboxed" suggested
+it might not be. What it cannot do is return a value, which is fine for a write.
+
+A small declared component reads, because reading is needed: the progress screen
+is built from these numbers, and only ``setComponentValue`` carries anything
+back to Python. Its build output is committed, so a deploy needs no npm.
+
+The public functions keep the names and signatures they had, including the
+``store`` argument that used to be a database connection. Nothing above this
+module has to change, and nothing above it ever knew what SQLite was.
 """
 
 from __future__ import annotations
 
-import sqlite3
+import json
+import os
 import time
-from pathlib import Path
 from typing import Any, Iterable
 
-DB_PATH = Path(__file__).resolve().parents[1] / "progress.sqlite3"
+import streamlit as st
+import streamlit.components.v1 as components
 
-SCHEMA = """
-CREATE TABLE IF NOT EXISTS attempts (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    question_id TEXT    NOT NULL,
-    qtype       TEXT    NOT NULL,
-    lecture     INTEGER NOT NULL,
-    mode        TEXT    NOT NULL,
-    score       REAL    NOT NULL,
-    max_score   REAL    NOT NULL,
-    created_at  REAL    NOT NULL
-);
-CREATE INDEX IF NOT EXISTS idx_attempts_qid ON attempts(question_id);
-CREATE INDEX IF NOT EXISTS idx_attempts_lecture ON attempts(lecture);
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+COMPONENT_DIR = os.path.join(REPO, "_progress_component")
 
-CREATE TABLE IF NOT EXISTS prefs (
-    name  TEXT PRIMARY KEY,
-    value TEXT NOT NULL
-);
-"""
+STORAGE_KEY = "sds1-progress-v1"
+SESSION_KEY = "_sds1_progress_blob"
+READY_KEY = "_sds1_progress_ready"
+NONCE_KEY = "_sds1_progress_nonce"
+
+_EMPTY: dict[str, Any] = {"attempts": [], "prefs": {}}
+
+MAX_ATTEMPTS = 20000
 
 
-def connect(db_path: Path | None = None) -> sqlite3.Connection:
-    conn = sqlite3.connect(str(db_path or DB_PATH))
-    conn.row_factory = sqlite3.Row
-    conn.executescript(SCHEMA)
-    return conn
+class Store:
+    """A handle, in the spirit of the connection object this replaced.
+
+    It carries no state worth having. Reads come from the session mirror and
+    writes go straight to the browser, so the object exists only so that the
+    call sites that thread a handle through the app - and pass it to
+    ``record()`` when an answer is graded - keep working unchanged.
+    """
+
+    __slots__ = ()
+
+    def __repr__(self) -> str:  # pragma: no cover - debugging aid
+        return "<progress store: browser local storage>"
 
 
-def record(conn: sqlite3.Connection, q: dict[str, Any], mode: str,
-           score: float, max_score: float | None = None) -> None:
-    conn.execute(
-        "INSERT INTO attempts (question_id, qtype, lecture, mode, score,"
-        " max_score, created_at) VALUES (?,?,?,?,?,?,?)",
-        (q["id"], q["type"], q["lecture"], mode, float(score),
-         float(max_score if max_score is not None else q["points"]),
-         time.time()),
+def _component():
+    return components.declare_component(
+        "sds1_progress", path=COMPONENT_DIR
     )
-    conn.commit()
 
 
-def attempts_for(conn: sqlite3.Connection,
-                 question_ids: Iterable[str]) -> dict[str, dict]:
-    """Latest score per question id, restricted to the given ids."""
-    ids = list(question_ids)
-    if not ids:
-        return {}
-    out: dict[str, dict] = {}
-    chunk = 400
-    for i in range(0, len(ids), chunk):
-        part = ids[i:i + chunk]
-        placeholders = ",".join("?" * len(part))
-        rows = conn.execute(
-            "SELECT question_id, score, max_score, created_at FROM attempts"
-            " WHERE question_id IN (%s) ORDER BY created_at" % placeholders,
-            part,
-        ).fetchall()
-        for r in rows:
-            out[r["question_id"]] = dict(r)
-    return out
+def _decode(raw: Any) -> dict:
+    """The blob, whatever shape it arrives in.
+
+    The component hands back a dict on a healthy run, but a default of ``None``
+    arrives on the first run of a session, and a hand-edited or truncated value
+    in local storage should not take the app down. Anything unusable becomes an
+    empty progress rather than an exception.
+    """
+    if isinstance(raw, dict):
+        attempts = raw.get("attempts")
+        prefs = raw.get("prefs")
+        return {
+            "attempts": list(attempts) if isinstance(attempts, list) else [],
+            "prefs": dict(prefs) if isinstance(prefs, dict) else {},
+        }
+    if isinstance(raw, str) and raw.strip():
+        try:
+            return _decode(json.loads(raw))
+        except (ValueError, TypeError):
+            pass
+    return {"attempts": [], "prefs": {}}
 
 
-def by_lecture(conn: sqlite3.Connection) -> list[dict]:
-    rows = conn.execute(
-        "SELECT lecture, qtype, COUNT(*) AS n, SUM(score) AS got,"
-        " SUM(max_score) AS poss, MAX(created_at) AS last_at"
-        " FROM attempts GROUP BY lecture, qtype ORDER BY lecture, qtype"
-    ).fetchall()
-    return [dict(r) for r in rows]
+def _mirror() -> dict:
+    return st.session_state.get(SESSION_KEY) or dict(_EMPTY)
 
 
-def overall(conn: sqlite3.Connection) -> dict:
-    row = conn.execute(
-        "SELECT COUNT(*) AS n, SUM(score) AS got, SUM(max_score) AS poss"
-        " FROM attempts"
-    ).fetchone()
+def hydrate() -> dict:
+    """Ask the browser for the stored progress and keep it in the session.
+
+    Called once per run from :func:`connect`. A component's value arrives on the
+    run *after* the call, so on the very first run of a session there is nothing
+    to read yet. Rather than render an empty progress screen that silently fills
+    in a moment later, the run is repeated once. One extra run on load, and only
+    the first one.
+    """
+    nonce = st.session_state.get(NONCE_KEY, 0) + 1
+    st.session_state[NONCE_KEY] = nonce
+
+    returned = _component()(
+        op="read", payload=None, nonce=nonce, key="sds1_progress", default=None
+    )
+    if returned is not None:
+        st.session_state[SESSION_KEY] = _decode(returned)
+        st.session_state[READY_KEY] = True
+    elif not st.session_state.get(READY_KEY):
+        st.rerun()
+
+    st.session_state[SESSION_KEY] = _decode(st.session_state.get(SESSION_KEY))
+    return st.session_state[SESSION_KEY]
+
+
+def _write(op: str, payload: Any = None) -> None:
+    """Apply a change in the browser, and in the session mirror.
+
+    ``components.html`` runs its script as soon as it is rendered, so the write
+    is durable immediately rather than a run later, which matters because the
+    session does not outlive the browser tab. The mirror is updated here too so
+    that anything reading progress in this same run sees the change.
+    """
+    components.html(
+        """
+        <script>
+        (function () {
+          var KEY = %s;
+          function read() {
+            try {
+              var raw = window.localStorage.getItem(KEY);
+              if (!raw) return { attempts: [], prefs: {} };
+              var p = JSON.parse(raw);
+              return {
+                attempts: Array.isArray(p.attempts) ? p.attempts : [],
+                prefs: p.prefs && typeof p.prefs === "object" ? p.prefs : {}
+              };
+            } catch (e) { return { attempts: [], prefs: {} }; }
+          }
+          function write(b) {
+            if (b.attempts.length > %d) {
+              b.attempts = b.attempts.slice(b.attempts.length - %d);
+            }
+            try { window.localStorage.setItem(KEY, JSON.stringify(b)); }
+            catch (e) { /* quota or private mode: the session mirror still has it */ }
+          }
+          var blob = read();
+          var op = %s, payload = %s;
+          if (op === "record") { blob.attempts.push(payload); }
+          else if (op === "reset") { blob.attempts = []; }
+          else if (op === "set_pref") { blob.prefs[payload.name] = String(payload.value); }
+          write(blob);
+        })();
+        </script>
+        """
+        % (json.dumps(STORAGE_KEY), MAX_ATTEMPTS, MAX_ATTEMPTS,
+           json.dumps(op), json.dumps(payload)),
+        height=0,
+    )
+
+
+def connect(db_path=None) -> Store:
+    """Open the progress store.
+
+    ``db_path`` is accepted and ignored. It used to name the SQLite file; nothing
+    passes it any more, and refusing to accept it would mean changing the one
+    call site in ``app.py`` for no gain.
+    """
+    hydrate()
+    return Store()
+
+
+def record(store: Any, q: dict, mode: str, score: float,
+           max_score: float | None = None) -> None:
+    """Record one graded answer."""
+    row = {
+        "question_id": q["id"],
+        "qtype": q["type"],
+        "lecture": q["lecture"],
+        "mode": mode,
+        "score": float(score),
+        "max_score": float(max_score if max_score is not None else q["points"]),
+        "created_at": time.time(),
+    }
+    blob = _mirror()
+    blob["attempts"] = (list(blob.get("attempts") or []) + [row])[-MAX_ATTEMPTS:]
+    st.session_state[SESSION_KEY] = blob
+    _write("record", row)
+
+
+def _rows() -> list[dict]:
+    return [r for r in (_mirror().get("attempts") or []) if isinstance(r, dict)]
+
+
+def attempts_for(store: Any, question_ids: Iterable[str]) -> dict[str, dict]:
+    """Latest score for each of the given question ids.
+
+    Retained from the database version, and it is the one function here that no
+    call site uses. Kept because it is the natural companion to ``record()`` and
+    costs six lines; it can go if a future change wants it gone.
+    """
+    wanted = set(question_ids)
+    latest: dict[str, dict] = {}
+    for row in _rows():
+        qid = row.get("question_id")
+        if qid in wanted:
+            latest[qid] = row
+    return latest
+
+
+def by_lecture(store: Any) -> list[dict]:
+    """Attempts grouped by lecture and question type, as the progress table wants."""
+    groups: dict[tuple, dict] = {}
+    for row in _rows():
+        key = (row.get("lecture"), row.get("qtype"))
+        g = groups.setdefault(key, {"lecture": key[0], "qtype": key[1],
+                                    "n": 0, "got": 0.0, "poss": 0.0,
+                                    "last_at": 0.0})
+        g["n"] += 1
+        g["got"] += float(row.get("score") or 0.0)
+        g["poss"] += float(row.get("max_score") or 0.0)
+        g["last_at"] = max(g["last_at"], float(row.get("created_at") or 0.0))
+    return sorted(groups.values(),
+                  key=lambda g: (g["lecture"] or 0, str(g["qtype"])))
+
+
+def overall(store: Any) -> dict:
+    """Totals for the progress screen."""
+    rows = _rows()
     return {
-        "attempts": row["n"] or 0,
-        "got": row["got"] or 0.0,
-        "possible": row["poss"] or 0.0,
+        "attempts": len(rows),
+        "got": sum(float(r.get("score") or 0.0) for r in rows),
+        "possible": sum(float(r.get("max_score") or 0.0) for r in rows),
     }
 
 
-def reset(conn: sqlite3.Connection) -> None:
-    conn.execute("DELETE FROM attempts")
-    conn.commit()
+def reset(store: Any) -> None:
+    """Throw the history away."""
+    st.session_state[SESSION_KEY] = dict(_EMPTY)
+    _write("reset")
 
 
-def export_rows(conn: sqlite3.Connection) -> list[dict]:
-    rows = conn.execute(
-        "SELECT question_id, qtype, lecture, mode, score, max_score, created_at"
-        " FROM attempts ORDER BY created_at"
-    ).fetchall()
-    return [dict(r) for r in rows]
+def export_rows(store: Any) -> list[dict]:
+    """Every attempt, oldest first."""
+    return sorted(_rows(), key=lambda r: float(r.get("created_at") or 0.0))
 
 
-def get_pref(conn: sqlite3.Connection, name: str, default: str) -> str:
-    """Read a setting. Preferences live here so they survive a restart, which
-    session_state does not."""
-    row = conn.execute("SELECT value FROM prefs WHERE name = ?", (name,)).fetchone()
-    return row["value"] if row else default
+def get_pref(store: Any, name: str, default: str) -> str:
+    """Read a setting, for instance whether the sound is on."""
+    prefs = _mirror().get("prefs") or {}
+    value = prefs.get(name)
+    return default if value is None else str(value)
 
 
-def set_pref(conn: sqlite3.Connection, name: str, value: str) -> None:
-    conn.execute(
-        "INSERT INTO prefs (name, value) VALUES (?, ?)"
-        " ON CONFLICT(name) DO UPDATE SET value = excluded.value",
-        (name, str(value)),
-    )
-    conn.commit()
+def set_pref(store: Any, name: str, value: str) -> None:
+    """Store a setting so it survives a restart."""
+    blob = _mirror()
+    prefs = dict(blob.get("prefs") or {})
+    prefs[name] = str(value)
+    blob["prefs"] = prefs
+    st.session_state[SESSION_KEY] = blob
+    _write("set_pref", {"name": name, "value": value})

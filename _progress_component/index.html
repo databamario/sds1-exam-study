@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>sds1 progress store</title>
+  </head>
+  <body>
+    <!-- Renders nothing and needs no build step: index.js speaks Streamlit's
+         postMessage component protocol directly, with no React and no bundler.
+         That matters because a Streamlit deploy runs `streamlit run` and never
+         `npm install`, so a component that had to be compiled would not work on
+         the cloud. -->
+    <script src="./index.js"></script>
+  </body>
+</html>
