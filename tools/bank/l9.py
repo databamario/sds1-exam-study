@@ -62,13 +62,16 @@ def questions():
          "The number of simulated draws where X is greater than Y",
          "The sum of X across all simulations",
          "The number of simulations, N",
-         "Half of them, since a comparison that is true is not also false"],
+         "Dividing H by N estimates the probability that X is less than Y, which is "
+         "awkward to solve analytically here"],
         ["a", "e"],
         "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N "
-        "gives the simulated probability P(X < Y). This is used to "
+        "gives the simulated probability P(X < Y). Only the true comparisons are summed, "
+        "which is why (e) as 'half of them' was wrong: every draw is either true or false "
+        "and only the true ones are counted. This is used to "
         "estimate a probability that is analytically awkward, here for X normal and Y "
         "exponential.",
-        PDF, "p.11",
+        PDF, "p.12",
         code="X <- rnorm(N, mean = 3, sd = 1)\nY <- rexp(N, rate = 0.5)\nH <- sum(X < Y)\nH / N",
         r_functions=["rnorm", "rexp", "sum"]))
 
@@ -191,7 +194,7 @@ def questions():
             "parameters", 3),
          rb("Count of favourable cases computed with `sum(X < Y)`", 2),
          rb("Estimate obtained as the count divided by N", 2)],
-        1, PDF, "p.11",
+        1, PDF, "p.12",
         code="X <- rnorm(N, mean = 3, sd = 1)\nY <- rexp(N, rate = 0.5)\nH <- sum(X < Y)\nH / N",
         r_functions=["rnorm", "rexp", "sum"]))
 

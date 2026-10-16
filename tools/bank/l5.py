@@ -54,8 +54,8 @@ def questions():
         "discrete variables such as a die; for a continuous variable the CDF is a smooth "
         "curve. A PDF is a density rather than a probability, and the probability of a "
         "continuous variable landing on one exact value is 0, which is why probabilities "
-        "are read off a PDF as an area over a range.",
-        PDF, "p.25"))
+"are read off a PDF as an area over a range.",
+      PDF, "p.21"))
 
     out.append(mc(
         "L5-MC-004", 5, "PMF, PDF and CDF",

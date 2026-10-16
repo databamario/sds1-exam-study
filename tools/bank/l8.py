@@ -335,9 +335,9 @@ def questions():
         "cancel and r lands near zero even though the variables are tightly "
         "related. That makes (a) and (c) correct and (d) wrong. No linear "
         "association is not independence, which is what (b) claims. A perfect "
-        "correlation describes the data and says nothing about cause and "
-        "effect, so (e) is wrong.",
-        PDF, "p.9"))
+"correlation describes the data and says nothing about cause and "
+         "effect, so (e) is wrong.",
+         PDF, "p.18"))
 
     out.append(wa(
         "L8-WA-007", 8, "The correlation formula",

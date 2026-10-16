@@ -3911,7 +3911,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture5_after.pdf",
-    "slide": "p.25"
+    "slide": "p.21"
    },
    "origin": "new"
   },
@@ -6712,7 +6712,7 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture8_after.pdf",
-    "slide": "p.9"
+    "slide": "p.18"
    },
    "origin": "new"
   },
@@ -7134,7 +7134,7 @@
     "b": "The number of simulated draws where X is greater than Y",
     "c": "The sum of X across all simulations",
     "d": "The number of simulations, N",
-    "e": "Half of them, since a comparison that is true is not also false"
+    "e": "Dividing H by N estimates the probability that X is less than Y, which is awkward to solve analytically here"
    },
    "correct": [
     "a",
@@ -7142,7 +7142,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N gives the simulated probability P(X < Y). This is used to estimate a probability that is analytically awkward, here for X normal and Y exponential.",
+   "explanation": "`H <- sum(X < Y)` counts the cases where the comparison is true, so dividing H by N gives the simulated probability P(X < Y). Only the true comparisons are summed, which is why (e) as 'half of them' was wrong: every draw is either true or false and only the true ones are counted. This is used to estimate a probability that is analytically awkward, here for X normal and Y exponential.",
    "r_flavoured": true,
    "r_functions": [
     "rnorm",
@@ -7151,7 +7151,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.11"
+    "slide": "p.12"
    },
    "origin": "new",
    "code": "X <- rnorm(N, mean = 3, sd = 1)\nY <- rexp(N, rate = 0.5)\nH <- sum(X < Y)\nH / N"
@@ -7391,7 +7391,7 @@
    ],
    "source": {
     "pdf": "lecture9_after.pdf",
-    "slide": "p.11"
+    "slide": "p.12"
    },
    "origin": "new",
    "code": "X <- rnorm(N, mean = 3, sd = 1)\nY <- rexp(N, rate = 0.5)\nH <- sum(X < Y)\nH / N"
