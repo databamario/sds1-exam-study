@@ -340,15 +340,21 @@ def questions():
         1, PDF, "p.54", code="se <- sqrt(p_hat * (1 - p_hat) / 500)",
         r_functions=["sqrt", "p_hat"], origin="adapted_HT25"))
 
+    # ---- The question used to ask why the t-test is used when sigma is unknown.
+        # p.31 only shows one worked one-sample test, and the reason is not on it:
+        # "unknown variance AND a small sample -> use the t" is lecture6 p.49. The
+        # old answer also quoted qt() and the two-sample form t.test(x, y), neither
+        # of which appears on p.31. Rewritten to ask only what p.31 demonstrates.
     out.append(wa(
         "L7-WA-008", 7, "Choosing the right distribution",
-        "Explain why a t-test is used when the population standard deviation is unknown, "
-        "and write the R code for a two-sided one-sample t-test.",
-        "A z-test requires the population standard deviation sigma, which is never known. Substituting s makes the statistic follow a t-distribution with n - 1 df, so critical values come from `qt()`. Two samples use `t.test(x, y)`, one against a null `t.test(x, mu = 50)`.",
-        [rb("Explains the z-test needs the unknown population sigma", 2),
-         rb("States that substituting s gives a t-distribution with n - 1 df", 2),
-         rb("Gives the R code for a two-sided one-sample t-test", 2)],
-        1, PDF, "p.31", code="t.test(x, mu = 50)", r_functions=["t.test", "qt", "qnorm"],
+        "Write the R code for a two-sided one-sample t-test against a null mean, "
+        "and say how the degrees of freedom are set and how the two-sided p-value is built.",
+        "```r\nt.test(sampl, mu = 75, alternative = \"two.sided\")\n```\n`t_stat <- (72 - 75) / (8 / sqrt(10))` and `2 * pt(t_stat, df = 9)`. Degrees of freedom are `n - 1`, so n = 10 gives 9, and two-sided doubles the one tail.",
+        [rb("Gives the R code for a two-sided one-sample t-test against a null", 2),
+         rb("States that the degrees of freedom are n - 1", 2),
+         rb("Explains the two-sided p-value doubles the one-tail probability", 2)],
+        1, PDF, "p.31", code='t.test(sampl, mu = 75, alternative = "two.sided")',
+        r_functions=["t.test", "pt"],
         origin="adapted_HT25"))
 
     # ---- paired data, L7 p.52. The bank had nothing on it: the two-sample

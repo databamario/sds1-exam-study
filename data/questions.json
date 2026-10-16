@@ -6112,36 +6112,35 @@
    "lecture": 7,
    "type": "WA",
    "topic": "Choosing the right distribution",
-   "stem": "Explain why a t-test is used when the population standard deviation is unknown, and write the R code for a two-sided one-sample t-test.",
+   "stem": "Write the R code for a two-sided one-sample t-test against a null mean, and say how the degrees of freedom are set and how the two-sided p-value is built.",
    "points": 1,
-   "answer": "A z-test requires the population standard deviation sigma, which is never known. Substituting s makes the statistic follow a t-distribution with n - 1 df, so critical values come from `qt()`. Two samples use `t.test(x, y)`, one against a null `t.test(x, mu = 50)`.",
+   "answer": "```r\nt.test(sampl, mu = 75, alternative = \"two.sided\")\n```\n`t_stat <- (72 - 75) / (8 / sqrt(10))` and `2 * pt(t_stat, df = 9)`. Degrees of freedom are `n - 1`, so n = 10 gives 9, and two-sided doubles the one tail.",
    "detail": "",
    "rubric": [
     {
-     "text": "Explains the z-test needs the unknown population sigma",
+     "text": "Gives the R code for a two-sided one-sample t-test against a null",
      "elements": 2
     },
     {
-     "text": "States that substituting s gives a t-distribution with n - 1 df",
+     "text": "States that the degrees of freedom are n - 1",
      "elements": 2
     },
     {
-     "text": "Gives the R code for a two-sided one-sample t-test",
+     "text": "Explains the two-sided p-value doubles the one-tail probability",
      "elements": 2
     }
    ],
    "r_flavoured": true,
    "r_functions": [
     "t.test",
-    "qt",
-    "qnorm"
+    "pt"
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
     "slide": "p.31"
    },
    "origin": "adapted_HT25",
-   "code": "t.test(x, mu = 50)"
+   "code": "t.test(sampl, mu = 75, alternative = \"two.sided\")"
   },
   {
    "id": "L7-WA-009",
