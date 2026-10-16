@@ -504,7 +504,7 @@
    ],
    "source": {
     "pdf": "lecture1.pdf",
-    "slide": "p.43"
+    "slide": "p.52"
    },
    "origin": "new",
    "code": "f <- function(x) x^2\nf(3)"
@@ -1053,7 +1053,7 @@
    ],
    "source": {
     "pdf": "lecture2.pdf",
-    "slide": "p.44"
+    "slide": "p.45"
    },
    "origin": "adapted_HT25",
    "code": "calc_percent <- function(x, total) (x / total) * 100"
@@ -4947,7 +4947,7 @@
    ],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.49"
+    "slide": "p.44"
    },
    "origin": "new",
    "code": "pt(qt(0.975, df = 7 - 1), df = 7 - 1)"
@@ -6138,7 +6138,7 @@
    ],
    "source": {
     "pdf": "lecture7_after.pdf",
-    "slide": "p.21"
+    "slide": "p.31"
    },
    "origin": "adapted_HT25",
    "code": "t.test(x, mu = 50)"

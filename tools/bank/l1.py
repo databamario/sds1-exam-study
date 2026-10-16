@@ -282,7 +282,7 @@ def questions():
         "argument and 3 squared is 9. A user-defined function behaves like any built-in "
         "one once it exists; the only subtlety is that the right-hand side is evaluated "
         "first, so `f` exists as a function object only after that line runs.",
-        PDF, "p.43", code="f <- function(x) x^2\nf(3)",
+        PDF, "p.52", code="f <- function(x) x^2\nf(3)",
         r_functions=["function", "<-", "^"]))
 
     out.append(mc(

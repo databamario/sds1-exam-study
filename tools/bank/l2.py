@@ -122,7 +122,7 @@ def questions():
         "R allows arguments to be passed positionally or by name, so the first two calls "
         "are both valid and both give 25. Order is not forced and both arguments are "
         "required, so the fourth claim is false.",
-        PDF, "p.44", code="calc_percent <- function(x, total) (x / total) * 100",
+        PDF, "p.45", code="calc_percent <- function(x, total) (x / total) * 100",
         r_functions=["function", "<-"], origin="adapted_HT25"))
 
     out.append(mc(

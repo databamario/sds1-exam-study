@@ -167,7 +167,7 @@ def questions():
         "area at or below a given t value. `dt()` is a density and `rt()` draws random "
         "samples, so the claims about them are both wrong. `pt()` is the t-distribution "
         "CDF, not something reserved for the normal.",
-        PDF, "p.49", code="pt(qt(0.975, df = 7 - 1), df = 7 - 1)",
+        PDF, "p.44", code="pt(qt(0.975, df = 7 - 1), df = 7 - 1)",
         r_functions=["dt", "pt", "qt", "rt"]))
 
     out.append(mc(

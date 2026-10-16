@@ -348,7 +348,7 @@ def questions():
         [rb("Explains the z-test needs the unknown population sigma", 2),
          rb("States that substituting s gives a t-distribution with n - 1 df", 2),
          rb("Gives the R code for a two-sided one-sample t-test", 2)],
-        1, PDF, "p.21", code="t.test(x, mu = 50)", r_functions=["t.test", "qt", "qnorm"],
+        1, PDF, "p.31", code="t.test(x, mu = 50)", r_functions=["t.test", "qt", "qnorm"],
         origin="adapted_HT25"))
 
     # ---- paired data, L7 p.52. The bank had nothing on it: the two-sample
