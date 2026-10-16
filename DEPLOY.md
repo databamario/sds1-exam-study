@@ -142,13 +142,43 @@ Worth checking against the practice loop before trusting it.
 
 ### What is involved
 
-- A small JS component, committed to the repo, that reads and writes one
-  `localStorage` key.
-- `progress.py` rewritten on top of it, keeping the same nine function names.
-- `attempts_for` and `by_lecture` are real queries; `localStorage` has no query
-  language, so both become a load, filter in Python, and return. Realistic
-  size: **~130 lines**, not the ~40 I first guessed - the estimate was too
-  optimistic because I forgot there is no SQL underneath any more.
+A search of the call sites turned up less surface than the estimate assumed.
+Of the nine functions, **two are dead code**:
+
+```
+attempts_for   never called
+export_rows    never called
+```
+
+They only exist in their own definitions. So the real surface is seven:
+
+```
+connect()      app.py:49
+record()       ui.py:637, ui.py:707, mock_exam.py:178
+by_lecture()   src/views/progress_view.py:23, loader.py:244
+overall()      src/views/progress_view.py:12
+reset()        src/views/progress_view.py:47
+get_pref/set_pref   app.py:74-81, the sound toggle
+```
+
+Both dead functions get deleted rather than ported. That also dissolves the lag
+worry in part: `attempts_for` was the one reader called in the middle of the
+practice loop, and it is not called at all. What is left reads only on the
+progress screen, which loads fresh.
+
+The sound toggle is the one interactive read, and a component returns its value
+on the *following* script run, so leaving it purely in localStorage would make
+the switch take effect one interaction late. The fix is to mirror the live
+value in `st.session_state` and treat localStorage as the thing that survives a
+restart, which is what it is actually good for.
+
+- A small JS component holding one JSON blob, `{"attempts": [...],
+  "prefs": {...}}`, committed with its built `dist/` so no build is needed on
+  the cloud.
+- `progress.py` rewritten on top of it, keeping the seven function names.
+- `localStorage` has no query language, so `by_lecture` becomes a load, a
+  group-by in Python, and a return. Realistic size: **~110 lines**, against the
+  ~130 first estimated once the dead code is removed.
 - Tests for the new layer, plus the existing suite kept green.
 
 ### What is deliberately not being done
@@ -158,24 +188,31 @@ lives in the browser that earned it. That is the trade: one line of code that
 does not need a server, in exchange for progress that does not follow you to
 your phone. Both were considered and this was the choice.
 
-## Phase 3 - one push
+## Phase 3 - one push  **DONE 16 October 2025**
 
-Everything above lands first, then:
-
-```powershell
-$env:GITHUB_TOKEN = $null     # a 93-char token in User scope shadows gh and 401s it
-gh repo create databamario/sds1-exam-study --public --source=. --remote=origin --push
+```
+repo     databamario/sds1-exam-study
+visibility  PUBLIC
+commits  30 of 30
+files    58 of 58
+https://github.com/databamario/sds1-exam-study
 ```
 
-Two accounts are now registered in the `gh` keyring, `databamario` active, so
-the command runs as Mario's personal account and not as the company one. If
-`gh` objects that `origin` already exists, remove it first and let `gh` recreate
-it - the URL is identical, so nothing else changes. If the push fails on
-credentials while the repo was created, the repo exists and only the push is
-missing: do **not** re-run `create`, it will fail with "already exists".
+Two things went as predicted, and both needed handling rather than retrying:
 
-The pre-push check is already done: 57 files, 1.44 MB, no PDFs, no databases,
-no secrets.
+- `gh repo create` created the repo and then failed with *"Unable to add remote
+  origin"*, because `origin` already pointed at the same URL. Re-running `create`
+  would have failed with "already exists", so the push was done separately.
+- The push needed credentials, so the token went into the remote URL for the
+  duration of one push and was removed immediately afterwards. `.git/config` was
+  then grepped for `ghp_`/`gh[ous]_` and confirmed clean, and the remote is back
+  to the plain URL. The company account's git configuration was never touched:
+  no `gh auth setup-git`, no change to `credential.helper`.
+
+Checked on GitHub afterwards, not just assumed: 58 blobs, extensions `.py` 36,
+`.png` 10, `.wav` 4, `.md` 2, and one each of `.bat`, `.sh`, `.gitignore`,
+`.toml`, `.json`, `.txt`. **No PDF, no SQLite, no `.env`, no secrets** - which is
+the point, and is why public was safe.
 
 ## Phase 4 - Streamlit
 
@@ -193,8 +230,12 @@ Steps at <https://share.streamlit.io>: Deploy, authorise GitHub, pick
 `sds1-exam-study`, wait 3-5 minutes for the first build, then set a password in
 the app's settings.
 
-Password on Streamlit Community Cloud shows a password prompt to anyone with the
-link, which is the point - the link is shareable, the app is not open.
+**It can be deployed now.** The only thing Phase 2 changes is where progress
+lives, and until that lands the app keeps working exactly as it does locally -
+the exam practice, the mock exam, the review screens, the figures and the sounds.
+What is degraded on the cloud is the progress history: shared between users, and
+wiped on redeploy. Worth deploying first and fixing second, so there is a URL to
+try before anything else changes.
 
 ## What is deliberately not being done
 
