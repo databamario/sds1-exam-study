@@ -41,7 +41,6 @@ COMPONENT_DIR = os.path.join(REPO, "_progress_component")
 
 STORAGE_KEY = "sds1-progress-v1"
 SESSION_KEY = "_sds1_progress_blob"
-READY_KEY = "_sds1_progress_ready"
 NONCE_KEY = "_sds1_progress_nonce"
 
 _EMPTY: dict[str, Any] = {"attempts": [], "prefs": {}}
@@ -102,9 +101,21 @@ def hydrate() -> dict:
 
     Called once per run from :func:`connect`. A component's value arrives on the
     run *after* the call, so on the very first run of a session there is nothing
-    to read yet. Rather than render an empty progress screen that silently fills
-    in a moment later, the run is repeated once. One extra run on load, and only
-    the first one.
+    to read yet and the app renders with empty progress for that one frame. That
+    is fine, and deliberately not optimised away.
+
+    This used to call ``st.rerun()`` to hide that first empty frame, and on a
+    deployed app it took the whole thing down: the component was never loading,
+    so the value never arrived, so ``st.rerun()`` fired again, forever. The script
+    never finished, no deltas were ever sent, and the page stayed blank with no
+    error anywhere - just a Stop button that never became a Rerun button. The
+    rerun was unnecessary as well as fatal: passing ``key=`` makes Streamlit
+    store the component value and rerun *by itself* when that value changes,
+    which is the one rerun this function actually wanted. So there is none here.
+
+    The general lesson, since it cost an hour: a loop waiting for a value that
+    may never arrive must be bounded, and if it cannot be bounded it must not
+    exist. A missing component should cost the progress screen, not the app.
     """
     nonce = st.session_state.get(NONCE_KEY, 0) + 1
     st.session_state[NONCE_KEY] = nonce
@@ -114,9 +125,6 @@ def hydrate() -> dict:
     )
     if returned is not None:
         st.session_state[SESSION_KEY] = _decode(returned)
-        st.session_state[READY_KEY] = True
-    elif not st.session_state.get(READY_KEY):
-        st.rerun()
 
     st.session_state[SESSION_KEY] = _decode(st.session_state.get(SESSION_KEY))
     return st.session_state[SESSION_KEY]
