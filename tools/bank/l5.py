@@ -304,7 +304,7 @@ def questions():
         "contains less than 35.8 mL.",
         "```r\npnorm(35.8, mean = 36, sd = 0.11)\n```\n`pnorm()` returns P(X <= x) for a "
         "normal variable, so this is the area under the PDF to the left of 35.8. The value "
-        "is about 0.0345, which is normally rounded to 0.0344.",
+        "is about 0.0345.",
         [rb("`pnorm()` used as the correct function", 2),
          rb("Mean and standard deviation supplied as named arguments", 2),
          rb("States that this is P(X <= 35.8), the area to the left")],
