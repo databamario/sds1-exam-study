@@ -27,6 +27,20 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # component is mounted, so the .wav files load with no configured static path.
 SFX_COMPONENT_DIR = os.path.join(REPO, "_sfx_component")
 
+# Declared at import, on purpose, rather than inside play(). The browser only
+# builds its list of known components once, when the session connects, and a
+# component first declared later in the session is not in that list: the
+# backend sends the element, the frontend answers "Received component message for
+# unregistered ComponentInstance", and no iframe is ever created. Nothing raises,
+# the .wav files still resolve, and there is still no sound - the same silence as
+# before, one layer further down.
+#
+# Importing this module happens while app.py is being loaded, before the first
+# run's configuration reaches the browser, which is early enough. The progress
+# component works for the same reason and by the same accident of ordering: it is
+# read on every run, including the first.
+_SFX = components.declare_component("sds1_sfx", path=SFX_COMPONENT_DIR)
+
 # The streak the celebration waits for, as chosen: sound on every correct
 # answer, confetti only once this many land in a row.
 CELEBRATE_AT = 5
@@ -146,14 +160,12 @@ def play(name: str, enabled: bool = True) -> None:
     not do so quietly.
 
     Called with no ``key``, and the component never reports a value, so playing a
-    sound cannot trigger a rerun.
+    sound cannot trigger a rerun. It is declared at import; see :data:`_SFX`.
     """
     if not enabled or name not in _SOUND_VOLUME:
         return
     try:
-        components.declare_component("sds1_sfx", path=SFX_COMPONENT_DIR)(
-            name=name, volume=_SOUND_VOLUME[name]
-        )
+        _SFX(name=name, volume=_SOUND_VOLUME[name])
     except Exception as exc:  # a missing sound must never take the app down
         print(
             "[celebrate] sound %r not played: %s: %s" % (name, type(exc).__name__, exc),
