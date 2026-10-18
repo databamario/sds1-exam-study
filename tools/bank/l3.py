@@ -280,21 +280,30 @@ def questions():
         "Id 1 is missing from scores and id 5 from students, so both are dropped.",
         PDF, "p.61", r_functions=["inner_join", "dplyr"]))
 
+    # ---- The four joins sit on four consecutive pages: inner p.61, left p.62,
+        # right p.63, full p.64. This question was cited to p.64 while one of its
+        # two correct options was about left_join, which is on p.62, so the cited
+        # page supported only half the answer. Reframed around full_join alone,
+        # which p.64 shows in full: five rows, NA on whichever side is missing.
+
     out.append(mc(
         "L3-MC-018", 3, "Merging data",
-        "Consider the same tables. Which statements about the joins are TRUE?",
-        ["`left_join(students, scores)` keeps all 4 students, giving Alice an NA score.",
-         "`right_join(students, scores)` keeps all 4 students, giving Alice an NA score.",
-         "`full_join(students, scores)` keeps all 5 rows, filling the gaps with NA.",
-         "`inner_join(students, scores)` keeps 5 rows.",
-         "A left join and a right join return the same rows here."],
+        "Look at the output of `full_join(students, scores)`. Which statements are TRUE?",
+        ["It keeps 5 rows: all 4 students plus the score that has no student.",
+         "It keeps only the ids that appear in both tables.",
+         "Rows present in just one table are kept, with NA on the missing side.",
+         "Alice keeps a score, because her id is in the first table.",
+         "It returns the same rows as `inner_join()` here."],
         ["a", "c"],
-        "The inner join keeps only the 3 overlapping ids, so the claim that it keeps 5 rows "
-        "is false. A left join keeps the 4 left rows and a right join keeps the 4 right "
-        "rows, which differ here, so they are not interchangeable. A full join keeps every "
-        "row from both sides, 5 in total, filling the gaps with NA.",
-        PDF, "p.64", r_functions=["left_join", "right_join", "full_join", "inner_join"]))
+        "The output on p.64 has five rows: the four students and the one score with no "
+        "student, so the claim that it keeps only shared ids is false. Alice has no score, "
+        "which is the missing side filled with NA, and the score-only row has NA for the "
+        "name. An inner join would keep only the 3 shared ids, so the two differ here.",
+        PDF, "p.64", r_functions=["full_join", "inner_join"]))
 
+    # ---- right_join is offered as a distractor in this question, so it is named
+        # in r_functions. It is still the one join of the four with no question
+        # devoted to it; worth adding when the bank grows.
     out.append(mc(
         "L3-MC-019", 3, "Merging data",
         "You need every row of `students` preserved, even if a student has no matching "
@@ -312,7 +321,7 @@ def questions():
         "with NA, which is what preserves a student who has no score. A right join would "
         "keep the scores side instead, and a full join would also pull in id 5, neither "
         "of which is wanted here.",
-        PDF, "p.62", r_functions=["left_join"]))
+        PDF, "p.62", r_functions=["left_join", "right_join"]))
 
     out.append(mc(
         "L3-MC-020", 3, "Merging data",
@@ -328,6 +337,7 @@ def questions():
         "tables, enriching data with new variables, and aligning datasets from "
         "different sources. Merging neither adds observations nor changes types.",
         PDF, "p.60", r_functions=["left_join", "inner_join"]))
+
 
     # ---------------------------------------------------------------- written
     out.append(wa(
