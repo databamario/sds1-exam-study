@@ -7,13 +7,15 @@ plays is derived from it, so all four sounds belong to the same family and only
 one asset has to be trusted.
 
 Run:  python tools/make_sfx.py
-Writes: _sfx_component/{correct,celebrate,wrong,tap}.wav
+Writes: assets/sfx/{correct,celebrate,wrong,tap}.wav
 
-They land in the sound component's own directory rather than in ``static/``.
-Streamlit serves a declared component's directory relative to the component, so
-the files load from wherever it is mounted. They used to sit in ``static/`` and
-load from ``/app/static/sfx/``, which needed ``server.enableStaticServing`` - and
-that was enabled and committed and still produced silence on the deployed app.
+They are written at 16 kHz mono. The source is 48 kHz and these end up embedded in
+the app as base64 data URIs, so the bytes are shipped inside a Python file rather
+than fetched over HTTP - which means every kilobyte counts. The spectrum was
+measured before choosing this: everything of consequence sits below 6 kHz and
+there is almost nothing above 8 kHz, so 16 kHz (8 kHz Nyquist) keeps all of it.
+
+``tools/build_sfx.py`` turns these into ``src/sfx_data.py``.
 """
 
 from __future__ import annotations
@@ -26,7 +28,12 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "_sfx_component"
+OUT = ROOT / "assets" / "sfx"
+
+# The app plays these by embedding them in a data URI, so they are never fetched:
+# the whole cost is paid in repository text. 16 kHz is chosen from the measured
+# spectrum, not guessed - see the module docstring.
+SAMPLE_RATE = 16000
 
 # The recording this project already owns. Override with --source if it moves.
 DEFAULT_SOURCE = Path(
@@ -82,6 +89,33 @@ def resample(y: np.ndarray, factor: float) -> np.ndarray:
     n_out = max(1, int(len(y) / factor))
     idx = np.arange(n_out, dtype=np.float64) * factor
     return np.interp(idx, np.arange(len(y)), y).astype(np.float32)
+
+
+def downsample(y: np.ndarray, sr: int, target: int) -> tuple[np.ndarray, int]:
+    """Reduce to `target` Hz, low-passed first so nothing folds back into hearing.
+
+    Decimating on its own aliases everything above the new Nyquist back into the
+    band you can hear. A box filter of the decimation length is a crude low-pass,
+    which is enough here: the content is well under 6 kHz and only a whisper sits
+    above 8 kHz. A windowed-sinc would be more correct and would also be a lot of
+    code for audio nobody is going to analyse.
+    """
+    if target >= sr:
+        return y, sr
+    factor = sr / float(target)
+    taps = max(2, int(round(factor)))
+    kernel = np.ones(taps, dtype=np.float32) / taps
+    filtered = np.convolve(y, kernel, mode="same").astype(np.float32)
+    n_out = max(1, int(len(filtered) / factor))
+    idx = np.arange(n_out, dtype=np.float64) * factor
+    return np.interp(idx, np.arange(len(filtered)), filtered).astype(np.float32), target
+
+
+def emit(name: str, y: np.ndarray, sr: int) -> tuple[str, np.ndarray, int]:
+    """Downsample and write one sound, returning what was actually written."""
+    small, rate = downsample(y, sr, SAMPLE_RATE)
+    write_wav(OUT / (name + ".wav"), small, rate)
+    return (name, small, rate)
 
 
 def fade_edges(y: np.ndarray, sr: int, attack_ms: float = 6.0,
@@ -144,8 +178,7 @@ def build(source: Path) -> int:
     # correct: the source as authored, minus the tail.
     correct = fade_edges(trim_seconds(y, sr, 1.20), sr, release_ms=140.0)
     correct = normalize(correct)
-    write_wav(OUT / "correct.wav", correct, sr)
-    made.append(("correct", correct, sr))
+    made.append(emit("correct", correct, sr))
 
     # celebrate: the same hit raised a fifth and a third, struck in sequence so
     # it reads as a rising arpeggio rather than one bright blip.
@@ -157,23 +190,20 @@ def build(source: Path) -> int:
         off = int(delay * sr)
         celebrate[off: off + len(hit)] += hit[: len(celebrate) - off]
     celebrate = normalize(fade_edges(celebrate[: int(1.15 * sr)], sr, release_ms=120.0))
-    write_wav(OUT / "celebrate.wav", celebrate, sr)
-    made.append(("celebrate", celebrate, sr))
+    made.append(emit("celebrate", celebrate, sr))
 
     # wrong: the same hit dropped about a minor third, so a miss still belongs to
     # the same sound family instead of arriving as an unrelated alarm.
     wrong = normalize(resample(trim_seconds(y, sr, 0.62), 0.80))
     wrong = fade_edges(wrong, sr, release_ms=110.0)
-    write_wav(OUT / "wrong.wav", wrong, sr)
-    made.append(("wrong", wrong, sr))
+    made.append(emit("wrong", wrong, sr))
 
     # tap: only the attack of the source, raised and kept quiet, because this one
     # fires on every option the student ticks. Faded first and normalised after,
     # so the target level is the level that actually comes out of the fade.
     tap = resample(trim_seconds(y, sr, 0.11), 1.30)
     tap = normalize(fade_edges(tap, sr, attack_ms=1.0, release_ms=22.0), TAP_PEAK_DB)
-    write_wav(OUT / "tap.wav", tap, sr)
-    made.append(("tap", tap, sr))
+    made.append(emit("tap", tap, sr))
 
     for name, sig, rate in made:
         report(name, sig, rate)

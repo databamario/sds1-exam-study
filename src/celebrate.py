@@ -22,24 +22,9 @@ import sys
 import streamlit as st
 import streamlit.components.v1 as components
 
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# Streamlit serves a declared component's own directory, relative to wherever the
-# component is mounted, so the .wav files load with no configured static path.
-SFX_COMPONENT_DIR = os.path.join(REPO, "_sfx_component")
+from .sfx_data import SOUNDS as _SOUND_URI
 
-# Declared at import, on purpose, rather than inside play(). The browser only
-# builds its list of known components once, when the session connects, and a
-# component first declared later in the session is not in that list: the
-# backend sends the element, the frontend answers "Received component message for
-# unregistered ComponentInstance", and no iframe is ever created. Nothing raises,
-# the .wav files still resolve, and there is still no sound - the same silence as
-# before, one layer further down.
-#
-# Importing this module happens while app.py is being loaded, before the first
-# run's configuration reaches the browser, which is early enough. The progress
-# component works for the same reason and by the same accident of ordering: it is
-# read on every run, including the first.
-_SFX = components.declare_component("sds1_sfx", path=SFX_COMPONENT_DIR)
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # The streak the celebration waits for, as chosen: sound on every correct
 # answer, confetti only once this many land in a row.
@@ -143,34 +128,53 @@ _SOUND_VOLUME = {
 def play(name: str, enabled: bool = True) -> None:
     """Play one short effect.
 
-    The sound files live inside a declared component's own directory, so Streamlit
-    serves them relative to the component and no static path has to be configured.
+    The audio rides inside the markup as a ``data:`` URI. That is the third
+    mechanism tried here, and the first two are worth recording so the afternoon is
+    not spent a fourth time.
 
-    That was not a guess. The files used to load from ``/app/static/sfx/<name>.wav``,
-    which needs ``server.enableStaticServing``. That was enabled and committed, and
-    on the deployed app the URL still answered 200 with ``text/html`` - 9782 bytes
-    of the single-page app's own shell, because no static route was registered and
-    the request fell through to it. The browser received an HTML document where it
-    expected audio, ``play()`` rejected, and the rejection was swallowed. The
-    buttons were silent and nothing, anywhere, said why.
+    It used to load from ``/app/static/sfx/<name>.wav``, which needs Streamlit's
+    ``server.enableStaticServing``. That was enabled and committed, and on the
+    deployed app the URL still answered 200 with ``text/html`` - 9782 bytes of the
+    single-page app's own shell, because no static route was registered and the
+    request fell through to it. The browser received an HTML document where it
+    expected audio, ``play()`` rejected, and the rejection was swallowed. Silent
+    buttons, and nothing anywhere said why.
 
-    The part worth keeping is not the mechanism but the debugging cost: an error
-    that is swallowed is an error you find by looking for it, not by being told.
-    Hence the note on stderr below. The app must survive a missing sound; it must
-    not do so quietly.
+    The files then moved into a declared component's directory, which does serve
+    them: verified on the deployed app as ``audio/vnd.wave`` with RIFF headers and
+    byte counts matching the originals. But the component never rendered, so
+    nothing played them. Two mechanisms, two different silences.
 
-    Called with no ``key``, and the component never reports a value, so playing a
-    sound cannot trigger a rerun. It is declared at import; see :data:`_SFX`.
+    A data URI sidesteps both. There is no route to register, no configuration to
+    set and no component for the browser to fail to draw; the audio arrives with
+    the page. What it costs is size - 100 KB of wav becomes 135 KB of base64 - and
+    that is worth paying for a sound that cannot fail to be playable.
+
+    ``components.html`` is used because it is already proven on this deployment:
+    the progress store writes through it. Height is zero, so it draws nothing.
+    ``.play()`` has its rejection swallowed, because browsers refuse to start audio
+    before the reader has interacted with the page, and that must degrade to
+    silence rather than raise.
     """
     if not enabled or name not in _SOUND_VOLUME:
         return
-    try:
-        _SFX(name=name, volume=_SOUND_VOLUME[name])
-    except Exception as exc:  # a missing sound must never take the app down
-        print(
-            "[celebrate] sound %r not played: %s: %s" % (name, type(exc).__name__, exc),
-            file=sys.stderr,
-        )
+    uri = _SOUND_URI.get(name)
+    if not uri:
+        print("[celebrate] no embedded audio for %r" % (name,), file=sys.stderr)
+        return
+    components.html(
+        """
+        <audio id="sds-sfx" preload="auto" src="%s"></audio>
+        <script>
+          var a = document.getElementById('sds-sfx');
+          a.volume = %s;
+          a.currentTime = 0;
+          var p = a.play();
+          if (p && p.catch) { p.catch(function () {}); }
+        </script>
+        """ % (uri, _SOUND_VOLUME[name]),
+        height=0,
+    )
 
 
 def streak_upto(queue: list[dict], history: dict, done: dict, index: int) -> int:

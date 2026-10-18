@@ -356,19 +356,22 @@ def main() -> int:
         print("  warn figures generated but unused: %s" % ", ".join(unused))
 
     hr("Interface sounds")
-    # The sounds used to live in static/ and load from /app/static/sfx/. That
-    # needed server.enableStaticServing, which was enabled and committed and still
-    # did not work on the deployed app: the URL answered 200 with the SPA's HTML
-    # shell, the browser got HTML where it expected audio, and play() rejected into
-    # a swallowed catch. Nothing failed and the app was silent. They now sit in a
-    # declared component's directory, which Streamlit always serves relative to the
-    # component, so no configuration is involved.
-    sfx_dir = Path(__file__).resolve().parents[1] / "_sfx_component"
+    # The sounds are now embedded in src/sfx_data.py as base64 data URIs. Both
+    # previous mechanisms were tried and both were silent on the deployed app:
+    # /app/static/sfx/ answered 200 with the SPA's HTML shell because no static
+    # route was registered, and a declared component served the files correctly
+    # but never rendered. A data URI removes both dependencies - nothing to
+    # register, nothing to configure, no component to draw - at the cost of the
+    # bytes living in a Python file.
+    #
+    # So this checks both halves. The wav files have to exist, because they are
+    # what the app actually plays, and the generated module has to contain all
+    # four, because that module is what the app imports. A wav edited without
+    # rebuilding leaves the two disagreeing, and the app would keep playing the
+    # old audio while the repository claims a new one.
+    root = Path(__file__).resolve().parents[1]
+    sfx_dir = root / "assets" / "sfx"
     needed = ["correct", "celebrate", "wrong", "tap"]
-    for required in ("index.html", "index.js"):
-        if not (sfx_dir / required).exists():
-            failures.append("the sound component has no %s at %s"
-                            % (required, sfx_dir))
     missing_sfx = [n for n in needed if not (sfx_dir / (n + ".wav")).exists()]
     empty_sfx = [n for n in needed if (sfx_dir / (n + ".wav")).exists()
                  and (sfx_dir / (n + ".wav")).stat().st_size < 1000]
@@ -383,7 +386,23 @@ def main() -> int:
         failures.append("suspiciously small sound files: %s"
                         % ", ".join(empty_sfx))
     else:
-        print("  ok   all four sounds present, in _sfx_component/")
+        print("  ok   all four sounds present, in assets/sfx/")
+
+    module = root / "src" / "sfx_data.py"
+    if not module.exists():
+        failures.append("src/sfx_data.py is missing, so no sound can play. "
+                        "Run tools/build_sfx.py")
+    else:
+        body = module.read_text(encoding="utf-8")
+        unembedded = [n for n in needed if '"%s": "data:audio/wav;base64,' % n not in body]
+        if unembedded:
+            failures.append(
+                "src/sfx_data.py does not embed: %s. The app would import the "
+                "module and find no audio for those (run tools/build_sfx.py)"
+                % ", ".join(unembedded))
+        else:
+            print("  ok   all four embedded in src/sfx_data.py (%.0f KB)"
+                  % (module.stat().st_size / 1024))
 
     hr("No references to the course in student-facing text")
     meta = re.compile(

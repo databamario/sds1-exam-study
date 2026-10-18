@@ -42,6 +42,12 @@ BANK = REPO / "data" / "questions.json"
 # check, so it has to come first and it has to be allowed to stop the run.
 BUILD = "tools/build_bank.py"
 
+# Same arrangement for the embedded sounds. src/sfx_data.py is generated from
+# assets/sfx/*.wav, and the app plays what is in the generated module, so an
+# edited wav that was never rebuilt means the repository and the running app
+# disagree about what the interface sounds like.
+BUILD_SFX = "tools/build_sfx.py"
+
 # Every other gate, in the order they were added.
 GATES = [
     "tools/validate.py",
@@ -66,6 +72,22 @@ def run(step: str, verbose: bool) -> tuple[bool, str]:
     if verbose and out:
         print(out)
     return proc.returncode == 0, out
+
+
+def generated_is_stale(relative: str) -> bool:
+    """True when a generated file differs from what git holds.
+
+    Same question as :func:`bank_is_stale`, asked of a second generated file.
+    """
+    proc = subprocess.run(
+        ["git", "diff", "--quiet", "--", relative],
+        cwd=str(REPO),
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode not in (0, 1):
+        return False
+    return proc.returncode == 1
 
 
 def bank_is_stale() -> bool:
@@ -186,6 +208,28 @@ def main() -> int:
         except Exception:
             ver = "?"
         print("%-28s ok" % ("streamlit %s pinned" % ver))
+
+    ok, out = run(BUILD_SFX, args.verbose)
+    print("%-28s %s" % (BUILD_SFX, "ok" if ok else "FAILED"))
+    if not ok:
+        failures.append(
+            "src/sfx_data.py could not be rebuilt from assets/sfx/. The app "
+            "imports that module, so without it no sound can play."
+        )
+        if out:
+            print()
+            print(out)
+            print()
+
+    if generated_is_stale("src/sfx_data.py"):
+        failures.append(
+            "src/sfx_data.py differs from what tools/build_sfx.py produces. A "
+            "sound was edited in assets/sfx/ without rebuilding, so the app "
+            "plays the old audio while the repository claims a new one."
+        )
+        print("%-28s STALE" % "src/sfx_data.py")
+    else:
+        print("%-28s ok" % "src/sfx_data.py up to date")
 
     for gate in GATES:
         ok, out = run(gate, args.verbose)
