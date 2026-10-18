@@ -356,8 +356,19 @@ def main() -> int:
         print("  warn figures generated but unused: %s" % ", ".join(unused))
 
     hr("Interface sounds")
-    sfx_dir = Path(__file__).resolve().parents[1] / "static" / "sfx"
+    # The sounds used to live in static/ and load from /app/static/sfx/. That
+    # needed server.enableStaticServing, which was enabled and committed and still
+    # did not work on the deployed app: the URL answered 200 with the SPA's HTML
+    # shell, the browser got HTML where it expected audio, and play() rejected into
+    # a swallowed catch. Nothing failed and the app was silent. They now sit in a
+    # declared component's directory, which Streamlit always serves relative to the
+    # component, so no configuration is involved.
+    sfx_dir = Path(__file__).resolve().parents[1] / "_sfx_component"
     needed = ["correct", "celebrate", "wrong", "tap"]
+    for required in ("index.html", "index.js"):
+        if not (sfx_dir / required).exists():
+            failures.append("the sound component has no %s at %s"
+                            % (required, sfx_dir))
     missing_sfx = [n for n in needed if not (sfx_dir / (n + ".wav")).exists()]
     empty_sfx = [n for n in needed if (sfx_dir / (n + ".wav")).exists()
                  and (sfx_dir / (n + ".wav")).stat().st_size < 1000]
@@ -372,10 +383,7 @@ def main() -> int:
         failures.append("suspiciously small sound files: %s"
                         % ", ".join(empty_sfx))
     else:
-        print("  ok   all four sounds present")
-    if not (Path(__file__).resolve().parents[1] / ".streamlit" / "config.toml").exists():
-        failures.append(".streamlit/config.toml is missing, so Streamlit will not "
-                        "serve static/ and no sound will play")
+        print("  ok   all four sounds present, in _sfx_component/")
 
     hr("No references to the course in student-facing text")
     meta = re.compile(

@@ -16,10 +16,16 @@ JavaScript and no animation library to load.
 
 from __future__ import annotations
 
-import html
+import os
+import sys
 
 import streamlit as st
 import streamlit.components.v1 as components
+
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Streamlit serves a declared component's own directory, relative to wherever the
+# component is mounted, so the .wav files load with no configured static path.
+SFX_COMPONENT_DIR = os.path.join(REPO, "_sfx_component")
 
 # The streak the celebration waits for, as chosen: sound on every correct
 # answer, confetti only once this many land in a row.
@@ -123,28 +129,36 @@ _SOUND_VOLUME = {
 def play(name: str, enabled: bool = True) -> None:
     """Play one short effect.
 
-    Streamlit serves anything in ``static/`` itself, so the files need no
-    bundling. A zero-height component is enough for an audio element, and
-    ``.play()`` is called explicitly with the rejection swallowed: browsers
-    refuse to start audio without a user gesture, and that must degrade to
-    silence rather than raise.
+    The sound files live inside a declared component's own directory, so Streamlit
+    serves them relative to the component and no static path has to be configured.
+
+    That was not a guess. The files used to load from ``/app/static/sfx/<name>.wav``,
+    which needs ``server.enableStaticServing``. That was enabled and committed, and
+    on the deployed app the URL still answered 200 with ``text/html`` - 9782 bytes
+    of the single-page app's own shell, because no static route was registered and
+    the request fell through to it. The browser received an HTML document where it
+    expected audio, ``play()`` rejected, and the rejection was swallowed. The
+    buttons were silent and nothing, anywhere, said why.
+
+    The part worth keeping is not the mechanism but the debugging cost: an error
+    that is swallowed is an error you find by looking for it, not by being told.
+    Hence the note on stderr below. The app must survive a missing sound; it must
+    not do so quietly.
+
+    Called with no ``key``, and the component never reports a value, so playing a
+    sound cannot trigger a rerun.
     """
     if not enabled or name not in _SOUND_VOLUME:
         return
-    volume = _SOUND_VOLUME[name]
-    components.html(
-        """
-        <audio id="sds-sfx" preload="auto" src="/app/static/sfx/%s.wav"></audio>
-        <script>
-          var a = document.getElementById('sds-sfx');
-          a.volume = %s;
-          a.currentTime = 0;
-          var p = a.play();
-          if (p && p.catch) { p.catch(function () {}); }
-        </script>
-        """ % (name, volume),
-        height=0,
-    )
+    try:
+        components.declare_component("sds1_sfx", path=SFX_COMPONENT_DIR)(
+            name=name, volume=_SOUND_VOLUME[name]
+        )
+    except Exception as exc:  # a missing sound must never take the app down
+        print(
+            "[celebrate] sound %r not played: %s: %s" % (name, type(exc).__name__, exc),
+            file=sys.stderr,
+        )
 
 
 def streak_upto(queue: list[dict], history: dict, done: dict, index: int) -> int:

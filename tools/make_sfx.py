@@ -7,7 +7,13 @@ plays is derived from it, so all four sounds belong to the same family and only
 one asset has to be trusted.
 
 Run:  python tools/make_sfx.py
-Writes: static/sfx/{correct,celebrate,wrong,tap}.wav
+Writes: _sfx_component/{correct,celebrate,wrong,tap}.wav
+
+They land in the sound component's own directory rather than in ``static/``.
+Streamlit serves a declared component's directory relative to the component, so
+the files load from wherever it is mounted. They used to sit in ``static/`` and
+load from ``/app/static/sfx/``, which needed ``server.enableStaticServing`` - and
+that was enabled and committed and still produced silence on the deployed app.
 """
 
 from __future__ import annotations
@@ -20,7 +26,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "static" / "sfx"
+OUT = ROOT / "_sfx_component"
 
 # The recording this project already owns. Override with --source if it moves.
 DEFAULT_SOURCE = Path(
