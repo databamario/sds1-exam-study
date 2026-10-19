@@ -6593,11 +6593,11 @@
    "topic": "Reading R output",
    "stem": "Consider this ANOVA output from `oneway.test()`. Which statements about it are true?",
    "options": {
-    "a": "F = 13.915",
+    "a": "F = 1.673",
     "b": "num df = 2 and denom df = 297",
     "c": "p-value = 1.673e-06, far below any usual significance level",
     "d": "We accept the null hypothesis that all city means are equal",
-    "e": "There is significant evidence that average height differs between the cities"
+    "e": "The output identifies which specific pairs of cities differ in mean height"
    },
    "correct": [
     "b",
@@ -6605,7 +6605,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "R reports F = 13.915 with numerator df 2 and denominator df 297, and a p-value of 1.673e-06. That p-value is far below any usual significance level, so we reject the hypothesis that all city means are equal; we never accept the null, so (d) is false. The cities do differ significantly in mean height, which is what (e) states.",
+   "explanation": "R reports F = 13.915 with numerator df 2 and denominator df 297, and a p-value of 1.673e-06; the 1.673 belongs to the p-value, not to F. That p-value is far below any usual significance level, so the hypothesis that all city means are equal is rejected - never accepted, which is what makes the accept option false. The output says the means differ but not which pairs, so identifying them needs a post-hoc test.",
    "r_flavoured": true,
    "r_functions": [
     "oneway.test"

@@ -201,16 +201,17 @@ def questions():
         "L8-MC-012", 8, "Reading R output",
         "Consider this ANOVA output from `oneway.test()`. Which statements about it are "
         "true?",
-        ["F = 13.915",
+        ["F = 1.673",
          "num df = 2 and denom df = 297",
          "p-value = 1.673e-06, far below any usual significance level",
          "We accept the null hypothesis that all city means are equal",
-         "There is significant evidence that average height differs between the cities"],
+         "The output identifies which specific pairs of cities differ in mean height"],
         ["b", "c"],
         "R reports F = 13.915 with numerator df 2 and denominator df 297, and a p-value of "
-        "1.673e-06. That p-value is far below any usual significance level, so we reject the "
-        "hypothesis that all city means are equal; we never accept the null, so (d) is false. "
-        "The cities do differ significantly in mean height, which is what (e) states.",
+        "1.673e-06; the 1.673 belongs to the p-value, not to F. That p-value is far below any "
+        "usual significance level, so the hypothesis that all city means are equal is rejected "
+        "- never accepted, which is what makes the accept option false. The output says the "
+        "means differ but not which pairs, so identifying them needs a post-hoc test.",
         PDF, "p.29", code="oneway.test(height ~ city, data = heights, var.equal = TRUE)",
         r_functions=["oneway.test"]))
 

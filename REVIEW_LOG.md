@@ -189,3 +189,11 @@ careless:
 | L7-WA-002 | ok | p.35 carries both definitions with their symbols, power as 1 - beta, and "reducing one often increases the other", which is the direction the answer's trade-off takes |
 | L8-MC-002 | ok | p.16 prints the whole cor.test block and the sentence rejecting H0 with a positive correlation, which is both keyed options |
 | L8-MC-006 | ok | p.26 carries the F ratio verbatim and the homoscedasticity assumption with Welch's variant relaxing it, which is option (e) |
+| L1-MC-006 | ok | p.26 defines all four terms with exactly the examples in the stem, and the same page's "ideally the same, but are often not the same" is what makes the last distractor false |
+| L4-MC-006 | ok | p.21 asks this exact question and answers it: 2/52 + 2/52 = 4/52, disjoint because no card is both. Both keyed options are the page |
+| L4-MC-010 | ok | p.29 prints the three conditional probabilities and concludes dependence in one line, which is both keyed options |
+| L4-WA-002 | ok | p.17 prints 26/52 + 26/52 = 1 and the complementary definition in the same words the answer uses |
+| L6-MC-002 | ok | p.22 prints the general formula, defines each of its three terms, and states the sentence that is option (e) verbatim |
+| L7-MC-002 | ok | p.26 is the light-bulb example and carries "at least 1000 hours", which makes H0: mu >= 1000 a one-step consequence and the reversed option the distractor |
+| L7-WA-005 | ok | p.31 prints the whole t.test block the question quotes, including the CI endpoints to five decimals |
+| L8-MC-012 | **wrong** | not a citation error: the question had **three** true options against a two-option key. Option (a) was "F = 13.915", which p.29 prints, and option (e) was "there is significant evidence that average height differs", which is also on the page - the explanation even said so, while not keying it. Rewritten: (a) now misattributes 1.673 to F, and (e) claims the output identifies which pairs differ, which p.29 explicitly denies with "though we don't know which". Key unchanged at [b, c] |
