@@ -3471,7 +3471,7 @@
    "options": {
     "a": "Tossing a coin twice gives independent outcomes, because the two tosses cannot both happen at once.",
     "b": "Drawing two cards without replacement gives independent outcomes.",
-    "c": "P(A) = P(A|B) = P(A|Bc) is the condition for independence.",
+    "c": "For two independent coin tosses, P(two tails in a row) = 1/4, because (1/2) x (1/2) = (1/2)^2.",
     "d": "For independent events, P(A and B) = P(A) x P(B).",
     "e": "Two events are independent whenever they are disjoint."
    },
@@ -5660,21 +5660,21 @@
    "lecture": 7,
    "type": "MC",
    "topic": "Choosing the right distribution",
-   "stem": "When should a t-test be used rather than a z-test?",
+   "stem": "The data are not normally distributed. What should you do?",
    "options": {
-    "a": "Only when testing a proportion",
-    "b": "When the null hypothesis is one-sided",
-    "c": "Always, because R has no z-test function",
-    "d": "When the population standard deviation is unknown, so the sample standard deviation is substituted",
-    "e": "With an unknown population standard deviation the t-distribution has heavier tails, which absorb the extra uncertainty of estimating the standard deviation"
+    "a": "Use a t-test whatever the sample size, since it handles non-normal data",
+    "b": "If n is small, use the t-distribution anyway, because the t-test is robust",
+    "c": "If n is small, use non-parametric methods such as bootstrapping to construct confidence intervals",
+    "d": "If n is large, the sampling distribution of the mean is approximately normal by the central limit theorem",
+    "e": "The data must be transformed before any test is possible"
    },
    "correct": [
-    "d",
-    "e"
+    "c",
+    "d"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The z-test requires knowing the population sigma, which is rarely available, so substituting s leads to the t-test and its t-distribution. Neither sample size nor the direction of the alternative decides this.",
+   "explanation": "Sample size is what decides this. With many independent observations the sampling distribution of the mean is approximately normal even when the data are not, so the usual parametric test remains valid. With a small sample and a non-normal population the approximation does not hold, and non-parametric methods such as bootstrapping are the right choice instead. Notice that the t-distribution is not the answer to non-normality: it is about the population being normal while n is small, and about the population standard deviation being unknown, which is a different problem from an unknown shape.",
    "r_flavoured": true,
    "r_functions": [
     "t.test",

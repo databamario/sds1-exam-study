@@ -181,7 +181,8 @@ def questions():
         ["Tossing a coin twice gives independent outcomes, because the two tosses cannot "
          "both happen at once.",
          "Drawing two cards without replacement gives independent outcomes.",
-         "P(A) = P(A|B) = P(A|Bc) is the condition for independence.",
+         "For two independent coin tosses, P(two tails in a row) = 1/4, because "
+         "(1/2) x (1/2) = (1/2)^2.",
          "For independent events, P(A and B) = P(A) x P(B).",
          "Two events are independent whenever they are disjoint."],
         ["c", "d"],

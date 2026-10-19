@@ -331,3 +331,29 @@ that one area is much larger - would not be something the picture showed.
 behind: an unused function, an unused FIG_DATA entry the verifier would have
 treated as a source for nothing, and a PNG in the repository. Twelve figures,
 twelve used, no orphans.
+
+## Band F, the 78 remaining lecture questions
+
+Ordered by similarity score, lowest first, the same mechanical ordering bands A
+to E used. Fifty-nine of the seventy-eight sit under 0.2. The score has been a
+poor guide - it is vocabulary mismatch more than a wrong page - so each question
+is read against its slide, and its key is read from `tools/bank/` rather than
+from the snapshot.
+
+| id | verdict |
+|---|---|
+| L3-MC-013 | ok - p.45 is "one quantitative, one qualitative: box plots by groups", which is the keyed option, and reading medians and spreads off side-by-side boxes is what a box plot is for |
+| L3-WA-007 | ok - p.17 prints med(x) = x((n+1)/2) when n is odd, and the answer applies that printed rule to the question's own five values to get 42. A worked example on the page plus different data in the stem is the ordinary case |
+| L7-MC-013 | **wrong** | its two keyed options - use t when the population sd is unknown, and the t has heavier tails for that reason - appear **nowhere in Lecture 7**. A search for "population standard deviation", "z-distribution" and "heavier tails" across all sixteen PDFs returns nothing. p.20 is about non-normal data: large n is fine by the CLT, small n with a non-normal population wants bootstrapping. Rewritten around what p.20 actually prints, with the old misconception kept as the explanation's closing point |
+| L1-MC-012 | ok - p.42 prints a <- 2 + 2, b <- 3 * 2 and a + b giving 10, and d <- c(1, 2, 3, 4) with d * 2 giving 2 4 6 8, which is the contrast the keyed option draws |
+| L9-MC-008 | ok - read again after the snapshot suggested only one correct option. The source key is ["a", "d"] and both are on p.11: N is the number of draws sampled, and step 3 is the ratio H/N for the probability the slide asks about |
+| L1-WA-006 | ok - p.42 prints the vector and its doubling verbatim |
+| L3-MC-012 | ok - p.41 is titled "two quantitative variables: scatterplot", and its x-axis runs $1,000 / $10,000 / $100,000 at even spacing, which is the log scale the second keyed option describes |
+| L9-WA-005 | ok - p.16 prints set.seed(123), the simulation and its output beside the exact answer, which is what makes the seed's purpose and the cost of omitting it legible |
+| L2-MC-005 | ok - p.32 is a bar plot with x = class and the count on the y-axis, which is both keyed options |
+| L4-MC-011 | **wrong** | keyed option (c) was the condition for independence, P(A) = P(A|B) = P(A|Bc). That is on p.29; the question cites p.30, which carries only the product rule P(A and B) = P(A) x P(B) and the two-toss example. Option (c) now states the two-toss result the page does print, P(two tails) = (1/2) x (1/2) = 1/4 |
+
+Two wrong in ten, both the same shape: a question whose answer needs a page it
+does not cite. That is the defect this whole pass exists to find, and it is
+comfortably below the 30 per cent the figure questions came in at - which is
+what you would expect, since here the slide is genuinely the source.

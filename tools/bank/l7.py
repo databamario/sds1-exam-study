@@ -219,20 +219,25 @@ def questions():
 
     out.append(mc(
         "L7-MC-013", 7, "Choosing the right distribution",
-        "When should a t-test be used rather than a z-test?",
+        "The data are not normally distributed. What should you do?",
         [
-        "Only when testing a proportion",
-        "When the null hypothesis is one-sided",
-        "Always, because R has no z-test function",
-        "When the population standard deviation is unknown, so the sample standard "
-                "deviation is substituted",
-        "With an unknown population standard deviation the t-distribution has heavier "
-                 "tails, which absorb the extra uncertainty of estimating the standard deviation",
+        "Use a t-test whatever the sample size, since it handles non-normal data",
+        "If n is small, use the t-distribution anyway, because the t-test is robust",
+        "If n is small, use non-parametric methods such as bootstrapping to construct "
+                "confidence intervals",
+        "If n is large, the sampling distribution of the mean is approximately normal "
+                "by the central limit theorem",
+        "The data must be transformed before any test is possible",
          ],
-        ["d", "e"],
-        "The z-test requires knowing the population sigma, which is rarely available, so "
-        "substituting s leads to the t-test and its t-distribution. Neither sample size nor "
-        "the direction of the alternative decides this.",
+        ["c", "d"],
+        "Sample size is what decides this. With many independent observations the "
+        "sampling distribution of the mean is approximately normal even when the data "
+        "are not, so the usual parametric test remains valid. With a small sample and a "
+        "non-normal population the approximation does not hold, and non-parametric methods "
+        "such as bootstrapping are the right choice instead. Notice that the "
+        "t-distribution is not the answer to non-normality: it is about the "
+        "population being normal while n is small, and about the population standard "
+        "deviation being unknown, which is a different problem from an unknown shape.",
         PDF, "p.20", r_functions=["t.test", "pnorm", "qt"], origin="adapted_HT25"))
 
     out.append(mc(
