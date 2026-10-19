@@ -1,4 +1,4 @@
-# Citation review log
+﻿# Citation review log
 
 Which questions have been read against their slide, and what the reading found.
 
@@ -108,7 +108,7 @@ careless:
 | L5-MC-005 | ok | p.27 carries both halves: the area-to-the-left reading and the pnorm call. Slide prints 0.0344, option says "about 0.034" - consistent |
 | L3-MC-002 | **wrong** | "a strongly right-skewed distribution implies mean > median" is printed **nowhere in the course** - `find_slide.py "skew"` returns only the p.21 pros/cons table and a Lecture 5 caption. p.20 says the mean is pulled *down* by low outliers, which is the other direction. Reframed on what p.21 actually prints: mean sensitive to outliers and skew, median robust to them. The fact itself is true and commonly taught, but there is no slide to cite it to, which is the whole constraint |
 | L3-WA-005 | **wrong** | p.42 explains correlation and the -1/0/+1 readings, but never prints `cor(`; `find_slide.py "cor("` returns exactly two hits, both in Lecture 8's correlation matrix. Half the question was unciteable. Dropped the code half rather than moving the citation to another lecture, because the -1/0/+1 content is what the slide teaches |
-| L4-MC-004 | **wrong** | p.17 carries the deck, the sum, and the complementary definition - but the P(Aᶜ) = 1 - P(A) rule in option (e) is on p.49 (and p.18). One page cannot reach both. Option (e) reworded to the inclusive-or note p.17 does carry, and the stem changed from "why" to "which two statements", since inclusive-or is a clarification rather than the reason the sum is 1 |
+| L4-MC-004 | **wrong** | p.17 carries the deck, the sum, and the complementary definition - but the P(Aá¶œ) = 1 - P(A) rule in option (e) is on p.49 (and p.18). One page cannot reach both. Option (e) reworded to the inclusive-or note p.17 does carry, and the stem changed from "why" to "which two statements", since inclusive-or is a clarification rather than the reason the sum is 1 |
 | L2-MC-019 | **wrong** | same split across two pages: the alphabetical-sort premise is on p.54, the `factor(levels = ...)` fix on p.51. Reframed on p.51 alone, which means dropping the bar-plot premise. The "passenger class" example in option (e) was also not on p.51 and became "these levels carry a meaningful order" |
 | L1-MC-007 | ok | p.26 defines all four terms; the keyed pair (observation unit, sample) is verbatim and option (e) is contradicted by the same page's "ideally the same, but are often not the same" |
 | L2-WA-002 | ok | p.31 prints the pipeline verbatim. The answer omits the `round(3)` the slide adds, which is a deliberate omission, not an error |
@@ -207,3 +207,13 @@ careless:
 | L7-WA-008 | ok | p.31 prints the t.test call, the statistic and 2 * pt(t_stat, df = 9); n - 1 is the one step from n = 10 with df = 9 |
 | L7-WA-009 | ok | p.52 states the independence assumption, names before-and-after on the same subjects as paired, and prescribes differencing within pairs plus paired = TRUE |
 | L8-MC-009 | ok | p.31 prints the chi-squared formula and all three test types; the keyed options are its words for the statistic and for independence, the distractors swap the three definitions between them |
+| L1-MC-004 | ok | p.25 is the whole Literary Digest story in the same order as the question, ending on "Large sample size doesn't fix biased sampling!", which is option (e) verbatim |
+| L1-WA-003 | **wrong** | minor: the answer gave `2L` as the integer example and "SDS1" for character. p.46 prints integer examples 3 and 1 and character examples "sds1" and "norrkoping". `2L` is correct R but is not on the page, so it is now 3; "sds1" was already right, I had only mis-cased it |
+| L1-WA-008 | ok | p.25 carries the whole example. The opening clause "reduces random error" is not printed there, but it is the counterpart of the sentence that is, and the load-bearing claim - large sample cannot repair bias - is verbatim. Judgement call, recorded rather than cut |
+| L2-WA-006 | ok | p.49 prints all three row-selection forms under "many ways of doing the same thing", character for character, including the dplyr filter it prefers |
+| L6-MC-007 | ok | p.29 defines attrition and item non-response in the keyed words, and the last option is a clean trap: the page says missing data *increases* the standard error |
+| L8-MC-003 | ok | p.14 prints SE(r) = sqrt((1 - r^2)/(n - 2)), says the statistic is t with n - 2 df, and states H0: rho = 0 vs H1: rho not equal to 0 |
+| L8-WA-003 | **wrong** | the question needed two pages. The three types are on p.31; df = k - 1 is on p.32, and p.31 only says df "depends on the number of categories and groups". Dropped the degrees-of-freedom half from stem, answer and rubric, leaving the part p.31 actually prints. **Not lost:** p.32 gives df = k - 1 with k = 6 giving df = 5, and L8-WA-004 still shows df = 5 in its output, so the fact stays in the bank |
+| L8-WA-004 | ok | p.33 prints the observed vector, the chisq.test call and the output including X-squared = 1, df = 5, p = 0.9626, and concludes we fail to reject |
+| L8-WA-007 | ok | p.9 says the numerator measures the covariance and the denominator standardises by the product of the two standard deviations so r is unitless and between -1 and 1 |
+| L9-WA-001 | ok | p.6 numbers the three steps, names the law of large numbers, and defines the simulation in the same sentence the answer uses |

@@ -263,11 +263,9 @@ def questions():
 
     out.append(wa(
         "L8-WA-003", 8, "Chi-squared tests",
-        "Name the three main types of chi-squared test and state the degrees of freedom for "
-        "a goodness-of-fit test with k categories.",
-        "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated. For goodness-of-fit df = k - 1, so a 6-faced die gives df = 5.",
-        [rb("All three test types named with correct purpose", 3),
-         rb("Degrees of freedom given as k - 1 with the die example giving 5", 2)],
+        "Name the three main types of chi-squared test and say what each one checks.",
+        "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated.",
+        [rb("All three test types named with correct purpose", 5)],
         1, PDF, "p.31", r_functions=["chisq.test", "pchisq"]))
 
     out.append(wa(

@@ -586,7 +586,7 @@
    "topic": "R data types",
    "stem": "R has six data types. Name the four that matter for this exam and give one example value of each.",
    "points": 1,
-   "answer": "Numeric (3.14), integer (2L), logical (TRUE or NA) and character (\"SDS1\"). The two types not used here are complex and raw.",
+   "answer": "Numeric (3.14), integer (3), logical (TRUE or NA) and character (\"sds1\"). The two types not used here are complex and raw.",
    "detail": "`numeric` and `integer` are stored the same way but behave differently in arithmetic: `1/2` gives 0.5 but `1L/2L` gives 0, which is why a count read from a file often needs `as.numeric()`. Logical values can hold TRUE, FALSE or NA. Complex numbers and raw vectors exist in R but do not appear in this material.",
    "rubric": [
     {
@@ -6845,18 +6845,14 @@
    "lecture": 8,
    "type": "WA",
    "topic": "Chi-squared tests",
-   "stem": "Name the three main types of chi-squared test and state the degrees of freedom for a goodness-of-fit test with k categories.",
+   "stem": "Name the three main types of chi-squared test and say what each one checks.",
    "points": 1,
-   "answer": "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated. For goodness-of-fit df = k - 1, so a 6-faced die gives df = 5.",
+   "answer": "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated.",
    "detail": "",
    "rubric": [
     {
      "text": "All three test types named with correct purpose",
-     "elements": 3
-    },
-    {
-     "text": "Degrees of freedom given as k - 1 with the die example giving 5",
-     "elements": 2
+     "elements": 5
     }
    ],
    "r_flavoured": true,

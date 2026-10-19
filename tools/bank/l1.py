@@ -374,7 +374,7 @@ def questions():
         "L1-WA-003", 1, "R data types",
         "R has six data types. Name the four that matter for this exam and give one "
         "example value of each.",
-        "Numeric (3.14), integer (2L), logical (TRUE or NA) and character (\"SDS1\"). "
+        "Numeric (3.14), integer (3), logical (TRUE or NA) and character (\"sds1\"). "
         "The two types not used here are complex and raw.",
         [rb("Numeric and integer both named"),
          rb("Logical and character both named"),
