@@ -113,14 +113,15 @@ def questions():
          "The null hypothesis is that the variances are equal across the groups.",
          "The alternative is that all the group means are equal.",
          "Rejecting H0 tells you which specific groups differ.",
-         "Rejecting H0 shows the group means are not all equal, but finding out which "
-         "ones differ needs a post-hoc test."],
+         "ANOVA with only two groups gives exactly the same p-value as the two-sample "
+         "t-test with equal variances."],
         ["a", "e"],
-        "ANOVA is an omnibus test: rejecting H0 says the group means are not all equal, "
-        "not that any particular pair differs, which is why a follow-up post-hoc test is "
-        "needed to identify them. The test is about means, not about equality of variances, "
-        "and the alternative is that at least one mean differs rather than that they are "
-        "all equal, so (b) and (c) are false.",
+        "ANOVA is an omnibus test over means, and it is the t-test extended to more than "
+        "two groups, so with exactly two it returns the same p-value as the two-sample "
+        "t-test with equal variances. Rejecting H0 says the group means are not all equal "
+        "without saying which, which is why a post-hoc test is needed; the test is about "
+        "means rather than equality of variances, and the alternative is that at least one "
+        "mean differs rather than that they are all equal.",
         PDF, "p.29", code="oneway.test(height ~ city, data = heights, var.equal = TRUE)",
         r_functions=["oneway.test", "pairwise.t.test"]))
 
@@ -249,7 +250,10 @@ def questions():
         "L8-WA-002", 8, "Analysis of variance",
         "Explain what the F-statistic in a one-way ANOVA is, what a large value means, and "
         "what rejecting the null hypothesis does NOT tell you.",
-        "The F-statistic is the ratio of the variance between groups to the variance within them. A large F means the group means differ substantially relative to the noise inside the groups. Rejecting H0 shows only that some group differs, so post-hoc tests are needed.",
+        "The F-statistic is the ratio of the variance between groups to the variance "
+        "within them. A large F means the group means differ substantially relative to the "
+        "noise inside the groups. Rejecting H0 shows only that at least one group mean "
+        "differs, not which one.",
         [rb("F defined as between-group variance over within-group variance", 2),
          rb("Explains what a large F indicates", 2),
          rb("Notes the F distribution and its degrees of freedom"),
