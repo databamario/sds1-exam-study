@@ -281,7 +281,7 @@ def questions():
         "L5-WA-003", 5, "Sampling distribution and variance",
         "Write down the formula for the variance of the sample mean, and explain what "
         "happens to it as n increases.",
-        "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n grows the variance shrinks, so the sample mean becomes a more precise estimate, approaching zero only in the limit.",
+        "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n grows the variance shrinks, so the sample mean becomes a more precise estimate.",
         [rb("Variance of sample mean given as sigma squared over n", 2),
          rb("Derivation or intermediate term involving n sigma squared over n squared "
             "shown", 2),

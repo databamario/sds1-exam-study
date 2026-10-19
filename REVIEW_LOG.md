@@ -46,10 +46,25 @@ with no row at all). Rather than carry a number forward or invent a new one,
 the numbers that can be counted are given and the rest is left open.
 `L7-WA-008` is known to be wrong and still has no row.
 
-What can be said: band E holds 127 questions, the two batches logged at the
-bottom of this table read 18 of them, and the error rate in those two batches was
-11 of 18 - far above the 9% the band is supposed to average, because a batch read
-in score order starts at the most suspicious end of the band.
+What can be said: band E holds 127 questions, the four batches logged at the
+bottom of this table read 34 of them, and 15 of the 58 entries in this table
+are wrong.
+
+The error rate by batch is the interesting part, because the batches were read
+in score order and the rate is not flat:
+
+| batch | score range read | read | wrong |
+|-------|------------------|-----:|------:|
+| 1 | 0.301 - 0.351 | 6 | 4 |
+| 2 | 0.357 - 0.403 | 12 | 6 |
+| 3 | 0.401 - 0.403 | 8 | 2 |
+| 4 | 0.403 - 0.419 | 8 | 0 |
+
+67%, then 50%, then 25%, then nothing. That is the concentration hypothesis
+holding up: the errors sit at the low end of band E, not evenly through it. It
+also means the band's headline "9%" was measured somewhere else and does not
+describe its first 34 questions. Extrapolating either number to the remaining 93
+would be guessing, and the two guesses differ by a factor of four.
 
 Two shapes account for most of the errors, and both are structural rather than
 careless:
@@ -107,3 +122,19 @@ careless:
 | L4-WA-008 | **wrong** | the bag example runs over four pages: with replacement on p.34-35, without on p.36-37, and the cited p.37 carries only the second half. Reframed on p.33, which defines both in one sentence each. The 3/10 against 2/9 contrast survives in the detail panel, where it is not the asserted answer |
 | L5-WA-002 | **wrong** | p.47 states the CLT precisely and says which statistics it extends to, but "it matters because it lets us use z-scores and confidence intervals" is on no page of Lecture 5. Stem changed to ask for the statement plus the extension, both verbatim on p.47 |
 | L5-WA-006 | **wrong** | p.46 says the LLN makes the estimate more accurate, calls Xbar a consistent estimator, and says it does not describe the sample mean's distribution for finite n - which is the whole of the comparison. But stating what the CLT *does* give is p.47. Answer rewritten to stay on p.46 and still answer the question |
+| L1-MC-005 | **wrong** | p.25 ends on "Large sample size doesn't fix biased sampling!", but option (c) also said it "reduces random error" - `find_slide.py "random error"` returns nothing in Lecture 1, and the same phrase opens the explanation. Trimmed the option and rewrote the explanation off the page's own sentences. Same defect as L3-MC-002: a correct option that is half on the page and half imported |
+| L2-MC-006 | ok | p.34 is the grouped bar plot itself: `aes(x = class, fill = survived)` with `position = "stack"`, which is both keyed options |
+| L2-MC-010 | ok | p.48 carries `[1, ]` as the first row, `[, 3]` as the third column, and the positional-index note. Read it wrong the first time and nearly "fixed" a key that was already right - the lesson from rebalance_pairs, repeated |
+| L5-MC-003 | ok | p.21 defines PMF, PDF and CDF in three clauses and the keyed two are verbatim |
+| L5-MC-016 | ok | p.39 defines independent and identically distributed in the keyed words, with the coin-toss examples |
+| L5-WA-003 | **wrong** | p.38 carries the whole derivation and "the variance of the sample mean decreases, making the sample mean a more precise estimate". The answer added "approaching zero only in the limit", which the page does not say. Trimmed |
+| L7-MC-015 | ok | p.52 states the independence assumption, the before-and-after pairing, and that sleep is paired data - so the keyed pair and the three distractors are all on the page |
+| L9-MC-009 | ok | p.16 gives the code, the 30 and 365, the exact answer and the counter, which contradicts distractors (d) and (e) directly |
+| L5-WA-007 | ok | p.15 names all three distributions with the same three examples the stem uses: coin tosses, events per fixed interval, and heights as natural measurements |
+| L9-MC-003 | ok | p.6 carries both keyed options verbatim, the law of large numbers and the standard errors / confidence intervals / p-values sentence |
+| L7-MC-005 | ok | p.35 defines alpha, beta, power, and the trade-off. Option (e) says reducing alpha "always" reduces beta, which the same page contradicts with "often increases" |
+| L8-MC-014 | ok | p.9 carries the formula and the two sentences behind both keyed options, including "unitless" |
+| L9-MC-007 | ok | p.19 prints `numeric(N)` and then the `bootstrap_means[i] <- ...` line, which is both keyed options |
+| L2-MC-004 | ok | p.31 output shows every row summing to 1, which is the keyed second option; margin = 1 is in the printed code |
+| L1-MC-016 | ok | p.51 prints the list with `[[1]]` numeric and `[[2]]` character, so two of the five options are decided by the page alone |
+| L9-WA-002 | ok | p.12 prints the whole pipeline including `rnorm(N, mean = 3, sd = 1)` and 0.25186. The R check already covers the 0.25 claim |

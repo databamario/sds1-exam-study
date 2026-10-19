@@ -121,7 +121,7 @@
    "options": {
     "a": "A poll of 2.4 million people was still off by about 19% because of how its respondents were selected.",
     "b": "A large sample size guarantees the sample is representative.",
-    "c": "A large sample size reduces random error but does not fix a biased sampling strategy.",
+    "c": "A large sample size does not fix a biased sampling strategy.",
     "d": "Sample size is irrelevant whenever probability sampling is used.",
     "e": "Bias can only occur when the sample is smaller than the population."
    },
@@ -131,7 +131,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "Sample size reduces random error, i.e. sampling variability. It cannot repair a systematically unrepresentative sampling frame. The Literary Digest poll is exactly this kind of example: 2.4 million respondents, and still off by about 19%.",
+   "explanation": "The poll had 2.4 million respondents and was still off by about 19%. It surveyed magazine subscribers and car owners, who during the Great Depression were mostly wealthy Republicans, so the sampling frame was unrepresentative however large the sample. A large sample size does not fix a biased sampling strategy.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -4396,7 +4396,7 @@
    "topic": "Sampling distribution and variance",
    "stem": "Write down the formula for the variance of the sample mean, and explain what happens to it as n increases.",
    "points": 1,
-   "answer": "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n grows the variance shrinks, so the sample mean becomes a more precise estimate, approaching zero only in the limit.",
+   "answer": "`Var(Xbar_n) = (1/n^2) * sum of Var(X_i) = (n sigma^2) / n^2 = sigma^2 / n`, using the independence of the observations. As n grows the variance shrinks, so the sample mean becomes a more precise estimate.",
    "detail": "",
    "rubric": [
     {

@@ -84,15 +84,15 @@ def questions():
         ["A poll of 2.4 million people was still off by about 19% because of how its "
          "respondents were selected.",
          "A large sample size guarantees the sample is representative.",
-         "A large sample size reduces random error but does not fix a biased "
-         "sampling strategy.",
+         "A large sample size does not fix a biased sampling strategy.",
          "Sample size is irrelevant whenever probability sampling is used.",
          "Bias can only occur when the sample is smaller than the population."],
         ["a", "c"],
-        "Sample size reduces random error, i.e. sampling variability. It cannot "
-        "repair a systematically unrepresentative sampling frame. The Literary "
-        "Digest poll is exactly this kind of example: 2.4 million respondents, and "
-        "still off by about 19%.",
+        "The poll had 2.4 million respondents and was still off by about 19%. It "
+        "surveyed magazine subscribers and car owners, who during the Great "
+        "Depression were mostly wealthy Republicans, so the sampling frame was "
+        "unrepresentative however large the sample. A large sample size does not "
+        "fix a biased sampling strategy.",
         PDF, "p.25"))
 
     # ------------------------------------------------------ target/sampled/sample
