@@ -238,7 +238,8 @@ def questions():
         "L3-MC-015", 3, "Type hierarchy and implicit coercion",
         "Which statements about R's type hierarchy are TRUE?",
         ["The hierarchy runs logical -> integer -> double -> character.",
-         "TRUE can be coerced to 1 and FALSE to 0.",
+         "TRUE cannot be coerced to a number, because logical is the lowest type in the "
+         "hierarchy.",
          "Characters can be coerced to numbers implicitly.",
          "Integers and doubles can be coerced to characters.",
          "Explicit conversion is never needed, because R coerces characters to numbers "

@@ -155,3 +155,13 @@ careless:
 | L7-MC-008 | ok | p.41 states both directions verbatim, including "the (1 - alpha) CI contains all values of mu0 that would not be rejected at the alpha significance level for this particular sample" |
 | L6-MC-003 | **wrong** | p.17 has the computation and the SE reading, but the "~95% within +/-2 SE" rule in option (c) is on **p.18** - another page, same shape. Rather than leave a five-option question needing two pages, option (c) is gone and the question is now four options with one correct, which the format rule allows. The rule itself is not lost: it is in the p.18 material and is worth its own question later |
 | L8-MC-007 | **wrong** | p.29 says the means are not all equal and that post-hoc tests are needed, but the equivalence between a two-group ANOVA and the two-sample t-test - which is textbook-true - is printed nowhere; `find_slide.py "t-test"` in Lecture 8 returns only the multiple-testing pages and the p.40 decision table. Option (e) reworded to the omnibus reading the page does give |
+| L1-MC-010 | ok | p.41 prints `2 + 2` giving 4, then `a <- 2 + 2` and `a` giving 4, so both the value and the assignment claim are on the page |
+| L2-MC-024 | ok | p.23 is the type table; survived is Logical and class is Ordered factor, and the three distractors are the other three rows of the same table |
+| L5-MC-002 | ok | p.15 names all three distributions with their defining phrases, which are the two keyed options |
+| L7-MC-010 | ok | p.54 step 3 prints the SE of a proportion and step 5 prints "0.52 +/- 1.96 x 0.022", so both keyed options are on the page |
+| L2-MC-008 | ok | p.45 prints the exact function definition, the exact call, and the comment "total defaults to 100, returns 25" |
+| L3-MC-004 | ok | p.15 gives the sum-over-n formula in words and in symbols; the arithmetic is the reader's |
+| L7-MC-006 | ok | p.38 defines the acceptance region as mu +/- 1.96 s/sqrt(n) and its complement as the rejection region, which is both keyed options |
+| L7-WA-003 | ok | p.38 prints the two rejection conditions on the statistic and on the sample mean in the same form the answer uses. The 1.96 and -1.96 claims are now covered by the qnorm checks added with the numeric audit |
+| L9-WA-004 | ok | p.4 carries both halves: the definition of non-parametric and the small-sample unreliability of the standard tests |
+| L3-MC-015 | **wrong** | not a citation error: option (b) said "TRUE can be coerced to 1 and FALSE to 0", which p.56 states verbatim in its own bullet list, and it was not keyed - so the question had three true options against a two-option key. Reworded to the opposite claim, which the same page contradicts |

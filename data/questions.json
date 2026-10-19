@@ -2579,7 +2579,7 @@
    "stem": "Which statements about R's type hierarchy are TRUE?",
    "options": {
     "a": "The hierarchy runs logical -> integer -> double -> character.",
-    "b": "TRUE can be coerced to 1 and FALSE to 0.",
+    "b": "TRUE cannot be coerced to a number, because logical is the lowest type in the hierarchy.",
     "c": "Characters can be coerced to numbers implicitly.",
     "d": "Integers and doubles can be coerced to characters.",
     "e": "Explicit conversion is never needed, because R coerces characters to numbers automatically."
