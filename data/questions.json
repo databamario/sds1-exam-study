@@ -5483,7 +5483,7 @@
     "a": "Reject H0, because 173.0 is below the interval",
     "b": "Fail to reject H0, because 173.0 lies inside the acceptance region",
     "c": "Fail to reject H0, because the null value 175 lies inside the interval",
-    "d": "Fail to reject H0, because 175 lies inside the interval",
+    "d": "Accept H0, because 173.0 lies inside the acceptance region",
     "e": "The test cannot be performed without the standard error"
    },
    "correct": [
@@ -5492,7 +5492,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "For a two-sided test at alpha = 0.05 you fail to reject exactly when the observed estimate lies inside the corresponding 95% CI. Since 173.0 is between 172.06 and 177.94, H0 is not rejected, and equivalently 175 lies inside the CI.",
+   "explanation": "For a two-sided test at alpha = 0.05 you fail to reject exactly when the observed estimate lies inside the corresponding 95% CI. Since 173.0 is between 172.06 and 177.94, H0 is not rejected, and equivalently 175 lies inside the CI. Note we never accept a null hypothesis, only fail to reject it.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {

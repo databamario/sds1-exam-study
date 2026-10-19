@@ -118,12 +118,13 @@ def questions():
         ["Reject H0, because 173.0 is below the interval",
          "Fail to reject H0, because 173.0 lies inside the acceptance region",
          "Fail to reject H0, because the null value 175 lies inside the interval",
-         "Fail to reject H0, because 175 lies inside the interval",
+         "Accept H0, because 173.0 lies inside the acceptance region",
          "The test cannot be performed without the standard error"],
         ["b", "c"],
         "For a two-sided test at alpha = 0.05 you fail to reject exactly when the observed "
         "estimate lies inside the corresponding 95% CI. Since 173.0 is between 172.06 and "
-        "177.94, H0 is not rejected, and equivalently 175 lies inside the CI.",
+        "177.94, H0 is not rejected, and equivalently 175 lies inside the CI. Note we never "
+        "accept a null hypothesis, only fail to reject it.",
         PDF, "p.39", origin="adapted_HT25"))
 
     out.append(mc(
