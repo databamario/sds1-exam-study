@@ -204,9 +204,12 @@ def questions():
 
     out.append(wa(
         "L9-WA-003", 9, "Bootstrapping",
-        "Explain how you would bootstrap a median, writing the R code, and say why you "
-        "cannot simply do this with a mean on the exam.",
-        "Resample the observed data with replacement many times, compute the median of each resample, and use the distribution of those medians to form a confidence interval. In R pre-allocate `boot_medians <- numeric(N)`, then in a loop take `sample(x, length(x), replace = TRUE)` and store `median(boot_sample)`.",
+        "Explain how you would bootstrap a median, writing the R code, and say what "
+        "the bootstrap gives you that a closed-form calculation does not.",
+        "Resample with replacement many times and take the median of each resample; "
+        "their distribution gives a CI. Pre-allocate `boot_medians <- numeric(N)`, "
+        "then loop `sample(x, length(x), replace = TRUE)` into `median(boot_sample)`. "
+        "It approximates rather than computes the sampling distribution exactly.",
         [rb("Resampling with replacement correctly described", 2),
          rb("Median computed for each resample and stored", 2),
          rb("R code given including pre-allocation with `numeric(N)`", 2),
@@ -241,7 +244,10 @@ def questions():
         "A probability can be checked analytically, or estimated by simulating it. Give "
         "the analytic approach and the simulation approach for the probability of obtaining "
         "1, 5 or 9 heads in 10 tosses of a fair coin.",
-        "The count of heads in 10 tosses is binomial(n = 10, p = 0.5), so the probability is P(X = 1) + P(X = 5) + P(X = 9) \u2248 0.2656. The simulation draws many samples and uses the matching fraction as the estimate.",
+        "The count of heads in 10 tosses is binomial(n = 10, p = 0.5), so the "
+        "probability is the sum P(X=1)+P(X=5)+P(X=9) ~ 0.2656. The simulation "
+        "repeats many draws and takes the matching fraction, which converges to the "
+        "analytic value as N grows.",
         [rb("Identifies the binomial distribution with n = 10 and p = 0.5", 2),
          rb("Correctly sums P(X=1), P(X=5) and P(X=9) and gives about 0.2656", 2),
          rb("Describes the simulation as repeated draws with a sample fraction", 2),
@@ -262,14 +268,17 @@ def questions():
         r_functions=["sample", "replace", "any", "duplicated"]))
 
     out.append(wa(
-        "L9-WA-008", 9, "Scope of the course and next steps",
-        "Summarise what simulation-based inference adds, and state which statistical "
-        "topic is deferred to SDS2.",
-        "Simulation-based inference covers Monte-Carlo simulation to approximate sampling distributions and awkward probabilities, and bootstrapping to estimate standard errors, confidence intervals and p-values without assuming a parametric form. Linear regression and a fuller treatment of correlation are deferred to SDS2.",
-        [rb("Identifies Monte-Carlo simulation as the addition", 2),
-         rb("Identifies bootstrapping as the second addition", 2),
-         rb("Correctly defers linear regression to SDS2", 2)],
-        1, PDF, "p.18", r_functions=["sample", "rnorm", "median"],
+        "L9-WA-008", 9, "Scope of simulation-based inference",
+        "Summarise what simulation-based inference adds to the toolbox, naming the "
+        "two techniques and what each is for.",
+        "Monte-Carlo simulation approximates analytically awkward probabilities by "
+        "counting matches over many simulated draws. Bootstrapping estimates standard "
+        "errors, confidence intervals and p-values by resampling the observed data, "
+        "without assuming a parametric form.",
+        [rb("Monte-Carlo simulation named as approximating an awkward probability", 2),
+         rb("Bootstrapping named as estimating standard errors, confidence intervals and p-values", 2),
+         rb("Notes that the bootstrap assumes no parametric form", 1)],
+        1, PDF, "p.18", also=["p.12"], r_functions=["sample", "rnorm", "median"],
         origin="adapted_HT25"))
 
     return out

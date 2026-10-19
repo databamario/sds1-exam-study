@@ -1,30 +1,42 @@
-Read L4, L5 and L6: twenty questions missing a page, two saying things the slides do not
+Read L7, L8 and L9: the last unreviewed questions, and two rubrics grading nothing
 
-Twenty-two questions. Two were wrong in substance and twenty had a second page
-they should have cited but did not. That is a much higher rate than the earlier
-batches found, and the reason is visible in the table: the lectures split single
-ideas across consecutive slides, so the question sits on the seam.
+Fourteen questions. Three were wrong, three needed a second page, eight passed.
 
-L4-MC-009 is the clearest case. "What is a confidence interval", "what happens at
-99%", and "how often does it cover the truth" are p.32, p.33 and p.34 respectively,
-and the question asks all three. Under the old format two of them had to go. It
-now cites all three and the two other CI questions sit on their own slides.
+L9-WA-008 keyed "linear regression and a fuller treatment of correlation are
+deferred to SDS2". Searching Lecture 9 for SDS2 returns nothing, and its final
+three pages are the exam notice and the course evaluation. The lecture never
+says it, so the question and the rubric point that graded it are gone; what
+remains is the half the lecture does support.
 
-The rest follow the same shape. p.16 defines disjoint and uses the same red/black
-card that L4-MC-002 asks about, while the p.17 it cited only covers complementary.
-p.36 is where "with replacement draws are independent" is printed, and L4-MC-013 was
-citing p.37, which is entirely about without replacement. p.35 defines an estimator
-as a function of the data and a random variable, which is the whole keyed content
-of L5-MC-008, while p.37 only shows the sample mean is unbiased. p.22 turned out to
-be a figure reference whose text layer carries no formula at all, so L4-WA-005 now
-cites p.21, where the rule is actually worked.
+L9-WA-003 and L9-WA-006 had the same defect in miniature. Each rubric graded an
+element its own keyed answer never contained - that the bootstrap approximates
+rather than computes, and that the simulation converges to the analytic value as
+N grows. A student who answered the key perfectly and stopped there would have
+lost those points for saying nothing extra. Both answers now contain the clause
+their rubrics were already asking for, which is the whole point of a rubric.
 
-Two questions were wrong in the way that is harder to see. L5-MC-015 keyed a claim
-about symmetry and the mean and median coinciding, which p.21 never mentions; its
-options now say what p.21's table says. Its explanation also claimed the mode is
-"still perfectly well defined for a skewed distribution", which p.21 does not say
-either. And L4-WA-004 asked about drawing two cards while its rubric demanded the
-bag's 3/10 versus 2/9, so it asked about the bag, which is what the answer and the
-cited page actually use.
+L8-MC-008 named Tukey as the post hoc test, and Tukey is printed on exactly one
+page of Lecture 8, the p.40 flow chart, while the omnibus argument is on p.25.
+It now cites both. L7-WA-006's answer closes on the paired-data rule, which is
+p.52 rather than the p.47 it cited, and L9-WA-008 now also cites p.12 for its
+Monte-Carlo half.
 
-Suite green apart from the rebuilt bank being uncommitted.
+### The eighth false alarm, and this time the reader was mine
+
+L7-MC-009 looked like the worst finding of the review. Option (c) is p.47's
+formula written out character for character, and it read as marked wrong while a
+prose paraphrase of the same thing was marked right - a keying error on a
+question students get wrong for free. I had the write-up half-formed.
+
+The bank disagreed. Its correct list is ['a', 'c']. Both were keyed correctly
+from the start, and the viewer I wrote earlier in this pass had printed KEY> on
+both lines; I misread the block rather than checking it.
+
+That is the eighth misread snapshot in this review and the first where the
+faulty reader was one I had just written. It is also the clearest argument for
+the rule that has caught all eight: read the key from tools/bank/ or from
+questions.json, never from a rendered dump, however carefully the dump is
+formatted.
+
+Every one of the 213 L-* questions has now been read against its slides. Suite
+green apart from the rebuilt bank being uncommitted.

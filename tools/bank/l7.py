@@ -331,7 +331,7 @@ def questions():
         [rb("Formula given as sqrt of the sum of the two variances", 2),
          rb("Substitutes 15^2/100 and 20^2/100"),
          rb("Notes the independence assumption", 2)],
-        1, PDF, "p.47", code="se_diff <- sqrt(15^2 / 100 + 20^2 / 100)",
+        1, PDF, "p.47", also=["p.52"], code="se_diff <- sqrt(15^2 / 100 + 20^2 / 100)",
         r_functions=["sqrt", "se_diff"]))
 
     out.append(wa(

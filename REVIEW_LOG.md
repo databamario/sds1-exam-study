@@ -525,3 +525,67 @@ page verbatim: L4-MC-005 against p.21's worked addition rule, L6-MC-006 against
 p.26's bias definition, L6-MC-010 against p.48's three components, and L6-MC-004
 against p.19's printed pnorm output.
 
+
+## Lectures 7, 8 and 9 read against their slides, and the rest of 1-6
+
+Fourteen questions. Three were wrong, three needed a second page, and eight
+passed on the spot.
+
+**Wrong.**
+
+L9-WA-008 keyed "linear regression and a fuller treatment of correlation are
+deferred to SDS2". A search for `SDS2` returns nothing in Lecture 9, and its
+last three pages are the exam notice and the course evaluation. The lecture never
+says it, so the question and the rubric that graded that point are gone, and what
+is left is the half the lecture does support: Monte-Carlo for awkward
+probabilities, bootstrapping for standard errors.
+
+L9-WA-003 and L9-WA-006 were the same defect in a smaller room. Both rubrics
+graded an element their keyed answer never contained - "the bootstrap
+approximates rather than computes exactly" and "converges to the analytic value
+as N grows". A student answering the key perfectly would have lost points for
+saying nothing else. Both answers now carry the clause their rubric already
+demanded.
+
+L8-MC-008 keyed a post hoc test "such as Tukey", and Tukey appears on exactly one
+page of Lecture 8, the p.40 flow chart. p.25 gives the omnibus argument but not
+the name, so the question now cites both.
+
+**Second pages.** L7-WA-006's answer ends "if the samples were paired you would
+instead work with the differences within pairs", which is p.52, not the p.47 it
+cited. L9-WA-008 now also cites p.12, where the Monte-Carlo half lives.
+
+**Passed, all read against their slides.** L1-WA-001 maps all four sampling terms
+onto p.26. L1-WA-004 restates p.44's rule about the hash symbol. L2-MC-011's two
+keyed options are the positional indices p.48 teaches. L2-MC-016 follows from
+p.54's printed pipeline and its three-row output. L3-MC-019 follows from p.62's
+description of the left join, and L3-WA-001's three formulas are the p.38 recap
+verbatim. L4-MC-008's 24/72 and its marginal reading are both on p.40, and
+L4-MC-012 is p.37's bag example worked through. L5-MC-012 restates the CLT from
+p.47. L6-MC-005 is p.21's step 3. L7-MC-011 and L7-MC-012 are both p.64's
+printed code, L7-MC-014 is p.31's `2 * pt(...)`, L7-MC-016 quotes p.52 twice
+over, and L7-WA-007's formula is p.54's step 3 with its 1.96.
+
+### The eighth false alarm, and it was mine again
+
+L7-MC-009 looked like the worst finding of the whole review: option (c) is
+p.47's formula written out character for character, and it appeared to be marked
+wrong while a prose paraphrase of the same thing was marked right. I was about to
+write it up as a keying error.
+
+The bank said otherwise. `correct` is `['a', 'c']`. Both were keyed correctly all
+along, and my own viewer had printed `KEY>` on both lines - I misread a block of
+output rather than checking it.
+
+That is the eighth time in this review the snapshot was misread rather than the
+question being wrong, and the first time the faulty reader was the one I had just
+written for this pass. The rule that stopped it is the same one that stopped the
+other seven: read the key from `tools/bank/` or from `questions.json`, never from
+a rendered dump.
+
+
+| L2-MC-022 | **wrong** | keyed that the axis labels name the variables "and their units"; p.37 lists x-axis label, y-axis label, legend, title and subtitle and never mentions units. The clause is gone |
+
+| L9-MC-004 | ok - p.12 is the Monte-Carlo example itself, X ~ N(3,1) and Y ~ Exp(0.5), count H then take H/N, and the option that H/N estimates the awkward probability is p.12's own framing |
+| L9-MC-005 | ok - p.18 lists all four bootstrap steps, so both keyed options are printed: the three uses in step 4, and "when you only have sample data" with mean, median and variance named |
+

@@ -143,7 +143,7 @@ def questions():
         "single omnibus test such as ANOVA, which controls the overall Type I error rate. "
         "Merely shrinking alpha for each test wastes power and does not fix the underlying "
         "problem of repeated decisions.",
-        PDF, "p.25"))
+    PDF, "p.25", also=["p.40"]))
 
     out.append(mc(
         "L8-MC-009", 8, "Chi-squared tests",
