@@ -369,10 +369,12 @@ def render_why(text: str, label: str = "Why?") -> None:
 def mc_options_ui(q: dict, key_prefix: str, disabled: bool = False) -> list[str]:
     """Render checkbox options and return the labels marked.
 
-    A short tick plays the first time an option is marked, which is the only
-    feedback that lands while the student is still deciding, so it is the one
-    worth having. It is deliberately quiet: this can fire several times a
-    question.
+    This used to play a short tick the first time an option was marked, on the
+    argument that it is the only feedback that lands while the student is still
+    deciding. It has been taken out: ticking three boxes in a row is three ticks,
+    and by the fourth the sound is noise rather than information. What is left
+    plays once per answered question and says something about the answer, which
+    is the part worth spending a sound on.
     """
     chosen = []
     for label, text in q["options"].items():
@@ -382,12 +384,6 @@ def mc_options_ui(q: dict, key_prefix: str, disabled: bool = False) -> list[str]
             disabled=disabled,
         ):
             chosen.append(label)
-
-    mark_key = key_prefix + "_marked"
-    already = set(st.session_state.get(mark_key, []))
-    if set(chosen) - already:
-        celebrate.play("tap", st.session_state.get("sound_on", True))
-    st.session_state[mark_key] = list(chosen)
     return chosen
 
 

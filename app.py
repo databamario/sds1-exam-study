@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import streamlit as st
 
-from src import loader, progress, ui
+from src import loader, progress, ui, celebrate
 from src.views import mock_exam, practice, progress_view, review
 
 st.set_page_config(
@@ -132,3 +132,11 @@ elif target == "progress":
     progress_view.dashboard(bank, conn)
 elif target == "coverage":
     review.r_coverage(bank)
+
+# Drawn last, and here rather than where the sound was queued. Rendering the
+# audio element from inside the question-rendering helpers produced no iframe at
+# all - no element, no error, no sound - while the identical call from the top
+# level of the script produced one holding a decoded <audio>. Measured, not
+# assumed. Anything that calls celebrate.play() above only queues the sound; this
+# is the single place it reaches the page.
+celebrate.flush()

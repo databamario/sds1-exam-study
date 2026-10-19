@@ -125,11 +125,36 @@ _SOUND_VOLUME = {
 }
 
 
-def play(name: str, enabled: bool = True) -> None:
-    """Play one short effect.
+_PENDING_KEY = "_sds_pending_sound"
+_SEQ_KEY = "_sds_sound_seq"
+_DRAWN_KEY = "_sds_sound_drawn"
 
-    The audio rides inside the markup as a ``data:`` URI. That is the third
-    mechanism tried here, and the first two are worth recording so the afternoon is
+_PLAYER = """
+<audio id="sds-sfx" preload="auto" src="%s"></audio>
+<script>
+  var a = document.getElementById('sds-sfx');
+  a.volume = %s;
+  a.currentTime = 0;
+  var p = a.play();
+  if (p && p.catch) { p.catch(function () {}); }
+</script>
+"""
+
+
+def play(name: str, enabled: bool = True) -> None:
+    """Queue one short effect, to be drawn by :func:`flush`.
+
+    Queueing rather than rendering is the whole trick, and it was found by
+    measurement rather than reasoning. The identical ``components.html`` call was
+    run from two places in the same process: called at the top level of the script
+    it produced an iframe holding a decoded ``<audio>`` - ``readyState`` 4, no
+    error, duration 0.085 s, matching the source wav exactly. Called from deep
+    inside the question-rendering helpers it produced no iframe at all, no error
+    and no sound. Same function, same arguments. So the sound is queued here, and
+    drawn from the one place it is known to work.
+
+    The audio rides inside the markup as a ``data:`` URI, which is the third
+    mechanism tried here. The first two are worth recording so the afternoon is
     not spent a fourth time.
 
     It used to load from ``/app/static/sfx/<name>.wav``, which needs Streamlit's
@@ -142,39 +167,51 @@ def play(name: str, enabled: bool = True) -> None:
 
     The files then moved into a declared component's directory, which does serve
     them: verified on the deployed app as ``audio/vnd.wave`` with RIFF headers and
-    byte counts matching the originals. But the component never rendered, so
-    nothing played them. Two mechanisms, two different silences.
+    byte counts matching the originals. That was not the problem either, which is
+    what took the longest to accept.
 
-    A data URI sidesteps both. There is no route to register, no configuration to
-    set and no component for the browser to fail to draw; the audio arrives with
-    the page. What it costs is size - 100 KB of wav becomes 135 KB of base64 - and
-    that is worth paying for a sound that cannot fail to be playable.
-
-    ``components.html`` is used because it is already proven on this deployment:
-    the progress store writes through it. Height is zero, so it draws nothing.
-    ``.play()`` has its rejection swallowed, because browsers refuse to start audio
-    before the reader has interacted with the page, and that must degrade to
-    silence rather than raise.
+    A data URI needs no route, no configuration and no component: the audio
+    arrives with the page. The cost is size - 100 KB of wav becomes 135 KB of
+    base64 - which is worth paying for a sound that cannot fail to be playable.
     """
     if not enabled or name not in _SOUND_VOLUME:
+        return
+    seq = st.session_state.get(_SEQ_KEY, 0) + 1
+    st.session_state[_SEQ_KEY] = seq
+    st.session_state[_PENDING_KEY] = (seq, name)
+
+
+def flush() -> None:
+    """Draw the queued sound, once, from the top level of the script run.
+
+    Nothing is cleared when the sound is drawn. Answering a question ends with
+    ``st.rerun()``, which unwinds the script immediately - so a run that queues a
+    sound usually never reaches the end of the file, and a queue that was emptied
+    at that point would take the sound down with it. Instead each queued sound
+    carries a sequence number, and it is considered drawn only once that number has
+    actually been rendered. The run after the rerun draws it.
+
+    A sound queued but never drawn would otherwise repeat forever on every
+    subsequent run, which is why the drawn marker exists rather than just leaving
+    the queue in place.
+
+    ``.play()`` has its rejection swallowed. Browsers refuse to start audio before
+    the reader has interacted with the page, and that has to degrade to silence
+    rather than raise.
+    """
+    pending = st.session_state.get(_PENDING_KEY)
+    if pending is None:
+        return
+    seq, name = pending
+    if st.session_state.get(_DRAWN_KEY) == seq:
         return
     uri = _SOUND_URI.get(name)
     if not uri:
         print("[celebrate] no embedded audio for %r" % (name,), file=sys.stderr)
+        st.session_state[_DRAWN_KEY] = seq
         return
-    components.html(
-        """
-        <audio id="sds-sfx" preload="auto" src="%s"></audio>
-        <script>
-          var a = document.getElementById('sds-sfx');
-          a.volume = %s;
-          a.currentTime = 0;
-          var p = a.play();
-          if (p && p.catch) { p.catch(function () {}); }
-        </script>
-        """ % (uri, _SOUND_VOLUME[name]),
-        height=0,
-    )
+    components.html(_PLAYER % (uri, _SOUND_VOLUME[name]), height=0)
+    st.session_state[_DRAWN_KEY] = seq
 
 
 def streak_upto(queue: list[dict], history: dict, done: dict, index: int) -> int:
