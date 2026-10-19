@@ -138,7 +138,7 @@ def questions():
         "fact an unbiased estimator of the population mean, so the claim that it is biased "
         "gets that backwards; and an estimator does not collapse to a fixed number, it "
         "gives a different one for every sample.",
-        PDF, "p.37", origin="adapted_HT25"))
+        PDF, "p.37", also=["p.35"], origin="adapted_HT25"))
 
     out.append(mc(
         "L5-MC-009", 5, "Sampling distribution and variance",
@@ -248,14 +248,13 @@ def questions():
          "The mean is larger than the median.",
          "The mean and median are always equal for a symmetric distribution.",
          "The median is more affected by outliers than the mean.",
-         "A right-skewed distribution is not a symmetric one, so it is not a case where "
-         "the mean and median coincide."],
+         "A right-skewed distribution is one where the median is the safer summary, "
+         "since it is robust to outliers and skew where the mean is not."],
         ["b", "e"],
         "A long right tail pulls the mean upward, so the mean exceeds the median. The "
-        "median is the more robust of the two, which is why the option claiming it is more "
-        "affected has it backwards. The mode is still perfectly well defined for a skewed "
-        "distribution, and the mean and median coincide only in the symmetric case, which "
-        "a right-skewed distribution is not.",
+        "page's pros and cons make the same point the other way round: the mean is "
+        "sensitive to outliers and skewed data, while the median is robust to both, so "
+        "the option claiming the median is more affected has it backwards.",
         PDF3, "p.21", r_functions=["mean", "median", "quantile"]))
 
     # ----------------------------------------------------------------- written

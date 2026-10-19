@@ -39,7 +39,7 @@ def questions():
         "every card in a deck is either red or black, because face cards are coloured too, "
         "so the two together cover the entire sample space. Disjoint and complementary are "
         "not exclusive of each other.",
-        PDF, "p.17"))
+        PDF, "p.17", also=['p.16']))
 
     out.append(mc(
         "L4-MC-003", 4, "Disjoint and joint events",
@@ -225,7 +225,7 @@ def questions():
         "independent. Without replacement, after a blue is removed the probability of a "
         "second blue is 2/9, not 3/9, because one blue and one ball overall have been "
         "taken out.",
-        PDF, "p.37"))
+        PDF, "p.37", also=['p.36']))
 
     out.append(mc(
         "L4-MC-014", 5, "Random variables",
@@ -268,7 +268,7 @@ def questions():
         [rb("Disjoint defined as unable to occur together, intersection probability 0", 2),
          rb("Joint defined as able to occur together", 2),
          rb("Correct card example given for each", 2)],
-        1, PDF, "p.15",
+        1, PDF, "p.15", also=['p.16'],
         detail="The two are easy to confuse because the word joint is used loosely in everyday speech. In probability a joint probability is simply the probability of an intersection, whether or not that intersection is empty. Disjoint is a special case of mutually exclusive, and the pair red-and-black in a single draw is the clearest classroom example because a card genuinely cannot be both."))
 
     out.append(wa(
@@ -296,13 +296,14 @@ def questions():
 
     out.append(wa(
         "L4-WA-004", 4, "Independence",
-        "Define independence of two events, and explain why drawing two cards without "
-        "replacement gives dependent outcomes.",
-        "Two events are independent if knowing whether B occurred gives no useful information about A, written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent, because the first card changes what remains.",
+        "Define independence of two events, and explain why drawing without "
+        "replacement from a bag of 5 red, 3 blue and 2 orange balls gives "
+        "dependent outcomes.",
+        "Two events are independent if knowing whether B occurred gives no useful information about A, written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent, because the first draw changes what remains.",
         [rb("Independence defined via P(A|B) = P(A|Bc) = P(A)", 2),
          rb("Explains the first draw changes what remains", 2),
          rb("Uses the 3/10 versus 2/9 contrast as evidence")],
-        1, PDF, "p.29",
+        1, PDF, "p.29", also=['p.37'],
         detail="In the bag example the probability of a second blue drops from 3/10 to 2/9 once a blue is removed, so the second draw depends on the first. Independence is what allows the multiplication rule P(A and B) = P(A) * P(B) to be used; without it you need the conditional form instead."))
 
     out.append(wa(
@@ -315,7 +316,7 @@ def questions():
         [rb("Addition rule written in full including the subtraction term"),
          rb("Substitutes 5/10 and 2/10"),
          rb("Justifies the zero intersection as the events being disjoint")],
-        1, PDF, "p.22"))
+        1, PDF, "p.22", also=['p.21']))
 
     out.append(wa(
         "L4-WA-006", 4, "Joint and conditional probability",
@@ -325,7 +326,7 @@ def questions():
         [rb("Marginal defined as using an overall total and ignoring the other variable", 2),
          rb("Conditional defined as joint probability divided by the condition", 2),
          rb("Correct MTO figures 24/72 and 14/24 used")],
-        1, PDF, "p.43",
+        1, PDF, "p.43", also=['p.40'],
         detail="The two differ, which is itself evidence of an association. A conditional probability is always read inside the given condition, so the denominator is the total for that condition rather than the grand total. This is the calculation behind a comparison of two conditional probabilities that produces a chi-squared test for independence."))
 
     out.append(wa(

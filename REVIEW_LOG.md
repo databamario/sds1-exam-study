@@ -485,3 +485,43 @@ What that question actually lacked was not the mean but the mode, the range and
 the standard deviation its explanation discusses, and those are on the p.38
 recap. The page that looked obviously right was not the page the question needed.
 
+
+## Lectures 4, 5 and 6 read against their slides
+
+Twenty-two questions. Two were wrong, and the other twenty were missing pages.
+
+L5-MC-015 keyed "a right-skewed distribution is not a symmetric one, so it is not a
+case where the mean and median coincide". p.21's pros-and-cons table says the mean
+is sensitive to outliers and skewed data and the median is robust to both; it never
+mentions symmetry or coincidence. The option now states the table's own claim, and
+the explanation's detour about the mode, which p.21 also does not make, is gone.
+
+L4-WA-004 asked about drawing two *cards* without replacement while its rubric
+demanded the bag's 3/10 versus 2/9. The question now asks about the bag, which is
+what the answer and the cited page actually use.
+
+The twenty missing pages are the same defect as before, and they cluster where the
+lecture splits a single idea across consecutive slides:
+
+| id | added | why |
+| --- | --- | --- |
+| L4-MC-002 | p.16 | p.16 defines disjoint and uses the same red/black card; p.17 only covers complementary |
+| L4-WA-001 | p.16 | the card examples are on p.16, the definitions on p.15 |
+| L4-MC-013 | p.36 | "with replacement draws are independent" is on p.36; p.37 is only without replacement |
+| L4-WA-004 | p.37 | the 3/10 to 2/9 contrast is on p.37; p.29 defines independence with a school example |
+| L4-WA-005 | p.21 | p.22 is a figure reference whose text layer carries no formula; p.21 works the rule |
+| L4-WA-006 | p.40 | the marginal half is p.40; p.43 has only the conditional |
+| L5-MC-008 | p.35 | p.35 defines an estimator as a function of the data and a random variable; p.37 only shows the sample mean is unbiased |
+| L6-MC-009 | p.32, p.33, p.34 | the question spans the definition, the confidence level and the coverage |
+| L6-WA-003 | p.48 | the answer's "estimate +/- critical value x SE" is p.48's notation, not p.39's |
+
+L4-MC-009 needed three pages and that is not a workaround. "What is a confidence
+interval", "what happens at 99%", and "how often does it cover the truth" are three
+separate slides, and the question asks all three. The old format could only keep
+one and would have had to drop two of them.
+
+Eleven passed on the same test, including several whose keyed answers are the cited
+page verbatim: L4-MC-005 against p.21's worked addition rule, L6-MC-006 against
+p.26's bias definition, L6-MC-010 against p.48's three components, and L6-MC-004
+against p.19's printed pnorm output.
+

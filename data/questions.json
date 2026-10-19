@@ -2795,7 +2795,7 @@
     "b": "The mean is larger than the median.",
     "c": "The mean and median are always equal for a symmetric distribution.",
     "d": "The median is more affected by outliers than the mean.",
-    "e": "A right-skewed distribution is not a symmetric one, so it is not a case where the mean and median coincide."
+    "e": "A right-skewed distribution is one where the median is the safer summary, since it is robust to outliers and skew where the mean is not."
    },
    "correct": [
     "b",
@@ -2803,7 +2803,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "A long right tail pulls the mean upward, so the mean exceeds the median. The median is the more robust of the two, which is why the option claiming it is more affected has it backwards. The mode is still perfectly well defined for a skewed distribution, and the mean and median coincide only in the symmetric case, which a right-skewed distribution is not.",
+   "explanation": "A long right tail pulls the mean upward, so the mean exceeds the median. The page's pros and cons make the same point the other way round: the mean is sensitive to outliers and skewed data, while the median is robust to both, so the option claiming the median is more affected has it backwards.",
    "r_flavoured": true,
    "r_functions": [
     "mean",
@@ -3305,7 +3305,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.17"
+    "slide": "p.17",
+    "slides": [
+     "p.17",
+     "p.16"
+    ]
    },
    "origin": "new"
   },
@@ -3592,7 +3596,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.37"
+    "slide": "p.37",
+    "slides": [
+     "p.37",
+     "p.36"
+    ]
    },
    "origin": "new"
   },
@@ -3623,7 +3631,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.15"
+    "slide": "p.15",
+    "slides": [
+     "p.15",
+     "p.16"
+    ]
    },
    "origin": "new"
   },
@@ -3697,9 +3709,9 @@
    "lecture": 4,
    "type": "WA",
    "topic": "Independence",
-   "stem": "Define independence of two events, and explain why drawing two cards without replacement gives dependent outcomes.",
+   "stem": "Define independence of two events, and explain why drawing without replacement from a bag of 5 red, 3 blue and 2 orange balls gives dependent outcomes.",
    "points": 1,
-   "answer": "Two events are independent if knowing whether B occurred gives no useful information about A, written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent, because the first card changes what remains.",
+   "answer": "Two events are independent if knowing whether B occurred gives no useful information about A, written P(A|B) = P(A|Bc) = P(A). Drawing without replacement is dependent, because the first draw changes what remains.",
    "detail": "In the bag example the probability of a second blue drops from 3/10 to 2/9 once a blue is removed, so the second draw depends on the first. Independence is what allows the multiplication rule P(A and B) = P(A) * P(B) to be used; without it you need the conditional form instead.",
    "rubric": [
     {
@@ -3719,7 +3731,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.29"
+    "slide": "p.29",
+    "slides": [
+     "p.29",
+     "p.37"
+    ]
    },
    "origin": "new"
   },
@@ -3750,7 +3766,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.22"
+    "slide": "p.22",
+    "slides": [
+     "p.22",
+     "p.21"
+    ]
    },
    "origin": "new"
   },
@@ -3781,7 +3801,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.43"
+    "slide": "p.43",
+    "slides": [
+     "p.43",
+     "p.40"
+    ]
    },
    "origin": "new"
   },
@@ -4100,7 +4124,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture5_after.pdf",
-    "slide": "p.37"
+    "slide": "p.37",
+    "slides": [
+     "p.37",
+     "p.35"
+    ]
    },
    "origin": "adapted_HT25"
   },
@@ -4908,7 +4936,12 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.34"
+    "slide": "p.32",
+    "slides": [
+     "p.32",
+     "p.33",
+     "p.34"
+    ]
    },
    "origin": "new"
   },
@@ -5136,7 +5169,11 @@
    ],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.39"
+    "slide": "p.39",
+    "slides": [
+     "p.39",
+     "p.48"
+    ]
    },
    "origin": "new"
   },

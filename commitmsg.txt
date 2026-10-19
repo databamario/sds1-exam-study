@@ -1,43 +1,30 @@
-Read L3: three claims the lecture never makes, and two untaught arguments
+Read L4, L5 and L6: twenty questions missing a page, two saying things the slides do not
 
-Eight questions. Five passed, three were wrong, and the three share a shape:
-they ask about something the lecture simply does not cover.
+Twenty-two questions. Two were wrong in substance and twenty had a second page
+they should have cited but did not. That is a much higher rate than the earlier
+batches found, and the reason is visible in the table: the lectures split single
+ideas across consecutive slides, so the question sits on the seam.
 
-L3-WA-008 asked why a histogram is preferred to a bar plot for a numerical
-variable. Lecture 3 does not teach bar plots - the word appears once, on p.54,
-in a warning about geom_col(). What p.24 actually contrasts is a histogram with
-a dotplot, so that is what the question now asks.
+L4-MC-009 is the clearest case. "What is a confidence interval", "what happens at
+99%", and "how often does it cover the truth" are p.32, p.33 and p.34 respectively,
+and the question asks all three. Under the old format two of them had to go. It
+now cites all three and the two other CI questions sit on their own slides.
 
-L3-MC-016 keyed "NA with a warning" as the result of mean() on c(1, 2, "3"),
-where p.58 prints "# error" and then the value NA. L3-WA-003's answer had the
-same phrase. Both now say NA and stop there, which is what the page shows; the
-distinction the question is really testing is NA against a number, not NA
-against a hard stop.
+The rest follow the same shape. p.16 defines disjoint and uses the same red/black
+card that L4-MC-002 asks about, while the p.17 it cited only covers complementary.
+p.36 is where "with replacement draws are independent" is printed, and L4-MC-013 was
+citing p.37, which is entirely about without replacement. p.35 defines an estimator
+as a function of the data and a random variable, which is the whole keyed content
+of L5-MC-008, while p.37 only shows the sample mean is unbiased. p.22 turned out to
+be a figure reference whose text layer carries no formula at all, so L4-WA-005 now
+cites p.21, where the rule is actually worked.
 
-L1-WA-007 and L3-MC-010 both lean on the interquartile range, which Lecture 3
-never defines. It is named on p.13 in a list of topics and again on p.66, and
-nowhere else. L3-MC-010 now keys Q3 minus Q1, which p.35 states outright, and
-its detail says so.
-
-The rest were pages that existed and had not been cited. `.by` is on p.54
-(L2-MC-017). The interquartile range's basis, the quartiles, are on p.35
-(L3-MC-007). The type hierarchy is on p.56, while p.58 is only the pitfall
-(L3-WA-003). L3-MC-001 cites the p.38 recap beside p.17, because what it lacked
-was not the mean but the mode, range and standard deviation its explanation
-names.
-
-That last one is the useful finding. I reached for p.15, the mean page, because
-option (c) is about the mean being pulled upward - and the gate refused it. It
-was right. The terms actually missing after p.17 were mode, range, sd and
-standard, and those live on the recap table. The page that looked obviously
-correct was not the page the question needed, and term overlap said so before I
-did.
-
-Five of nineteen wrong. Fourteen passed on the same test: L1-WA-001 maps all
-four sampling terms onto p.26, L1-WA-004 restates p.44's rule about the hash
-symbol, L2-MC-011's two keyed options are the positional indices p.48 teaches,
-L2-MC-016's follow from p.54's printed pipeline, L3-MC-019's from p.62's
-description of the left join, and L3-WA-001's three formulas are the p.38 recap
-verbatim.
+Two questions were wrong in the way that is harder to see. L5-MC-015 keyed a claim
+about symmetry and the mean and median coinciding, which p.21 never mentions; its
+options now say what p.21's table says. Its explanation also claimed the mode is
+"still perfectly well defined for a skewed distribution", which p.21 does not say
+either. And L4-WA-004 asked about drawing two cards while its rubric demanded the
+bag's 3/10 versus 2/9, so it asked about the bag, which is what the answer and the
+cited page actually use.
 
 Suite green apart from the rebuilt bank being uncommitted.
