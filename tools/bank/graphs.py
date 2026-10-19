@@ -75,15 +75,15 @@ def questions():
         "G-MC-003", 3, "Reading a box plot",
         "A box plot shows a box covering the middle 50% of the data. Which "
         "statement about group A in the plot is correct?",
-        ["At least 75% of the values lie between 10 and 50",
-         "The range of group A is 40",
+        ["About 75% of the values lie between 22 and 38",
+         "The interquartile range of group A is 40",
          "About 25% of the values lie above 38",
-         "The standard deviation of group A is 16"],
+         "The median of group A is 22"],
         ["c"],
-        "The top edge of the box is the third quartile at 38, so roughly the top "
-        "25% of values lie above it. A range of 40 would mean 50 minus 10, but "
-        "the whiskers are not necessarily the true extremes, and the standard "
-        "deviation cannot be read off a box plot at all.",
+        "The top edge of the box is the third quartile, so roughly the top quarter of "
+        "the values lie above it. The box spans the middle 50% rather than 75%, so the "
+        "interquartile range is the width of the box and not the full spread, and the "
+        "median is the line inside the box rather than its lower edge.",
         BOXPLOT[0], BOXPLOT[1], image="boxplots_h"))
 
     # ---- skew and centre

@@ -1424,32 +1424,31 @@
    "lecture": 2,
    "type": "MC",
    "topic": "Frequency tables",
-   "stem": "Consider the vector `x <- c(\"a\", \"b\", \"a\", NA)`. What does `table(x)` return?",
+   "stem": "Consider `table(titanic_data$class)`. What does the call return?",
    "options": {
-    "a": "Counts a = 1, b = 1, and NA = 1",
-    "b": "Counts a = 2, b = 1, and does not include NA by default",
-    "c": "Counts a = 2, b = 1, and includes NA = 1",
-    "d": "`table()` returns the number of observations in each category",
-    "e": "Returns an error because of the missing value"
+    "a": "One count per class, so 324 passengers are in 1st class",
+    "b": "The proportion of passengers in each class",
+    "c": "A data.frame with one row per class",
+    "d": "A vector of counts, named by the levels of the variable",
+    "e": "It errors, because class is a character variable"
    },
    "correct": [
-    "b",
+    "a",
     "d"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "`table()` ignores missing values unless you ask for them with `useNA = \"ifany\"`. So a = 2 and b = 1, and the NA is silently dropped.",
+   "explanation": "The output is a frequency for every level of the variable, with the counts as the values and the level names attached, which is why reading it needs both parts. What comes out is a count rather than a proportion.",
    "r_flavoured": true,
    "r_functions": [
-    "table",
-    "NA"
+    "table"
    ],
    "source": {
     "pdf": "lecture2.pdf",
     "slide": "p.28"
    },
    "origin": "new",
-   "code": "x <- c(\"a\", \"b\", \"a\", NA)\ntable(x)"
+   "code": "table(titanic_data$class)"
   },
   {
    "id": "L2-MC-022",
@@ -2003,17 +2002,17 @@
    "topic": "Reading a box plot",
    "stem": "A box plot shows a box covering the middle 50% of the data. Which statement about group A in the plot is correct?",
    "options": {
-    "a": "At least 75% of the values lie between 10 and 50",
-    "b": "The range of group A is 40",
+    "a": "About 75% of the values lie between 22 and 38",
+    "b": "The interquartile range of group A is 40",
     "c": "About 25% of the values lie above 38",
-    "d": "The standard deviation of group A is 16"
+    "d": "The median of group A is 22"
    },
    "correct": [
     "c"
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The top edge of the box is the third quartile at 38, so roughly the top 25% of values lie above it. A range of 40 would mean 50 minus 10, but the whiskers are not necessarily the true extremes, and the standard deviation cannot be read off a box plot at all.",
+   "explanation": "The top edge of the box is the third quartile, so roughly the top quarter of the values lie above it. The box spans the middle 50% rather than 75%, so the interquartile range is the width of the box and not the full spread, and the median is the line inside the box rather than its lower edge.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2964,29 +2963,26 @@
    "lecture": 3,
    "type": "WA",
    "topic": "Quantiles, quartiles and box plots",
-   "stem": "Explain what the interquartile range measures and why it is preferable to the standard deviation for a right-skewed distribution.",
+   "stem": "What does the interquartile range measure, in terms of the quartiles?",
    "points": 1,
-   "answer": "The interquartile range spans the middle 50% of the data, from Q1 to Q3, so it is Q3 - Q1. The standard deviation squares every deviation from the mean, so a single very large value inflates it heavily.",
-   "detail": "Because the IQR depends only on the middle half of the ordered data, it ignores the extreme tail and is far more stable for skewed data. That is why the IQR is the preferred measure of spread whenever the distribution is not roughly symmetric, and why income-type variables are routinely summarised with a median and IQR rather than a mean and standard deviation.",
+   "answer": "The interquartile range spans the middle 50% of the data, running from Q1 to Q3, so it is Q3 - Q1. Quartiles divide the data into four equal parts, with Q1 the 25th percentile and Q3 the 75th.",
+   "detail": "Because the median is the 50th percentile, half the data falls below it and half above, which is the one dividing point a box plot marks exactly. Preferring the IQR over the standard deviation when a distribution is skewed is a sound habit, but it is a property of the two measures rather than something this page states.",
    "rubric": [
     {
-     "text": "IQR defined as Q3 - Q1 and described as the middle 50%",
+     "text": "IQR described as running from Q1 to Q3",
      "elements": 2
     },
     {
-     "text": "Explains that squaring amplifies the influence of extreme values",
+     "text": "Q3 - Q1 given as the formula",
      "elements": 2
     },
     {
-     "text": "Concludes the IQR is therefore preferable for skewed data",
-     "elements": 1
+     "text": "Q1 named as the 25th percentile and Q3 the 75th",
+     "elements": 2
     }
    ],
-   "r_flavoured": true,
-   "r_functions": [
-    "IQR",
-    "quantile"
-   ],
+   "r_flavoured": false,
+   "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
     "slide": "p.35"
@@ -7189,32 +7185,29 @@
    "id": "L9-MC-006",
    "lecture": 9,
    "type": "MC",
-   "topic": "Bootstrapping",
-   "stem": "Why is `set.seed()` used before a simulation?",
+   "topic": "Monte-Carlo accuracy",
+   "stem": "The birthday simulation returns 0.7103, while the exact answer is written 1 - (365 x 364 x ... x 336) / 365^30 = 0.706. Which two statements about these two numbers are true?",
    "options": {
-    "a": "It makes the simulation run faster",
-    "b": "It makes the random numbers reproducible so results can be recovered",
-    "c": "It increases the number of simulations",
-    "d": "It sets the starting state of the pseudo-random generator, so the same seed reproduces the same sequence of draws",
-    "e": "It removes the need for a bootstrap"
+    "a": "The simulated value and the exact value agree to about two decimal places",
+    "b": "The exact value comes from the product formula, and the simulation only approximates it",
+    "c": "The numerator 365 x 364 x ... x 336 counts all possible birthday assignments",
+    "d": "The simulated value becomes exactly the true probability once N is large enough",
+    "e": "The exact value is itself an estimate, obtained by running the simulation with a larger N"
    },
    "correct": [
-    "b",
-    "d"
+    "a",
+    "b"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "`set.seed()` fixes the starting state of the random number generator, so the same seed reproduces the same pseudo-random draws. That is essential when a result needs to be reported or checked by someone else.",
-   "r_flavoured": true,
-   "r_functions": [
-    "set.seed"
-   ],
+   "explanation": "The product in the numerator counts the assignments with no repeated day, so subtracting it from the total 365^30 leaves the assignments containing at least one match, which is the exact probability. The simulation arrives at the same quantity by repeating the draw and keeping the fraction of iterations that contained a match, which is why it lands near the exact value rather than on it.",
+   "r_flavoured": false,
+   "r_functions": [],
    "source": {
     "pdf": "lecture9_after.pdf",
     "slide": "p.16"
    },
-   "origin": "adapted_HT25",
-   "code": "set.seed(42)"
+   "origin": "adapted_HT25"
   },
   {
    "id": "L9-MC-007",

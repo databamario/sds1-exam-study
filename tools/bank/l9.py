@@ -100,20 +100,24 @@ def questions():
         r_functions=["sample", "replace", "median", "numeric", "for"]))
 
     out.append(mc(
-        "L9-MC-006", 9, "Bootstrapping",
-        "Why is `set.seed()` used before a simulation?",
-        ["It makes the simulation run faster",
-         "It makes the random numbers reproducible so results can be recovered",
-         "It increases the number of simulations",
-         "It sets the starting state of the pseudo-random generator, so the same seed "
-         "reproduces the same sequence of draws",
-         "It removes the need for a bootstrap"],
-        ["b", "d"],
-        "`set.seed()` fixes the starting state of the random number generator, so the same "
-        "seed reproduces the same pseudo-random draws. That is essential when a result needs "
-        "to be reported or checked by someone else.",
-        PDF, "p.16", code="set.seed(42)", r_functions=["set.seed"],
-        origin="adapted_HT25"))
+        "L9-MC-006", 9, "Monte-Carlo accuracy",
+        "The birthday simulation returns 0.7103, while the exact answer is written "
+        "1 - (365 x 364 x ... x 336) / 365^30 = 0.706. Which two statements about these "
+        "two numbers are true?",
+        ["The simulated value and the exact value agree to about two decimal places",
+         "The exact value comes from the product formula, and the simulation only "
+         "approximates it",
+         "The numerator 365 x 364 x ... x 336 counts all possible birthday assignments",
+         "The simulated value becomes exactly the true probability once N is large enough",
+         "The exact value is itself an estimate, obtained by running the simulation with "
+         "a larger N"],
+        ["a", "b"],
+        "The product in the numerator counts the assignments with no repeated day, so "
+        "subtracting it from the total 365^30 leaves the assignments containing at least "
+        "one match, which is the exact probability. The simulation arrives at the same "
+        "quantity by repeating the draw and keeping the fraction of iterations that "
+        "contained a match, which is why it lands near the exact value rather than on it.",
+        PDF, "p.16", origin="adapted_HT25"))
 
     out.append(mc(
         "L9-MC-007", 9, "Bootstrapping",

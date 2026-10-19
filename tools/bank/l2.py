@@ -352,18 +352,18 @@ def questions():
 
     out.append(mc(
         "L2-MC-021", 2, "Frequency tables",
-        "Consider the vector `x <- c(\"a\", \"b\", \"a\", NA)`. What does "
-        "`table(x)` return?",
-        ["Counts a = 1, b = 1, and NA = 1",
-         "Counts a = 2, b = 1, and does not include NA by default",
-         "Counts a = 2, b = 1, and includes NA = 1",
-         "`table()` returns the number of observations in each category",
-         "Returns an error because of the missing value"],
-        ["b", "d"],
-        "`table()` ignores missing values unless you ask for them with "
-        "`useNA = \"ifany\"`. So a = 2 and b = 1, and the NA is silently dropped.",
-        PDF, "p.28", code="x <- c(\"a\", \"b\", \"a\", NA)\ntable(x)",
-        r_functions=["table", "NA"]))
+        "Consider `table(titanic_data$class)`. What does the call return?",
+        ["One count per class, so 324 passengers are in 1st class",
+         "The proportion of passengers in each class",
+         "A data.frame with one row per class",
+         "A vector of counts, named by the levels of the variable",
+         "It errors, because class is a character variable"],
+        ["a", "d"],
+        "The output is a frequency for every level of the variable, with the counts as "
+        "the values and the level names attached, which is why reading it needs both "
+        "parts. What comes out is a count rather than a proportion.",
+        PDF, "p.28", code="table(titanic_data$class)",
+        r_functions=["table"]))
 
     out.append(mc(
         "L2-MC-022", 2, "Elements of a graph",

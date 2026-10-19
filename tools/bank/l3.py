@@ -361,14 +361,15 @@ def questions():
 
     out.append(wa(
         "L3-WA-002", 3, "Quantiles, quartiles and box plots",
-        "Explain what the interquartile range measures and why it is preferable to the "
-        "standard deviation for a right-skewed distribution.",
-        "The interquartile range spans the middle 50% of the data, from Q1 to Q3, so it is Q3 - Q1. The standard deviation squares every deviation from the mean, so a single very large value inflates it heavily.",
-        [rb("IQR defined as Q3 - Q1 and described as the middle 50%", 2),
-         rb("Explains that squaring amplifies the influence of extreme values", 2),
-         rb("Concludes the IQR is therefore preferable for skewed data")],
-        1, PDF, "p.35", r_functions=["IQR", "quantile"],
-        detail="Because the IQR depends only on the middle half of the ordered data, it ignores the extreme tail and is far more stable for skewed data. That is why the IQR is the preferred measure of spread whenever the distribution is not roughly symmetric, and why income-type variables are routinely summarised with a median and IQR rather than a mean and standard deviation."))
+        "What does the interquartile range measure, in terms of the quartiles?",
+        "The interquartile range spans the middle 50% of the data, running from Q1 to "
+        "Q3, so it is Q3 - Q1. Quartiles divide the data into four equal parts, with "
+        "Q1 the 25th percentile and Q3 the 75th.",
+        [rb("IQR described as running from Q1 to Q3", 2),
+         rb("Q3 - Q1 given as the formula", 2),
+         rb("Q1 named as the 25th percentile and Q3 the 75th", 2)],
+        1, PDF, "p.35",
+        detail="Because the median is the 50th percentile, half the data falls below it and half above, which is the one dividing point a box plot marks exactly. Preferring the IQR over the standard deviation when a distribution is skewed is a sound habit, but it is a property of the two measures rather than something this page states."))
 
     out.append(wa(
         "L3-WA-003", 3, "Type hierarchy and implicit coercion",
