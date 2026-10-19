@@ -101,6 +101,92 @@ PDF_CHECKS = [
     ("L3-WA-002", 3, "75", "75th percentile"),
 ]
 
+# --------------------------------------------------------------------------
+# The figure questions cite a slide that teaches the skill, but the numbers on
+# screen come from tools/figures.py and exist nowhere in the PDFs. So every
+# number a G-* question asserts used to be unverifiable, which is how G-MC-008
+# came to say group A's interval spans 7.6 units and group B's 3.8 when both
+# span 7.6: the check that would have caught it had no place to look.
+#
+# The fix is to make the figures a source the same way the PDFs are one. The
+# data is read from figures.py rather than copied here, so there is a single
+# place to change a number and this table cannot drift away from it.
+FIGURE_TOLERANCE = 0.011
+
+
+def _load_fig_data() -> dict:
+    """Import FIG_DATA out of tools/figures.py, the same way a reader would."""
+    import importlib.util
+
+    path = ROOT / "tools" / "figures.py"
+    if not path.exists():
+        return {}
+    try:
+        spec = importlib.util.spec_from_file_location("_figs", str(path))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return getattr(mod, "FIG_DATA", {}) or {}
+    except Exception:
+        return {}
+
+
+def _numbers_in(value, out: set[float]) -> None:
+    """Every number a figure's data holds, including digits inside labels."""
+    if isinstance(value, bool):
+        return
+    if isinstance(value, (int, float)):
+        out.add(float(value))
+    elif isinstance(value, str):
+        for raw in NUM_RE.findall(value):
+            try:
+                out.add(float(raw))
+            except ValueError:
+                pass
+    elif isinstance(value, dict):
+        lists: list[list[float]] = []
+        for item in value.values():
+            _numbers_in(item, out)
+            nums = [float(x) for x in item if isinstance(x, (int, float))
+                    and not isinstance(x, bool)] if isinstance(item, (list, tuple)) else []
+            if nums:
+                lists.append(nums)
+        # Interval bounds, means and any other equal-length columns describe the
+        # same objects, so their differences and midpoints are real quantities of
+        # the figure: the width of an interval is what the margin-of-error
+        # questions talk about, and it appears nowhere in the data itself.
+        for i in range(len(lists)):
+            for j in range(i + 1, len(lists)):
+                if len(lists[i]) != len(lists[j]):
+                    continue
+                for a, b in zip(lists[i], lists[j]):
+                    out.add(abs(a - b))
+                    out.add((a + b) / 2.0)
+    elif isinstance(value, (list, tuple)):
+        nums: list[float] = []
+        for item in value:
+            _numbers_in(item, out)
+            if isinstance(item, (int, float)) and not isinstance(item, bool):
+                nums.append(float(item))
+        if nums:
+            out.add(sum(nums))
+            out.add(sum(nums) / len(nums))
+            out.add(max(nums) - min(nums))
+            for a in nums:
+                for b in nums:
+                    out.add(abs(a - b))
+                    out.add((a + b) / 2.0)
+
+
+def figure_numbers() -> dict[str, set[float]]:
+    """Numbers each generated figure legitimately shows, directly or derived."""
+    cache = {}
+    for name, data in _load_fig_data().items():
+        out: set[float] = set()
+        _numbers_in(data, out)
+        cache[name] = out
+    return cache
+
+
 NUM_RE = re.compile(r"-?\d+\.?\d*(?:[eE][-+]?\d+)?")
 # print() prefixes scalars with a "[1] " index marker, which would otherwise be
 # read as the first number in the output.
@@ -128,14 +214,23 @@ ACCEPTED: dict[str, dict[str, str]] = {
     "G-WA-008": {
         "11": "a bar height in the generated figure",
         "29": "the upper edge of a bin label in the generated figure",
+        "0.23": "7/30 rounded to two decimals, a proportion of the generated figure",
     },
     "G-WA-011": {"7.4": "a boundary marked on the generated normal curve"},
+    "G-MC-003": {
+        "75": "'about 75% between the quartiles' is a property of the box, not a "
+              "number read off it; the option states it to be rejected",
+    },
+    "G-WA-003": {
+        "0.05": "the conventional significance level, named in the question",
+        "95": "'95% confidence interval' is the name of the interval shown, not a "
+              "value the figure plots",
+    },
     "G-WA-012": {
         "6.2": "the centre marked on the generated normal curve",
         "7.4": "a boundary marked on the generated normal curve",
     },
     # --- definitions, not measurements ---------------------------------------
-    "G-WA-003": {"0.05": "the conventional significance level, named in the question"},
     "L3-WA-002": {"50": "'the middle 50%' is the definition of the IQR"},
     "L4-WA-002": {
         "26": "the red-card count of a standard deck",
@@ -236,7 +331,8 @@ def unverified_literals(questions: dict[str, dict]) -> list[tuple[str, str]]:
     A literal is excluded when it is already claimed by a check in R_CHECKS or
     PDF_CHECKS, when it is noise, or when the stem already states it - a number
     repeated from the stem is an input the answer works from, not a value the
-    answer produces.
+    answer produces. Numbers a figure question reads off its own figure count as
+    verified too, since the figure is a source in the same sense the slides are.
     """
     claimed: dict[str, set[str]] = {}
     for qid, claim, *_ in R_CHECKS:
@@ -244,10 +340,13 @@ def unverified_literals(questions: dict[str, dict]) -> list[tuple[str, str]]:
     for qid, _lecture, claim, _needle in PDF_CHECKS:
         claimed.setdefault(qid, set()).add(claim)
 
+    figs = figure_numbers()
+
     out: list[tuple[str, str]] = []
     for qid, q in sorted(questions.items()):
         if q.get("type") != "WA":
             continue
+        allowed = figs.get(q.get("image"))
         given = set()
         for raw in literals(str(q.get("stem") or "")):
             given.add(str(float(raw)))
@@ -258,6 +357,9 @@ def unverified_literals(questions: dict[str, dict]) -> list[tuple[str, str]]:
             except ValueError:
                 continue
             if is_noise(value) or str(value) in given or raw in claimed.get(qid, ()):
+                continue
+            if allowed is not None and any(
+                    abs(value - a) <= FIGURE_TOLERANCE for a in allowed):
                 continue
             out.append((qid, raw))
     return out
@@ -288,6 +390,51 @@ def audit_unverified(failures: list[str], questions: dict[str, dict],
                         "it to R_CHECKS or PDF_CHECKS, or record why in ACCEPTED."
                         % (qid, raw))
     return len(leftovers)
+
+
+def audit_figures(failures: list[str], questions: dict[str, dict]) -> int:
+    """Every number a figure question asserts must match the figure it cites.
+
+    Written answers were already audited; multiple-choice explanations were
+    not, and an explanation is where a question states its own arithmetic. Both
+    are checked here against the data tools/figures.py actually draws.
+    """
+    figs = figure_numbers()
+    if not figs:
+        print("\n  --   no generated figure data found, skipping the figure audit")
+        return 0
+
+    bad = 0
+    for qid, q in sorted(questions.items()):
+        if not qid.startswith("G-"):
+            continue
+        name = q.get("image")
+        allowed = figs.get(name)
+        if allowed is None:
+            continue
+        body = " ".join(str(q.get(k) or "")
+                        for k in ("answer", "explanation", "detail", "rubric"))
+        for raw in sorted(set(literals(body)), key=float):
+            try:
+                value = float(raw)
+            except ValueError:
+                continue
+            if is_noise(value):
+                continue
+            if any(abs(value - a) <= FIGURE_TOLERANCE for a in allowed):
+                continue
+            if raw in ACCEPTED.get(qid, {}):
+                continue
+            bad += 1
+            print("  ??   %-11s %-9s asserted but not in %s" % (qid, raw, name))
+            failures.append(
+                "%s: asserts %s, which the %s figure does not contain. The "
+                "figure data is tools/figures.py; if the claim is right, the "
+                "figure is wrong, and if the figure is right, the claim is."
+                % (qid, raw, name))
+    if not bad:
+        print("\n  ok   every figure question's numbers match the figure it cites")
+    return bad
 
 
 def run_batch(rscript: str, checks: list[tuple[str, str]], td: str) -> dict[str, str]:
@@ -403,6 +550,7 @@ def main() -> int:
 
     print("\n%d numeric claims verified, %d failed." % (checked, len(failures)))
     audit_unverified(failures, questions, report=args.report)
+    audit_figures(failures, questions)
     if failures:
         print("\nProblems:")
         for f in failures:

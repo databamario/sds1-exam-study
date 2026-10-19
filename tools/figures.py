@@ -50,6 +50,69 @@ SHADE_3 = "#e8a5a5"
 
 DPI = 200
 
+# ---------------------------------------------------------------- figure data
+#
+# The numbers each figure draws live here, at module level, rather than inside
+# the drawing functions. That is what lets ``verify_numbers.py`` import them and
+# check that the G-* questions' answers and options actually agree with what is
+# plotted. While the data was buried in the functions, every number in a figure
+# question was unchecked - which is how G-MC-008 came to claim that group A's
+# interval spans 7.6 units and group B's 3.8 when both span 7.6.
+
+FIG_DATA = {
+    "bar_stacked": {
+        "categories": ["Never", "Rarely", "Sometimes", "Often"],
+        "men": [18, 22, 34, 26],
+        "women": [36, 22, 14, 13],
+    },
+    "boxplots_h": {
+        #            low    q1    med   q3    high
+        "A": [10, 22, 30, 38, 50],
+        "B": [5, 20, 30, 40, 55],
+        "C": [28, 29, 30, 31, 32],
+    },
+    "hist_skewed": {
+        "seed": 7, "shape": 2.0, "scale": 2.0, "n": 4000, "bins": 28,
+    },
+    "hist_symmetric": {
+        "bins": list(range(0, 28, 2)),
+        "counts": [1, 2, 5, 11, 19, 24, 21, 14, 8, 4, 2, 1, 1],
+    },
+    "ci_dotplot": {
+        "names": ["A", "B"],
+        "means": [52.4, 45.1],
+        "lo": [45.0, 41.3],
+        "hi": [59.8, 48.9],
+        "ref": 44.0,
+    },
+    "normal_shaded": {
+        "edges": [5.0, 6.2, 7.4],
+        "labels": ["a", "b", "c"],
+    },
+    "scatter_trend": {
+        "x_mean": 50, "x_sd": 10, "slope": 0.8, "intercept": 20,
+        "noise_sd": 14, "n": 120, "seed": 3,
+    },
+    "density_overlay": {
+        "A_mean": 30, "A_sd": 5, "B_mean": 38, "B_sd": 9, "n": 3000,
+        "seed": 11,
+    },
+    "corr_heatmap": {
+        "labels": ["Hours", "Sleep", "Screen", "Stress", "Caff"],
+        "matrix": [
+            [1.00, -0.28, 0.62, 0.41, 0.35],
+            [-0.28, 1.00, 0.18, -0.33, -0.15],
+            [0.62, 0.18, 1.00, 0.55, 0.29],
+            [0.41, -0.33, 0.55, 1.00, 0.47],
+            [0.35, -0.15, 0.29, 0.47, 1.00],
+        ],
+    },
+    "freq_bars": {
+        "labels": ["0-9", "10-19", "20-29", "30-39", "40-49"],
+        "counts": [2, 5, 11, 9, 3],
+    },
+}
+
 
 def _style(ax) -> None:
     """Shared look: no top/right spines, soft horizontal grid only."""
@@ -74,9 +137,9 @@ def _save(fig, name: str) -> None:
 
 def bar_stacked() -> None:
     """Two groups across four categories; drives the 'describe the plot' item."""
-    categories = ["Never", "Rarely", "Sometimes", "Often"]
-    men = np.array([18, 22, 34, 26])
-    women = np.array([29, 30, 27, 14])
+    categories = FIG_DATA["bar_stacked"]["categories"]
+    men = np.array(FIG_DATA["bar_stacked"]["men"])
+    women = np.array(FIG_DATA["bar_stacked"]["women"])
 
     fig, ax = plt.subplots(figsize=(6.4, 3.6))
     x = np.arange(len(categories))
@@ -97,10 +160,7 @@ def boxplots_h() -> None:
     """Three boxes with clearly different spread; the 'highest variance' item."""
     fig, ax = plt.subplots(figsize=(6.4, 3.2))
     labels = ["A", "B", "C"]
-    #            low    q1    med   q3    high
-    stats = [(10, 22, 30, 38, 50),
-             (5, 20, 30, 40, 55),
-             (28, 29, 30, 31, 32)]
+    stats = [tuple(FIG_DATA["boxplots_h"][k]) for k in ("A", "B", "C")]
     for i, (lo, q1, med, q3, hi) in enumerate(stats):
         ax.plot([i, i], [lo, hi], color=MUTED, linewidth=1.4)
         ax.plot([i - 0.12, i + 0.12], [lo, lo], color=MUTED, linewidth=1.4)
@@ -119,10 +179,11 @@ def boxplots_h() -> None:
 
 def hist_skewed() -> None:
     """Right-skewed: pulls mean above median. Drives the mean-vs-median item."""
-    rng = np.random.default_rng(7)
-    sample = rng.gamma(shape=2.0, scale=2.0, size=4000)
+    d = FIG_DATA["hist_skewed"]
+    rng = np.random.default_rng(d["seed"])
+    sample = rng.gamma(shape=d["shape"], scale=d["scale"], size=d["n"])
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    ax.hist(sample, bins=28, color=BAR_A, edgecolor="white", linewidth=0.6)
+    ax.hist(sample, bins=d["bins"], color=BAR_A, edgecolor="white", linewidth=0.6)
     ax.set_xlabel("Response value")
     ax.set_ylabel("Frequency")
     ax.grid(axis="y", color=GRID, linewidth=0.8)
@@ -134,8 +195,8 @@ def hist_skewed() -> None:
 def hist_symmetric() -> None:
     """Symmetric: mean sits in the middle, variance follows the spread."""
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    bins = np.arange(0, 28, 2)  # 14 edges for 13 bars
-    counts = np.array([1, 2, 5, 11, 19, 24, 21, 14, 8, 4, 2, 1, 1])
+    bins = np.array(FIG_DATA["hist_symmetric"]["bins"])
+    counts = np.array(FIG_DATA["hist_symmetric"]["counts"])
     ax.bar(bins[:-1], counts, width=2.0, align="edge",
            color=BAR_A, edgecolor="white", linewidth=0.6)
     ax.set_xlabel("Response value")
@@ -147,16 +208,20 @@ def hist_symmetric() -> None:
 
 
 def ci_dotplot() -> None:
-    """Estimates with 95% CI. Group A's CI clears the reference line, B's does not."""
-    names = ["A", "B"]
-    means = [52.4, 45.1]
-    lo = [48.6, 41.3]
-    hi = [56.2, 48.9]
-    ref = 44.0
+    """Estimates with 95% CI. Group A's CI clears the reference line, B's does not.
+
+    A's interval is drawn roughly twice as wide as B's on purpose: it lets the
+    margin-of-error item have a real answer, and it makes the point that the
+    estimate furthest from the reference is not the sharpest one.
+    """
+    names = FIG_DATA["ci_dotplot"]["names"]
+    means = FIG_DATA["ci_dotplot"]["means"]
+    lo = FIG_DATA["ci_dotplot"]["lo"]
+    hi = FIG_DATA["ci_dotplot"]["hi"]
+    ref = FIG_DATA["ci_dotplot"]["ref"]
 
     fig, ax = plt.subplots(figsize=(6.4, 3.0))
     y = np.array([1, 0])  # A on top, B below, reading order
-    names = ["A", "B"]
     ax.errorbar(means, y, xerr=[np.array(means) - np.array(lo),
                                 np.array(hi) - np.array(means)],
                 fmt="o", color=BAR_A, markersize=9, capsize=6, linewidth=2)
@@ -186,7 +251,8 @@ def normal_shaded() -> None:
                     color=SHADE_3, alpha=0.9)
     ax.plot(x, y, color=INK, linewidth=1.8)
 
-    for xv, label in ((5, "a"), (6.2, "b"), (7.4, "c")):
+    for xv, label in zip(FIG_DATA["normal_shaded"]["edges"],
+                        FIG_DATA["normal_shaded"]["labels"]):
         ax.axvline(xv, color=MUTED, linewidth=1.0, linestyle=":")
         ax.text(xv, 3.45, f" {label}", color=MUTED, fontsize=9)
 
@@ -201,9 +267,10 @@ def normal_shaded() -> None:
 
 def scatter_trend() -> None:
     """Positive but moderate association; drives direction and strength items."""
-    rng = np.random.default_rng(3)
-    x = rng.normal(50, 10, 120)
-    y = 0.8 * x + 20 + rng.normal(0, 14, 120)
+    d = FIG_DATA["scatter_trend"]
+    rng = np.random.default_rng(d["seed"])
+    x = rng.normal(d["x_mean"], d["x_sd"], d["n"])
+    y = d["slope"] * x + d["intercept"] + rng.normal(0, d["noise_sd"], d["n"])
     fig, ax = plt.subplots(figsize=(5.6, 3.6))
     ax.scatter(x, y, s=34, color=BAR_A, alpha=0.75, edgecolor="none")
     ax.set_xlabel("Study hours per week")
@@ -216,9 +283,10 @@ def scatter_trend() -> None:
 
 def density_overlay() -> None:
     """Two groups with different centres and different spreads."""
-    rng = np.random.default_rng(11)
-    a = rng.normal(30, 5, 3000)
-    b = rng.normal(38, 9, 3000)
+    d = FIG_DATA["density_overlay"]
+    rng = np.random.default_rng(d["seed"])
+    a = rng.normal(d["A_mean"], d["A_sd"], d["n"])
+    b = rng.normal(d["B_mean"], d["B_sd"], d["n"])
     grid = np.linspace(8, 58, 500)
 
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
@@ -241,14 +309,8 @@ def density_overlay() -> None:
 
 def corr_heatmap() -> None:
     """Correlation matrix; the student must find the strongest pair."""
-    labels = ["Hours", "Sleep", "Screen", "Stress", "Caff"]
-    matrix = np.array([
-        [1.00, -0.28, 0.62, 0.41, 0.35],
-        [-0.28, 1.00, 0.18, -0.33, -0.15],
-        [0.62, 0.18, 1.00, 0.55, 0.29],
-        [0.41, -0.33, 0.55, 1.00, 0.47],
-        [0.35, -0.15, 0.29, 0.47, 1.00],
-    ])
+    labels = FIG_DATA["corr_heatmap"]["labels"]
+    matrix = np.array(FIG_DATA["corr_heatmap"]["matrix"])
 
     fig, ax = plt.subplots(figsize=(5.2, 4.4))
     im = ax.imshow(matrix, cmap="RdBu_r", vmin=-1, vmax=1)
@@ -268,8 +330,8 @@ def corr_heatmap() -> None:
 
 def freq_bars() -> None:
     """Frequency table as bars; drives proportion and marginal questions."""
-    labels = ["0-9", "10-19", "20-29", "30-39", "40-49"]
-    counts = np.array([2, 5, 11, 9, 3])
+    labels = FIG_DATA["freq_bars"]["labels"]
+    counts = np.array(FIG_DATA["freq_bars"]["counts"])
 
     fig, ax = plt.subplots(figsize=(6.4, 3.4))
     bars = ax.bar(labels, counts, color=BAR_A, width=0.62)

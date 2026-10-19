@@ -221,3 +221,75 @@ careless:
 | **correction** | the counting pattern used to track this review | every figure I reported for the last several batches came from the regex `[LG]\d-(?:MC|WA)-\d+`, which requires a digit straight after the letter. The figure questions are named `G-MC-003`, with no lecture digit, so **they were never counted at all**. With that pattern the log showed 136 rows and 0 of the 30 G-* questions, and the "108 pending" figure was really 107: it included G-MC-003, which was already logged. Correct pattern is `(?:[LG]\d|G)-(?:MC|WA)-\d+`. What survives the correction: band E was genuinely finished, because `bandE.txt` contains only L-* ids and all 126 of them are in the log. What does not survive: the claim that the review had covered a stated fraction of the bank, which was never measured correctly |
 | **correction** | two mechanical gates proposed after batch 15 | I proposed detecting duplicate options and detecting non-keyed options the explanation echoes, on the reasoning that both defect classes are automatable. Both were implemented and run against all 243 questions before being adopted. Duplicate detection returned 47 candidates, almost all legitimate contrast pairs (row vs column proportions, H0 <= 1000 vs H0 >= 1000), plus normalisation artefacts that strip the operators and report `Q3 + Q1` identical to `Q3 - Q1`. Explanation-echo returned 28 candidates, almost all good explanations: refuting a distractor naturally reuses its words. Neither is adopted. The underlying defect - two options that are the same sentence, one keyed and one not - is not mechanically detectable, because a distractor is designed to be nearly identical to its neighbour |
 | **correction** | "the score is a bad signal and the defects are question defects" | that was overstated from 28 questions. Across the whole review the 29 wrong rows are 23 citation-or-page defects, 4 broken questions and 2 content moved aside, so citation defects still dominate at 79 per cent. The score is a poor signal for the G-* family specifically, and for no established reason elsewhere |
+
+## Figure audit (F1 and F2)
+
+`tools/figures.py` draws the ten figures rather than cropping them from the
+slides, so every number a G-* question shows on screen exists only in that file.
+Verifying the figures against the PDFs - which is what phase F1 was going to do
+- is therefore impossible: there is nothing to verify them against.
+
+What can be checked is internal consistency, and doing that for all thirty
+figure questions turned up more defects per question than the slide-reading pass
+ever managed. Nine questions were wrong; seven are fixed here, and two are
+listed as still open below.
+
+| id | figure | verdict |
+|---|---|---|
+| G-MC-016 | freq_bars | ok - 30 students is 2+5+11+9+3, the figure's own bars |
+| G-MC-017 | freq_bars | ok - fewer than 20 books is 2+5=7 of 30 |
+| G-MC-018 | freq_bars | ok - books read is quantitative discrete |
+| G-WA-008 | freq_bars | ok - total, mode (the bar of 11 at 20-29) and 7/30 all check out |
+| G-WA-010 | bar_stacked | **wrong**, fixed - the answer said women's bars "shrink steadily from Never" and that men read more often, but the data were women [29, 30, 27, 14] against men [18, 22, 34, 26]: the two groups had the *same* mean of 25, and women's bars rose before they fell. A figure meant to teach "compare counts across two groups" that shows no difference at all is a bad teaching object, so the data were changed to women [36, 22, 14, 13] and the answer rewritten to match |
+| G-MC-001 | boxplots_h | ok - B has the largest IQR (20 against 16 and 2) and the widest range |
+| G-MC-002 | boxplots_h | ok - all three medians are drawn at 30 |
+| G-MC-003 | boxplots_h | ok - re-verified in this pass; option (a) "about 75% between 22 and 38" is false because the box spans 50%, which the explanation already says |
+| G-WA-001 | boxplots_h | ok - widest box and longest whiskers are both B |
+| G-MC-004 | hist_skewed | **wrong**, fixed - the explanation claimed the median was "near 2.3". The generated sample has a median of 3.28. The number was replaced with a non-numeric statement, because any specific median is a snapshot of a seeded sample that drifts between runs, which is the same trap as G-MC-008 |
+| G-MC-005 | hist_skewed | **wrong, still open** - the stem asks which of "the first plot" and "the second plot" is right-skewed and the explanation discusses "the second", but only one histogram is displayed. The question cannot be answered from the screen |
+| G-WA-002 | hist_skewed | ok - the long right tail is what pulls the mean up |
+| G-MC-006 | hist_symmetric | **weak, still open** - the stem posits two histograms while one is shown. The answer is right for the hypothetical, but nothing on screen matches the stem |
+| G-WA-009 | hist_symmetric | **weak, still open** - same mismatch as G-MC-006 |
+| G-MC-012 | density_overlay | ok - B is centred further right and drawn wider |
+| G-MC-013 | density_overlay | **wrong, still open** - the stem says "the area under a density curve for one group is much larger", but a density is normalised to total area 1, which the explanation itself says. The premise is impossible on the figure that is displayed |
+| G-WA-006 | density_overlay | ok - B is flatter and wider, A taller and narrower |
+| G-WA-011 | normal_shaded | **wrong**, fixed - the answer gave P(5 < X < 6.2) as P(a) + P(b). Region a is shaded 5 to 6.2 and region b 6.2 to 7.4, so adding b gives P(5 < X < 7.4). The answer's own reasoning was self-defeating: it named both boundaries and then claimed the sum stopped at 6.2 |
+| G-WA-012 | normal_shaded | ok - the rightmost region is P(X > 7.4) = P(c) |
+| G-MC-007 | ci_dotplot | **wrong**, fixed - the explanation quoted A's interval as 48.6 to 56.2, the bounds from before this audit changed them |
+| G-MC-008 | ci_dotplot | **wrong**, fixed - the explanation said "Group A's spans about 7.6 units and Group B's about 3.8". Both spans are 7.6; 3.8 is B's *half* width. Option (a) "They are equal" was therefore true and unkeyed |
+| G-MC-009 | ci_dotplot | ok - an interval containing the reference means the difference is not significant at 5% |
+| G-WA-003 | ci_dotplot | ok - A's interval sits entirely above the reference |
+| G-WA-004 | ci_dotplot | **wrong**, fixed by the same change - "about twice as wide" was false while both spans were 7.6 |
+| G-MC-010 | scatter_trend | ok - the generated sample has r near 0.50, positive and moderate |
+| G-MC-011 | scatter_trend | ok - r = 0 is a cloud with no trend |
+| G-WA-005 | scatter_trend | ok - positive, moderate rather than strong |
+| G-MC-014 | corr_heatmap | ok - Hours and Screen at 0.62 is the largest off-diagonal cell |
+| G-MC-015 | corr_heatmap | ok - -0.28 is weak and negative |
+| G-WA-007 | corr_heatmap | ok - strongest positive 0.62, strongest negative -0.33 |
+
+### Why the figure numbers were never checked
+
+Every G-* number was outside the reach of `verify_numbers.py`, which resolves
+numbers against R or against the slide text. A figure's numbers exist in
+neither. The `ACCEPTED` table already had G-* entries saying "read off the
+figure" - which documented the hole rather than closing it.
+
+Three changes close it:
+
+1. The data each figure draws is hoisted into `FIG_DATA` at module level, so
+   there is one place to change a number and it can be imported.
+2. `verify_numbers.py` reads that data and checks every number a figure
+   question asserts in its answer, explanation, detail or rubric against it,
+   allowing derived quantities such as interval widths. It found the stale
+   bounds in G-MC-007 and the invented median in G-MC-004 the moment it ran.
+3. Multiple-choice explanations are now audited at all. They were not before,
+   and an explanation is where a question does its own arithmetic - which is
+   where G-MC-008 went wrong.
+
+### What this gate does not catch
+
+It catches numbers with no basis in the figure. It does **not** catch a number
+that is wrong but happens to be derivable: in the original `ci_dotplot`, 3.8
+was a legitimate half-width of one of the two intervals, so a gate built on
+"is this number derivable" would have passed the very sentence that was wrong.
+Getting G-MC-008 required reading the sentence, not matching its number.

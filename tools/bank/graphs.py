@@ -98,8 +98,8 @@ def questions():
         ["b"],
         "The distribution has a long tail to the right. The mean uses every value, "
         "so the few large values pull it up, while the median only cares about the "
-        "middle observation and stays lower. Here the mean sits around 4 while the "
-        "median is near 2.3.",
+        "middle observation and stays lower. The drawn sample has a mean around 4 and "
+        "a median a full unit below it.",
         SKEW_MM[0], SKEW_MM[1], image="hist_skewed"))
 
     out.append(mc(
@@ -138,7 +138,7 @@ def questions():
         "reference at the 5% level?",
         ["Neither group", "Group A only", "Group B only", "Both groups"],
         ["b"],
-        "Group A's interval runs from about 48.6 to 56.2 and does not touch the "
+        "Group A's interval runs from about 45.0 to 59.8 and does not touch the "
         "reference line at 44, so the difference is significant. Group B's interval "
         "runs from about 41.3 to 48.9 and does contain 44, so it is not significant.",
         CI[0], CI[1], image="ci_dotplot"))
@@ -149,8 +149,9 @@ def questions():
         ["They are equal", "This cannot be determined", "Group A", "Group B"],
         ["c"],
         "The margin of error is half the width of the interval. Group A's spans "
-        "about 7.6 units and Group B's about 3.8, so Group A's is larger and its "
-        "estimate is less precise.",
+        "about 14.8 units and group B's about 7.6, so group A's is larger and its "
+        "estimate is less precise - which is worth noticing next to the fact that "
+        "A is also the group whose interval misses the reference value.",
         CI[0], CI[1], image="ci_dotplot"))
 
     out.append(mc(
@@ -439,7 +440,7 @@ def questions():
         "G-WA-010", 2, "Reading a grouped bar chart",
         "The chart compares how often men and women read a book. Describe the main "
         "difference between the two groups in two or three sentences.",
-        "Women report reading less often than men: their bars shrink steadily from the 'Never' category, while the men's peak in the middle. The clearest contrast is at the extremes, where reading often is about twice as common among men. The middle categories are much closer.",
+        "Men report reading more often: their bars peak at 34 in 'Sometimes' and end at 26, while the women's fall steadily from 36 in 'Never' to 13 in 'Often'. The extremes differ most, and 'Rarely' is identical at 22.",
         [rb("Identifies that women report reading less often"),
          rb("Cites the contrast between the extreme categories"),
          rb("Notes that the middle categories are similar")],
@@ -455,17 +456,19 @@ def questions():
         "G-WA-011", 5, "Areas under a curve",
         "For the normal curve shown, the shaded regions are marked a, b and c from "
         "left to right. Write P(5 < X < 6.2) in terms of these regions.",
-        "P(5 < X < 6.2) is regions a and b added, written P(a) + P(b). Region a covers 5 to 6.2 and b covers 6.2 to 7.4, and the boundary point 6.2 adds no area, so together they are the interval.",
-        [rb("Identifies the correct regions as a and b"),
-         rb("States the answer as P(a) + P(b) or P(a and b)"),
-         rb("Notes that the single boundary point adds no area")],
+        "P(5 < X < 6.2) is region a on its own: a is shaded from 5 to 6.2, exactly the interval asked for. Adding b would extend the range to 7.4.",
+        [rb("Identifies region a as the only region in the interval"),
+         rb("States the answer as P(a)"),
+         rb("Explains that adding region b would reach 7.4")],
         2, NORMALQ[0], NORMALQ[1], image="normal_shaded",
-        detail="The rule for splitting an interval at an interior point is that "
-               "the probabilities of the pieces add up, because the events are "
-               "mutually exclusive. A single value has probability zero under a "
-               "continuous distribution, which is why the endpoints never cause "
-               "trouble. The same logic gives P(X < 6.2) = P(a) + P(b) and "
-               "P(X > 7.4) = P(c)."))
+        detail="Read each shaded region off the boundaries drawn on the curve: a "
+               "covers 5 to 6.2, b covers 6.2 to 7.4, and c covers everything to the "
+               "right of 7.4. The rule for splitting an interval at an interior "
+               "point is that the probabilities of the pieces add up, because the "
+               "events are mutually exclusive, which is why P(X < 6.2) = P(a) + "
+               "P(b) even though P(5 < X < 6.2) is P(a) alone. A single value has "
+               "probability zero under a continuous distribution, which is why the "
+               "endpoints never cause trouble."))
 
     out.append(wa(
         "G-WA-012", 5, "Areas under a curve",
