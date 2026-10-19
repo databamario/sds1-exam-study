@@ -4426,7 +4426,7 @@
    "topic": "PMF, PDF and CDF",
    "stem": "Explain the difference between a probability mass function, a probability density function and a cumulative distribution function, and say which applies to a fair die.",
    "points": 1,
-   "answer": "A PMF gives the probability of each individual outcome and applies to discrete variables, so a fair die has 1/6 at each face. A PDF describes relative likelihood across a continuous range and gives no probability at a point. A CDF gives P(X <= x).",
+   "answer": "A PMF gives the probability of each outcome and applies to discrete variables, so it is the one for a fair die. A PDF describes the relative likelihood. A CDF gives the probability of a variable being less than or equal to a value.",
    "detail": "",
    "rubric": [
     {
@@ -4599,7 +4599,7 @@
     "a": "Compute the p-value, then reject H0, then state the hypotheses",
     "b": "Formulate H0, compute the test statistic, calculate the p-value, draw conclusions",
     "c": "Collect data, then choose the test, then report",
-    "d": "The standard error used is the standard deviation of the sampling distribution of the estimate",
+    "d": "The test statistic divides the difference between the point estimate and the null value by the standard error",
     "e": "State Ha, compute the standard error, then stop"
    },
    "correct": [
@@ -4608,7 +4608,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The four steps are: formulate the null hypothesis, compute the test statistic which measures how far the estimate sits from what H0 predicts, compute the p-value of a statistic at least as extreme under H0, and then draw the conclusion.",
+   "explanation": "The four steps are: formulate the null hypothesis, compute the test statistic as the point estimate minus the null value over the standard error, compute the probability of a statistic at least as extreme under H0, and then draw the conclusion.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -5960,7 +5960,7 @@
    "topic": "Connection between tests and CIs",
    "stem": "Explain how a hypothesis test and a confidence interval relate, using an example with a 95% CI of (172.06, 177.94) and a test of H0: mu = 175.",
    "points": 1,
-   "answer": "For a two-sided test you fail to reject H0 exactly when the corresponding 1 - alpha confidence interval contains the null value. Here 175 lies inside (172.06, 177.94), so at the 5% level we fail to reject H0.",
+   "answer": "The 95% CI is the acceptance region for H0: the null value is not rejected when it falls inside the interval. With H0: mu = 175, that region is (172.06, 177.94), which contains 175, so we fail to reject at the 5% level.",
    "detail": "",
    "rubric": [
     {

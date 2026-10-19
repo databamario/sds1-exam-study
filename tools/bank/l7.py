@@ -289,7 +289,7 @@ def questions():
         "L7-WA-004", 7, "Connection between tests and CIs",
         "Explain how a hypothesis test and a confidence interval relate, using an example "
         "with a 95% CI of (172.06, 177.94) and a test of H0: mu = 175.",
-        "For a two-sided test you fail to reject H0 exactly when the corresponding 1 - alpha confidence interval contains the null value. Here 175 lies inside (172.06, 177.94), so at the 5% level we fail to reject H0.",
+        "The 95% CI is the acceptance region for H0: the null value is not rejected when it falls inside the interval. With H0: mu = 175, that region is (172.06, 177.94), which contains 175, so we fail to reject at the 5% level.",
         [rb("Duality between test at level alpha and the 1 - alpha CI stated", 2),
          rb("States that rejection happens when the null value is outside the interval", 2),
          rb("175 correctly identified as lying inside the interval"),

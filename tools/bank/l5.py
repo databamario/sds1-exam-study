@@ -293,7 +293,7 @@ def questions():
         "Explain the difference between a probability mass function, a probability density "
         "function and a cumulative distribution function, and say which applies to a fair "
         "die.",
-        "A PMF gives the probability of each individual outcome and applies to discrete variables, so a fair die has 1/6 at each face. A PDF describes relative likelihood across a continuous range and gives no probability at a point. A CDF gives P(X <= x).",
+        "A PMF gives the probability of each outcome and applies to discrete variables, so it is the one for a fair die. A PDF describes the relative likelihood. A CDF gives the probability of a variable being less than or equal to a value.",
         [rb("PMF defined as the probability of each discrete outcome", 2),
          rb("PDF defined as relative likelihood for a continuous variable", 2),
          rb("CDF defined as P(X <= x) and distinguished as step versus smooth", 2),

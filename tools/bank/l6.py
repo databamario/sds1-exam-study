@@ -15,13 +15,13 @@ def questions():
          "Formulate H0, compute the test statistic, calculate the p-value, draw "
          "conclusions",
          "Collect data, then choose the test, then report",
-         "The standard error used is the standard deviation of the sampling distribution "
-         "of the estimate",
+         "The test statistic divides the difference between the point estimate and the "
+         "null value by the standard error",
          "State Ha, compute the standard error, then stop"],
         ["b", "d"],
         "The four steps are: formulate the null hypothesis, compute the test statistic "
-        "which measures how far the estimate sits from what H0 predicts, compute the "
-        "p-value of a statistic at least as extreme under H0, and then draw the "
+        "as the point estimate minus the null value over the standard error, compute "
+        "the probability of a statistic at least as extreme under H0, and then draw the "
         "conclusion.",
         PDF, "p.21", origin="adapted_HT25"))
 
