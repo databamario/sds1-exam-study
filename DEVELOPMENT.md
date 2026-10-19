@@ -147,27 +147,68 @@ checks that every question kept its options, its true options, its stem and its 
 
 ## The citation review
 
-This is the one part of the app that is **not** fully checked, and it is the only open work.
-
-`validate.py` proves every citation names a real lecture file and a page inside it â€” all 243 pass.
-That is not the same as being the *right* page. Read by hand so far: 113 citations. 34 errors
-found and fixed. The remaining ~130 have not been read, so **34 is a floor, not an estimate**.
+`validate.py` proves every citation names a real lecture file and a page inside it — all 243 pass.
+That is not the same as being the *right* page, which is why **every one of them has now been read
+by hand against the slide it cites**: all 243, the 30 figure questions and the 213 from the nine
+lectures. **43 of them were wrong** and are fixed. `REVIEW_LOG.md` records each one with the reason.
 
 `tools/show_citation.py` prints a question beside the text of the slide it cites, which is the only
 thing that has found these. `validate.py` reports every one of them as perfectly formed.
 
-The reading is done in score bands with `tools/verify_citations.py`, and the hit rate is measured
-rather than assumed: 67% in the worst band, 28% in the next, then 0% in the band after that, then
-38% on a probe of the band below, then 27% and 22% on the two batches that followed. The zero in
-the middle is the reason the reading did not stop there â€” one empty band was a gap in the signal,
-not the end of it, and the bands on either side both gave errors. About a third of any shortlist
-is false alarm, where the slide says "quantitative" and the question says "numerical".
+### How the shortlist was chosen, and where that stopped working
+
+The reading began in score bands with `tools/verify_citations.py`: 67% in the worst band, 28% in
+the next, then 0% in the band after that, then 38% on a probe of the band below, then 27% and 22%
+on the two batches that followed. The zero in the middle was a gap in the signal rather than the
+end of it — the bands on either side both gave errors, so it did not stop there.
+
+The score then stopped discriminating altogether. Measured on a band of 30, the eight defective
+questions scored **0.129** on average and the 22 clean ones **0.118**: the defective ones ranked
+slightly *worse*, and reversing the order would have changed nothing. From that point the bank was
+read by hand in lecture order, not by score.
+
+Three classes of error came out of the reading. They are worth separating because from inside the
+tool they look identical — in all three the key words are simply absent from the cited page:
+
+1. **A claim the lecture never makes.** `L1-MC-018` keyed `factor(x, levels = ...)`; `levels =`
+   appears nowhere in Lecture 1. `L2-MC-018` keyed `summary()`; it appears nowhere in Lecture 2.
+   `L3-WA-008` compared a histogram with a bar plot, which Lecture 3 does not teach. `L9-WA-008`
+   claimed regression was deferred to SDS2; `SDS2` appears nowhere in Lecture 9.
+2. **A real slide the question does not cite.** 26 questions now cite two or three pages, added
+   with `also=[...]` and checked by the gate described above. `L4-MC-009` needs p.32, p.33 and
+   p.34 together: the definition, the confidence level, and the coverage.
+3. **A rubric grading something the keyed answer does not say.** `L9-WA-003` and `L9-WA-006` each
+   graded a clause their own answer never contained, so a student answering perfectly would have
+   lost those points for not saying more than the key.
+
+### Read the key from the source, never from a dump
+
+Eight questions in this review looked wrong only because a rendered snapshot was misread rather
+than because the question was defective. Two of those were reported as tool bugs and were not tool
+bugs: `show_citation.py` marks every keyed option correctly.
+
+The last of the eight was a viewer written minutes earlier, for this review, specifically to avoid
+that failure. So the rule is not "trust the tool" or "distrust the tool" — it is that a dump and a
+question must never disagree in the bank's favour:
+
+```python
+# wrong: judge the answer key from rendered output
+python tools/show_citation.py L7-MC-009     # I read KEY> on one line and missed the other
+
+# right: read the key from the source the bank is built from
+grep -A6 '"L7-MC-009"' tools/bank/l7.py    # -> ["a", "c"]
+```
+
+`data/questions.json` is equally authoritative, and `check_all.py` fails if it differs from what
+`tools/bank/` produces, so either is a valid thing to check a verdict against.
 
 ```bash
 python tools/verify_citations.py                  # the 25 worst-matched citations
 python tools/verify_citations.py --figures        # which slide each figure's questions cite
 python tools/verify_citations.py --id L7-MC-016   # one question beside its slide
 python tools/verify_citations.py --proximity      # citations whose content is on the next page
+python tools/show_citation.py L7-MC-016           # the same, with the code block shown
+python tools/verify_second_pages.py               # each extra cited page, and what it supplied
 ```
 
 The dominant cause is structural: a question inherits its lecture's citation wholesale even when

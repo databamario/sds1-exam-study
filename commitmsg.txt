@@ -1,42 +1,29 @@
-Read L7, L8 and L9: the last unreviewed questions, and two rubrics grading nothing
+DEVELOPMENT.md: the citation review is finished, with the real numbers
 
-Fourteen questions. Three were wrong, three needed a second page, eight passed.
+It said 113 read and 34 errors, and warned that the remaining ~130 had not been
+read so 34 was a floor. All of that is now false. Every one of the 243
+citations has been read by hand against its slide, and 43 of them were wrong.
 
-L9-WA-008 keyed "linear regression and a fuller treatment of correlation are
-deferred to SDS2". Searching Lecture 9 for SDS2 returns nothing, and its final
-three pages are the exam notice and the course evaluation. The lecture never
-says it, so the question and the rubric point that graded it are gone; what
-remains is the half the lecture does support.
+The section is rewritten around what the reading actually found rather than
+around the method that chose the shortlist. The bands were how the work was
+selected, and they stopped working: on a band of 30 the eight defective
+questions scored 0.129 and the 22 clean ones 0.118, so the score ranked the bad
+ones slightly worse and reversing it would have changed nothing. Everything
+after that point was read in lecture order.
 
-L9-WA-003 and L9-WA-006 had the same defect in miniature. Each rubric graded an
-element its own keyed answer never contained - that the bootstrap approximates
-rather than computes, and that the simulation converges to the analytic value as
-N grows. A student who answered the key perfectly and stopped there would have
-lost those points for saying nothing extra. Both answers now contain the clause
-their rubrics were already asking for, which is the whole point of a rubric.
+The three classes of error are separated, because from inside the tool they
+look identical - in all three the key words are simply absent from the cited
+page. A claim the lecture never makes (levels = is nowhere in Lecture 1,
+summary() nowhere in Lecture 2, SDS2 nowhere in Lecture 9). A real slide the
+question does not cite, which is the 26 that now carry also=[...]. And a rubric
+grading something the keyed answer does not say, which cost L9-WA-003 and
+L9-WA-006 points to a student who answered perfectly.
 
-L8-MC-008 named Tukey as the post hoc test, and Tukey is printed on exactly one
-page of Lecture 8, the p.40 flow chart, while the omnibus argument is on p.25.
-It now cites both. L7-WA-006's answer closes on the paired-data rule, which is
-p.52 rather than the p.47 it cited, and L9-WA-008 now also cites p.12 for its
-Monte-Carlo half.
+The section that seemed most worth keeping is the one about method. Eight
+questions in this review looked wrong only because a rendered dump was
+misread, and the last of the eight was a viewer written minutes earlier for
+this very review. So it now says what to do instead, with the L7-MC-009 case
+that produced the rule: check the key against tools/bank/ or questions.json,
+which check_all.py already guarantees are in step.
 
-### The eighth false alarm, and this time the reader was mine
-
-L7-MC-009 looked like the worst finding of the review. Option (c) is p.47's
-formula written out character for character, and it read as marked wrong while a
-prose paraphrase of the same thing was marked right - a keying error on a
-question students get wrong for free. I had the write-up half-formed.
-
-The bank disagreed. Its correct list is ['a', 'c']. Both were keyed correctly
-from the start, and the viewer I wrote earlier in this pass had printed KEY> on
-both lines; I misread the block rather than checking it.
-
-That is the eighth misread snapshot in this review and the first where the
-faulty reader was one I had just written. It is also the clearest argument for
-the rule that has caught all eight: read the key from tools/bank/ or from
-questions.json, never from a rendered dump, however carefully the dump is
-formatted.
-
-Every one of the 213 L-* questions has now been read against its slides. Suite
-green apart from the rebuilt bank being uncommitted.
+Suite green.
