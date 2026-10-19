@@ -46,15 +46,15 @@ def questions():
         "The population mean is 170 cm, the sample mean is 179 cm and the standard error "
         "is 1.83. What is the z-score, and what does it mean?",
         ["z is about 0.05, so the sample mean is very close to the population mean",
-         "z is about 4.9, so the sample mean is about 4.9 standard errors above the "
-         "population mean",
-         "About 95% of sample means fall within 2 standard errors of the population mean",
+         "z is about 4.9, so the sample mean is about 4.9 standard errors away from "
+         "the population mean",
          "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
          "z cannot be computed without knowing the standard deviation"],
-        ["b", "c"],
-        "z = (179 - 170)/1.83 is about 4.9. Because the statistic is in units of standard "
-        "errors rather than centimetres, the number describes how many SE away the value "
-        "sits, not a distance in cm.",
+        ["b"],
+        "z = (179 - 170)/1.83 is about 4.93, and a z-score says how many standard errors "
+        "the observed sample mean sits from the population mean. The unit is standard "
+        "errors, not centimetres: the 9 cm gap and the 4.93 SE are different numbers, and "
+        "only the second one says how unusual the sample is.",
         PDF, "p.17", code="z <- (179 - 170) / 1.83",
         r_functions=["<-", "-", "/"], origin="adapted_HT25"))
 

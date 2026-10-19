@@ -113,12 +113,14 @@ def questions():
          "The null hypothesis is that the variances are equal across the groups.",
          "The alternative is that all the group means are equal.",
          "Rejecting H0 tells you which specific groups differ.",
-         "ANOVA with only two groups gives exactly the same p-value as the two-sample "
-         "t-test with equal variances."],
+         "Rejecting H0 shows the group means are not all equal, but finding out which "
+         "ones differ needs a post-hoc test."],
         ["a", "e"],
-        "ANOVA is an omnibus test: rejecting H0 only says something differs, not what. "
-        "Identifying the differing pairs needs post-hoc tests such as `pairwise.t.test()`, "
-        "which is not covered here, so (d) is false.",
+        "ANOVA is an omnibus test: rejecting H0 says the group means are not all equal, "
+        "not that any particular pair differs, which is why a follow-up post-hoc test is "
+        "needed to identify them. The test is about means, not about equality of variances, "
+        "and the alternative is that at least one mean differs rather than that they are "
+        "all equal, so (b) and (c) are false.",
         PDF, "p.29", code="oneway.test(height ~ city, data = heights, var.equal = TRUE)",
         r_functions=["oneway.test", "pairwise.t.test"]))
 

@@ -4653,18 +4653,16 @@
    "stem": "The population mean is 170 cm, the sample mean is 179 cm and the standard error is 1.83. What is the z-score, and what does it mean?",
    "options": {
     "a": "z is about 0.05, so the sample mean is very close to the population mean",
-    "b": "z is about 4.9, so the sample mean is about 4.9 standard errors above the population mean",
-    "c": "About 95% of sample means fall within 2 standard errors of the population mean",
-    "d": "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
-    "e": "z cannot be computed without knowing the standard deviation"
+    "b": "z is about 4.9, so the sample mean is about 4.9 standard errors away from the population mean",
+    "c": "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
+    "d": "z cannot be computed without knowing the standard deviation"
    },
    "correct": [
-    "b",
-    "c"
+    "b"
    ],
-   "n_correct": 2,
+   "n_correct": 1,
    "points": 1,
-   "explanation": "z = (179 - 170)/1.83 is about 4.9. Because the statistic is in units of standard errors rather than centimetres, the number describes how many SE away the value sits, not a distance in cm.",
+   "explanation": "z = (179 - 170)/1.83 is about 4.93, and a z-score says how many standard errors the observed sample mean sits from the population mean. The unit is standard errors, not centimetres: the 9 cm gap and the 4.93 SE are different numbers, and only the second one says how unusual the sample is.",
    "r_flavoured": true,
    "r_functions": [
     "<-",
@@ -6476,7 +6474,7 @@
     "b": "The null hypothesis is that the variances are equal across the groups.",
     "c": "The alternative is that all the group means are equal.",
     "d": "Rejecting H0 tells you which specific groups differ.",
-    "e": "ANOVA with only two groups gives exactly the same p-value as the two-sample t-test with equal variances."
+    "e": "Rejecting H0 shows the group means are not all equal, but finding out which ones differ needs a post-hoc test."
    },
    "correct": [
     "a",
@@ -6484,7 +6482,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "ANOVA is an omnibus test: rejecting H0 only says something differs, not what. Identifying the differing pairs needs post-hoc tests such as `pairwise.t.test()`, which is not covered here, so (d) is false.",
+   "explanation": "ANOVA is an omnibus test: rejecting H0 says the group means are not all equal, not that any particular pair differs, which is why a follow-up post-hoc test is needed to identify them. The test is about means, not about equality of variances, and the alternative is that at least one mean differs rather than that they are all equal, so (b) and (c) are false.",
    "r_flavoured": true,
    "r_functions": [
     "oneway.test",
