@@ -339,13 +339,15 @@ def questions():
 
     out.append(wa(
         "L4-WA-008", 4, "Sampling with and without replacement",
-        "Explain the difference between sampling with and without replacement, and state "
-        "what happens to the probability of a second blue ball in each case.",
-        "With replacement the ball is returned after each draw, so the bag is unchanged, the draws are independent, and the second blue has probability 3/10. Without replacement the bag becomes 2 blue out of 9, giving 2/9, so the draws are dependent.",
-        [rb("With-replacement behaviour described as restoring the bag and independence", 2),
-         rb("Without-replacement behaviour described as changing the composition", 2),
-         rb("Both probabilities 3/10 and 2/9 correctly stated")],
-        1, PDF, "p.37",
-        detail="The two values 3/10 and 2/9 are the standard test of independence: they are equal exactly when the draws are independent. Replacement is the case that makes repeated draws behave like repeated copies of the same experiment, which is what justifies using the product rule repeatedly. Note that 3/10 comes from 3 blue out of 10 balls."))
+        "Explain what distinguishes sampling with replacement from sampling without "
+        "replacement.",
+        "With replacement, after drawing a unit you put it back into the population "
+        "before drawing again. Without replacement, you do not put it back, so the "
+        "composition of the population changes as the sample is drawn.",
+        [rb("With replacement defined as putting the unit back before drawing again", 2),
+         rb("Without replacement defined as not putting it back", 2),
+         rb("Notes the population composition changes across draws", 2)],
+        1, PDF, "p.33",
+        detail="Whether the draws are independent follows directly from this. In a bag with 10 balls of which 3 are blue, the second draw is 3/10 with replacement because the bag is back to 10 balls, and 2/9 without it because the first blue is gone. Those two values are equal exactly when the draws are independent, which is what makes them the standard test of the distinction."))
 
     return out

@@ -234,10 +234,13 @@ def questions():
         "L8-WA-001", 8, "Correlation and association",
         "Explain what the correlation coefficient measures, and give one situation where a "
         "correlation near zero would be misleading.",
-        "Correlation measures the strength and direction of the LINEAR association between two continuous variables, running from -1 through 0 to 1. A value near zero only rules out a linear relationship, so it can mislead when the pattern is curved or driven by an outlier.",
+        "Correlation measures the strength and direction of the LINEAR association "
+        "between two continuous variables. A value near zero rules out only a linear "
+        "relationship, so it can mislead when the pattern is curved, even if the "
+        "variables are strongly related.",
         [rb("Defined as the strength and direction of LINEAR association", 2),
          rb("Notes zero rules out only a linear relationship", 2),
-         rb("Gives a valid non-linear or outlier example")],
+         rb("Gives the curved or non-linear case")],
         1, PDF, "p.18", r_functions=["cor", "cor.test"]))
 
     out.append(wa(

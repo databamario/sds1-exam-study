@@ -47,15 +47,16 @@ def questions():
         "Which statements about the three measures of central tendency are TRUE?",
         ["The mean is always reported with a standard deviation.",
          "The median is robust to extreme values.",
-         "The mode is the only measure that works for categorical data.",
+         "The mode is useful for categorical or bimodal distributions.",
          "a data set can have at most one mode, since the mode is a single value.",
          "The median is pulled towards extreme values in a skewed sample."],
         ["b", "c"],
         "The median resists outliers and skewness because it only looks at the middle of "
-        "the ordered data, and it is the mode that is meaningful for a categorical "
-        "variable, where taking an average of the categories would be meaningless. A mode "
-        "need not be unique, so a dataset can have more than one, and the median is not "
-        "what gets pulled towards extreme values; the mean is.",
+        "the ordered data, and a mode is the measure worth reaching for on a "
+        "categorical or bimodal variable, where averaging the categories would be "
+        "meaningless. A mode need not be unique, so a dataset can have more than "
+        "one, and the median is not what gets pulled towards extreme values; the "
+        "mean is.",
         PDF, "p.21"))
 
     out.append(mc(

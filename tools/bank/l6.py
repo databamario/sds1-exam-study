@@ -292,11 +292,15 @@ def questions():
 
     out.append(wa(
         "L6-WA-007", 6, "P-values",
-        "Explain what a p-value is and state one thing it is NOT.",
-        "A p-value is the probability, assuming the null is true, of observing a statistic at least as extreme as the one obtained. It is not the probability that the null is true, and it does not measure the size of an effect.",
-        [rb("P-value defined as an H0-conditional tail probability", 2),
-         rb("States that it is NOT the probability that H0 is true"),
-         rb("Notes it says nothing about effect size or importance")],
+        "Explain what a p-value is: what it conditions on, and what probability is "
+        "being computed.",
+        "The p-value is the probability of observing a test statistic as extreme or "
+        "more extreme, calculated under the null hypothesis. It is the area in the tail "
+        "beyond the observed statistic, so a large test statistic gives a p-value close "
+        "to zero.",
+        [rb("P-value defined as a probability under the null hypothesis", 2),
+         rb("Conditions on the observed statistic being as extreme or more extreme", 2),
+         rb("Explains it as the tail area beyond the observed statistic", 2)],
         1, PDF, "p.21", r_functions=["pnorm"], origin="adapted_HT25"))
 
     out.append(wa(

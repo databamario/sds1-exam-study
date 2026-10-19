@@ -267,11 +267,14 @@ def questions():
 
     out.append(wa(
         "L5-WA-002", 5, "Central limit theorem",
-        "Explain what the central limit theorem states and why it matters for inference.",
-        "The CLT states that for large n the sampling distribution of the sample mean is approximately normal even when the population is not. It matters because it lets us use z-scores and confidence intervals without knowing the population's shape, which is rarely available in practice.",
+        "State the central limit theorem, and say which other statistics it covers.",
+        "For i.i.d. variables with distribution F(mu, sigma^2), for large n the sample "
+        "mean is approximately normal regardless of the shape of F. The theorem extends "
+        "to a statistic written as a sum or average of i.i.d. variables, such as sample "
+        "proportions and variances.",
         [rb("States the approximate normality of the sampling distribution of the mean", 2),
          rb("Notes it holds regardless of the population shape", 2),
-         rb("Explains it enables normal-based inference without knowing the population")],
+         rb("Names the extension to sums or averages, e.g. proportions and variances", 2)],
         1, PDF, "p.47", origin="adapted_HT25"))
 
     out.append(wa(
@@ -313,12 +316,14 @@ def questions():
 
     out.append(wa(
         "L5-WA-006", 5, "Law of large numbers",
-        "Explain the law of large numbers and how it differs from the central limit "
-        "theorem.",
-        "The law of large numbers says the sample mean converges to the population mean as the sample grows, so it concerns where the sample mean ends up. The CLT adds that the sampling distribution is approximately normal for large n, a statement about shape.",
-        [rb("LLN stated as convergence of the sample mean to the population mean", 2),
-         rb("CLT stated as approximate normality of the sampling distribution", 2),
-         rb("Relationship between the two explained", 2)],
+        "Explain what the law of large numbers says, and what it leaves for the "
+        "central limit theorem to answer.",
+        "The LLN says the estimate of the population mean becomes more accurate as the "
+        "sample grows: Xbar is a consistent estimator of mu. It does not describe the "
+        "distribution of the sample mean for finite n; that is what the CLT is for.",
+        [rb("LLN stated as the estimate of the population mean becoming more accurate", 2),
+         rb("Xbar named as a consistent estimator of the population mean", 2),
+         rb("Notes it says nothing about the sample mean's distribution for finite n", 2)],
         1, PDF, "p.46"))
 
     out.append(wa(

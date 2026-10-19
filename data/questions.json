@@ -2260,7 +2260,7 @@
    "options": {
     "a": "The mean is always reported with a standard deviation.",
     "b": "The median is robust to extreme values.",
-    "c": "The mode is the only measure that works for categorical data.",
+    "c": "The mode is useful for categorical or bimodal distributions.",
     "d": "a data set can have at most one mode, since the mode is a single value.",
     "e": "The median is pulled towards extreme values in a skewed sample."
    },
@@ -2270,7 +2270,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The median resists outliers and skewness because it only looks at the middle of the ordered data, and it is the mode that is meaningful for a categorical variable, where taking an average of the categories would be meaningless. A mode need not be unique, so a dataset can have more than one, and the median is not what gets pulled towards extreme values; the mean is.",
+   "explanation": "The median resists outliers and skewness because it only looks at the middle of the ordered data, and a mode is the measure worth reaching for on a categorical or bimodal variable, where averaging the categories would be meaningless. A mode need not be unique, so a dataset can have more than one, and the median is not what gets pulled towards extreme values; the mean is.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3744,29 +3744,29 @@
    "lecture": 4,
    "type": "WA",
    "topic": "Sampling with and without replacement",
-   "stem": "Explain the difference between sampling with and without replacement, and state what happens to the probability of a second blue ball in each case.",
+   "stem": "Explain what distinguishes sampling with replacement from sampling without replacement.",
    "points": 1,
-   "answer": "With replacement the ball is returned after each draw, so the bag is unchanged, the draws are independent, and the second blue has probability 3/10. Without replacement the bag becomes 2 blue out of 9, giving 2/9, so the draws are dependent.",
-   "detail": "The two values 3/10 and 2/9 are the standard test of independence: they are equal exactly when the draws are independent. Replacement is the case that makes repeated draws behave like repeated copies of the same experiment, which is what justifies using the product rule repeatedly. Note that 3/10 comes from 3 blue out of 10 balls.",
+   "answer": "With replacement, after drawing a unit you put it back into the population before drawing again. Without replacement, you do not put it back, so the composition of the population changes as the sample is drawn.",
+   "detail": "Whether the draws are independent follows directly from this. In a bag with 10 balls of which 3 are blue, the second draw is 3/10 with replacement because the bag is back to 10 balls, and 2/9 without it because the first blue is gone. Those two values are equal exactly when the draws are independent, which is what makes them the standard test of the distinction.",
    "rubric": [
     {
-     "text": "With-replacement behaviour described as restoring the bag and independence",
+     "text": "With replacement defined as putting the unit back before drawing again",
      "elements": 2
     },
     {
-     "text": "Without-replacement behaviour described as changing the composition",
+     "text": "Without replacement defined as not putting it back",
      "elements": 2
     },
     {
-     "text": "Both probabilities 3/10 and 2/9 correctly stated",
-     "elements": 1
+     "text": "Notes the population composition changes across draws",
+     "elements": 2
     }
    ],
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.37"
+    "slide": "p.33"
    },
    "origin": "new"
   },
@@ -4363,9 +4363,9 @@
    "lecture": 5,
    "type": "WA",
    "topic": "Central limit theorem",
-   "stem": "Explain what the central limit theorem states and why it matters for inference.",
+   "stem": "State the central limit theorem, and say which other statistics it covers.",
    "points": 1,
-   "answer": "The CLT states that for large n the sampling distribution of the sample mean is approximately normal even when the population is not. It matters because it lets us use z-scores and confidence intervals without knowing the population's shape, which is rarely available in practice.",
+   "answer": "For i.i.d. variables with distribution F(mu, sigma^2), for large n the sample mean is approximately normal regardless of the shape of F. The theorem extends to a statistic written as a sum or average of i.i.d. variables, such as sample proportions and variances.",
    "detail": "",
    "rubric": [
     {
@@ -4377,8 +4377,8 @@
      "elements": 2
     },
     {
-     "text": "Explains it enables normal-based inference without knowing the population",
-     "elements": 1
+     "text": "Names the extension to sums or averages, e.g. proportions and variances",
+     "elements": 2
     }
    ],
    "r_flavoured": false,
@@ -4502,21 +4502,21 @@
    "lecture": 5,
    "type": "WA",
    "topic": "Law of large numbers",
-   "stem": "Explain the law of large numbers and how it differs from the central limit theorem.",
+   "stem": "Explain what the law of large numbers says, and what it leaves for the central limit theorem to answer.",
    "points": 1,
-   "answer": "The law of large numbers says the sample mean converges to the population mean as the sample grows, so it concerns where the sample mean ends up. The CLT adds that the sampling distribution is approximately normal for large n, a statement about shape.",
+   "answer": "The LLN says the estimate of the population mean becomes more accurate as the sample grows: Xbar is a consistent estimator of mu. It does not describe the distribution of the sample mean for finite n; that is what the CLT is for.",
    "detail": "",
    "rubric": [
     {
-     "text": "LLN stated as convergence of the sample mean to the population mean",
+     "text": "LLN stated as the estimate of the population mean becoming more accurate",
      "elements": 2
     },
     {
-     "text": "CLT stated as approximate normality of the sampling distribution",
+     "text": "Xbar named as a consistent estimator of the population mean",
      "elements": 2
     },
     {
-     "text": "Relationship between the two explained",
+     "text": "Notes it says nothing about the sample mean's distribution for finite n",
      "elements": 2
     }
    ],
@@ -5195,22 +5195,22 @@
    "lecture": 6,
    "type": "WA",
    "topic": "P-values",
-   "stem": "Explain what a p-value is and state one thing it is NOT.",
+   "stem": "Explain what a p-value is: what it conditions on, and what probability is being computed.",
    "points": 1,
-   "answer": "A p-value is the probability, assuming the null is true, of observing a statistic at least as extreme as the one obtained. It is not the probability that the null is true, and it does not measure the size of an effect.",
+   "answer": "The p-value is the probability of observing a test statistic as extreme or more extreme, calculated under the null hypothesis. It is the area in the tail beyond the observed statistic, so a large test statistic gives a p-value close to zero.",
    "detail": "",
    "rubric": [
     {
-     "text": "P-value defined as an H0-conditional tail probability",
+     "text": "P-value defined as a probability under the null hypothesis",
      "elements": 2
     },
     {
-     "text": "States that it is NOT the probability that H0 is true",
-     "elements": 1
+     "text": "Conditions on the observed statistic being as extreme or more extreme",
+     "elements": 2
     },
     {
-     "text": "Notes it says nothing about effect size or importance",
-     "elements": 1
+     "text": "Explains it as the tail area beyond the observed statistic",
+     "elements": 2
     }
    ],
    "r_flavoured": true,
@@ -6781,7 +6781,7 @@
    "topic": "Correlation and association",
    "stem": "Explain what the correlation coefficient measures, and give one situation where a correlation near zero would be misleading.",
    "points": 1,
-   "answer": "Correlation measures the strength and direction of the LINEAR association between two continuous variables, running from -1 through 0 to 1. A value near zero only rules out a linear relationship, so it can mislead when the pattern is curved or driven by an outlier.",
+   "answer": "Correlation measures the strength and direction of the LINEAR association between two continuous variables. A value near zero rules out only a linear relationship, so it can mislead when the pattern is curved, even if the variables are strongly related.",
    "detail": "",
    "rubric": [
     {
@@ -6793,7 +6793,7 @@
      "elements": 2
     },
     {
-     "text": "Gives a valid non-linear or outlier example",
+     "text": "Gives the curved or non-linear case",
      "elements": 1
     }
    ],
