@@ -314,20 +314,23 @@ def questions():
 
     out.append(mc(
         "L2-MC-019", 3, "Factors and ordering",
-        "A bar plot of a factor with levels High school, Bachelor, Master, PhD puts the "
-        "categories in alphabetical order by default, which puts Bachelor first. What is "
-        "the fix?",
+        "A data frame has a character column `education` holding \"High school\", "
+        "\"Bachelor\", \"Master\" and \"PhD\", and you want those values treated as four "
+        "levels in that order. Which two statements about doing this are TRUE?",
         ["Rename the categories so they happen to sort in the intended order",
-         "Set the order of the levels explicitly with `factor(levels = ...)`",
+         "Convert it with `factor(levels = ...)` so the order of the levels is set "
+         "explicitly",
          "Use `arrange()` on the plotting data",
-         "Convert the factor to character",
-         "An ordered factor is one whose levels carry a meaningful order, such as "
-         "passenger class"],
+         "Convert the column to character",
+         "An ordered factor is the right type here, because these levels carry a "
+         "meaningful order"],
         ["b", "e"],
-        "ggplot2 sorts a factor by its level order, not alphabetically, so setting the "
-        "levels explicitly is the direct fix. That order is stored on the factor as an "
-        "attribute, which is why the fix belongs in the data rather than in the plot call.",
-        PDF3, "p.51", r_functions=["factor", "levels", "ggplot"]))
+        "The levels carry a natural order - High school below Bachelor below Master "
+        "below PhD - so the column wants to be an ordered factor, and that order is set "
+        "explicitly with `factor(levels = ...)` rather than left to whatever order the "
+        "values happen to arrive in. Passing the levels in order, together with "
+        "`ordered = TRUE`, is what records that the order means something.",
+        PDF3, "p.51", r_functions=["factor", "levels"]))
 
     out.append(mc(
         "L2-MC-020", 2, "Ordering data",

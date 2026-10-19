@@ -27,16 +27,19 @@ def questions():
 
     out.append(mc(
         "L3-MC-002", 3, "Measures of central tendency",
-        "A distribution is strongly right-skewed. What does that imply?",
-        ["mean is smaller than median",
-         "mean is larger than median",
-         "the median is robust to extreme values and skewness",
-         "mean and median are always equal",
-         "the mode cannot be identified"],
-        ["b", "c"],
-        "In a right-skewed distribution the long tail pulls the mean upward, so the mean "
-        "exceeds the median, and the median is left where it is because only the middle of "
-        "the ordered data defines it. The left-skewed case is the mirror image.",
+        "A distribution contains a few extreme values. Which two statements about the "
+        "measures of central tendency are TRUE?",
+        ["the mean is sensitive to outliers and skewed data",
+         "the median is robust to outliers and skewness",
+         "the median takes the magnitude of extreme values into account",
+         "the mode is unique and informative for a continuous distribution",
+         "the mean is robust to outliers"],
+        ["a", "b"],
+        "The comparison is between a measure that reacts to extreme values and one that "
+        "does not: the mean is pulled around by outliers and by skewed data, while the "
+        "median depends only on the middle of the ordered values. Robustness is not free - "
+        "the median ignores the magnitude of the extreme values, and the mode may be "
+        "neither unique nor informative for continuous data.",
         PDF, "p.21"))
 
     out.append(mc(
@@ -392,18 +395,17 @@ def questions():
 
     out.append(wa(
         "L3-WA-005", 3, "Describing two variables",
-        "Write down the R code to compute the correlation between two numerical vectors, "
-        "and say what values close to -1, 0 and +1 indicate.",
-        "```r" 
-                "```r "
-                "cor(x, y) "
-                "``` "
-                "A value near +1 means a strong positive linear relationship, near -1 a strong negative one, and near 0 little or no linear relationship.",
-        [rb("`cor()` used to compute the correlation"),
-         rb("+1 described as a strong positive linear relationship"),
-         rb("-1 described as a strong negative linear relationship"),
-         rb("0 described as little or no LINEAR relationship")],
-        1, PDF, "p.42", code="cor(x, y)", r_functions=["cor"],
+        "What does a correlation coefficient measure, and what do the values -1, 0 and "
+        "+1 mean?",
+        "A correlation coefficient quantifies the strength and direction of the "
+        "linear relationship between two continuous variables. The most common is "
+        "Pearson's r, ranging from -1 to 1: 1 is a perfect positive linear "
+        "relationship, -1 a perfect negative one, and 0 no linear relationship.",
+        [rb("Pearson correlation coefficient named as the most common measure"),
+         rb("Strength AND direction of the LINEAR relationship between two continuous variables"),
+         rb("Range from -1 to 1"),
+         rb("1 = perfect positive, -1 = perfect negative, 0 = no linear relationship", 2)],
+        1, PDF, "p.42",
         detail="Correlation measures linear association only, so a value near 0 does not rule out a curved relationship. Two clearly curved clouds can correlate at almost zero. It is also unit-free and unaffected by linear rescaling, but it is not a measure of cause, and a high value in observational data can still be explained by a confounding variable."))
 
     out.append(wa(

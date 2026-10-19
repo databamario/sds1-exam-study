@@ -2163,13 +2163,13 @@
    "lecture": 3,
    "type": "MC",
    "topic": "Factors and ordering",
-   "stem": "A bar plot of a factor with levels High school, Bachelor, Master, PhD puts the categories in alphabetical order by default, which puts Bachelor first. What is the fix?",
+   "stem": "A data frame has a character column `education` holding \"High school\", \"Bachelor\", \"Master\" and \"PhD\", and you want those values treated as four levels in that order. Which two statements about doing this are TRUE?",
    "options": {
     "a": "Rename the categories so they happen to sort in the intended order",
-    "b": "Set the order of the levels explicitly with `factor(levels = ...)`",
+    "b": "Convert it with `factor(levels = ...)` so the order of the levels is set explicitly",
     "c": "Use `arrange()` on the plotting data",
-    "d": "Convert the factor to character",
-    "e": "An ordered factor is one whose levels carry a meaningful order, such as passenger class"
+    "d": "Convert the column to character",
+    "e": "An ordered factor is the right type here, because these levels carry a meaningful order"
    },
    "correct": [
     "b",
@@ -2177,12 +2177,11 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "ggplot2 sorts a factor by its level order, not alphabetically, so setting the levels explicitly is the direct fix. That order is stored on the factor as an attribute, which is why the fix belongs in the data rather than in the plot call.",
+   "explanation": "The levels carry a natural order - High school below Bachelor below Master below PhD - so the column wants to be an ordered factor, and that order is set explicitly with `factor(levels = ...)` rather than left to whatever order the values happen to arrive in. Passing the levels in order, together with `ordered = TRUE`, is what records that the order means something.",
    "r_flavoured": true,
    "r_functions": [
     "factor",
-    "levels",
-    "ggplot"
+    "levels"
    ],
    "source": {
     "pdf": "lecture3.pdf",
@@ -2229,21 +2228,21 @@
    "lecture": 3,
    "type": "MC",
    "topic": "Measures of central tendency",
-   "stem": "A distribution is strongly right-skewed. What does that imply?",
+   "stem": "A distribution contains a few extreme values. Which two statements about the measures of central tendency are TRUE?",
    "options": {
-    "a": "mean is smaller than median",
-    "b": "mean is larger than median",
-    "c": "the median is robust to extreme values and skewness",
-    "d": "mean and median are always equal",
-    "e": "the mode cannot be identified"
+    "a": "the mean is sensitive to outliers and skewed data",
+    "b": "the median is robust to outliers and skewness",
+    "c": "the median takes the magnitude of extreme values into account",
+    "d": "the mode is unique and informative for a continuous distribution",
+    "e": "the mean is robust to outliers"
    },
    "correct": [
-    "b",
-    "c"
+    "a",
+    "b"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "In a right-skewed distribution the long tail pulls the mean upward, so the mean exceeds the median, and the median is left where it is because only the middle of the ordered data defines it. The left-skewed case is the mirror image.",
+   "explanation": "The comparison is between a measure that reacts to extreme values and one that does not: the mean is pulled around by outliers and by skewed data, while the median depends only on the middle of the ordered values. Robustness is not free - the median ignores the magnitude of the extreme values, and the mode may be neither unique nor informative for continuous data.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -3073,38 +3072,35 @@
    "lecture": 3,
    "type": "WA",
    "topic": "Describing two variables",
-   "stem": "Write down the R code to compute the correlation between two numerical vectors, and say what values close to -1, 0 and +1 indicate.",
+   "stem": "What does a correlation coefficient measure, and what do the values -1, 0 and +1 mean?",
    "points": 1,
-   "answer": "```r```r cor(x, y) ``` A value near +1 means a strong positive linear relationship, near -1 a strong negative one, and near 0 little or no linear relationship.",
+   "answer": "A correlation coefficient quantifies the strength and direction of the linear relationship between two continuous variables. The most common is Pearson's r, ranging from -1 to 1: 1 is a perfect positive linear relationship, -1 a perfect negative one, and 0 no linear relationship.",
    "detail": "Correlation measures linear association only, so a value near 0 does not rule out a curved relationship. Two clearly curved clouds can correlate at almost zero. It is also unit-free and unaffected by linear rescaling, but it is not a measure of cause, and a high value in observational data can still be explained by a confounding variable.",
    "rubric": [
     {
-     "text": "`cor()` used to compute the correlation",
+     "text": "Pearson correlation coefficient named as the most common measure",
      "elements": 1
     },
     {
-     "text": "+1 described as a strong positive linear relationship",
+     "text": "Strength AND direction of the LINEAR relationship between two continuous variables",
      "elements": 1
     },
     {
-     "text": "-1 described as a strong negative linear relationship",
+     "text": "Range from -1 to 1",
      "elements": 1
     },
     {
-     "text": "0 described as little or no LINEAR relationship",
-     "elements": 1
+     "text": "1 = perfect positive, -1 = perfect negative, 0 = no linear relationship",
+     "elements": 2
     }
    ],
-   "r_flavoured": true,
-   "r_functions": [
-    "cor"
-   ],
+   "r_flavoured": false,
+   "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
     "slide": "p.42"
    },
-   "origin": "new",
-   "code": "cor(x, y)"
+   "origin": "new"
   },
   {
    "id": "L3-WA-006",
@@ -3276,13 +3272,13 @@
    "lecture": 4,
    "type": "MC",
    "topic": "Complementary events",
-   "stem": "Why is P(red or black) = 26/52 + 26/52 = 1 for a shuffled deck?",
+   "stem": "For a shuffled deck, P(red or black) = 26/52 + 26/52 = 1. Which two statements about this probability are TRUE?",
    "options": {
-    "a": "Because the two events are independent",
-    "b": "Because the two events are complementary: they are disjoint and together cover the whole sample space",
-    "c": "Because every card has probability 1",
-    "d": "Because red and black are joint events",
-    "e": "Because the probability of the complement of an event is 1 minus that event"
+    "a": "The two events are independent",
+    "b": "The two events are complementary: they are disjoint and together cover the whole sample space",
+    "c": "Every card has probability 1",
+    "d": "Red and black are joint events",
+    "e": "Here \"or\" is inclusive: A or B means A, or B, or both, which is written A∪B"
    },
    "correct": [
     "b",
@@ -3290,7 +3286,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "Red and black are disjoint and their union is the entire deck, so they are complements. For disjoint events the addition rule reduces to simple addition, which is why the probabilities sum to exactly 1.",
+   "explanation": "Red and black are disjoint and their union is the entire deck, so they are complements, and for disjoint events the addition rule reduces to simple addition, which is why the probabilities sum to exactly 1. The notation matters too: \"or\" is inclusive, so A or B counts an outcome satisfying both, which changes nothing here only because the two events cannot overlap.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {

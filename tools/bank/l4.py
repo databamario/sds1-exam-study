@@ -57,17 +57,20 @@ def questions():
 
     out.append(mc(
         "L4-MC-004", 4, "Complementary events",
-        "Why is P(red or black) = 26/52 + 26/52 = 1 for a shuffled deck?",
-        ["Because the two events are independent",
-         "Because the two events are complementary: they are disjoint and together cover "
-         "the whole sample space",
-         "Because every card has probability 1",
-         "Because red and black are joint events",
-         "Because the probability of the complement of an event is 1 minus that event"],
+        "For a shuffled deck, P(red or black) = 26/52 + 26/52 = 1. Which two statements "
+        "about this probability are TRUE?",
+        ["The two events are independent",
+         "The two events are complementary: they are disjoint and together cover the "
+         "whole sample space",
+         "Every card has probability 1",
+         "Red and black are joint events",
+         "Here \"or\" is inclusive: A or B means A, or B, or both, which is written A∪B"],
         ["b", "e"],
         "Red and black are disjoint and their union is the entire deck, so they are "
-        "complements. For disjoint events the addition rule reduces to simple addition, "
-        "which is why the probabilities sum to exactly 1.",
+        "complements, and for disjoint events the addition rule reduces to simple "
+        "addition, which is why the probabilities sum to exactly 1. The notation matters "
+        "too: \"or\" is inclusive, so A or B counts an outcome satisfying both, which "
+        "changes nothing here only because the two events cannot overlap.",
         PDF, "p.17"))
 
     out.append(mc(
