@@ -296,21 +296,22 @@ def questions():
     # ------------------------------------------------------ data.frame sense
     out.append(mc(
         "L2-MC-018", 2, "Getting a sense of the data",
-        "Which statements about these functions are TRUE?",
-        ["`str()` summarises the structure of a data.frame, showing column types",
-         "`summary()` gives distributional summaries such as mean and median",
-         "`dim()` returns the number of columns only",
-         "`str()` returns the arithmetic mean of a column",
-         "`dim()` returns the column names"],
-        ["a", "b"],
-        "`str()` shows structure rather than statistics, so the claim that it returns a "
-        "mean is false. `summary()` is its counterpart for statistics: it reports mean, "
-        "median and quartiles per column, which is why (b) is correct. `dim()` gives both "
-        "dimensions at once, and the column names come "
-        "from `names()` or `colnames()`.",
+        "What does `str(titanic_data)` report?",
+        ["The number of observations and variables, then each variable's type "
+         "and its first few values",
+         "The mean and median of every numeric variable",
+         "How many levels a factor has, and what they are",
+         "A plot of each variable, drawn in the console",
+         "Only the column names of the data.frame"],
+        ["a", "c"],
+        "The output shown is the shape of the object: 2207 observations of 9 "
+        "variables, then one line per variable giving its type and first values. "
+        "The factor lines also carry their level count and the level names "
+        "themselves, so a factor is visibly different from a numeric column. It "
+        "reports no averages, and it is not a plot.",
         PDF, "p.47",
-        code="str(titanic_data)\nsummary(titanic_data)\ndim(titanic_data)",
-        r_functions=["str", "summary", "dim"]))
+        code="str(titanic_data)",
+        r_functions=["str"]))
 
     out.append(mc(
         "L2-MC-019", 3, "Factors and ordering",
@@ -369,7 +370,7 @@ def questions():
         "L2-MC-022", 2, "Elements of a graph",
         "Which statements about graphs are TRUE?",
         ["A graph's title states what is being shown",
-         "The x-axis and y-axis name the variables and their units",
+         "The x-axis and y-axis label the variables being plotted",
          "A legend is optional, because the reader can infer the colours from the bars",
          "A graph should never include a source note",
          "Axis labels should be omitted when the variable names are obvious"],

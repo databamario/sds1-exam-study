@@ -450,21 +450,21 @@
    "lecture": 1,
    "type": "MC",
    "topic": "R objects and functions",
-   "stem": "You want a factor with the levels in the order Low, Medium, High. Which R code is correct?",
+   "stem": "Which statements about factors in R are TRUE?",
    "options": {
-    "a": "factor(x, levels = c(\"Low\", \"Medium\", \"High\"))",
-    "b": "factor(x) - it always sorts alphabetically, which is what we want",
-    "c": "levels(x) = c(\"Low\", \"Medium\", \"High\")",
-    "d": "as.character(x) <- c(\"Low\", \"Medium\", \"High\")",
-    "e": "A factor is a character string with extra attributes, such as an ordered set of levels."
+    "a": "A factor is a special type of character string that carries extra attributes, such as levels or an order.",
+    "b": "A factor is just a character vector, so you write it in quotes exactly like any other text.",
+    "c": "A factor is a numeric type used for counts and amounts.",
+    "d": "A factor is internally stored as integers with labels, and its class is \"factor\".",
+    "e": "A factor is an ordered list of numbers, like a vector with dimensions."
    },
    "correct": [
     "a",
-    "e"
+    "d"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "You set the level order by passing `levels` to `factor()`. Bare `factor(x)` takes the levels in alphabetical order, which would give High, Low, Medium. That ordering is not a property of the underlying text at all: it is the extra attribute the factor carries, which is what makes factors different from plain character vectors.",
+   "explanation": "A factor is described as a string but with additional attributes, like levels or an order, which is what separates it from a plain character vector. The recap table gives its class as \"factor\" and notes that it is internally stored as integers with labels. Quoting is what the table attaches to characters, not to factors, and a numeric type is the row above it.",
    "r_flavoured": true,
    "r_functions": [
     "factor",
@@ -472,7 +472,11 @@
    ],
    "source": {
     "pdf": "lecture1.pdf",
-    "slide": "p.52"
+    "slide": "p.52",
+    "slides": [
+     "p.52",
+     "p.46"
+    ]
    },
    "origin": "new"
   },
@@ -703,17 +707,21 @@
    "lecture": 1,
    "type": "WA",
    "topic": "Factors",
-   "stem": "A factor stores integers with labels attached. Explain what that means in practice, and why it matters when you need a specific order of categories.",
+   "stem": "A factor stores integers with labels attached. Explain what that means in practice, and what the levels attribute adds on top of it.",
    "points": 1,
-   "answer": "The integer codes are not meaningful on their own, so the labels and the order of the levels carry the information. Level order controls sorting and plotting, so categories appear in the order of their levels rather than alphabetically.",
-   "detail": "A frequent symptom of this is a bar chart whose categories come out in the wrong order, with \"High\" before \"Low\". Setting the levels with `factor(x, levels = c(\"Low\", \"Medium\", \"High\"), ordered = TRUE)` fixes both the plot and any subsequent arithmetic. The distinction between a factor's stored codes and its printed labels is also why `mean(x)` fails on a factor: the codes are meaningless as numbers.",
+   "answer": "The stored integers are just codes; the labels carry the meaning. A factor also carries extra attributes, among them levels or an order, so the order of the categories belongs to the factor rather than to the text.",
+   "detail": "The pages split this in two: the recap table gives the integer storage with labels, and the objects page earlier calls a factor a string with additional attributes, like levels or an order. A frequent symptom of getting the level order wrong is a bar chart whose categories come out alphabetically, with \"High\" before \"Low\". The distinction between a factor's stored codes and its printed labels is also why `mean(x)` fails on a factor: the codes are meaningless as numbers.",
    "rubric": [
     {
      "text": "Explanation that storage is integer codes plus a label mapping",
      "elements": 2
     },
     {
-     "text": "Levels control ordering, so order must sometimes be set explicitly",
+     "text": "Levels named as the extra attribute a factor carries",
+     "elements": 2
+    },
+    {
+     "text": "Order identified as a property of the factor, not the text",
      "elements": 2
     }
    ],
@@ -721,7 +729,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture1.pdf",
-    "slide": "p.52"
+    "slide": "p.52",
+    "slides": [
+     "p.52",
+     "p.46"
+    ]
    },
    "origin": "new"
   },
@@ -1357,33 +1369,31 @@
    "lecture": 2,
    "type": "MC",
    "topic": "Getting a sense of the data",
-   "stem": "Which statements about these functions are TRUE?",
+   "stem": "What does `str(titanic_data)` report?",
    "options": {
-    "a": "`str()` summarises the structure of a data.frame, showing column types",
-    "b": "`summary()` gives distributional summaries such as mean and median",
-    "c": "`dim()` returns the number of columns only",
-    "d": "`str()` returns the arithmetic mean of a column",
-    "e": "`dim()` returns the column names"
+    "a": "The number of observations and variables, then each variable's type and its first few values",
+    "b": "The mean and median of every numeric variable",
+    "c": "How many levels a factor has, and what they are",
+    "d": "A plot of each variable, drawn in the console",
+    "e": "Only the column names of the data.frame"
    },
    "correct": [
     "a",
-    "b"
+    "c"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "`str()` shows structure rather than statistics, so the claim that it returns a mean is false. `summary()` is its counterpart for statistics: it reports mean, median and quartiles per column, which is why (b) is correct. `dim()` gives both dimensions at once, and the column names come from `names()` or `colnames()`.",
+   "explanation": "The output shown is the shape of the object: 2207 observations of 9 variables, then one line per variable giving its type and first values. The factor lines also carry their level count and the level names themselves, so a factor is visibly different from a numeric column. It reports no averages, and it is not a plot.",
    "r_flavoured": true,
    "r_functions": [
-    "str",
-    "summary",
-    "dim"
+    "str"
    ],
    "source": {
     "pdf": "lecture2.pdf",
     "slide": "p.47"
    },
    "origin": "new",
-   "code": "str(titanic_data)\nsummary(titanic_data)\ndim(titanic_data)"
+   "code": "str(titanic_data)"
   },
   {
    "id": "L2-MC-020",
@@ -1458,7 +1468,7 @@
    "stem": "Which statements about graphs are TRUE?",
    "options": {
     "a": "A graph's title states what is being shown",
-    "b": "The x-axis and y-axis name the variables and their units",
+    "b": "The x-axis and y-axis label the variables being plotted",
     "c": "A legend is optional, because the reader can infer the colours from the bars",
     "d": "A graph should never include a source note",
     "e": "Axis labels should be omitted when the variable names are obvious"

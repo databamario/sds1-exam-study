@@ -1,43 +1,33 @@
-Give the eight cut questions their second page back
+Read L1 and L2: two untaught claims, two pages that were not cited
 
-The three Band F batches all found the same defect: the answer needed a second
-page, the format allowed one, so the fix was to delete real course content. Six
-times in twenty. The two-page citations landed in the previous commit; this puts
-the content back.
+Nine questions. Six are fine. Three were wrong.
 
-L3-WA-004 contrasts an inner join with a left join again, and L3-WA-006 asks for
-a measure of spread as well as the shape of the distribution. L4-MC-011 keys the
-conditional definition of independence, which is p.29 and not p.30 where the
-product rule lives, and L5-MC-010 gets var(X-bar) = sigma squared over n as an
-option of its own. L6-MC-003 gets the rule that about 95% of sample means fall
-within two standard errors, and L6-WA-004 gets its basketball club example back
-together with the name the lecture gives it, coverage bias. L8-WA-003 asks for
-the df = k - 1 rule, and L8-WA-006 asks for both the independence and the
-homogeneity chi-square, which p.40's flow chart cannot tell apart.
+L1-MC-018 keyed `factor(x, levels = ...)` as the answer to a question about
+setting level order, and that argument appears nowhere in Lecture 1 - a search
+for "levels =" over the whole lecture returns nothing. Its second keyed option
+said a factor is a character string with extra attributes, which is p.46, not
+p.52. Both halves of the question were unsupported, and they were unsupported
+differently. The question now asks what the two pages actually say: p.46 calls a
+factor a string with additional attributes like levels or an order, p.52 gives
+its class and notes the integer storage with labels.
 
-L1-MC-019 was on the same list and deliberately did not get one. Its batch 3
-repair had replaced an option keying a claim about right-hand-side evaluation,
-which no page of Lecture 1 makes. The replacement states what p.52 carries, and
-p.52's function row says all of it - "can be assigned or passed as values", with
-function(x) x^2 as its example, the same code the question runs. Nothing was
-missing. Adding a page would have satisfied the new gate for the wrong reason,
-which is the failure mode the gate exists to catch, so it would have been silly
-to walk into it deliberately.
+L2-MC-018 keyed `summary()` as giving mean and median. `summary()` does not
+appear anywhere in Lecture 2, and p.47 shows only `str()`. The question is now
+about `str()` alone, keyed to what p.47's output shows: the observation and
+variable counts, one line per variable with its type and first values, and the
+level count and level names for each factor.
 
-The gate's weakness was measured instead of guessed at. It passes an extra page
-that supplies one incidental word, and L1-MC-019 was exactly that: p.41 gives
-`lists` and nothing else, 5% of the weight. The tempting fix was a threshold, and
-the numbers refuse it. L3-WA-004's p.61 also supplies a single word at 8%, but
-that word is `inner` and it is the whole reason the page is there - `join` is too
-common across Lecture 3 for the scorer to count. A cut at 10% would fail a
-question whose second page is genuinely load-bearing. So the bar stays low and the
-gate now prints what every extra page supplied, which makes a passing run
-readable instead of merely green. Passing is not evidence the page was needed,
-and the tool now says so where someone will see it.
+L1-WA-007 asked why level order matters, which p.52 does not discuss, and its
+answer claimed level order controls sorting and plotting, which no page makes.
+It now asks what the levels attribute adds on top of the integer storage, and
+cites p.46 beside p.52. L2-MC-017 compares `.by` with `group_by()`, but `.by`
+only appears on p.54, so it cites both. L2-MC-022 keyed that the axis labels
+name the variables "and their units"; p.37 shows axis labels, title, subtitle
+and legend, and says nothing about units, so that clause is gone.
 
-The format gate caught three things in this batch and all three were mine: a
-five-option question with three correct answers, twice, and two written answers
-that ran past the word limit. Also two explanations that said "the lecture",
-which validate.py forbids.
+Six passed on the same test. L1-WA-001 maps all four sampling terms onto p.26's
+definitions. L1-WA-004 restates p.44's rule about the hash symbol. L2-MC-011's
+two keyed options are the positional indices p.48 teaches. L2-MC-016's keyed
+options both follow from p.54's printed pipeline and its three-row output.
 
 Suite green apart from the rebuilt bank being uncommitted.

@@ -316,21 +316,22 @@ def questions():
 
     out.append(mc(
         "L1-MC-018", 1, "R objects and functions",
-        "You want a factor with the levels in the order Low, Medium, High. Which R "
-        "code is correct?",
-        ["factor(x, levels = c(\"Low\", \"Medium\", \"High\"))",
-         "factor(x) - it always sorts alphabetically, which is what we want",
-         "levels(x) = c(\"Low\", \"Medium\", \"High\")",
-         "as.character(x) <- c(\"Low\", \"Medium\", \"High\")",
-         "A factor is a character string with extra attributes, such as an ordered set "
-         "of levels."],
-        ["a", "e"],
-        "You set the level order by passing `levels` to `factor()`. Bare `factor(x)` "
-        "takes the levels in alphabetical order, which would give High, Low, Medium. "
-        "That ordering is not a property of the underlying text at all: it is the extra "
-        "attribute the factor carries, which is what makes factors different from plain "
-        "character vectors.",
-        PDF, "p.52", r_functions=["factor", "levels"]))
+        "Which statements about factors in R are TRUE?",
+        ["A factor is a special type of character string that carries extra "
+         "attributes, such as levels or an order.",
+         "A factor is just a character vector, so you write it in quotes exactly "
+         "like any other text.",
+         "A factor is a numeric type used for counts and amounts.",
+         "A factor is internally stored as integers with labels, and its class is "
+         "\"factor\".",
+         "A factor is an ordered list of numbers, like a vector with dimensions."],
+        ["a", "d"],
+        "A factor is described as a string but with additional attributes, like levels "
+        "or an order, which is what separates it from a plain character vector. The "
+        "recap table gives its class as \"factor\" and notes that it is internally "
+        "stored as integers with labels. Quoting is what the table attaches to "
+        "characters, not to factors, and a numeric type is the row above it.",
+        PDF, "p.52", also=["p.46"], r_functions=["factor", "levels"]))
 
     # -------------------------------------------------------------- written answers
     out.append(wa(
@@ -435,19 +436,21 @@ def questions():
     out.append(wa(
         "L1-WA-007", 1, "Factors",
         "A factor stores integers with labels attached. Explain what that means in "
-        "practice, and why it matters when you need a specific order of categories.",
-        "The integer codes are not meaningful on their own, so the labels and the order "
-        "of the levels carry the information. Level order controls sorting and "
-        "plotting, so categories appear in the order of their levels rather than "
-        "alphabetically.",
+        "practice, and what the levels attribute adds on top of it.",
+        "The stored integers are just codes; the labels carry the meaning. A factor "
+        "also carries extra attributes, among them levels or an order, so the order of "
+        "the categories belongs to the factor rather than to the text.",
         [rb("Explanation that storage is integer codes plus a label mapping", 2),
-         rb("Levels control ordering, so order must sometimes be set explicitly", 2)],
-        1, PDF, "p.52",
-        detail="A frequent symptom of this is a bar chart whose categories come out in "
-               "the wrong order, with \"High\" before \"Low\". Setting the levels with "
-               "`factor(x, levels = c(\"Low\", \"Medium\", \"High\"), ordered = TRUE)` "
-               "fixes both the plot and any subsequent arithmetic. The distinction "
-               "between a factor's stored codes and its printed labels is also why "
+         rb("Levels named as the extra attribute a factor carries", 2),
+         rb("Order identified as a property of the factor, not the text", 2)],
+        1, PDF, "p.52", also=["p.46"],
+        detail="The pages split this in two: the recap table gives the integer "
+               "storage with labels, and the objects page earlier calls a factor a "
+               "string with additional attributes, like levels or an order. A "
+               "frequent symptom of getting the level order wrong is a bar chart "
+               "whose categories come out alphabetically, with \"High\" before "
+               "\"Low\". The distinction between a factor's stored codes and its "
+               "printed labels is also why "
                "`mean(x)` fails on a factor: the codes are meaningless as numbers."))
 
     out.append(wa(
