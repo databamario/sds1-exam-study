@@ -104,17 +104,18 @@ def questions():
 
     out.append(mc(
         "G-MC-005", 3, "Skew and centre",
-        "Which distribution is right-skewed, meaning it has a long tail to the "
-        "right?",
-        ["The one shown in the first plot",
-         "The one shown in the second plot",
+        "Two histograms are shown. Which of them is right-skewed, meaning it has a "
+        "long tail to the right?",
+        ["The left one",
+         "The right one",
          "Both are right-skewed",
          "Neither is right-skewed"],
         ["a"],
-        "The first plot has its mass on the left and a tail stretching to the "
-        "right. A symmetric histogram such as the second has its centre in the "
-        "middle and no long tail on either side.",
-        SHAPE[0], SHAPE[1], image="hist_skewed"))
+        "The left histogram has its mass on the left and a tail stretching to the "
+        "right. The right one is symmetric: its centre sits in the middle with no "
+        "long tail on either side. Both panels share a scale, so the difference is "
+        "the shape and not the width of the drawing.",
+        SHAPE[0], SHAPE[1], image="hist_skewed_pair"))
 
     out.append(mc(
         "G-MC-006", 3, "Shape and spread",
@@ -128,7 +129,7 @@ def questions():
         "Variance measures how far values sit from the centre, so spreading the "
         "same shape out increases it. Identical shapes that differ only in width "
         "differ in variance and standard deviation but not in shape or centre.",
-        SPREAD[0], SPREAD[1], image="hist_symmetric"))
+        SPREAD[0], SPREAD[1], image="hist_symmetric_pair"))
 
     # ---- confidence intervals
     out.append(mc(
@@ -214,17 +215,19 @@ def questions():
 
     out.append(mc(
         "G-MC-013", 3, "Comparing distributions",
-        "The area under a density curve for one group is much larger than the "
-        "area for the other. What does that tell you?",
+        "Two histograms are drawn on the same scale, and the area under one of them is "
+        "much larger. What does that tell you?",
         ["That group has a larger total value",
          "That group has a higher variance",
          "That group's mean is larger",
          "That group contains more observations"],
         ["d"],
-        "Density curves are each normalised so the total area is 1 regardless of "
-        "how many observations were collected. A larger area on the plot comes "
-        "from a wider distribution, not a larger sample.",
-        DENSITY[0], DENSITY[1], image="density_overlay"))
+        "In a histogram each bar's height times its width is a count, so the total "
+        "area is the number of observations - which is why the larger group looks "
+        "taller here. The same would not be true of a density curve: those are "
+        "normalised to total area 1 whatever the sample size, so a density plot "
+        "can never tell you how many observations were collected.",
+        DENSITY[0], DENSITY[1], image="hist_counts_pair"))
 
     # ---- correlation matrix
     out.append(mc(
@@ -430,7 +433,7 @@ def questions():
         [rb("States that the shape is the same in both"),
          rb("Identifies the more spread-out histogram as having the larger variance"),
          rb("Explains variance as distance from the centre")],
-        2, SPREAD[0], SPREAD[1], image="hist_symmetric",
+        2, SPREAD[0], SPREAD[1], image="hist_symmetric_pair",
         detail="Shape, centre and spread are three separate properties of a "
                "distribution, and two histograms can agree on the first two while "
                "differing on the third. Keeping them apart is the point of "

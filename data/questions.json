@@ -2054,10 +2054,10 @@
    "lecture": 3,
    "type": "MC",
    "topic": "Skew and centre",
-   "stem": "Which distribution is right-skewed, meaning it has a long tail to the right?",
+   "stem": "Two histograms are shown. Which of them is right-skewed, meaning it has a long tail to the right?",
    "options": {
-    "a": "The one shown in the first plot",
-    "b": "The one shown in the second plot",
+    "a": "The left one",
+    "b": "The right one",
     "c": "Both are right-skewed",
     "d": "Neither is right-skewed"
    },
@@ -2066,7 +2066,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "The first plot has its mass on the left and a tail stretching to the right. A symmetric histogram such as the second has its centre in the middle and no long tail on either side.",
+   "explanation": "The left histogram has its mass on the left and a tail stretching to the right. The right one is symmetric: its centre sits in the middle with no long tail on either side. Both panels share a scale, so the difference is the shape and not the width of the drawing.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2074,7 +2074,7 @@
     "slide": "p.24"
    },
    "origin": "new",
-   "image": "hist_skewed"
+   "image": "hist_skewed_pair"
   },
   {
    "id": "G-MC-006",
@@ -2101,7 +2101,7 @@
     "slide": "p.28"
    },
    "origin": "new",
-   "image": "hist_symmetric"
+   "image": "hist_symmetric_pair"
   },
   {
    "id": "G-MC-012",
@@ -2135,7 +2135,7 @@
    "lecture": 3,
    "type": "MC",
    "topic": "Comparing distributions",
-   "stem": "The area under a density curve for one group is much larger than the area for the other. What does that tell you?",
+   "stem": "Two histograms are drawn on the same scale, and the area under one of them is much larger. What does that tell you?",
    "options": {
     "a": "That group has a larger total value",
     "b": "That group has a higher variance",
@@ -2147,7 +2147,7 @@
    ],
    "n_correct": 1,
    "points": 1,
-   "explanation": "Density curves are each normalised so the total area is 1 regardless of how many observations were collected. A larger area on the plot comes from a wider distribution, not a larger sample.",
+   "explanation": "In a histogram each bar's height times its width is a count, so the total area is the number of observations - which is why the larger group looks taller here. The same would not be true of a density curve: those are normalised to total area 1 whatever the sample size, so a density plot can never tell you how many observations were collected.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
@@ -2155,7 +2155,7 @@
     "slide": "p.25"
    },
    "origin": "new",
-   "image": "density_overlay"
+   "image": "hist_counts_pair"
   },
   {
    "id": "L2-MC-019",
@@ -2920,7 +2920,7 @@
     "slide": "p.28"
    },
    "origin": "new",
-   "image": "hist_symmetric"
+   "image": "hist_symmetric_pair"
   },
   {
    "id": "L3-WA-001",

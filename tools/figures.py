@@ -74,9 +74,19 @@ FIG_DATA = {
     "hist_skewed": {
         "seed": 7, "shape": 2.0, "scale": 2.0, "n": 4000, "bins": 28,
     },
-    "hist_symmetric": {
-        "bins": list(range(0, 28, 2)),
-        "counts": [1, 2, 5, 11, 19, 24, 21, 14, 8, 4, 2, 1, 1],
+    # Paired figures. Four questions were written about two plots side by side
+    # while only one was ever drawn, so the pair is now what gets drawn.
+    "hist_skewed_pair": {
+        "seed": 7, "shape": 2.0, "scale": 2.0, "n": 4000, "bins": 28,
+        "sym_seed": 8, "sym_mean": 4.0, "sym_sd": 2.0, "sym_n": 4000,
+    },
+    "hist_symmetric_pair": {
+        "seed": 21, "mean": 15.0, "narrow_sd": 2.0, "wide_sd": 7.0,
+        "n": 4000, "bins": 30,
+    },
+    "hist_counts_pair": {
+        "seed": 33, "mean": 50.0, "sd": 10.0,
+        "small_n": 30, "large_n": 80, "bins": 15,
     },
     "ci_dotplot": {
         "names": ["A", "B"],
@@ -192,21 +202,6 @@ def hist_skewed() -> None:
     _save(fig, "hist_skewed")
 
 
-def hist_symmetric() -> None:
-    """Symmetric: mean sits in the middle, variance follows the spread."""
-    fig, ax = plt.subplots(figsize=(6.4, 3.4))
-    bins = np.array(FIG_DATA["hist_symmetric"]["bins"])
-    counts = np.array(FIG_DATA["hist_symmetric"]["counts"])
-    ax.bar(bins[:-1], counts, width=2.0, align="edge",
-           color=BAR_A, edgecolor="white", linewidth=0.6)
-    ax.set_xlabel("Response value")
-    ax.set_ylabel("Frequency")
-    ax.grid(axis="y", color=GRID, linewidth=0.8)
-    ax.set_axisbelow(True)
-    _style(ax)
-    _save(fig, "hist_symmetric")
-
-
 def ci_dotplot() -> None:
     """Estimates with 95% CI. Group A's CI clears the reference line, B's does not.
 
@@ -307,6 +302,84 @@ def density_overlay() -> None:
     _save(fig, "density_overlay")
 
 
+def hist_skewed_pair() -> None:
+    """A skewed histogram beside a symmetric one, for the 'which is skewed?' item."""
+    d = FIG_DATA["hist_skewed_pair"]
+    skew = np.random.default_rng(d["seed"]).gamma(
+        shape=d["shape"], scale=d["scale"], size=d["n"])
+    sym = np.random.default_rng(d["sym_seed"]).normal(
+        d["sym_mean"], d["sym_sd"], d["sym_n"])
+
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 3.2), sharey=True, sharex=True)
+    for ax, data, title in ((axes[0], skew, "Left"), (axes[1], sym, "Right")):
+        ax.hist(data, bins=d["bins"], color=BAR_A, edgecolor="white", linewidth=0.6)
+        ax.set_title(title, color=INK, fontsize=10)
+        ax.set_xlabel("Response value")
+        ax.grid(axis="y", color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+        _style(ax)
+    # One x range for both panels: the item asks which shape has the long tail,
+    # and a panel that is merely drawn wider would answer it wrongly.
+    lo = min(skew.min(), sym.min())
+    hi = max(skew.max(), sym.max())
+    axes[0].set_xlim(lo, hi)
+    axes[0].set_ylabel("Frequency")
+    _save(fig, "hist_skewed_pair")
+
+
+def hist_symmetric_pair() -> None:
+    """Same shape, same centre, two spreads: the 'which is more spread out?' item."""
+    d = FIG_DATA["hist_symmetric_pair"]
+    rng = np.random.default_rng(d["seed"])
+    narrow = rng.normal(d["mean"], d["narrow_sd"], d["n"])
+    wide = rng.normal(d["mean"], d["wide_sd"], d["n"])
+
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 3.2), sharey=True, sharex=True)
+    for ax, data, title in ((axes[0], narrow, "Left"), (axes[1], wide, "Right")):
+        ax.hist(data, bins=d["bins"], color=BAR_A, edgecolor="white", linewidth=0.6)
+        ax.set_title(title, color=INK, fontsize=10)
+        ax.set_xlabel("Response value")
+        ax.grid(axis="y", color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+        _style(ax)
+    # Shared range again, so the only thing that differs is the width of the
+    # bars. If each panel were scaled to its own data the narrow one would look
+    # the same width as the wide one and the item would stop working.
+    axes[0].set_xlim(min(narrow.min(), wide.min()), max(narrow.max(), wide.max()))
+    axes[0].set_ylabel("Frequency")
+    _save(fig, "hist_symmetric_pair")
+
+
+def hist_counts_pair() -> None:
+    """Two groups from the same process, different sample sizes.
+
+    The point is that a histogram's area is a count, so the taller total means
+    more observations - the thing a density curve cannot show, since it is
+    normalised to area 1 whatever the sample size.
+    """
+    d = FIG_DATA["hist_counts_pair"]
+    rng = np.random.default_rng(d["seed"])
+    small = rng.normal(d["mean"], d["sd"], d["small_n"])
+    large = rng.normal(d["mean"], d["sd"], d["large_n"])
+
+    fig, axes = plt.subplots(1, 2, figsize=(8.2, 3.2), sharey=True)
+    for ax, data, title in ((axes[0], small, "Small group"),
+                            (axes[1], large, "Large group")):
+        ax.hist(data, bins=d["bins"], color=BAR_A, edgecolor="white", linewidth=0.6)
+        ax.set_title(title, color=INK, fontsize=10)
+        ax.set_xlabel("Response value")
+        ax.grid(axis="y", color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+        _style(ax)
+    axes[0].set_ylabel("Frequency")
+    axes[0].set_xlim(min(small.min(), large.min()) - 5,
+                     max(small.max(), large.max()) + 5)
+    # A shared frequency scale is what makes the item answerable: with each
+    # panel scaled to itself the total area would look the same in both, and
+    # "the area is bigger" would not be something the picture shows.
+    _save(fig, "hist_counts_pair")
+
+
 def corr_heatmap() -> None:
     """Correlation matrix; the student must find the strongest pair."""
     labels = FIG_DATA["corr_heatmap"]["labels"]
@@ -350,7 +423,9 @@ FIGURES = {
     "bar_stacked": bar_stacked,
     "boxplots_h": boxplots_h,
     "hist_skewed": hist_skewed,
-    "hist_symmetric": hist_symmetric,
+    "hist_skewed_pair": hist_skewed_pair,
+    "hist_symmetric_pair": hist_symmetric_pair,
+    "hist_counts_pair": hist_counts_pair,
     "ci_dotplot": ci_dotplot,
     "normal_shaded": normal_shaded,
     "scatter_trend": scatter_trend,

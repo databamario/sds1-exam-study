@@ -293,3 +293,41 @@ that is wrong but happens to be derivable: in the original `ci_dotplot`, 3.8
 was a legitimate half-width of one of the two intervals, so a gate built on
 "is this number derivable" would have passed the very sentence that was wrong.
 Getting G-MC-008 required reading the sentence, not matching its number.
+
+### Closing the four open figure questions
+
+Three figures were added rather than four questions rewritten, and the reason is
+that a question about two plots cannot be asked against one. "Which of these is
+right-skewed?" and "which is more spread out?" are the forms the course
+actually uses; trimming either stem down to the single histogram on screen would
+have turned it into another mean-against-median item, which G-MC-004 and G-WA-002
+already cover. So the pair was drawn.
+
+| figure | data | serves |
+|---|---|---|
+| `hist_skewed_pair` | gamma(2, 2) beside a normal | G-MC-005 |
+| `hist_symmetric_pair` | same shape, same centre, sd 2 against sd 7 | G-MC-006, G-WA-009 |
+| `hist_counts_pair` | same process, n = 30 against n = 80 | G-MC-013 |
+
+G-MC-005 keeps its key and loses only the words "first plot" and "second plot",
+which pointed at a second panel that did not exist. G-MC-006 and G-WA-009 keep
+their wording untouched, because they were always written for two histograms and
+only the figure was missing. G-MC-013 changes premise: it asked about the area
+under a density curve, which is always 1, and now asks about the area under
+histogram bars, which is a count. Its explanation keeps the density contrast as
+the reason the distinction matters.
+
+Drawing each pair exposed something the questions depend on and the first draft
+got wrong. The two panels of `hist_skewed_pair` and `hist_symmetric_pair` were
+first drawn with independent x scales, which means the narrow distribution is
+displayed stretched across the same panel width as the wide one - a student
+comparing them would see no difference in spread, and G-MC-006 would have had no
+answer on screen. Both now share an x range, so the only thing that differs is
+the width of the bars. `hist_counts_pair` needed the same in y: with each panel
+scaled to itself the total area looks equal in both, and G-MC-013's premise -
+that one area is much larger - would not be something the picture showed.
+
+`hist_symmetric` lost its last two questions and was deleted rather than left
+behind: an unused function, an unused FIG_DATA entry the verifier would have
+treated as a source for nothing, and a PNG in the repository. Twelve figures,
+twelve used, no orphans.
