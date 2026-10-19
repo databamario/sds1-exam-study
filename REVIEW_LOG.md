@@ -36,8 +36,9 @@ which is which.
 
 ## Entries
 
-Reviewed in this file so far: none. The earlier passes are recorded in the
-commit messages, which carry the reasoning but not an exhaustive list.
+Read so far: 27. Two wrong (L5-WA-008, L7-WA-008 earlier; L3-MC-018 now), both
+the same shape: a fact that belongs to a neighbouring page. The earlier passes are
+in the commit messages, which carry the reasoning but not a full list.
 
 | question | verdict | finding |
 |----------|---------|---------|
@@ -57,3 +58,11 @@ commit messages, which carry the reasoning but not an exhaustive list.
 | L4-MC-009 | ok | p.43 carries the table and the 14/24 = 0.58 calculation |
 | L5-WA-008 | **wrong** | answer quoted Var(Xbar) = sigma^2/n, which is on p.38; p.37 ends mid-sentence at "But exac...". Formula removed, point kept as variability |
 | L6-WA-006 | ok | p.34 carries the randomness argument. The phrase "interval of plausible values" is loose for a question that asks what the interval does *not* tell you, but the citation is right |
+| L2-MC-014 | ok | p.49 lists filter and subset as many ways of the same thing |
+| L6-MC-008 | ok | p.39 gives 1.96. The alpha = 0.05 answer is derived from z(0.025), not printed |
+| L3-MC-006 | ok | p.28 gives s^2 with n-1. Four options, one correct - inside the format rule |
+| L1-WA-002 | ok | p.52 has all four structures, matrix included as a 2D array of same type |
+| L5-MC-001 | ok | p.15 names coin tosses and yes/no questions as the binomial example |
+| L6-WA-001 | ok | p.17 gives z = (179-170)/1.83 = 4.93 |
+| L2-WA-008 | ok | p.54 shows both forms. But "the modern alternative" for .by is not on the page - it offers the two as equals |
+| L3-MC-018 | **wrong** | two correct options: one about full_join (p.64), one about left_join (p.62). The four joins take one page each - inner 61, left 62, right 63, full 64 - so one citation can never reach both. Reframed on full_join alone |

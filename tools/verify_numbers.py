@@ -14,7 +14,15 @@ Checks whose value needs the real `states` dataset, which is not installed
 here, are anchored to the PDF instead: the value is looked up in the text of
 the source lecture, so the number is traceable to the slide that printed it.
 
+Both tables above are written by hand, which is the hole this file also closes.
+A check that nobody added verifies nothing, and nothing about the run says so.
+So after the declared checks run, every numeric literal asserted in a written
+answer is compared against them. Anything left over is an *unverified claim*,
+and it must appear in ACCEPTED below with a reason for why it cannot be
+checked. There is no third option: undeclared means failing.
+
 Run:  python tools/verify_numbers.py
+       python tools/verify_numbers.py --report     # list them, exit 0
 """
 
 from __future__ import annotations
@@ -65,6 +73,16 @@ R_CHECKS = [
     ("L9-WA-002", "0.25",
      "integrate(function(y) pnorm(y, 3, 1) * dexp(y, rate = 0.5), 0, Inf)$value", 1e-2),
     ("L9-WA-006", "0.2656", "sum(dbinom(c(1, 5, 9), size = 10, prob = 0.5))", 1e-4),
+    # Found by the audit below, which is the only thing that could find them:
+    # every one of these numbers was being asserted by a written answer with
+    # nothing recomputing it.
+    ("G-WA-008", "30", "2 + 5 + 11 + 9 + 3", 1e-9),
+    ("G-WA-008", "0.23", "(2 + 5) / (2 + 5 + 11 + 9 + 3)", 5e-3),
+    ("L1-WA-003", "0.5", "1 / 2", 1e-9),
+    ("L6-WA-001", "4.9", "(179 - 170) / 1.83", 5e-2),
+    ("L6-WA-003", "1.96", "qnorm(0.975)", 1e-3),
+    ("L7-WA-003", "1.96", "qnorm(0.975)", 1e-3),
+    ("L7-WA-003", "-1.96", "qnorm(0.025)", 1e-3),
 ]
 
 # Values that need the real `states` data, anchored to the slide that printed
@@ -85,6 +103,91 @@ NUM_RE = re.compile(r"-?\d+\.?\d*(?:[eE][-+]?\d+)?")
 # print() prefixes scalars with a "[1] " index marker, which would otherwise be
 # read as the first number in the output.
 INDEX_RE = re.compile(r"\[\d+\]")
+
+# A bare integer that is really a decimal - "24." at the end of a sentence, or
+# "42," inside a list. The looser NUM_RE above swallows the punctuation; this
+# one does not, and it is the one used for the audit.
+LITERAL_RE = re.compile(r"-?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?")
+
+# Numeric literals that a written answer asserts and that are deliberately NOT
+# recomputed by R or looked up on a slide: {question id: {literal: reason}}.
+#
+# The reason is the point. A number nobody can check is fine as long as somebody
+# had to write down why. A bare list of numbers would be the same hole this
+# table exists to close, one level down.
+ACCEPTED: dict[str, dict[str, str]] = {
+    # --- read off a generated figure; the drawing is the source --------------
+    "G-WA-001": {"30": "the common median of all three groups, read off the figure"},
+    "G-WA-005": {"0.6": "an approximate correlation read off the generated scatter"},
+    "G-WA-007": {
+        "0.62": "the cell value in the generated correlation matrix",
+        "-0.33": "the cell value in the generated correlation matrix",
+    },
+    "G-WA-008": {
+        "11": "a bar height in the generated figure",
+        "29": "the upper edge of a bin label in the generated figure",
+    },
+    "G-WA-011": {"7.4": "a boundary marked on the generated normal curve"},
+    "G-WA-012": {
+        "6.2": "the centre marked on the generated normal curve",
+        "7.4": "a boundary marked on the generated normal curve",
+    },
+    # --- definitions, not measurements ---------------------------------------
+    "G-WA-003": {"0.05": "the conventional significance level, named in the question"},
+    "L3-WA-002": {"50": "'the middle 50%' is the definition of the IQR"},
+    "L4-WA-002": {
+        "26": "the red-card count of a standard deck",
+        "52": "the size of a standard deck",
+    },
+    "L9-WA-006": {"0.5": "the success probability of a fair coin"},
+    "L9-WA-007": {
+        "30": "the group size in the birthday problem",
+        "365": "the number of days in a year",
+    },
+    # --- totals derived from figures already given in the question ----------
+    "L4-WA-004": {"10": "the bag total, 5 + 3 + 2 from the question"},
+    "L4-WA-005": {"10": "the bag total, 5 + 3 + 2 from the question"},
+    "L4-WA-008": {"10": "the bag total, 5 + 3 + 2 from the question"},
+    # --- quoted from the lecture material, which is not in the repo ----------
+    "L1-WA-008": {
+        "2.4": "the size of the Literary Digest poll, a historical figure",
+        "57": "its predicted share for Landon, a historical figure",
+        "62": "the share Roosevelt actually won with, a historical figure",
+    },
+    "L4-WA-003": {
+        "14": "the MTO table count quoted from the lecture slide",
+        "24": "the MTO table count quoted from the lecture slide",
+        "72": "the MTO table total quoted from the lecture slide",
+    },
+    "L4-WA-006": {
+        "14": "the MTO table count quoted from the lecture slide",
+        "24": "the MTO table count quoted from the lecture slide",
+        "72": "the MTO table total quoted from the lecture slide",
+    },
+    "L5-WA-001": {
+        "50": "the sample size of the lecture's worked example",
+        "169.03": "that example's sample mean; the data itself is not in the repo",
+    },
+    "L7-WA-005": {
+        "0.05": "the conventional significance level",
+        "66.28": "66.27714 from the R output quoted in the question, to 2 dp",
+        "77.72": "77.72286 from the R output quoted in the question, to 2 dp",
+    },
+    "L7-WA-008": {
+        "10": "n in the worked example the question describes",
+        "72": "that example's sample mean",
+        "75": "that example's null mean",
+    },
+    "L6-WA-002": {"170": "an arbitrary null mean used as an example"},
+    # --- illustrative values, chosen to make a point -------------------------
+    "L1-WA-003": {"3.14": "an example value of the numeric type"},
+    "L2-WA-005": {"100": "an arbitrary default in a code example"},
+    "L4-WA-007": {
+        "4.5": "an impossible count, used to show what discrete rules out",
+        "100": "an illustrative possible burn-out time",
+        "250.5": "an illustrative possible burn-out time",
+    },
+}
 
 
 def find_rscript(explicit: str | None) -> str | None:
@@ -109,6 +212,80 @@ def blob(q: dict) -> str:
     for v in (q.get("options") or {}).values():
         parts.append(v or "")
     return " ".join(parts)
+
+
+def literals(text: str) -> set[str]:
+    """Every numeric literal in `text`, as written."""
+    return {m.group(0) for m in LITERAL_RE.finditer(text or "")}
+
+
+def is_noise(value: float) -> bool:
+    """Literals that are never a statistical claim."""
+    if float(value).is_integer() and abs(value) < 10:
+        return True          # 0-9: counts of points, of sentences, of answers
+    if float(value).is_integer() and 1900 <= value <= 2100:
+        return True          # a year
+    return False
+
+
+def unverified_literals(questions: dict[str, dict]) -> list[tuple[str, str]]:
+    """Numeric literals a written answer asserts and nothing verifies.
+
+    A literal is excluded when it is already claimed by a check in R_CHECKS or
+    PDF_CHECKS, when it is noise, or when the stem already states it - a number
+    repeated from the stem is an input the answer works from, not a value the
+    answer produces.
+    """
+    claimed: dict[str, set[str]] = {}
+    for qid, claim, *_ in R_CHECKS:
+        claimed.setdefault(qid, set()).add(claim)
+    for qid, _lecture, claim, _needle in PDF_CHECKS:
+        claimed.setdefault(qid, set()).add(claim)
+
+    out: list[tuple[str, str]] = []
+    for qid, q in sorted(questions.items()):
+        if q.get("type") != "WA":
+            continue
+        given = set()
+        for raw in literals(str(q.get("stem") or "")):
+            given.add(str(float(raw)))
+        body = " ".join(str(q.get(k) or "") for k in ("answer", "rubric", "detail"))
+        for raw in sorted(literals(body), key=float):
+            try:
+                value = float(raw)
+            except ValueError:
+                continue
+            if is_noise(value) or str(value) in given or raw in claimed.get(qid, ()):
+                continue
+            out.append((qid, raw))
+    return out
+
+
+def audit_unverified(failures: list[str], questions: dict[str, dict],
+                     report: bool = False) -> int:
+    leftovers = unverified_literals(questions)
+    if not leftovers:
+        print("\n  ok   every number a written answer asserts is checked or justified")
+        return 0
+
+    by_q: dict[str, list[str]] = {}
+    for qid, raw in leftovers:
+        by_q.setdefault(qid, []).append(raw)
+
+    print("\nNumbers asserted in a written answer that nothing verifies:")
+    for qid, raws in by_q.items():
+        for raw in raws:
+            reason = ACCEPTED.get(qid, {}).get(raw)
+            if reason:
+                print("  ok   %-11s %-9s accepted: %s" % (qid, raw, reason))
+            else:
+                print("  ??   %-11s %-9s unverified" % (qid, raw))
+                if not report:
+                    failures.append(
+                        "%s: written answer asserts %s and no check covers it. Add "
+                        "it to R_CHECKS or PDF_CHECKS, or record why in ACCEPTED."
+                        % (qid, raw))
+    return len(leftovers)
 
 
 def run_batch(rscript: str, checks: list[tuple[str, str]], td: str) -> dict[str, str]:
@@ -146,6 +323,8 @@ def main() -> int:
     import argparse
     ap = argparse.ArgumentParser()
     ap.add_argument("--rscript", default=None)
+    ap.add_argument("--report", action="store_true",
+                    help="list the unverified numbers instead of failing on them")
     args = ap.parse_args()
 
     questions = {q["id"]: q for q in load_bank()}
@@ -221,6 +400,7 @@ def main() -> int:
                                 % (qid, needle, lecture))
 
     print("\n%d numeric claims verified, %d failed." % (checked, len(failures)))
+    audit_unverified(failures, questions, report=args.report)
     if failures:
         print("\nProblems:")
         for f in failures:
