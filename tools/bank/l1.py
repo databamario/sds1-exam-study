@@ -275,13 +275,14 @@ def questions():
          "9",
          "3",
          "An error, because f is not a built-in function",
-         "The right-hand side is evaluated before the assignment, so `f` becomes a "
-         "function object only after that line runs."],
+         "A function is an object like any other in R: it can be assigned to a name "
+         "or passed as a value."],
         ["b", "e"],
         "The assignment stores a function in `f`, so calling it applies `x^2` to the "
-        "argument and 3 squared is 9. A user-defined function behaves like any built-in "
-        "one once it exists; the only subtlety is that the right-hand side is evaluated "
-        "first, so `f` exists as a function object only after that line runs.",
+        "argument and 3 squared is 9. p.52 lists functions among the objects R works "
+        "with, giving `function(x) x^2` as its example, and notes that a function can "
+        "be assigned or passed as values - so once `f` exists it is used exactly like "
+        "any built-in function such as `mean` or `sum`.",
         PDF, "p.52", code="f <- function(x) x^2\nf(3)",
         r_functions=["function", "<-", "^"]))
 

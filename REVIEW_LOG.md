@@ -387,3 +387,21 @@ Three wrong in twenty. All three are the same defect again: the answer needs a
 page the question does not cite. Two consecutive batches at that rate would put
 this band near the 30 per cent the figures came in at, but two batches is still
 two.
+| L5-MC-011 | ok - p.42 states the LLN with the X_i i.i.d. and E = mu and nothing else, so reading that it requires no normality is reading the hypotheses rather than adding one |
+| L6-WA-004 | **wrong** | the answer illustrated positive bias with sampling a basketball club. Basketball appears on pp.24, 27 and 28; p.26 carries only the definition Bias(theta-hat) = E[theta-hat] - theta and the unbiased case. The example is gone and replaced by what the definition itself says: positive bias means the expected value sits above the true parameter |
+| L8-MC-015 | ok - key is ["a", "c"] and p.18 carries both: it says correlation focuses on the "linear relationship" and that "any non-linear relationship may not be captured by the correlation coefficient, even if the variables are strongly related". Both false options are refuted by that same sentence |
+| L3-WA-006 | **wrong** | the second half asked which statistic to report alongside the mean and answered with the standard deviation or the interquartile range. Neither is on p.21, and a search finds "interquartile range" nowhere in Lecture 3, which says Q1 and Q3 instead. p.21 does carry the comparison the question is really about - the mean is "sensitive to outliers and skewed data" while the median is "robust to outliers and skewness" - so the question now asks which of the two is safer, which the page answers |
+| L1-MC-019 | **wrong** | keyed option (e) explained that the right-hand side is evaluated before the assignment, which p.52 does not say; p.52 is the table of object types. Option (e) now states the row the page does carry, that a function is an object which "can be assigned or passed as values". The page's own example for that row is function(x) x^2, which is the code the question runs |
+| L4-MC-001 | ok - p.11 gives 0 <= P(A) <= 1 and states that P(A) = 0 means the event will never happen, which is the keyed pair |
+| L3-WA-004 | **wrong** | the question contrasted an inner join with a left join. The inner join is on p.61; p.62 carries only the left join. The question now asks what a left join does to unmatched rows and when you would need one, which p.62 answers with its NA row, and the inner join moves into the detail panel where it is not graded |
+| L1-MC-002 | ok - p.5 defines inferential statistics as generalising from the sample to the broader population, which is what a hypothesis test and a proportion estimate both do |
+| L2-MC-001 | ok - p.13 gives class (1st, 2nd, 3rd) as its ordinal example and gender, country and survived as nominal, so educational level and car ownership each have one step from those |
+| L2-MC-003 | ok - p.30 prints table(class, survived) with its reading comparing how survival splits across class, which is the keyed pair |
+
+### Two false alarms, both mine
+
+L8-MC-015 and, in batch 1, L9-MC-008 both looked like the L8-MC-012 defect: the printed question showed one correct option where the source had two. I reported the second of these as a bug in show_citation.py. **It is not a bug.** The tool marks every keyed option correctly, and both questions are fine. I misread two asterisks in a dense block of terminal output and then compounded it by attributing the error to the tool.
+
+That is seven false alarms stopped by reading the key from tools/bank/, and it is the third and fourth time in this review that the snapshot was misread rather than the question being wrong.
+
+Three wrong in twenty, all the same defect: the answer needs a page the question does not cite. That is three batches running at 20, 30 and 30 per cent. The figure questions came in at 30, so the band is tracking at the same rate and for the same reason - the citation points at a page that only holds part of the answer.

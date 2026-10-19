@@ -387,14 +387,21 @@ def questions():
 
     out.append(wa(
         "L3-WA-004", 3, "Merging data",
-        "Explain the difference between an inner join and a left join, and give a "
-        "situation where you would need a left join rather than an inner join.",
-        "An inner join keeps only rows whose key appears in both tables, discarding unmatched rows. A left join keeps every row of the left table and fills unmatched columns with NA. You need a left join when the left table is the list of interest.",
-        [rb("Inner join described as keeping only rows matched in both", 2),
-         rb("Left join described as keeping all left rows and filling with NA", 2),
+        "Explain what a left join does to rows that have no match in the other table, "
+        "and give a situation where you would need one rather than dropping them.",
+        "A left join keeps every row of the left dataset and adds matches from the "
+        "right, so an unmatched row is kept with NA. You need one when the left "
+        "table is the list of interest: students with no score must still appear.",
+        [rb("Left join described as keeping all left rows", 2),
+         rb("Unmatched rows filled with NA rather than dropped", 2),
          rb("Gives a concrete situation where dropping rows would be wrong", 2)],
-        1, PDF, "p.62", r_functions=["inner_join", "left_join"],
-        detail="Keeping all students even when some have no recorded score is the motivating case: an inner join would quietly drop those students and change who is in the study. Right joins and full joins complete the family. The danger of an inner join is that it rarely errors, so a row count before and after is the cheapest safety check available."))
+        1, PDF, "p.62", r_functions=["left_join"],
+        detail="The inner join on the previous slide is the other half of the "
+               "comparison and the reason this matters: it keeps only rows matched in "
+               "both datasets, so it would quietly drop those students and change who "
+               "is in the study. An inner join rarely errors, which is why comparing "
+               "row counts before and after is the cheapest safety check available. "
+               "Right joins and full joins complete the family."))
 
     out.append(wa(
         "L3-WA-005", 3, "Describing two variables",
@@ -414,12 +421,12 @@ def questions():
     out.append(wa(
         "L3-WA-006", 3, "Measures of central tendency",
         "A dataset has mean 46.8 and median 42. Explain what this tells you about the "
-        "shape of the distribution and name one statistic you would report alongside the "
-        "mean.",
-        "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. A sensible companion is the standard deviation if the distribution is roughly symmetric, or the interquartile range when the skew is strong.",
+        "shape of the distribution, and which of the two the median is the safer "
+        "summary for.",
+        "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. The median is the safer summary here: it is robust to outliers and to skew, while the mean is sensitive to both.",
         [rb("Identifies right skew from mean exceeding median", 2),
          rb("Explains that a long right tail pulls the mean up", 2),
-         rb("Names a suitable accompanying statistic and justifies it")],
+         rb("Names the median as the robust choice, citing its resistance to skew")],
         1, PDF, "p.21", r_functions=["mean", "median", "sd", "IQR"],
         detail="The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population."))
 

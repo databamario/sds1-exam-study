@@ -487,7 +487,7 @@
     "b": "9",
     "c": "3",
     "d": "An error, because f is not a built-in function",
-    "e": "The right-hand side is evaluated before the assignment, so `f` becomes a function object only after that line runs."
+    "e": "A function is an object like any other in R: it can be assigned to a name or passed as a value."
    },
    "correct": [
     "b",
@@ -495,7 +495,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The assignment stores a function in `f`, so calling it applies `x^2` to the argument and 3 squared is 9. A user-defined function behaves like any built-in one once it exists; the only subtlety is that the right-hand side is evaluated first, so `f` exists as a function object only after that line runs.",
+   "explanation": "The assignment stores a function in `f`, so calling it applies `x^2` to the argument and 3 squared is 9. p.52 lists functions among the objects R works with, giving `function(x) x^2` as its example, and notes that a function can be assigned or passed as values - so once `f` exists it is used exactly like any built-in function such as `mean` or `sum`.",
    "r_flavoured": true,
    "r_functions": [
     "function",
@@ -3034,17 +3034,17 @@
    "lecture": 3,
    "type": "WA",
    "topic": "Merging data",
-   "stem": "Explain the difference between an inner join and a left join, and give a situation where you would need a left join rather than an inner join.",
+   "stem": "Explain what a left join does to rows that have no match in the other table, and give a situation where you would need one rather than dropping them.",
    "points": 1,
-   "answer": "An inner join keeps only rows whose key appears in both tables, discarding unmatched rows. A left join keeps every row of the left table and fills unmatched columns with NA. You need a left join when the left table is the list of interest.",
-   "detail": "Keeping all students even when some have no recorded score is the motivating case: an inner join would quietly drop those students and change who is in the study. Right joins and full joins complete the family. The danger of an inner join is that it rarely errors, so a row count before and after is the cheapest safety check available.",
+   "answer": "A left join keeps every row of the left dataset and adds matches from the right, so an unmatched row is kept with NA. You need one when the left table is the list of interest: students with no score must still appear.",
+   "detail": "The inner join on the previous slide is the other half of the comparison and the reason this matters: it keeps only rows matched in both datasets, so it would quietly drop those students and change who is in the study. An inner join rarely errors, which is why comparing row counts before and after is the cheapest safety check available. Right joins and full joins complete the family.",
    "rubric": [
     {
-     "text": "Inner join described as keeping only rows matched in both",
+     "text": "Left join described as keeping all left rows",
      "elements": 2
     },
     {
-     "text": "Left join described as keeping all left rows and filling with NA",
+     "text": "Unmatched rows filled with NA rather than dropped",
      "elements": 2
     },
     {
@@ -3054,7 +3054,6 @@
    ],
    "r_flavoured": true,
    "r_functions": [
-    "inner_join",
     "left_join"
    ],
    "source": {
@@ -3103,9 +3102,9 @@
    "lecture": 3,
    "type": "WA",
    "topic": "Measures of central tendency",
-   "stem": "A dataset has mean 46.8 and median 42. Explain what this tells you about the shape of the distribution and name one statistic you would report alongside the mean.",
+   "stem": "A dataset has mean 46.8 and median 42. Explain what this tells you about the shape of the distribution, and which of the two the median is the safer summary for.",
    "points": 1,
-   "answer": "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. A sensible companion is the standard deviation if the distribution is roughly symmetric, or the interquartile range when the skew is strong.",
+   "answer": "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. The median is the safer summary here: it is robust to outliers and to skew, while the mean is sensitive to both.",
    "detail": "The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population.",
    "rubric": [
     {
@@ -3117,7 +3116,7 @@
      "elements": 2
     },
     {
-     "text": "Names a suitable accompanying statistic and justifies it",
+     "text": "Names the median as the robust choice, citing its resistance to skew",
      "elements": 1
     }
    ],
@@ -5085,9 +5084,9 @@
    "lecture": 6,
    "type": "WA",
    "topic": "Bias",
-   "stem": "Define bias in terms of the estimator and the true parameter, and explain how sampling bias would affect a height study.",
+   "stem": "Define bias in terms of the estimator and the true parameter, and say what it means for an estimator to be positively biased.",
    "points": 1,
-   "answer": "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`, and an estimator is unbiased when that is zero. Sampling mainly basketball players would shift the expected sample mean upward, giving positive bias.",
+   "answer": "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`. Positive bias means that expected value sits above the true parameter, so the estimator is on average too high; an unbiased estimator has a bias of zero.",
    "detail": "",
    "rubric": [
     {
@@ -5099,8 +5098,8 @@
      "elements": 2
     },
     {
-     "text": "Basketball club example used to illustrate upward bias of the mean",
-     "elements": 1
+     "text": "Positive bias explained as the expected value sitting above the true parameter",
+     "elements": 2
     }
    ],
    "r_flavoured": false,

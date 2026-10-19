@@ -261,12 +261,12 @@ def questions():
 
     out.append(wa(
         "L6-WA-004", 6, "Bias",
-        "Define bias in terms of the estimator and the true parameter, and explain how "
-        "sampling bias would affect a height study.",
-        "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`, and an estimator is unbiased when that is zero. Sampling mainly basketball players would shift the expected sample mean upward, giving positive bias.",
+        "Define bias in terms of the estimator and the true parameter, and say what it "
+        "means for an estimator to be positively biased.",
+        "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`. Positive bias means that expected value sits above the true parameter, so the estimator is on average too high; an unbiased estimator has a bias of zero.",
         [rb("Bias defined as E[estimator] minus the true parameter", 2),
          rb("Unbiased estimator correctly identified as having bias of zero", 2),
-         rb("Basketball club example used to illustrate upward bias of the mean")],
+         rb("Positive bias explained as the expected value sitting above the true parameter", 2)],
         1, PDF, "p.26", origin="adapted_HT25"))
 
     out.append(wa(
