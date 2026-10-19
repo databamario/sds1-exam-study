@@ -17,7 +17,12 @@ keeps the feature honest, and it was written with the feature for that reason -
 if the second page were allowed in unchecked, it would be a way to launder a
 wrong citation rather than a way to fix one.
 
-Exits 0 when every extra page pulls its weight, 1 otherwise.
+What it does not do is decide whether the extra page is *needed*. One incidental
+word passing the bar is enough, and a page that genuinely carries the missing
+half can rest on a single word that happens to be too common for the scorer.
+So the gate reports what each extra page supplied and leaves that to a reader.
+
+Exits 0 when every extra page supplies something, 1 otherwise.
 """
 
 from __future__ import annotations
@@ -39,9 +44,15 @@ from verify_citations import (  # noqa: E402
 )
 
 
-def audit(questions: list[dict], slides: dict, idf: dict) -> list[str]:
-    """Return one line per extra cited page that supplies nothing."""
+def audit(questions: list[dict], slides: dict, idf: dict):
+    """Return (problems, supply) for every extra page a question cites.
+
+    ``supply`` is what each extra page contributed, so a passing gate can
+    still be read rather than trusted: one incidental word is enough to pass,
+    and the reader is the one who knows whether that word was load-bearing.
+    """
     problems: list[str] = []
+    supply: list[tuple[str, int, list[str]]] = []
     for q in questions:
         pages = _cited(q)
         if len(pages) < 2:
@@ -59,15 +70,17 @@ def audit(questions: list[dict], slides: dict, idf: dict) -> list[str]:
                 "on its own" % (q["id"],
                                 ", ".join("p.%d" % p for p in pages[1:]),
                                 primary))
+            supply.extend((q["id"], p, []) for p in pages[1:])
             continue
 
         for page in pages[1:]:
-            supplied = spare & expand(terms(slides.get((pdf, page), "")))
+            supplied = sorted(spare & expand(terms(slides.get((pdf, page), ""))))
+            supply.append((q["id"], page, supplied))
             if not supplied:
                 problems.append(
                     "%s: p.%d adds nothing p.%d did not already cover"
                     % (q["id"], page, primary))
-    return problems
+    return problems, supply
 
 
 def main() -> int:
@@ -86,15 +99,20 @@ def main() -> int:
 
     idf = build_idf(slides)
     multi = [q for q in questions if len(_cited(q)) > 1]
-    problems = audit(questions, slides, idf)
+    problems, supply = audit(questions, slides, idf)
 
     print("Second cited pages")
     print("=" * 66)
     print("  %d of %d questions cite more than one page"
           % (len(multi), len(questions)))
+    got = dict(((qid, page), terms) for qid, page, terms in supply)
     for q in multi:
-        print("    %-11s p.%s" % (q["id"],
-                                  ", p.".join(str(p) for p in _cited(q))))
+        pages = _cited(q)
+        print("    %-11s p.%s" % (q["id"], ", p.".join(str(p) for p in pages)))
+        for page in pages[1:]:
+            terms_hit = got.get((q["id"], page), [])
+            print("        p.%-3d supplies %s"
+                  % (page, ", ".join(terms_hit) if terms_hit else "nothing"))
     print()
     if problems:
         print("  %d extra page(s) supply nothing:" % len(problems))
@@ -104,6 +122,13 @@ def main() -> int:
         print("Drop the page, or cite one that carries what is missing.")
         return 1
     print("  every extra cited page supplies something the primary lacked.")
+    print()
+    print("One incidental word is enough to pass that, so read the list above")
+    print("rather than the verdict alone. L1-MC-019 cited a second page that")
+    print("supplied only the word 'lists' and was dropped: the page it cited")
+    print("already said everything the question asks. The opposite also")
+    print("happens - L3-WA-004's extra page supplies one word too, but that")
+    print("one word is the whole reason the second page is there.")
     return 0
 
 

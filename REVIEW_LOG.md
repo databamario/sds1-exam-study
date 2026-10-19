@@ -405,3 +405,50 @@ L8-MC-015 and, in batch 1, L9-MC-008 both looked like the L8-MC-012 defect: the 
 That is seven false alarms stopped by reading the key from tools/bank/, and it is the third and fourth time in this review that the snapshot was misread rather than the question being wrong.
 
 Three wrong in twenty, all the same defect: the answer needs a page the question does not cite. That is three batches running at 20, 30 and 30 per cent. The figure questions came in at 30, so the band is tracking at the same rate and for the same reason - the citation points at a page that only holds part of the answer.
+
+## Two-page citations: letting a question cite what it needs
+
+Every wrong question in the three Band F batches above was the same shape. The
+answer needed a second page, the format allowed one, and the fix was to delete
+real course content. Six times in twenty. Rather than keep cutting, the bank now
+lets a question cite two pages, and this restores what was cut.
+
+`source` keeps `slide` as the page everything else already reads and adds
+`slides` for the full set, starting with it. Absent means one page, so the 235
+questions that never needed it rebuild byte-identical. `verify_second_pages.py`
+is the new gate: an extra page has to supply at least one term the primary page
+leaves unexplained, or the question fails.
+
+| id | pages | restored |
+| --- | --- | --- |
+| L3-WA-004 | p.62 + p.61 | the inner join half of the comparison, cut in batch 3 |
+| L3-WA-006 | p.21 + p.28 + p.35 | the standard deviation and the Q1/Q3 alternative, cut in batch 3 |
+| L4-MC-011 | p.30 + p.29 | the conditional definition of independence, which the option set lost |
+| L5-MC-010 | p.40 + p.38 | var(X-bar) = sigma squared over n, as an option of its own |
+| L6-MC-003 | p.17 + p.18 | the rule that about 95% of sample means fall within 2 SE |
+| L6-WA-004 | p.26 + p.24 + p.28 | the basketball club example and the name coverage bias |
+| L8-WA-003 | p.31 + p.32 | the degrees of freedom rule df = k - 1, cut in batch 2 |
+| L8-WA-006 | p.40 + p.31 | the homogeneity scenario, cut in batch 2 |
+
+L1-MC-019 was on the same list and did **not** get a second page. Batch 3 had
+replaced an option that keyed a claim about right-hand-side evaluation, which no
+page of Lecture 1 makes. The replacement states what p.52 carries, and p.52's
+function row turns out to say all of it: "can be assigned or passed as values",
+with `function(x) x^2` as its example, the same code the question runs. There was
+nothing to restore. Adding a page anyway would have been the gate satisfied for
+the wrong reason.
+
+**The gate's limit, measured rather than assumed.** It passes an extra page that
+supplies one incidental word, and L1-MC-019 was exactly that: p.41 supplies
+`lists` and nothing else, 5% of the weight, so the second page is decoration. The
+obvious fix was a threshold, and the numbers say a threshold would be wrong.
+L3-WA-004's p.61 supplies one word too, at 8%, but that word is `inner` and it is
+the entire reason the second page exists - the decisive word `join` is too common
+across Lecture 3 for the scorer to count it. A cut at 10% would reject a page
+that is genuinely needed. So the gate keeps its low bar and now *prints what
+each extra page supplied*, so a passing run can be read rather than trusted.
+
+That is the honest position: the gate catches an extra page that supplies
+nothing, and it is not evidence that the page is needed. Reading is still what
+decides.
+

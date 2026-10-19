@@ -178,22 +178,23 @@ def questions():
     out.append(mc(
         "L4-MC-011", 4, "Independence",
         "Which statements are TRUE?",
-        ["Tossing a coin twice gives independent outcomes, because the two tosses cannot "
-         "both happen at once.",
+        ["Two events are independent if the probability of one occurring is the same "
+         "whether or not the other occurs.",
          "Drawing two cards without replacement gives independent outcomes.",
          "For two independent coin tosses, P(two tails in a row) = 1/4, because "
          "(1/2) x (1/2) = (1/2)^2.",
-         "For independent events, P(A and B) = P(A) x P(B).",
-         "Two events are independent whenever they are disjoint."],
-        ["c", "d"],
-        "Independence means the probability of A is the same whether or not B occurs, and "
-        "it is equivalent to the joint probability being the product. Two coin tosses do "
-        "give independent outcomes, but not because they cannot both happen at once: that "
-        "is disjointness, and disjointness does not imply independence. For a fair coin the "
-        "two tosses are independent yet the heads and tails events are disjoint, whereas "
-        "two disjoint events in an asymmetric deck can still be dependent. Drawing without "
-        "replacement makes the second draw depend on the first.",
-        PDF, "p.30"))
+         "Two events are independent whenever they are disjoint.",
+         "For independent events, P(A and B) = P(A) + P(B)."],
+        ["a", "c"],
+        "Independence means the probability of A is the same whether or not B occurs, "
+        "which is the conditional form on the page before the product rule. For two "
+        "independent coin tosses the joint probability is the product, 1/2 x 1/2 = 1/4. "
+        "Disjointness is not independence: for a fair coin the two tosses are "
+        "independent yet the heads and tails events are disjoint, whereas two disjoint "
+        "events in an asymmetric deck can still be dependent. Drawing without "
+        "replacement makes the second draw depend on the first, and independence "
+        "multiplies rather than adds.",
+        PDF, "p.30", also=["p.29"]))
 
     out.append(mc(
         "L4-MC-012", 4, "Sampling with and without replacement",

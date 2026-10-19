@@ -49,13 +49,16 @@ def questions():
          "z is about 4.9, so the sample mean is about 4.9 standard errors away from "
          "the population mean",
          "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
-         "z cannot be computed without knowing the standard deviation"],
-        ["b"],
+         "z cannot be computed without knowing the standard deviation",
+         "z is about 4.9, which is far outside the 2 standard errors that contain "
+         "about 95% of sample means, so this is an unusually large sample mean"],
+        ["b", "e"],
         "z = (179 - 170)/1.83 is about 4.93, and a z-score says how many standard errors "
         "the observed sample mean sits from the population mean. The unit is standard "
         "errors, not centimetres: the 9 cm gap and the 4.93 SE are different numbers, and "
-        "only the second one says how unusual the sample is.",
-        PDF, "p.17", code="z <- (179 - 170) / 1.83",
+        "only the second one says how unusual the sample is. About 95% of sample means "
+        "fall within 2 SE, so one at 4.93 SE is out in the tail.",
+        PDF, "p.17", also=["p.18"], code="z <- (179 - 170) / 1.83",
         r_functions=["<-", "-", "/"], origin="adapted_HT25"))
 
     out.append(mc(
@@ -261,13 +264,18 @@ def questions():
 
     out.append(wa(
         "L6-WA-004", 6, "Bias",
-        "Define bias in terms of the estimator and the true parameter, and say what it "
-        "means for an estimator to be positively biased.",
-        "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`. Positive bias means that expected value sits above the true parameter, so the estimator is on average too high; an unbiased estimator has a bias of zero.",
+        "Define bias in terms of the estimator and the true parameter, then say "
+        "what the basketball club example shows about the sample mean, "
+        "and name the kind of sampling bias it is.",
+        "Bias is the expected value of the estimator minus the true parameter, so "
+        "unbiased means zero. Sampling only people at a basketball club shifts the "
+        "expected sample mean upward; that is coverage bias, where the sampled "
+        "population is not the target population.",
         [rb("Bias defined as E[estimator] minus the true parameter", 2),
          rb("Unbiased estimator correctly identified as having bias of zero", 2),
-         rb("Positive bias explained as the expected value sitting above the true parameter", 2)],
-        1, PDF, "p.26", origin="adapted_HT25"))
+         rb("Basketball club example linked to the sample mean sitting too high", 2),
+         rb("Coverage bias named and explained as a mismatched population", 2)],
+        1, PDF, "p.26", also=["p.24", "p.28"], origin="adapted_HT25"))
 
     out.append(wa(
         "L6-WA-005", 6, "Bias and missing data",

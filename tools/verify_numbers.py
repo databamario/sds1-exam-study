@@ -98,6 +98,7 @@ PDF_CHECKS = [
     ("L8-MC-013", 8, "0.6199323", "0.6199323"),
     ("L9-MC-005", 9, "38", "38, 95"),
     ("L3-WA-002", 3, "25", "25th percentile"),
+    ("L8-WA-003", 8, "1", "the degrees of freedom is given by"),
     ("L3-WA-002", 3, "75", "75th percentile"),
 ]
 

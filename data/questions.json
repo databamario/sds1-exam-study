@@ -3111,9 +3111,9 @@
    "lecture": 3,
    "type": "WA",
    "topic": "Measures of central tendency",
-   "stem": "A dataset has mean 46.8 and median 42. Explain what this tells you about the shape of the distribution, and which of the two the median is the safer summary for.",
+   "stem": "A dataset has mean 46.8 and median 42. Explain what this tells you about the shape of the distribution, why the median is the safer summary here, and which measure of spread you would report alongside it.",
    "points": 1,
-   "answer": "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. The median is the safer summary here: it is robust to outliers and to skew, while the mean is sensitive to both.",
+   "answer": "A mean above the median indicates right skew, because a long right tail pulls the mean upward. The median is safer: it is robust to outliers and skew, the mean is sensitive to both. Report the standard deviation, or Q1 and Q3 for quartiles.",
    "detail": "The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population.",
    "rubric": [
     {
@@ -3126,6 +3126,14 @@
     },
     {
      "text": "Names the median as the robust choice, citing its resistance to skew",
+     "elements": 2
+    },
+    {
+     "text": "Standard deviation named as the spread to report",
+     "elements": 2
+    },
+    {
+     "text": "Q1 and Q3 offered as the quartile alternative",
      "elements": 1
     }
    ],
@@ -3138,7 +3146,12 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.21"
+    "slide": "p.21",
+    "slides": [
+     "p.21",
+     "p.28",
+     "p.35"
+    ]
    },
    "origin": "new"
   },
@@ -3477,24 +3490,28 @@
    "topic": "Independence",
    "stem": "Which statements are TRUE?",
    "options": {
-    "a": "Tossing a coin twice gives independent outcomes, because the two tosses cannot both happen at once.",
+    "a": "Two events are independent if the probability of one occurring is the same whether or not the other occurs.",
     "b": "Drawing two cards without replacement gives independent outcomes.",
     "c": "For two independent coin tosses, P(two tails in a row) = 1/4, because (1/2) x (1/2) = (1/2)^2.",
-    "d": "For independent events, P(A and B) = P(A) x P(B).",
-    "e": "Two events are independent whenever they are disjoint."
+    "d": "Two events are independent whenever they are disjoint.",
+    "e": "For independent events, P(A and B) = P(A) + P(B)."
    },
    "correct": [
-    "c",
-    "d"
+    "a",
+    "c"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "Independence means the probability of A is the same whether or not B occurs, and it is equivalent to the joint probability being the product. Two coin tosses do give independent outcomes, but not because they cannot both happen at once: that is disjointness, and disjointness does not imply independence. For a fair coin the two tosses are independent yet the heads and tails events are disjoint, whereas two disjoint events in an asymmetric deck can still be dependent. Drawing without replacement makes the second draw depend on the first.",
+   "explanation": "Independence means the probability of A is the same whether or not B occurs, which is the conditional form on the page before the product rule. For two independent coin tosses the joint probability is the product, 1/2 x 1/2 = 1/4. Disjointness is not independence: for a fair coin the two tosses are independent yet the heads and tails events are disjoint, whereas two disjoint events in an asymmetric deck can still be dependent. Drawing without replacement makes the second draw depend on the first, and independence multiplies rather than adds.",
    "r_flavoured": false,
    "r_functions": [],
    "source": {
     "pdf": "lecture4_after.pdf",
-    "slide": "p.30"
+    "slide": "p.30",
+    "slides": [
+     "p.30",
+     "p.29"
+    ]
    },
    "origin": "new"
   },
@@ -4100,16 +4117,16 @@
     "a": "It increases",
     "b": "It decreases, as the plotted standard deviations fall from 4.47 at n = 5 to 1.41 at n = 50",
     "c": "It stays constant",
-    "d": "The standard deviation of the sample mean shrinks like 1 over the square root of n, so it is divided by ten when n is multiplied by a hundred",
-    "e": "It becomes zero for any n"
+    "d": "It becomes zero for any n",
+    "e": "It equals sigma squared over n, so a larger sample gives a more precise estimate of the population mean"
    },
    "correct": [
     "b",
-    "d"
+    "e"
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The plotted standard deviations fall steadily as n grows, so the variance of the sample mean decreases and the sample mean becomes a more precise estimate. The standard deviation falls like 1 over the square root of n rather than like 1 over n, which is why going from 5 to 50 observations cuts the spread by about three times and not ten: 4.47 times the square root of 5 and 1.41 times the square root of 50 are both about 10. The variance approaches zero but only reaches it in the limit, so the claim that it is zero for any n is false.",
+   "explanation": "The plotted standard deviations fall steadily as n grows, so the variance of the sample mean decreases and the sample mean becomes a more precise estimate. The derivation behind the plot pulls n sigma squared out of the sum using independence, giving var(X-bar) = sigma squared over n. The standard deviation therefore falls like 1 over the square root of n rather than like 1 over n, which is why going from 5 to 50 observations cuts the spread by about three times and not ten: 4.47 times the square root of 5 and 1.41 times the square root of 50 are both about 10. The variance approaches zero but only reaches it in the limit, so the claim that it is zero for any n is false.",
    "r_flavoured": true,
    "r_functions": [
     "var",
@@ -4118,7 +4135,11 @@
    ],
    "source": {
     "pdf": "lecture5_after.pdf",
-    "slide": "p.40"
+    "slide": "p.40",
+    "slides": [
+     "p.40",
+     "p.38"
+    ]
    },
    "origin": "new"
   },
@@ -4663,14 +4684,16 @@
     "a": "z is about 0.05, so the sample mean is very close to the population mean",
     "b": "z is about 4.9, so the sample mean is about 4.9 standard errors away from the population mean",
     "c": "z is about 4.9, so the sample mean is 4.9 cm above the population mean",
-    "d": "z cannot be computed without knowing the standard deviation"
+    "d": "z cannot be computed without knowing the standard deviation",
+    "e": "z is about 4.9, which is far outside the 2 standard errors that contain about 95% of sample means, so this is an unusually large sample mean"
    },
    "correct": [
-    "b"
+    "b",
+    "e"
    ],
-   "n_correct": 1,
+   "n_correct": 2,
    "points": 1,
-   "explanation": "z = (179 - 170)/1.83 is about 4.93, and a z-score says how many standard errors the observed sample mean sits from the population mean. The unit is standard errors, not centimetres: the 9 cm gap and the 4.93 SE are different numbers, and only the second one says how unusual the sample is.",
+   "explanation": "z = (179 - 170)/1.83 is about 4.93, and a z-score says how many standard errors the observed sample mean sits from the population mean. The unit is standard errors, not centimetres: the 9 cm gap and the 4.93 SE are different numbers, and only the second one says how unusual the sample is. About 95% of sample means fall within 2 SE, so one at 4.93 SE is out in the tail.",
    "r_flavoured": true,
    "r_functions": [
     "<-",
@@ -4679,7 +4702,11 @@
    ],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.17"
+    "slide": "p.17",
+    "slides": [
+     "p.17",
+     "p.18"
+    ]
    },
    "origin": "adapted_HT25",
    "code": "z <- (179 - 170) / 1.83"
@@ -5093,9 +5120,9 @@
    "lecture": 6,
    "type": "WA",
    "topic": "Bias",
-   "stem": "Define bias in terms of the estimator and the true parameter, and say what it means for an estimator to be positively biased.",
+   "stem": "Define bias in terms of the estimator and the true parameter, then say what the basketball club example shows about the sample mean, and name the kind of sampling bias it is.",
    "points": 1,
-   "answer": "Bias is the expected value of the estimator minus the true parameter, `Bias(theta-hat) = E[theta-hat] - theta`. Positive bias means that expected value sits above the true parameter, so the estimator is on average too high; an unbiased estimator has a bias of zero.",
+   "answer": "Bias is the expected value of the estimator minus the true parameter, so unbiased means zero. Sampling only people at a basketball club shifts the expected sample mean upward; that is coverage bias, where the sampled population is not the target population.",
    "detail": "",
    "rubric": [
     {
@@ -5107,7 +5134,11 @@
      "elements": 2
     },
     {
-     "text": "Positive bias explained as the expected value sitting above the true parameter",
+     "text": "Basketball club example linked to the sample mean sitting too high",
+     "elements": 2
+    },
+    {
+     "text": "Coverage bias named and explained as a mismatched population",
      "elements": 2
     }
    ],
@@ -5115,7 +5146,12 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture6_after.pdf",
-    "slide": "p.26"
+    "slide": "p.26",
+    "slides": [
+     "p.26",
+     "p.24",
+     "p.28"
+    ]
    },
    "origin": "adapted_HT25"
   },
@@ -6853,14 +6889,22 @@
    "lecture": 8,
    "type": "WA",
    "topic": "Chi-squared tests",
-   "stem": "Name the three main types of chi-squared test and say what each one checks.",
+   "stem": "Name the three main types of chi-squared test and say what each one checks, then state the degrees of freedom rule for a goodness-of-fit test in terms of the number of categories.",
    "points": 1,
-   "answer": "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated.",
+   "answer": "The three types are goodness-of-fit (one variable against an expected distribution), homogeneity (same distribution across groups) and independence (two variables associated). In a goodness-of-fit test the degrees of freedom are k - 1, where k is the number of categories.",
    "detail": "",
    "rubric": [
     {
      "text": "All three test types named with correct purpose",
-     "elements": 5
+     "elements": 4
+    },
+    {
+     "text": "Degrees of freedom given as k - 1",
+     "elements": 2
+    },
+    {
+     "text": "k correctly identified as the number of categories",
+     "elements": 2
     }
    ],
    "r_flavoured": true,
@@ -6870,7 +6914,11 @@
    ],
    "source": {
     "pdf": "lecture8_after.pdf",
-    "slide": "p.31"
+    "slide": "p.31",
+    "slides": [
+     "p.31",
+     "p.32"
+    ]
    },
    "origin": "new"
   },
@@ -6952,9 +7000,9 @@
    "lecture": 8,
    "type": "WA",
    "topic": "Choosing the right test",
-   "stem": "For each scenario, name the appropriate test: comparing average height across three cities; whether smoking is independent of eye colour; comparing the average height of two independent groups; and whether two continuous variables move together.",
+   "stem": "Name the appropriate test for each: average height across three cities; whether smoking is independent of eye colour; whether the proportion of smokers is the same across three age groups; whether two continuous variables move together.",
    "points": 1,
-   "answer": "Three cities is more than two groups, so ANOVA. Smoking against eye colour is two categorical variables, so a chi-square test. Two independent groups with the assumptions met is a Student's unpaired t-test. Two continuous variables moving together is a relationship, so Pearson's r.",
+   "answer": "Three cities is more than two groups, so ANOVA. Smoking against eye colour is the chi-squared test for independence. Smokers across age groups is the chi-squared test for homogeneity. Two continuous variables moving together is Pearson's r.",
    "detail": "",
    "rubric": [
     {
@@ -6962,11 +7010,11 @@
      "elements": 2
     },
     {
-     "text": "Chi-square correctly matched to smoking and eye colour",
+     "text": "Chi-square test for independence matched to smoking and eye colour",
      "elements": 2
     },
     {
-     "text": "Student's unpaired t-test matched to two independent groups",
+     "text": "Chi-square test for homogeneity matched to smokers across age groups",
      "elements": 2
     },
     {
@@ -6982,7 +7030,11 @@
    ],
    "source": {
     "pdf": "lecture8_after.pdf",
-    "slide": "p.40"
+    "slide": "p.40",
+    "slides": [
+     "p.40",
+     "p.31"
+    ]
    },
    "origin": "new"
   },

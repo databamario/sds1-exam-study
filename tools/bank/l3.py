@@ -423,13 +423,18 @@ def questions():
     out.append(wa(
         "L3-WA-006", 3, "Measures of central tendency",
         "A dataset has mean 46.8 and median 42. Explain what this tells you about the "
-        "shape of the distribution, and which of the two the median is the safer "
-        "summary for.",
-        "A mean sitting above the median indicates a right-skewed distribution, because a long right tail of large values pulls the mean upward. The median is the safer summary here: it is robust to outliers and to skew, while the mean is sensitive to both.",
+        "shape of the distribution, why the median is the safer summary here, and which "
+        "measure of spread you would report alongside it.",
+        "A mean above the median indicates right skew, because a long right tail pulls the "
+        "mean upward. The median is safer: it is robust to outliers and skew, the mean "
+        "is sensitive to both. Report the standard deviation, or Q1 and Q3 for quartiles.",
         [rb("Identifies right skew from mean exceeding median", 2),
          rb("Explains that a long right tail pulls the mean up", 2),
-         rb("Names the median as the robust choice, citing its resistance to skew")],
-        1, PDF, "p.21", r_functions=["mean", "median", "sd", "IQR"],
+         rb("Names the median as the robust choice, citing its resistance to skew", 2),
+         rb("Standard deviation named as the spread to report", 2),
+         rb("Q1 and Q3 offered as the quartile alternative", 1)],
+        1, PDF, "p.21", also=["p.28", "p.35"],
+        r_functions=["mean", "median", "sd", "IQR"],
         detail="The order of mean and median is a quick diagnostic: mean above median means right skew, mean below median means left skew, and the two roughly equal suggests symmetry. A grouped box plot by category is the natural way to spot it, since a category that stands out on a log-scaled income variable is usually a mixture rather than a single skewed population."))
 
     out.append(wa(

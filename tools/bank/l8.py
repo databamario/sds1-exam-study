@@ -263,10 +263,17 @@ def questions():
 
     out.append(wa(
         "L8-WA-003", 8, "Chi-squared tests",
-        "Name the three main types of chi-squared test and say what each one checks.",
-        "The three types are goodness-of-fit, checking one variable against an expected distribution; homogeneity, checking a distribution is the same across groups; and independence, checking whether two variables are associated.",
-        [rb("All three test types named with correct purpose", 5)],
-        1, PDF, "p.31", r_functions=["chisq.test", "pchisq"]))
+        "Name the three main types of chi-squared test and say what each one checks, "
+        "then state the degrees of freedom rule for a goodness-of-fit test in terms "
+        "of the number of categories.",
+        "The three types are goodness-of-fit (one variable against an expected "
+        "distribution), homogeneity (same distribution across groups) and "
+        "independence (two variables associated). In a goodness-of-fit test the "
+        "degrees of freedom are k - 1, where k is the number of categories.",
+        [rb("All three test types named with correct purpose", 4),
+         rb("Degrees of freedom given as k - 1", 2),
+         rb("k correctly identified as the number of categories", 2)],
+        1, PDF, "p.31", also=["p.32"], r_functions=["chisq.test", "pchisq"]))
 
     out.append(wa(
         "L8-WA-004", 8, "Working in R for a chi-squared test",
@@ -293,20 +300,20 @@ def questions():
         r_functions=["select", "cor", "round", "|>"]))
 
     out.append(wa(
-        "L8-WA-006", 8, "Choosing the right test",
-"For each scenario, name the appropriate test: comparing average height across "
-        "three cities; whether smoking is independent of eye colour; comparing the "
-        "average height of two independent groups; and whether two continuous "
+"L8-WA-006", 8, "Choosing the right test",
+        "Name the appropriate test for each: average height across three cities; "
+        "whether smoking is independent of eye colour; whether the proportion of "
+        "smokers is the same across three age groups; whether two continuous "
         "variables move together.",
-        "Three cities is more than two groups, so ANOVA. Smoking against eye colour is "
-        "two categorical variables, so a chi-square test. Two independent groups with "
-        "the assumptions met is a Student's unpaired t-test. Two continuous variables "
-        "moving together is a relationship, so Pearson's r.",
+        "Three cities is more than two groups, so ANOVA. Smoking against eye "
+        "colour is the chi-squared test for independence. Smokers across age "
+        "groups is the chi-squared test for homogeneity. Two continuous "
+        "variables moving together is Pearson's r.",
         [rb("ANOVA correctly matched to comparing three city means", 2),
-         rb("Chi-square correctly matched to smoking and eye colour", 2),
-         rb("Student's unpaired t-test matched to two independent groups", 2),
+         rb("Chi-square test for independence matched to smoking and eye colour", 2),
+         rb("Chi-square test for homogeneity matched to smokers across age groups", 2),
          rb("Pearson's r matched to two continuous variables", 2)],
-        1, PDF, "p.40",
+        1, PDF, "p.40", also=["p.31"],
         r_functions=["oneway.test", "chisq.test", "cor.test"]))
 
     # ---- the correlation formula, L8 p.9, and the r = 0 caveat on the same

@@ -1,44 +1,43 @@
-Let a question cite two pages, and make the second one earn it
+Give the eight cut questions their second page back
 
-Some questions are answered by a pair of pages: one states the problem and the
-other carries the formula, the code or the numbers. With one page to cite the
-only fix left was to delete real course content, which is what the last three
-Band F batches did, six times in twenty questions.
+The three Band F batches all found the same defect: the answer needed a second
+page, the format allowed one, so the fix was to delete real course content. Six
+times in twenty. The two-page citations landed in the previous commit; this puts
+the content back.
 
-source keeps "slide" as the page everything else already reads, and adds
-"slides" for the full set, always starting with it. Absent means a single page,
-so the 243 questions already written rebuild byte-identical. mc() and wa() take
-the extra page as also=[...].
+L3-WA-004 contrasts an inner join with a left join again, and L3-WA-006 asks for
+a measure of spread as well as the shape of the distribution. L4-MC-011 keys the
+conditional definition of independence, which is p.29 and not p.30 where the
+product rule lives, and L5-MC-010 gets var(X-bar) = sigma squared over n as an
+option of its own. L6-MC-003 gets the rule that about 95% of sample means fall
+within two standard errors, and L6-WA-004 gets its basketball club example back
+together with the name the lecture gives it, coverage bias. L8-WA-003 asks for
+the df = k - 1 rule, and L8-WA-006 asks for both the independence and the
+homogeneity chi-square, which p.40's flow chart cannot tell apart.
 
-- src/loader.py checks slides is a list of page strings.
-- tools/validate.py checks every cited page exists inside the named PDF, not
-  just the primary, and that slide and slides cannot disagree. Two fields
-  naming one thing is how a citation starts lying: edit one, ship the other.
-- src/ui.py shows the student every page cited, sorted, in one line.
-- tools/show_citation.py prints each page under SLIDE and ALSO.
-- tools/verify_citations.py scores and judges a question against all its pages.
-  Without that, a correct two-page citation reads as deficient, which is how the
-  tool used to report these questions as broken when they were not.
+L1-MC-019 was on the same list and deliberately did not get one. Its batch 3
+repair had replaced an option keying a claim about right-hand-side evaluation,
+which no page of Lecture 1 makes. The replacement states what p.52 carries, and
+p.52's function row says all of it - "can be assigned or passed as values", with
+function(x) x^2 as its example, the same code the question runs. Nothing was
+missing. Adding a page would have satisfied the new gate for the wrong reason,
+which is the failure mode the gate exists to catch, so it would have been silly
+to walk into it deliberately.
 
-tools/verify_second_pages.py is the gate, and it is the part that matters. If a
-second page can be added to silence the checker, then any question can look cited
-no matter how wrong it is, which is the exact defect this feature exists to
-remove. So an extra page has to supply at least one of the question's terms that
-the primary page leaves unexplained, or the gate fails. It was written with the
-feature rather than after it: unchecked, the extra page would launder wrong
-citations instead of fixing them.
+The gate's weakness was measured instead of guessed at. It passes an extra page
+that supplies one incidental word, and L1-MC-019 was exactly that: p.41 gives
+`lists` and nothing else, 5% of the weight. The tempting fix was a threshold, and
+the numbers refuse it. L3-WA-004's p.61 also supplies a single word at 8%, but
+that word is `inner` and it is the whole reason the page is there - `join` is too
+common across Lecture 3 for the scorer to count. A cut at 10% would fail a
+question whose second page is genuinely load-bearing. So the bar stays low and the
+gate now prints what every extra page supplied, which makes a passing run
+readable instead of merely green. Passing is not evidence the page was needed,
+and the tool now says so where someone will see it.
 
-Both branches were tested rather than assumed. A deliberately useless page fails
-with exit 1, and asking a question to cite a second page its primary already
-covers fails too. That second case had never run on real data and turned up a %d
-applied to a string in the failure message. The suite could not have found it:
-every multi-page question so far has a primary that leaves something missing.
-Writing the test is what found it.
-
-L3-WA-004 goes back to contrasting an inner join with a left join, which is what
-it always asked, citing both pages. Batch 3 had cut the inner join out because
-p.62 carries only the left join. verify_numbers then caught me writing the page
-numbers into the detail text, which are citation numbers rather than data, and
-the sentence was rewritten to say which slide says what without naming them.
+The format gate caught three things in this batch and all three were mine: a
+five-option question with three correct answers, twice, and two written answers
+that ran past the word limit. Also two explanations that said "the lecture",
+which validate.py forbids.
 
 Suite green apart from the rebuilt bank being uncommitted.
