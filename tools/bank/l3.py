@@ -22,7 +22,7 @@ def questions():
         "the median is 42. The single large value 104 drags the mean (46.8) well above "
         "the median. 82 is the range, 104 - 22, not a standard deviation, and there is "
         "no repeated value, so there is no mode.",
-        PDF, "p.17", code="y <- c(43, 23, 22, 104, 42)\nmedian(y)",
+        PDF, "p.17", also=["p.38"], code="y <- c(43, 23, 22, 104, 42)\nmedian(y)",
         r_functions=["median", "mean", "range", "sort"], origin="adapted_HT25"))
 
     out.append(mc(
@@ -120,7 +120,7 @@ def questions():
         "the variance becomes dominated by the tail. That is exactly why the "
         "interquartile range is preferred for skewed data: it is built from the quartiles "
         "and never looks at how far the extreme value sits from the centre.",
-        PDF, "p.28"))
+    PDF, "p.28", also=["p.35"]))
 
     out.append(mc(
         "L3-MC-008", 3, "Quantiles, quartiles and box plots",
@@ -160,15 +160,17 @@ def questions():
         "L3-MC-010", 3, "Quantiles, quartiles and box plots",
         "Consider `y <- c(43, 23, 22, 104, 42)`. Which statement is TRUE?",
         ["The middle 50% of the values lie between Q1 = 23 and Q3 = 43",
-         "The IQR is 20, which is far smaller than the range of 82, indicating the "
-         "spread is driven by the extreme value",
+         "The interquartile range, Q3 minus Q1, is 20, far smaller than the "
+         "range of 82, so the spread is driven by the extreme value",
          "The IQR equals the range",
          "The IQR cannot be computed for a sample of 5",
          "The IQR is larger than the standard deviation"],
         ["a", "b"],
-        "Q1 = 23 and Q3 = 43, so IQR = 20, while the range is 104 - 22 = 82. The large "
-        "gap is the signature of a single extreme value.",
-        PDF, "p.38", code="y <- c(43, 23, 22, 104, 42)\nIQR(y)",
+        "Quartiles divide the ordered data into four equal parts, which puts Q1 at 23 "
+        "and Q3 at 43, so the box runs from 23 to 43. The interquartile range is that "
+        "width, 43 - 23 = 20, while the range is 104 - 22 = 82. The large gap is the "
+        "signature of a single extreme value.",
+        PDF, "p.38", also=["p.35"], code="y <- c(43, 23, 22, 104, 42)\nIQR(y)",
         r_functions=["IQR", "quantile", "range"]))
 
     out.append(mc(
@@ -257,15 +259,15 @@ def questions():
         "L3-MC-016", 3, "Common pitfall: coercion",
         "Consider the code below. What does `mean(x)` return, and why?",
         ["2, because R converts the string to a number",
-         "NA with a warning, because x is a character vector and R will not convert it "
+         "NA, because x is a character vector and R will not convert the string "
          "for you",
          "An error that stops the script",
          "\"2\", a character result",
          "Converting with `as.numeric()` first makes the mean work and returns 2"],
         ["b", "e"],
-        "`c(1, 2, \"3\")` is coerced entirely to character, so mean() refuses it and "
-        "returns NA with a warning rather than an error. The fix is "
-        "`mean(as.numeric(x))`, which gives 2.",
+        "`c(1, 2, \"3\")` is coerced entirely to character. `mean()` on it prints NA "
+        "instead of a number: R does not convert the string for you. The fix shown "
+        "on the page is `mean(as.numeric(...))`, which gives 2.",
         PDF, "p.58",
         code="x <- c(1, 2, \"3\")\nclass(x)\nmean(x)\nmean(as.numeric(x))",
         r_functions=["c", "mean", "as.numeric", "class"]))
@@ -376,12 +378,14 @@ def questions():
         "L3-WA-003", 3, "Type hierarchy and implicit coercion",
         "Explain R's type hierarchy for implicit coercion, and describe the common pitfall "
         "with `c(1, 2, \"3\")`.",
-        "R promotes types up the hierarchy logical, integer, double, character, so `c(1, 2, \"3\")` becomes entirely character. `mean()` on that returns NA with a warning, because R will not convert strings for you.",
+        "R promotes types up the hierarchy logical, integer, double, character, so "
+        "`c(1, 2, \"3\")` becomes entirely character. `mean()` on that prints NA, "
+        "because R will not convert strings for you.",
         [rb("Hierarchy stated in order, lowest to highest flexibility", 2),
          rb("Notes coercion only goes upward, never downward", 2),
          rb("Identifies that `c(1,2,\"3\")` becomes character", 2),
          rb("States mean() returns NA and that as.numeric() is the fix", 2)],
-        1, PDF, "p.58", code="mean(c(1, 2, \"3\"))\nmean(as.numeric(c(1, 2, \"3\")))",
+        1, PDF, "p.58", also=["p.56"], code="mean(c(1, 2, \"3\"))\nmean(as.numeric(c(1, 2, \"3\")))",
         r_functions=["c", "mean", "as.numeric"],
         detail="The fix is an explicit conversion, `mean(as.numeric(c(1, 2, \"3\")))`. This is the single most common source of NA results in practice, and it usually appears when a numeric column has picked up a stray non-numeric entry such as a dash or a space. `str()` on the column will reveal the type, and `is.numeric()` tests it."))
 
@@ -453,13 +457,19 @@ def questions():
 
     out.append(wa(
         "L3-WA-008", 3, "Visualising continuous data",
-        "Explain why you would generally prefer a histogram to a bar plot for summarising "
-        "a numerical variable.",
-        "A bar plot treats axis categories as separate labels with gaps, which suits nominal categories but wastes the fact that numerical values are ordered and evenly spaced. A histogram places values into ordered bins with no gaps, so shape, centre and skewness become visible.",
-        [rb("Bar plot treats categories as unordered labels", 2),
-         rb("Histogram uses ordered bins with no gaps", 2),
-         rb("Notes this reveals distribution shape, centre and skewness")],
-        1, PDF, "p.24", r_functions=["geom_histogram", "geom_bar"],
-        detail="The gap is the tell: if the axis could sensibly carry intermediate values, a histogram is the right choice. A histogram of a categorical variable is not meaningful because the bin edges would imply a numeric spacing that the categories do not have. The number of bins also controls how much detail you see, and it is a display choice rather than part of the data."))
+        "Explain why a histogram is preferred to a dotplot for summarising a "
+        "numerical variable once the sample is large.",
+        "A histogram groups data into bins and shows their frequency, which is what "
+        "makes the distribution's shape readable. A dotplot places every observation "
+        "individually, so at larger sample sizes it stops being readable.",
+        [rb("Histogram groups data into bins and shows their frequency", 2),
+         rb("Dotplot has to show each observation, so it degrades with sample size", 2),
+         rb("Binning is what makes the shape of the distribution readable", 2)],
+        1, PDF, "p.24", r_functions=["geom_histogram"],
+        detail="The page makes the comparison against dotplots and says the histogram "
+               "is the more useful of the two for larger sample sizes. The number of "
+               "bins also controls how much detail you see, and it is a display "
+               "choice rather than part of the data: the page shows the same variable "
+               "binned every 2.5 and every 5."))
 
     return out

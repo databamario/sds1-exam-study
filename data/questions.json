@@ -2227,7 +2227,11 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.17"
+    "slide": "p.17",
+    "slides": [
+     "p.17",
+     "p.38"
+    ]
    },
    "origin": "adapted_HT25",
    "code": "y <- c(43, 23, 22, 104, 42)\nmedian(y)"
@@ -2398,7 +2402,11 @@
    "r_functions": [],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.28"
+    "slide": "p.28",
+    "slides": [
+     "p.28",
+     "p.35"
+    ]
    },
    "origin": "new"
   },
@@ -2470,7 +2478,7 @@
    "stem": "Consider `y <- c(43, 23, 22, 104, 42)`. Which statement is TRUE?",
    "options": {
     "a": "The middle 50% of the values lie between Q1 = 23 and Q3 = 43",
-    "b": "The IQR is 20, which is far smaller than the range of 82, indicating the spread is driven by the extreme value",
+    "b": "The interquartile range, Q3 minus Q1, is 20, far smaller than the range of 82, so the spread is driven by the extreme value",
     "c": "The IQR equals the range",
     "d": "The IQR cannot be computed for a sample of 5",
     "e": "The IQR is larger than the standard deviation"
@@ -2481,7 +2489,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "Q1 = 23 and Q3 = 43, so IQR = 20, while the range is 104 - 22 = 82. The large gap is the signature of a single extreme value.",
+   "explanation": "Quartiles divide the ordered data into four equal parts, which puts Q1 at 23 and Q3 at 43, so the box runs from 23 to 43. The interquartile range is that width, 43 - 23 = 20, while the range is 104 - 22 = 82. The large gap is the signature of a single extreme value.",
    "r_flavoured": true,
    "r_functions": [
     "IQR",
@@ -2490,7 +2498,11 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.38"
+    "slide": "p.38",
+    "slides": [
+     "p.38",
+     "p.35"
+    ]
    },
    "origin": "new",
    "code": "y <- c(43, 23, 22, 104, 42)\nIQR(y)"
@@ -2622,7 +2634,7 @@
    "stem": "Consider the code below. What does `mean(x)` return, and why?",
    "options": {
     "a": "2, because R converts the string to a number",
-    "b": "NA with a warning, because x is a character vector and R will not convert it for you",
+    "b": "NA, because x is a character vector and R will not convert the string for you",
     "c": "An error that stops the script",
     "d": "\"2\", a character result",
     "e": "Converting with `as.numeric()` first makes the mean work and returns 2"
@@ -2633,7 +2645,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "`c(1, 2, \"3\")` is coerced entirely to character, so mean() refuses it and returns NA with a warning rather than an error. The fix is `mean(as.numeric(x))`, which gives 2.",
+   "explanation": "`c(1, 2, \"3\")` is coerced entirely to character. `mean()` on it prints NA instead of a number: R does not convert the string for you. The fix shown on the page is `mean(as.numeric(...))`, which gives 2.",
    "r_flavoured": true,
    "r_functions": [
     "c",
@@ -3006,7 +3018,7 @@
    "topic": "Type hierarchy and implicit coercion",
    "stem": "Explain R's type hierarchy for implicit coercion, and describe the common pitfall with `c(1, 2, \"3\")`.",
    "points": 1,
-   "answer": "R promotes types up the hierarchy logical, integer, double, character, so `c(1, 2, \"3\")` becomes entirely character. `mean()` on that returns NA with a warning, because R will not convert strings for you.",
+   "answer": "R promotes types up the hierarchy logical, integer, double, character, so `c(1, 2, \"3\")` becomes entirely character. `mean()` on that prints NA, because R will not convert strings for you.",
    "detail": "The fix is an explicit conversion, `mean(as.numeric(c(1, 2, \"3\")))`. This is the single most common source of NA results in practice, and it usually appears when a numeric column has picked up a stray non-numeric entry such as a dash or a space. `str()` on the column will reveal the type, and `is.numeric()` tests it.",
    "rubric": [
     {
@@ -3034,7 +3046,11 @@
    ],
    "source": {
     "pdf": "lecture3.pdf",
-    "slide": "p.58"
+    "slide": "p.58",
+    "slides": [
+     "p.58",
+     "p.56"
+    ]
    },
    "origin": "new",
    "code": "mean(c(1, 2, \"3\"))\nmean(as.numeric(c(1, 2, \"3\")))"
@@ -3209,28 +3225,27 @@
    "lecture": 3,
    "type": "WA",
    "topic": "Visualising continuous data",
-   "stem": "Explain why you would generally prefer a histogram to a bar plot for summarising a numerical variable.",
+   "stem": "Explain why a histogram is preferred to a dotplot for summarising a numerical variable once the sample is large.",
    "points": 1,
-   "answer": "A bar plot treats axis categories as separate labels with gaps, which suits nominal categories but wastes the fact that numerical values are ordered and evenly spaced. A histogram places values into ordered bins with no gaps, so shape, centre and skewness become visible.",
-   "detail": "The gap is the tell: if the axis could sensibly carry intermediate values, a histogram is the right choice. A histogram of a categorical variable is not meaningful because the bin edges would imply a numeric spacing that the categories do not have. The number of bins also controls how much detail you see, and it is a display choice rather than part of the data.",
+   "answer": "A histogram groups data into bins and shows their frequency, which is what makes the distribution's shape readable. A dotplot places every observation individually, so at larger sample sizes it stops being readable.",
+   "detail": "The page makes the comparison against dotplots and says the histogram is the more useful of the two for larger sample sizes. The number of bins also controls how much detail you see, and it is a display choice rather than part of the data: the page shows the same variable binned every 2.5 and every 5.",
    "rubric": [
     {
-     "text": "Bar plot treats categories as unordered labels",
+     "text": "Histogram groups data into bins and shows their frequency",
      "elements": 2
     },
     {
-     "text": "Histogram uses ordered bins with no gaps",
+     "text": "Dotplot has to show each observation, so it degrades with sample size",
      "elements": 2
     },
     {
-     "text": "Notes this reveals distribution shape, centre and skewness",
-     "elements": 1
+     "text": "Binning is what makes the shape of the distribution readable",
+     "elements": 2
     }
    ],
    "r_flavoured": true,
    "r_functions": [
-    "geom_histogram",
-    "geom_bar"
+    "geom_histogram"
    ],
    "source": {
     "pdf": "lecture3.pdf",

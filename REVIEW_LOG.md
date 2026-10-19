@@ -452,3 +452,36 @@ That is the honest position: the gate catches an extra page that supplies
 nothing, and it is not evidence that the page is needed. Reading is still what
 decides.
 
+
+## Lecture 1, 2 and 3 read against their slides
+
+Nineteen questions. Fourteen passed. Five were wrong, and three of the five were
+claims the lecture never makes at all.
+
+| id | verdict | what was wrong |
+| --- | --- | --- |
+| L1-MC-018 | **wrong** | keyed `factor(x, levels = ...)` as the answer, and that argument is nowhere in Lecture 1 - a search for `levels =` over the whole lecture returns nothing. Its second keyed option described a factor as a character string with extra attributes, which is p.46, not the p.52 it cited |
+| L2-MC-018 | **wrong** | keyed `summary()` as giving mean and median. `summary()` appears nowhere in Lecture 2, and p.47 shows only `str()` |
+| L3-WA-008 | **wrong** | asked why a histogram beats a **bar plot**. Lecture 3 never teaches bar plots; p.24 compares a histogram to a **dotplot** |
+| L3-MC-016 | **wrong** | keyed "NA **with a warning**" where p.58 prints `# error`. Same wording in L3-WA-003's answer |
+| L1-WA-007 | **wrong** | asked why level order matters, which p.52 does not discuss, and claimed level order controls sorting and plotting, which no page makes |
+
+The rest were second pages that had not been cited: `.by` only appears on p.54
+(L2-MC-017), the mode and range the explanation names are on the p.38 recap
+rather than p.17 (L3-MC-001), the interquartile range is never defined in
+Lecture 3 at all - it is only named on p.13 and p.66 - so L3-MC-010 now keys
+Q3 minus Q1, which p.35 states (L3-MC-007, L3-MC-010), and the type hierarchy
+is on p.56, not the p.58 pitfall page (L3-WA-003).
+
+Two of these are worth naming as a class. **A claim the lecture never makes and a
+page that teaches a different thing look identical from inside the tool**, because
+in both cases the low-scoring words are simply absent. The only way to tell them
+apart is to search the lecture for the phrase the answer relies on, which is why
+every verdict above was settled by `find_slide.py` rather than by reading the
+cited page alone.
+
+A note on the gate: it initially rejected p.15 for L3-MC-001, and it was right.
+What that question actually lacked was not the mean but the mode, the range and
+the standard deviation its explanation discusses, and those are on the p.38
+recap. The page that looked obviously right was not the page the question needed.
+

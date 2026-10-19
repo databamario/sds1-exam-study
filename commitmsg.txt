@@ -1,33 +1,43 @@
-Read L1 and L2: two untaught claims, two pages that were not cited
+Read L3: three claims the lecture never makes, and two untaught arguments
 
-Nine questions. Six are fine. Three were wrong.
+Eight questions. Five passed, three were wrong, and the three share a shape:
+they ask about something the lecture simply does not cover.
 
-L1-MC-018 keyed `factor(x, levels = ...)` as the answer to a question about
-setting level order, and that argument appears nowhere in Lecture 1 - a search
-for "levels =" over the whole lecture returns nothing. Its second keyed option
-said a factor is a character string with extra attributes, which is p.46, not
-p.52. Both halves of the question were unsupported, and they were unsupported
-differently. The question now asks what the two pages actually say: p.46 calls a
-factor a string with additional attributes like levels or an order, p.52 gives
-its class and notes the integer storage with labels.
+L3-WA-008 asked why a histogram is preferred to a bar plot for a numerical
+variable. Lecture 3 does not teach bar plots - the word appears once, on p.54,
+in a warning about geom_col(). What p.24 actually contrasts is a histogram with
+a dotplot, so that is what the question now asks.
 
-L2-MC-018 keyed `summary()` as giving mean and median. `summary()` does not
-appear anywhere in Lecture 2, and p.47 shows only `str()`. The question is now
-about `str()` alone, keyed to what p.47's output shows: the observation and
-variable counts, one line per variable with its type and first values, and the
-level count and level names for each factor.
+L3-MC-016 keyed "NA with a warning" as the result of mean() on c(1, 2, "3"),
+where p.58 prints "# error" and then the value NA. L3-WA-003's answer had the
+same phrase. Both now say NA and stop there, which is what the page shows; the
+distinction the question is really testing is NA against a number, not NA
+against a hard stop.
 
-L1-WA-007 asked why level order matters, which p.52 does not discuss, and its
-answer claimed level order controls sorting and plotting, which no page makes.
-It now asks what the levels attribute adds on top of the integer storage, and
-cites p.46 beside p.52. L2-MC-017 compares `.by` with `group_by()`, but `.by`
-only appears on p.54, so it cites both. L2-MC-022 keyed that the axis labels
-name the variables "and their units"; p.37 shows axis labels, title, subtitle
-and legend, and says nothing about units, so that clause is gone.
+L1-WA-007 and L3-MC-010 both lean on the interquartile range, which Lecture 3
+never defines. It is named on p.13 in a list of topics and again on p.66, and
+nowhere else. L3-MC-010 now keys Q3 minus Q1, which p.35 states outright, and
+its detail says so.
 
-Six passed on the same test. L1-WA-001 maps all four sampling terms onto p.26's
-definitions. L1-WA-004 restates p.44's rule about the hash symbol. L2-MC-011's
-two keyed options are the positional indices p.48 teaches. L2-MC-016's keyed
-options both follow from p.54's printed pipeline and its three-row output.
+The rest were pages that existed and had not been cited. `.by` is on p.54
+(L2-MC-017). The interquartile range's basis, the quartiles, are on p.35
+(L3-MC-007). The type hierarchy is on p.56, while p.58 is only the pitfall
+(L3-WA-003). L3-MC-001 cites the p.38 recap beside p.17, because what it lacked
+was not the mean but the mode, range and standard deviation its explanation
+names.
+
+That last one is the useful finding. I reached for p.15, the mean page, because
+option (c) is about the mean being pulled upward - and the gate refused it. It
+was right. The terms actually missing after p.17 were mode, range, sd and
+standard, and those live on the recap table. The page that looked obviously
+correct was not the page the question needed, and term overlap said so before I
+did.
+
+Five of nineteen wrong. Fourteen passed on the same test: L1-WA-001 maps all
+four sampling terms onto p.26, L1-WA-004 restates p.44's rule about the hash
+symbol, L2-MC-011's two keyed options are the positional indices p.48 teaches,
+L2-MC-016's follow from p.54's printed pipeline, L3-MC-019's from p.62's
+description of the left join, and L3-WA-001's three formulas are the p.38 recap
+verbatim.
 
 Suite green apart from the rebuilt bank being uncommitted.
