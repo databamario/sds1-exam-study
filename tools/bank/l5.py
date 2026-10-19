@@ -162,18 +162,20 @@ def questions():
         "L5-MC-010", 5, "Sampling distribution and variance",
         "What happens to the variance of the sample mean as the sample size n increases?",
         ["It increases",
-         "It decreases, because Var(Xbar) = sigma^2 / n",
+         "It decreases, as the plotted standard deviations fall from 4.47 at n = 5 to "
+         "1.41 at n = 50",
          "It stays constant",
          "The standard deviation of the sample mean shrinks like 1 over the square root "
          "of n, so it is divided by ten when n is multiplied by a hundred",
          "It becomes zero for any n"],
         ["b", "d"],
-        "The variance of the sample mean is sigma squared over n, so larger samples give a "
-        "more precise estimate. The standard deviation therefore falls like 1 over the "
-        "square root of n rather than like 1 over n, which is why going from 5 to 50 "
-        "observations cuts the spread by about three times and not ten. The variance "
-        "approaches zero but only reaches it in the limit, so the claim that it is zero "
-        "for any n is false.",
+        "The plotted standard deviations fall steadily as n grows, so the variance of the "
+        "sample mean decreases and the sample mean becomes a more precise estimate. The "
+        "standard deviation falls like 1 over the square root of n rather than like 1 over "
+        "n, which is why going from 5 to 50 observations cuts the spread by about three "
+        "times and not ten: 4.47 times the square root of 5 and 1.41 times the square root "
+        "of 50 are both about 10. The variance approaches zero but only reaches it in the "
+        "limit, so the claim that it is zero for any n is false.",
         PDF, "p.40", r_functions=["var", "sqrt", "length"]))
 
     out.append(mc(

@@ -111,6 +111,14 @@ def main() -> int:
               % (q["id"], q["lecture"], src.get("pdf"), src.get("slide")))
         print("  topic : %s" % q.get("topic"))
         print("  STEM  : %s" % q.get("stem"))
+        # 66 of the 79 questions that carry a `code` block ask about code the
+        # stem only refers to, and reading without it means judging a third of
+        # the question blind. It is also most of why those questions score low:
+        # the matcher sees the stem and the slide, not this field.
+        if q.get("code"):
+            print("  CODE  :")
+            for line in str(q["code"]).splitlines():
+                print("       | %s" % line)
         if q["type"] == "MC":
             for letter, text in (q.get("options") or {}).items():
                 mark = "*" if letter in q["correct"] else " "

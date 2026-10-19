@@ -4090,7 +4090,7 @@
    "stem": "What happens to the variance of the sample mean as the sample size n increases?",
    "options": {
     "a": "It increases",
-    "b": "It decreases, because Var(Xbar) = sigma^2 / n",
+    "b": "It decreases, as the plotted standard deviations fall from 4.47 at n = 5 to 1.41 at n = 50",
     "c": "It stays constant",
     "d": "The standard deviation of the sample mean shrinks like 1 over the square root of n, so it is divided by ten when n is multiplied by a hundred",
     "e": "It becomes zero for any n"
@@ -4101,7 +4101,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The variance of the sample mean is sigma squared over n, so larger samples give a more precise estimate. The standard deviation therefore falls like 1 over the square root of n rather than like 1 over n, which is why going from 5 to 50 observations cuts the spread by about three times and not ten. The variance approaches zero but only reaches it in the limit, so the claim that it is zero for any n is false.",
+   "explanation": "The plotted standard deviations fall steadily as n grows, so the variance of the sample mean decreases and the sample mean becomes a more precise estimate. The standard deviation falls like 1 over the square root of n rather than like 1 over n, which is why going from 5 to 50 observations cuts the spread by about three times and not ten: 4.47 times the square root of 5 and 1.41 times the square root of 50 are both about 10. The variance approaches zero but only reaches it in the limit, so the claim that it is zero for any n is false.",
    "r_flavoured": true,
    "r_functions": [
     "var",
@@ -6944,9 +6944,9 @@
    "lecture": 8,
    "type": "WA",
    "topic": "Choosing the right test",
-   "stem": "For each scenario, name the appropriate test: comparing average height across three cities; whether smoking is independent of eye colour; whether a die is fair; and whether two continuous variables move together.",
+   "stem": "For each scenario, name the appropriate test: comparing average height across three cities; whether smoking is independent of eye colour; comparing the average height of two independent groups; and whether two continuous variables move together.",
    "points": 1,
-   "answer": "Comparing a mean across three cities uses a one-way ANOVA, `oneway.test()`. Whether smoking is independent of eye colour is a chi-squared test for independence. Whether a die is fair is a chi-squared goodness-of-fit test. Whether two continuous variables move together is tested with `cor.test()`.",
+   "answer": "Three cities is more than two groups, so ANOVA. Smoking against eye colour is two categorical variables, so a chi-square test. Two independent groups with the assumptions met is a Student's unpaired t-test. Two continuous variables moving together is a relationship, so Pearson's r.",
    "detail": "",
    "rubric": [
     {
@@ -6954,15 +6954,15 @@
      "elements": 2
     },
     {
-     "text": "Chi-squared independence correctly matched to smoking and eye colour",
+     "text": "Chi-square correctly matched to smoking and eye colour",
      "elements": 2
     },
     {
-     "text": "Chi-squared goodness-of-fit correctly matched to the fair die",
+     "text": "Student's unpaired t-test matched to two independent groups",
      "elements": 2
     },
     {
-     "text": "Correlation correctly matched to two continuous variables",
+     "text": "Pearson's r matched to two continuous variables",
      "elements": 2
     }
    ],

@@ -357,3 +357,33 @@ Two wrong in ten, both the same shape: a question whose answer needs a page it
 does not cite. That is the defect this whole pass exists to find, and it is
 comfortably below the 30 per cent the figure questions came in at - which is
 what you would expect, since here the slide is genuinely the source.
+| L6-MC-014 | ok | p.44 lists qt() as quantiles, rt() as random samples, pt() as CDF and dt() as PDF, which is exactly the keyed pair against four wrong readings of the same four functions |
+| L3-MC-009 | ok | p.35 gives Q1, Q2 as the median and Q3, and lists median as one of the five measures a box plot is built from |
+| L8-WA-006 | **wrong** | p.40's flow chart has a node reading "Chi-square tests" but never distinguishes independence from goodness-of-fit; the taxonomy is on p.31. The question asked for both subtypes, so it needed a page it did not cite. The fair-die scenario is replaced by one p.40 does resolve - two independent groups on a continuous mean, which the chart routes to a Student's unpaired t-test - and the answer now names tests only, since the R function names were never on the chart. The chi-square taxonomy is still covered on p.31 by L8-MC-009 and L8-WA-003 |
+| L5-MC-010 | **wrong** | keyed option (b) justified the decrease with Var(Xbar) = sigma^2 / n. That derivation is on p.38; p.40 only plots the standard deviations for n = 5, 10, 30 and 50. Option (b) now cites the plotted values instead, and the explanation derives the 1 over the square root of n law from them: 4.47 x sqrt(5) and 1.41 x sqrt(50) are both about 10 |
+| L4-WA-007 | ok - p.20 distinguishes variables taking "specific, separate values" from those taking "any value within a range", and the answer's "finite or countable set" is that definition in formal words. Classifying bulb lifetime is the student's own application of it |
+| L4-MC-007 | ok - p.44 prints P(A|B) = P(A and B)/P(B) and calls it the probability of A given condition B, which is both keyed options |
+| L1-WA-005 | ok - p.41 shows assignment with <- and then the object being read back. Reassigning an existing name is one step from that |
+| L1-MC-011 | ok - the code block is a <- "Hello", a <- "World", a, which prints World. Only readable once the code field is shown; see below |
+| L6-MC-011 | ok - p.39 gives the CI as xbar +- 1.96 sigma/sqrt(n), and the interval given yields xbar = 175 and a half-width of 2.94, hence a standard error of 2.94/1.96 = 1.5. Both keyed options are one step from the printed formula |
+| L2-MC-002 | ok - p.29 prints p = f/n and prop.table turning counts into proportions, which is the keyed definition |
+
+### A hole in how this pass reads questions
+
+L1-MC-011 asks "consider the following R code" and shows no code: it lives in a
+`code` field that `show_citation.py` was not printing. Seventy-nine questions
+carry that field and sixty-six of them refer to code the stem only alludes to, so
+a third of their content was invisible to this review - and to the similarity
+scorer too, which is most of why questions about code cluster at the bottom of
+the ranking. `show_citation.py` now prints it.
+
+This is a fault in the method rather than in the bank, and it is worth stating
+plainly: every verdict recorded before today for those sixty-six questions was
+reached without seeing a third of what the student sees. The verdicts may well
+be right - L1-MC-011 checks out the moment the code is visible - but they were
+reached on less evidence than they should have been.
+
+Three wrong in twenty. All three are the same defect again: the answer needs a
+page the question does not cite. Two consecutive batches at that rate would put
+this band near the 30 per cent the figures came in at, but two batches is still
+two.

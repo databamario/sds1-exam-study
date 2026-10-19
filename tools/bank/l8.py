@@ -294,14 +294,18 @@ def questions():
 
     out.append(wa(
         "L8-WA-006", 8, "Choosing the right test",
-        "For each scenario, name the appropriate test: comparing average height across "
-        "three cities; whether smoking is independent of eye colour; whether a die is fair; "
-        "and whether two continuous variables move together.",
-        "Comparing a mean across three cities uses a one-way ANOVA, `oneway.test()`. Whether smoking is independent of eye colour is a chi-squared test for independence. Whether a die is fair is a chi-squared goodness-of-fit test. Whether two continuous variables move together is tested with `cor.test()`.",
+"For each scenario, name the appropriate test: comparing average height across "
+        "three cities; whether smoking is independent of eye colour; comparing the "
+        "average height of two independent groups; and whether two continuous "
+        "variables move together.",
+        "Three cities is more than two groups, so ANOVA. Smoking against eye colour is "
+        "two categorical variables, so a chi-square test. Two independent groups with "
+        "the assumptions met is a Student's unpaired t-test. Two continuous variables "
+        "moving together is a relationship, so Pearson's r.",
         [rb("ANOVA correctly matched to comparing three city means", 2),
-         rb("Chi-squared independence correctly matched to smoking and eye colour", 2),
-         rb("Chi-squared goodness-of-fit correctly matched to the fair die", 2),
-         rb("Correlation correctly matched to two continuous variables", 2)],
+         rb("Chi-square correctly matched to smoking and eye colour", 2),
+         rb("Student's unpaired t-test matched to two independent groups", 2),
+         rb("Pearson's r matched to two continuous variables", 2)],
         1, PDF, "p.40",
         r_functions=["oneway.test", "chisq.test", "cor.test"]))
 
