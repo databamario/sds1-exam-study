@@ -149,6 +149,20 @@ def validate_question(q: dict) -> None:
     _require(src, "pdf", str, where + ".source")
     _require(src, "slide", str, where + ".source")
 
+    # A question that needs two cited pages lists them all under "slides",
+    # starting with "slide". Absent means a single page, so the 243 questions
+    # that never learned about this field are unaffected.
+    pages = src.get("slides")
+    if pages is not None:
+        if not isinstance(pages, list) or not pages:
+            raise QuestionBankError(
+                "%s.source: slides must be a non-empty list" % where)
+        for page in pages:
+            if not isinstance(page, str) or not page.strip():
+                raise QuestionBankError(
+                    "%s.source: every entry of slides must be a page string"
+                    % where)
+
     if q["type"] == MC:
         _validate_mc(q, where)
     else:

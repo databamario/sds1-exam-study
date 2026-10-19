@@ -277,18 +277,23 @@ def main() -> int:
     unknown_file, past_end, unparseable = [], [], []
     for q in questions:
         pdf = q["source"].get("pdf")
-        slide = q["source"].get("slide") or ""
-        if pdf not in KNOWN_PDFS:
-            unknown_file.append("%s -> %s" % (q["id"], pdf))
-            continue
-        try:
-            page = int(slide.lstrip("pP."))
-        except ValueError:
-            unparseable.append("%s -> %r" % (q["id"], slide))
-            continue
-        if not 1 <= page <= KNOWN_PDFS[pdf]:
-            past_end.append("%s -> %s %s, but that file has %d pages"
-                            % (q["id"], pdf, slide, KNOWN_PDFS[pdf]))
+        src = q["source"]
+        # Every page a question cites has to be a real page of a real file, not
+        # just the primary one. The extra page is shown to the student, so a bad
+        # one is as misleading as a bad primary.
+        cited = src.get("slides") or [src.get("slide") or ""]
+        for slide in cited:
+            if pdf not in KNOWN_PDFS:
+                unknown_file.append("%s -> %s" % (q["id"], pdf))
+                continue
+            try:
+                page = int(slide.lstrip("pP."))
+            except ValueError:
+                unparseable.append("%s -> %r" % (q["id"], slide))
+                continue
+            if not 1 <= page <= KNOWN_PDFS[pdf]:
+                past_end.append("%s -> %s %s, but that file has %d pages"
+                                % (q["id"], pdf, slide, KNOWN_PDFS[pdf]))
     print("  citations naming a file that is not a known lecture PDF: %d"
           % len(unknown_file))
     print("  citations pointing past the end of that file: %d" % len(past_end))
@@ -304,6 +309,30 @@ def main() -> int:
     if not (unknown_file or past_end or unparseable):
         print("  all %d citations name a known file and a page inside it"
               % len(questions))
+
+    # "slide" and "slides" must not disagree. Both exist so that the 243
+    # questions already written keep working unchanged, but two fields naming
+    # the same thing is exactly how a citation ends up lying: edit one, ship
+    # the other. The list has to start with the single page, and cannot
+    # repeat it.
+    disagree = []
+    for q in questions:
+        src = q["source"]
+        pages = src.get("slides")
+        if not pages:
+            continue
+        if pages[0] != src.get("slide"):
+            disagree.append("%s: slide %s but slides starts %s"
+                            % (q["id"], src.get("slide"), pages[0]))
+        if len(set(pages)) != len(pages):
+            disagree.append("%s: slides repeats a page (%s)"
+                            % (q["id"], ", ".join(pages)))
+    n_multi = sum(1 for q in questions if q["source"].get("slides"))
+    print("  questions citing more than one page: %d" % n_multi)
+    if disagree:
+        for line in disagree:
+            print("  %s" % line)
+        failures.append("slide and slides disagree: %s" % "; ".join(disagree[:6]))
 
     hr("Written-answer rubrics")
     bad = [q["id"] for q in wa if not q.get("rubric")]

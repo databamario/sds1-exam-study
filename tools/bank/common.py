@@ -1,9 +1,32 @@
 """Small constructors so question authoring stays readable and consistent."""
 
 
+def _source(pdf, slide, also):
+    """Build the citation block for a question.
+
+    ``slide`` is the page the answer mostly lives on, and it stays the field
+    everything else already reads, so a question that cites one page and one
+    that cites two are shaped the same at the front.
+
+    Some questions genuinely need two pages: the cited page states the problem
+    and a second one carries the formula, the code or the numbers. Citing only
+    the first made those questions unfixable without deleting real course
+    content, so the extra page is passed as ``also``.
+
+    ``slides`` is the full set and always starts with ``slide``.
+    ``tools/validate.py`` checks that agreement and that every page exists;
+    ``tools/verify_second_pages.py`` checks the extra page earns its place.
+    """
+    src = {"pdf": pdf, "slide": slide}
+    pages = [slide] + [p for p in (also or []) if p != slide]
+    if len(pages) > 1:
+        src["slides"] = pages
+    return src
+
+
 def mc(qid, lecture, topic, stem, options, correct, explanation,
        pdf, slide, points=1, code=None, r_functions=None,
-       origin="new", r_flavoured=False, image=None):
+       origin="new", r_flavoured=False, image=None, also=None):
     """Build a multiple-choice question.
 
     ``correct`` is a list of option labels and must never be empty: every
@@ -23,7 +46,7 @@ def mc(qid, lecture, topic, stem, options, correct, explanation,
         "explanation": explanation,
         "r_flavoured": bool(code) or bool(r_functions) or r_flavoured,
         "r_functions": list(r_functions or []),
-        "source": {"pdf": pdf, "slide": slide},
+        "source": _source(pdf, slide, also),
         "origin": origin,
     }
     if code:
@@ -35,7 +58,7 @@ def mc(qid, lecture, topic, stem, options, correct, explanation,
 
 def wa(qid, lecture, topic, stem, answer, rubric, points, pdf, slide,
        code=None, r_functions=None, origin="new", bullets=None,
-       detail=None, image=None):
+       detail=None, image=None, also=None):
     """Build a written-answer question with a self-grading rubric.
 
     ``answer`` is what the exam asks for and must stay short - the exam caps
@@ -57,7 +80,7 @@ def wa(qid, lecture, topic, stem, answer, rubric, points, pdf, slide,
         "rubric": rubric,
         "r_flavoured": bool(code) or bool(r_functions),
         "r_functions": list(r_functions or []),
-        "source": {"pdf": pdf, "slide": slide},
+        "source": _source(pdf, slide, also),
         "origin": origin,
     }
     if code:

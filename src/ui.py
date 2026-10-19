@@ -249,9 +249,15 @@ def render_stem(q: dict, show_source: bool = True) -> None:
                     unsafe_allow_html=True)
     if show_source:
         src = q["source"]
+        # A question needing two cited pages lists both, and the student is
+        # told about both: the point of the citation is that they can go and
+        # check the answer, and a page they were not shown is no use to them.
+        pages = set(src.get("slides") or [src["slide"]])
+        pages.discard(src["slide"])
+        order = sorted((src["slide"],) + tuple(pages))
         st.markdown(
             '<div class="sds-src">source: %s, %s</div>'
-            % (esc(src["pdf"]), esc(src["slide"])),
+            % (esc(src["pdf"]), esc(", ".join(order))),
             unsafe_allow_html=True,
         )
 

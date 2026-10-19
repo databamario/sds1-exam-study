@@ -207,9 +207,7 @@ def score(q: dict, slides: dict, idf: dict[str, float]) -> tuple[float, list[str
     want = terms(question_text(q))
     if not want:
         return 1.0, []
-    page = q["source"].get("slide") or ""
-    key = (q["source"].get("pdf"), _page(page))
-    have = expand(terms(slides.get(key, "")))
+    have = _cited_terms(q, slides)
     want = expand(want)
     total = sum(idf.get(t, 0.0) for t in want)
     if total <= 0:
@@ -224,6 +222,29 @@ def _page(slide: str) -> int:
         return int(str(slide).lstrip("pP."))
     except ValueError:
         return 0
+
+
+def _cited(q) -> list[int]:
+    """The page numbers a question cites, primary first, then the extras."""
+    src = q["source"]
+    extras = {_page(p) for p in (src.get("slides") or [])}
+    extras.discard(_page(src.get("slide")))
+    return [_page(src.get("slide"))] + sorted(x for x in extras if x > 0)
+
+
+def _cited_terms(q, slides: dict) -> set[str]:
+    """Every term the question's cited pages explain, taken together.
+
+    A question citing two pages is answered by both, so scoring it against the
+    primary alone would call a correct citation deficient - which is how the
+    tool used to report these questions as broken when they were not.
+    """
+    pdf = q["source"].get("pdf")
+    out: set[str] = set()
+    for page in _cited(q):
+        if page > 0:
+            out |= expand(terms(slides.get((pdf, page), "")))
+    return out
 
 
 def proximity(q: dict, slides: dict, idf: dict[str, float]) -> dict:
@@ -250,7 +271,7 @@ def proximity(q: dict, slides: dict, idf: dict[str, float]) -> dict:
     if here <= 0:
         return {"verdict": "no-page", "where": 0, "terms": [], "relieved": 0.0}
 
-    missing = want - expand(terms(slides.get((pdf, here), "")))
+    missing = want - _cited_terms(q, slides)
     missing = {t for t in missing if idf.get(t, 0.0) > 0}
     if not missing:
         return {"verdict": "complete", "where": 0, "terms": [], "relieved": 0.0}
@@ -357,19 +378,21 @@ def report_one(questions: list[dict], slides: dict, idf: dict, qid: str) -> int:
         print("no question with id %r" % qid)
         return 1
     src = q["source"]
-    key = (src["pdf"], _page(src["slide"]))
     s, missed = score(q, slides, idf)
     print("=" * 74)
-    print("%s   lecture %s   cites %s %s" % (q["id"], q["lecture"],
-                                              src["pdf"], src["slide"]))
+    print("%s   lecture %s   cites %s" % (q["id"], q["lecture"], src["pdf"]))
     print("=" * 74)
     print("\nstem\n----")
     print(q["stem"])
     if q.get("explanation"):
         print("\nkeyed answer\n------------")
         print(q["explanation"][:400])
-    print("\ncited slide\n------------")
-    print(" ".join(slides.get(key, "<page not found>").split())[:900])
+    print("\ncited slides\n--------------")
+    for n, page in enumerate(_cited(q)):
+        text = slides.get((src["pdf"], page), "<page not found>")
+        head = "primary" if n == 0 else "also cited"
+        print("\n[%s, p.%d]" % (head, page))
+        print(" ".join(text.split())[:900])
     print("\nmatch %.3f" % s)
     if missed:
         print("question terms absent from that slide: %s" % ", ".join(missed))

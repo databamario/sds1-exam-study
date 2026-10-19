@@ -1,0 +1,44 @@
+Let a question cite two pages, and make the second one earn it
+
+Some questions are answered by a pair of pages: one states the problem and the
+other carries the formula, the code or the numbers. With one page to cite the
+only fix left was to delete real course content, which is what the last three
+Band F batches did, six times in twenty questions.
+
+source keeps "slide" as the page everything else already reads, and adds
+"slides" for the full set, always starting with it. Absent means a single page,
+so the 243 questions already written rebuild byte-identical. mc() and wa() take
+the extra page as also=[...].
+
+- src/loader.py checks slides is a list of page strings.
+- tools/validate.py checks every cited page exists inside the named PDF, not
+  just the primary, and that slide and slides cannot disagree. Two fields
+  naming one thing is how a citation starts lying: edit one, ship the other.
+- src/ui.py shows the student every page cited, sorted, in one line.
+- tools/show_citation.py prints each page under SLIDE and ALSO.
+- tools/verify_citations.py scores and judges a question against all its pages.
+  Without that, a correct two-page citation reads as deficient, which is how the
+  tool used to report these questions as broken when they were not.
+
+tools/verify_second_pages.py is the gate, and it is the part that matters. If a
+second page can be added to silence the checker, then any question can look cited
+no matter how wrong it is, which is the exact defect this feature exists to
+remove. So an extra page has to supply at least one of the question's terms that
+the primary page leaves unexplained, or the gate fails. It was written with the
+feature rather than after it: unchecked, the extra page would launder wrong
+citations instead of fixing them.
+
+Both branches were tested rather than assumed. A deliberately useless page fails
+with exit 1, and asking a question to cite a second page its primary already
+covers fails too. That second case had never run on real data and turned up a %d
+applied to a string in the failure message. The suite could not have found it:
+every multi-page question so far has a primary that leaves something missing.
+Writing the test is what found it.
+
+L3-WA-004 goes back to contrasting an inner join with a left join, which is what
+it always asked, citing both pages. Batch 3 had cut the inner join out because
+p.62 carries only the left join. verify_numbers then caught me writing the page
+numbers into the detail text, which are citation numbers rather than data, and
+the sentence was rewritten to say which slide says what without naming them.
+
+Suite green apart from the rebuilt bank being uncommitted.

@@ -95,20 +95,18 @@ def main() -> int:
         if args.list_only:
             for s, q in rows:
                 print("  %6.3f  %-11s %-22s %s"
-                      % (s, q["id"], q["source"]["pdf"], q["source"]["slide"]))
+                      % (s, q["id"], q["source"]["pdf"],
+                         ", ".join(_cited(q["source"]))))
             print("\n  %d questions in [%.3f, %.3f)" % (len(rows), lo, hi))
             return 0
 
     cache = {}
     for q in wanted:
         src = q["source"]
-        page = int(str(src.get("slide", "")).lstrip("pP.") or 0)
-        key = (src.get("pdf"), page)
-        if key not in cache:
-            cache[key] = _slide_text(vc, pdfs, key)
+        cited = _cited(src)
         print("=" * 78)
         print("%s  [L%d]  ->  %s %s"
-              % (q["id"], q["lecture"], src.get("pdf"), src.get("slide")))
+              % (q["id"], q["lecture"], src.get("pdf"), ", ".join(cited)))
         print("  topic : %s" % q.get("topic"))
         print("  STEM  : %s" % q.get("stem"))
         # 66 of the 79 questions that carry a `code` block ask about code the
@@ -125,9 +123,25 @@ def main() -> int:
                 print("     %s%s. %s" % (mark, letter, text))
         else:
             print("  ANSWER: %s" % q.get("answer"))
-        print("  SLIDE : %s" % (cache[key][:620] or "<page has no text layer>"))
+        # A question that needs two pages has to be read against both, or the
+        # half of the answer that lives on the second one is judged blind.
+        for n, page in enumerate(cited):
+            key = (src.get("pdf"), int(str(page).lstrip("pP.") or 0))
+            if key not in cache:
+                cache[key] = _slide_text(vc, pdfs, key)
+            label = "SLIDE" if n == 0 else "ALSO "
+            print("  %s : %s" % (label, cache[key][:620]
+                                 or "<page has no text layer>"))
         print()
     return 0
+
+
+def _cited(src):
+    """The pages a question cites, primary first, then the extras in order."""
+    primary = src.get("slide")
+    extras = set(src.get("slides") or [])
+    extras.discard(primary)
+    return [primary] + sorted(extras)
 
 
 def _slide_text(vc, pdfs, key) -> str:

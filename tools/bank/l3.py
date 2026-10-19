@@ -387,20 +387,22 @@ def questions():
 
     out.append(wa(
         "L3-WA-004", 3, "Merging data",
-        "Explain what a left join does to rows that have no match in the other table, "
-        "and give a situation where you would need one rather than dropping them.",
-        "A left join keeps every row of the left dataset and adds matches from the "
-        "right, so an unmatched row is kept with NA. You need one when the left "
-        "table is the list of interest: students with no score must still appear.",
+        "Compare a left join and an inner join in terms of what happens to rows "
+        "that have no match in the other table, and give a situation where each "
+        "one is the right choice.",
+        "A left join keeps every row of the left dataset and fills unmatched ones "
+        "with NA. An inner join keeps only rows matched in both, dropping the "
+        "rest. Use left when the left table is the list of interest, inner to "
+        "compare on shared cases.",
         [rb("Left join described as keeping all left rows", 2),
          rb("Unmatched rows filled with NA rather than dropped", 2),
-         rb("Gives a concrete situation where dropping rows would be wrong", 2)],
-        1, PDF, "p.62", r_functions=["left_join"],
-        detail="The inner join on the previous slide is the other half of the "
-               "comparison and the reason this matters: it keeps only rows matched in "
-               "both datasets, so it would quietly drop those students and change who "
-               "is in the study. An inner join rarely errors, which is why comparing "
-               "row counts before and after is the cheapest safety check available. "
+         rb("Inner join described as keeping only rows matched in both", 2),
+         rb("Contrasts the two and gives a situation for each", 2)],
+        1, PDF, "p.62", r_functions=["left_join", "inner_join"], also=["p.61"],
+        detail="The two slides are one comparison split across a page break: one "
+               "states what the inner join keeps, the other what the left join "
+               "keeps. An inner join rarely errors, which is why comparing row "
+               "counts before and after is the cheapest safety check available. "
                "Right joins and full joins complete the family."))
 
     out.append(wa(

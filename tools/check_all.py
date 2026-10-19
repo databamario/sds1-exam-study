@@ -56,6 +56,7 @@ GATES = [
     "tools/test_progress.py",
     "tools/verify_r.py",
     "tools/verify_numbers.py",
+    "tools/verify_second_pages.py",
 ]
 
 
