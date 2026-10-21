@@ -533,7 +533,7 @@ def question_loop(pool: list[dict], kind: str, conn=None) -> None:
             _reward(q, entry["score"], streak, key, round_no)
             _record_once(conn, q, entry["score"], kind, key)
     else:
-        _wa_body(q, kind, key, entry, answered, conn, streak)
+        _wa_body(q, kind, key, entry, answered, conn, streak, queue, i)
 
     left, mid, right = st.columns([1, 1, 1])
     if answered:
@@ -558,7 +558,7 @@ def question_loop(pool: list[dict], kind: str, conn=None) -> None:
                 st.rerun()
 
 
-def _wa_body(q, kind, key, entry, answered, conn, streak=0) -> None:
+def _wa_body(q, kind, key, entry, answered, conn, streak=0, queue=None, i=0) -> None:
     """Written answer: type it, grade it blind, then look if you want to.
 
     The rubric chips come before the model answer on purpose. Previously the
@@ -611,7 +611,15 @@ def _wa_body(q, kind, key, entry, answered, conn, streak=0) -> None:
                    % (score, q["points"], earned, n_el),
                    "Tick anything above you did cover but have not yet, then "
                    "press Next to save the score.")
-    _reward(q, score, streak, key, 1 if st.session_state.get(key + "_round", 1) == 1 else 2)
+    # The chip click did not trigger a rerun, so done is now updated but the
+    # ``streak`` we were passed was computed against the previous (often zero)
+    # mark. Recompute against the fresh state so confetti and the right sound
+    # fire on the same run the chips were ticked.
+    fresh_done = st.session_state[key + "_done"]
+    fresh_history = st.session_state[key + "_history"]
+    fresh_streak = celebrate.streak_upto(queue, fresh_history, fresh_done, i)
+    round_no = st.session_state.get(key + "_round", 1)
+    _reward(q, score, fresh_streak, key, round_no)
 
     peek = key + "_peeked_" + q["id"]
     if st.session_state.get(peek):

@@ -1,0 +1,7 @@
+[server]
+# The default `auto` watcher polls the repo on every rerun and re-emits a
+# `runScript` event when nothing has changed. On Streamlit Community Cloud this
+# shows up as the "man running" indicator and a favicon flicker without any
+# user action. Turning the watcher off stops the noise; the deployed app has
+# no runtime files to watch.
+fileWatcherType = "none"
