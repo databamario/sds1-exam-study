@@ -18,9 +18,26 @@ EXAM_POINTS = 41
 MC_POINT_SHARE = 0.33
 
 
+def _new_seed() -> int:
+    """Fresh seed for a new mock exam paper.
+
+    Earlier this defaulted to 42 once and never changed - the seed was
+    stashed in ``st.session_state``, which persists across reloads on
+    cloud deploys, so every visit produced the same paper. The seed input
+    still defaults to 42 in the UI for stability, but the first time
+    someone opens the mock exam after a fresh deploy the value is a real
+    random number instead, and a Randomize button next to the input
+    lets them swap to a different paper mid-session without rerunning the
+    script.
+    """
+    import random
+    return random.getrandbits(64)
+
+
 def _build_paper(bank, seed=None):
     """Build a mixed MC/WA paper worth about EXAM_POINTS."""
-    seed = st.session_state.get("exam_seed", 42) if seed is None else seed
+    if seed is None:
+        seed = st.session_state.setdefault("exam_seed", _new_seed())
     mc_pool = loader.shuffled(loader.of_type(bank, loader.MC), seed=seed)
     wa_pool = loader.shuffled(loader.of_type(bank, loader.WA), seed=seed + 1)
 
@@ -75,7 +92,7 @@ def mock_exam(bank, conn):
         st.session_state.exam_started = False
         st.session_state.exam_start_ts = None
         st.session_state.exam_answers = {}
-        st.session_state.exam_seed = 42
+        st.session_state.setdefault("exam_seed", _new_seed())
         st.session_state.exam_idx = 0
 
     if not st.session_state.exam_started:
@@ -90,9 +107,19 @@ def mock_exam(bank, conn):
             "(%d MC, %d WA)." % (sum(q["points"] for q in paper), len(paper),
                                  n_mc, n_wa)
         )
-        seed_in = st.number_input("Paper seed (change to get a different paper)",
-                                  value=st.session_state.exam_seed,
-                                  step=1, key="exam_seed_in")
+        cols = st.columns([3, 1])
+        with cols[0]:
+            seed_in = st.number_input(
+                "Paper seed",
+                value=st.session_state.exam_seed,
+                step=1,
+                key="exam_seed_in",
+                help="Type a number to pin the paper, or click Randomize for a new one.",
+            )
+        with cols[1]:
+            if st.button("Randomize"):
+                st.session_state.exam_seed = _new_seed()
+                st.rerun()
         if st.button("Start the 4-hour exam", type="primary"):
             st.session_state.exam_seed = int(seed_in)
             st.session_state.paper = _build_paper(bank)

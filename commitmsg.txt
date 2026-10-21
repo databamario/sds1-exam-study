@@ -1,21 +1,22 @@
-L1-MC-014: stop using a literal that looks like a symbol
+Shuffle: fresh seed per session, plus a Randomize button on the mock exam
 
-The previous option (b) used `x <- 3.14` to illustrate the numeric type. The
-literal is in p.52's recap table as the numeric example, so the option is
-technically correct, but `3.14` is π in disguise. A student can briefly wonder
-whether the test is about R or about constants they half-remember, and arrive
-at the right answer for the wrong reason. The literal in the option is now
-`2.5`, which is numeric without standing for anything else.
+Practice and the mock exam both used to deliver the same questions in the
+same order on every visit. The shuffle was deterministic - the seed was
+meant to be session-scoped, but st.session_state persists across reloads
+on streamlit cloud, so the seed landed at 1 the first time and never moved.
+random.Random(1).shuffle(pool) returns the same order every time, by
+definition.
 
-The stem is also sharper. The old wording was "Which of the following statements
-about R data types are TRUE?", which describes an abstract topic. The new
-wording is "Consider these R assignments. Without running the code, which of
-the descriptions are TRUE?", which puts the assignment-to-type mechanic on the
-page. The question always tested what each assignment produced; now the stem
-says so.
+The fix is small in code and obvious in retrospect: at the first call in a
+fresh session, generate a real random seed with random.getrandbits(64).
+shuffled() is unchanged; it was already deterministic given a seed. Same
+seed still produces the same order, so a teacher who wants to pin a paper
+still can.
 
-Page and key unchanged. p.52 already supported both keyed options and now
-also names 2.5 as a numeric example would, by absence, since "any number with a
-decimal point" is what p.52's recap row actually says.
+Mock exam gets a Randomize button next to the seed input. Practice's
+existing "Shuffle again" button does the equivalent, so I just pointed it
+at the new seed generator.
 
-Suite green apart from the rebuilt bank being uncommitted.
+Behaviour verified end to end: three simulated fresh sessions produced
+three distinct MC orderings; the same seed produced the same order both
+times. Imports clean, suite green.
