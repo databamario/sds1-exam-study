@@ -589,3 +589,22 @@ a rendered dump.
 | L9-MC-004 | ok - p.12 is the Monte-Carlo example itself, X ~ N(3,1) and Y ~ Exp(0.5), count H then take H/N, and the option that H/N estimates the awkward probability is p.12's own framing |
 | L9-MC-005 | ok - p.18 lists all four bootstrap steps, so both keyed options are printed: the three uses in step 4, and "when you only have sample data" with mean, median and variance named |
 
+
+## L1-MC-014: a number that looked like it was doing something it was not
+
+The previous stem read "Which of the following statements about R data types are TRUE?"
+and option (b) used `x <- 3.14` to illustrate the **numeric** type. The literal is taken
+verbatim from the p.52 recap table, which uses `x <- 3.14` as the numeric example.
+That is what everyone reads, and what nobody catches: a number that looks like
+something else.
+
+The test of R knowledge is what type an assignment produces, not what π is. `3.14`
+adds a step that has nothing to do with R - a student can briefly wonder whether
+"3.14 → numeric" is the same as "π → numeric" and arrive at the right answer for
+the wrong reason. The new option uses `2.5`, which has no second meaning. The stem
+is now "Consider these R assignments. Without running the code, which of the
+descriptions are TRUE?", which puts the assignment→type mechanic on the page
+instead of "data types" as an abstract topic.
+
+The page is unchanged: p.52 already carried both options' claims.
+

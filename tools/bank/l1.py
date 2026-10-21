@@ -232,21 +232,21 @@ def questions():
 
     out.append(mc(
         "L1-MC-014", 1, "R data types",
-        "Which of the following statements about R data types are TRUE?",
+        "Consider these R assignments. Without running the code, which of the "
+        "descriptions are TRUE?",
         ["`x <- 2L` creates an integer, because the L suffix forces integer type.",
-         "`x <- 3.14` creates a numeric value.",
-          "`x <- 2L` creates a double-precision numeric value, because integers are stored "
-          "as a subset of numerics.",
-          "`x <- TRUE` creates a numeric value, because TRUE is stored internally as 1.",
-          "`x <- \"hello\"` creates a factor, because character strings are stored as "
-          "factors in R."],
+         "`x <- 2.5` creates a numeric value.",
+         "`x <- 2L` creates a double-precision numeric value, because integers are stored "
+         "as a subset of numerics.",
+         "`x <- TRUE` creates a numeric value, because TRUE is stored internally as 1.",
+         "`x <- \"hello\"` creates a factor, because character strings are stored as "
+         "factors in R."],
         ["a", "b"],
-        "The L suffix explicitly forces integer type, so the claim that `x <- 2L` creates a "
-        "double-precision numeric is false, and a factor is a string with extra attributes "
-        "rather than the default for text. Note the trap worth knowing: `is.numeric(2L)` is "
-        "TRUE, because is.numeric() asks whether the value is a number rather than a "
-        "character or logical, and R will happily do arithmetic with integers. But 2L is "
-        "stored as an integer, not a double.",
+        "The recap table lists integer with the example `x <- 2L` and notes the L "
+        "suffix; any number with a decimal point, like 2.5, falls under numeric. "
+        "The same table puts logical under its own class, not under numeric, and "
+        "character under character, not factor. The opposite sign in option (c) - "
+        "calling `x <- 2L` a double - is what makes it wrong.",
         PDF, "p.52", code="x <- 2L\nclass(x)",
         r_functions=["<-", "class"]))
 

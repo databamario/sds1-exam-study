@@ -353,10 +353,10 @@
    "lecture": 1,
    "type": "MC",
    "topic": "R data types",
-   "stem": "Which of the following statements about R data types are TRUE?",
+   "stem": "Consider these R assignments. Without running the code, which of the descriptions are TRUE?",
    "options": {
     "a": "`x <- 2L` creates an integer, because the L suffix forces integer type.",
-    "b": "`x <- 3.14` creates a numeric value.",
+    "b": "`x <- 2.5` creates a numeric value.",
     "c": "`x <- 2L` creates a double-precision numeric value, because integers are stored as a subset of numerics.",
     "d": "`x <- TRUE` creates a numeric value, because TRUE is stored internally as 1.",
     "e": "`x <- \"hello\"` creates a factor, because character strings are stored as factors in R."
@@ -367,7 +367,7 @@
    ],
    "n_correct": 2,
    "points": 1,
-   "explanation": "The L suffix explicitly forces integer type, so the claim that `x <- 2L` creates a double-precision numeric is false, and a factor is a string with extra attributes rather than the default for text. Note the trap worth knowing: `is.numeric(2L)` is TRUE, because is.numeric() asks whether the value is a number rather than a character or logical, and R will happily do arithmetic with integers. But 2L is stored as an integer, not a double.",
+   "explanation": "The recap table lists integer with the example `x <- 2L` and notes the L suffix; any number with a decimal point, like 2.5, falls under numeric. The same table puts logical under its own class, not under numeric, and character under character, not factor. The opposite sign in option (c) - calling `x <- 2L` a double - is what makes it wrong.",
    "r_flavoured": true,
    "r_functions": [
     "<-",

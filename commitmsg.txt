@@ -1,29 +1,21 @@
-DEVELOPMENT.md: the citation review is finished, with the real numbers
+L1-MC-014: stop using a literal that looks like a symbol
 
-It said 113 read and 34 errors, and warned that the remaining ~130 had not been
-read so 34 was a floor. All of that is now false. Every one of the 243
-citations has been read by hand against its slide, and 43 of them were wrong.
+The previous option (b) used `x <- 3.14` to illustrate the numeric type. The
+literal is in p.52's recap table as the numeric example, so the option is
+technically correct, but `3.14` is π in disguise. A student can briefly wonder
+whether the test is about R or about constants they half-remember, and arrive
+at the right answer for the wrong reason. The literal in the option is now
+`2.5`, which is numeric without standing for anything else.
 
-The section is rewritten around what the reading actually found rather than
-around the method that chose the shortlist. The bands were how the work was
-selected, and they stopped working: on a band of 30 the eight defective
-questions scored 0.129 and the 22 clean ones 0.118, so the score ranked the bad
-ones slightly worse and reversing it would have changed nothing. Everything
-after that point was read in lecture order.
+The stem is also sharper. The old wording was "Which of the following statements
+about R data types are TRUE?", which describes an abstract topic. The new
+wording is "Consider these R assignments. Without running the code, which of
+the descriptions are TRUE?", which puts the assignment-to-type mechanic on the
+page. The question always tested what each assignment produced; now the stem
+says so.
 
-The three classes of error are separated, because from inside the tool they
-look identical - in all three the key words are simply absent from the cited
-page. A claim the lecture never makes (levels = is nowhere in Lecture 1,
-summary() nowhere in Lecture 2, SDS2 nowhere in Lecture 9). A real slide the
-question does not cite, which is the 26 that now carry also=[...]. And a rubric
-grading something the keyed answer does not say, which cost L9-WA-003 and
-L9-WA-006 points to a student who answered perfectly.
+Page and key unchanged. p.52 already supported both keyed options and now
+also names 2.5 as a numeric example would, by absence, since "any number with a
+decimal point" is what p.52's recap row actually says.
 
-The section that seemed most worth keeping is the one about method. Eight
-questions in this review looked wrong only because a rendered dump was
-misread, and the last of the eight was a viewer written minutes earlier for
-this very review. So it now says what to do instead, with the L7-MC-009 case
-that produced the rule: check the key against tools/bank/ or questions.json,
-which check_all.py already guarantees are in step.
-
-Suite green.
+Suite green apart from the rebuilt bank being uncommitted.
