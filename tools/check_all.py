@@ -70,6 +70,10 @@ GATES = [
     # progress.py and index.js each hold their own copy of the blob format and
     # have no build step to keep them in step. See the module docstring.
     "tools/test_storage_parity.py",
+    # Figures must be inlined as data URIs. Served from /media/, Streamlit
+    # deletes them as soon as no running script references them, which showed up
+    # as figures that render fine and then break on the next click.
+    "tools/test_figures_inline.py",
 ]
 
 

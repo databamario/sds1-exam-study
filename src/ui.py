@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import html
 import zlib
 from io import BytesIO
@@ -14,6 +15,12 @@ from . import celebrate
 from .scoring import mc_feedback, score_mc
 
 POINTS_PER_MC = 1.0
+
+# Figures are sent as data URIs, and the encoded bytes are kept here for the
+# life of the process. There are twelve of them and they never change, so the
+# encode happens once per figure rather than on every rerun.
+_FIGURE_URI: dict[str, str] = {}
+_FIGURE_SIZE: dict[str, tuple[int, int]] = {}
 
 
 def inject_css() -> None:
@@ -64,7 +71,7 @@ def inject_css() -> None:
           }
           .sds-fig { text-align:center; margin:.5rem 0 .2rem; }
           .sds-figcap { font-size:.74rem; color:#94a3b8; margin-top:.15rem; }
-          div[data-testid="stImage"] img {
+          img.sds-fig {
             border:1px solid #dbe3ec; border-radius:8px; background:#ffffff;
           }
 
@@ -195,7 +202,7 @@ def inject_css() -> None:
             .sds-streak { background:#422006; border-color:#78350f; color:#fcd34d; }
             .sds-streak.hot { background:#450a0a; border-color:#7f1d1d; color:#fca5a5; }
             .sds-figcap { color:#64748b; }
-            div[data-testid="stImage"] img { border-color:#1f2937; }
+            img.sds-fig { border-color:#1f2937; }
           }
         </style>
         """,
@@ -272,13 +279,49 @@ def dot_class(score: float, maximum: float) -> str:
     return "bad"
 
 
+def _figure_data(name: str):
+    """The encoded figure and its pixel size, read once and kept.
+
+    Returns ``None`` if the file is missing or unreadable, which the loader
+    has already ruled out in practice - this is the second line of defence, so
+    a figure that went missing shows nothing rather than raising.
+    """
+    if name in _FIGURE_URI:
+        return _FIGURE_URI[name], _FIGURE_SIZE[name]
+    path = loader.IMAGES_DIR / (name + ".png")
+    if not path.exists():
+        return None
+    try:
+        data = path.read_bytes()
+        with Image.open(BytesIO(data)) as im:
+            size = im.size
+    except Exception:
+        return None
+    _FIGURE_URI[name] = "data:image/png;base64," + base64.b64encode(data).decode("ascii")
+    _FIGURE_SIZE[name] = size
+    return _FIGURE_URI[name], size
+
+
 def render_figure(q: dict, max_height: int = 300, max_width: int = 680) -> None:
     """Draw the question's figure, if it has one.
 
-    The bytes are read and handed to st.image rather than passing a path: a
-    path makes Streamlit register the file in its media cache, and that entry
-    is evicted between reruns, which shows up as a broken image. Inlining the
-    bytes keeps the figure on screen every time.
+    The bytes are inlined into the page as a data URI rather than handed to
+    ``st.image``. That is not a style choice, it is the difference between a
+    figure that is always there and one that sometimes is not.
+
+    ``st.image(bytes)`` registers the image in Streamlit's media file manager
+    and serves it from ``/media/<hash>.png``. That entry is deleted whenever no
+    running script references it: ``script_runner`` calls
+    ``media_file_mgr.clear_session_refs()`` with no session id at the start of
+    every run, so the references are global, and
+    ``media_file_mgr.remove_orphaned_files()`` runs at the end and deletes
+    everything left unreferenced. Navigating away from a question with a figure
+    therefore deletes that figure from the server, while the URL in any DOM
+    still holding it stays the same - measured on the running app: 200 while
+    rendered, 404 after navigating away. Back/forward, a rerun that drops the
+    figure, and an app restart on the cloud all leave a broken image behind.
+
+    A data URI carries its own bytes, so there is nothing on the server to lose.
 
     The size is capped so the question and its options stay on one screen - an
     uncapped figure pushes the stem below the fold.
@@ -286,18 +329,17 @@ def render_figure(q: dict, max_height: int = 300, max_width: int = 680) -> None:
     name = q.get("image")
     if not name:
         return
-    path = loader.IMAGES_DIR / (name + ".png")
-    if not path.exists():
+    got = _figure_data(name)
+    if got is None:
         return
-    try:
-        data = path.read_bytes()
-        with Image.open(BytesIO(data)) as im:
-            w, h = im.size
-    except Exception:
-        st.image(str(path))
-        return
-    width = min(max_width, int(max_height * w / h))
-    st.image(data, width=width)
+    uri, (w, h) = got
+    width = min(max_width, int(max_height * w / h)) if h else max_width
+    alt = "Figure for this question"
+    st.markdown(
+        '<img class="sds-fig" src="%s" width="%d" alt="%s" />'
+        % (uri, width, html.escape(alt, quote=True)),
+        unsafe_allow_html=True,
+    )
     st.markdown(
         '<div class="sds-figcap">Figure &mdash; read the axes and the shape '
         "before the options</div>",

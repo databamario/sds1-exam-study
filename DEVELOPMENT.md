@@ -246,6 +246,40 @@ source recording, and embedded into `src/sfx_data.py` by `tools/build_sfx.py`. T
 Do not reintroduce a `static/` directory or `server.enableStaticServing`. It was tried, and it
 does not serve the files; see the postmortem in [DEPLOY.md](DEPLOY.md) for what happened and why.
 
+## Figures
+
+Figures are inlined as data URIs, not served from `/media/`. That is not a style choice.
+
+`st.image(bytes)` registers the image in Streamlit's media file manager and serves it from
+`/media/<hash>.png`. That entry is deleted whenever no running script references it:
+`script_runner` calls `media_file_mgr.clear_session_refs()` **with no session id** at the start of
+every run, so the references are global, and `remove_orphaned_files()` runs at the end and drops
+whatever nothing references. So navigating away from a question with a figure deletes that figure
+from the server, while the URL in any DOM still holding it is unchanged.
+
+Measured on the running app, before the fix:
+
+```
+while rendered        /media/<hash>.png -> 200
+after navigating away /media/<hash>.png -> 404
+data URI copy on the same page          -> still fine
+```
+
+`render_figure()` therefore inlines the bytes. There is nothing on the server to lose. The encode
+happens once per figure and is kept in `_FIGURE_URI` for the life of the process — twelve figures
+is 528 KB of PNG, so 704 KB of base64, and re-encoding that on every rerun is what would make
+inlining expensive rather than free.
+
+`tools/test_figures_inline.py` (gate 11) renders every figure question in the bank and asserts each
+one produced a png data URI with alt text and no `/media/` reference. Verified by putting
+`st.image` back and watching it report 30 media figures and 0 data URIs.
+
+The Answer key is the stress case: it renders all 243 questions, 30 of which carry a figure, so
+that one page carries every base64 payload. It is the page to check after any change here.
+
+`validate.py` already fails the build when a question names a figure file that does not exist, so
+`render_figure()` missing one is belt to braces: the question reads without it rather than raising.
+
 ## Regenerating the sounds
 
 ```bash
