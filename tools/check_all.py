@@ -63,6 +63,13 @@ GATES = [
     # anyone notices. Kept last so a failure in this gate does not mask the
     # data checks.
     "tools/test_app_smoke.py",
+    # A mock exam must survive a browser refresh. The load/save logic, and the
+    # guard that stops the first run of a session overwriting the saved exam
+    # before anything has read it.
+    "tools/test_exam_state.py",
+    # progress.py and index.js each hold their own copy of the blob format and
+    # have no build step to keep them in step. See the module docstring.
+    "tools/test_storage_parity.py",
 ]
 
 

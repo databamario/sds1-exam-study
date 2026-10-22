@@ -6,7 +6,7 @@ import time
 
 import streamlit as st
 
-from .. import celebrate, loader, progress, ui
+from .. import celebrate, exam_state, loader, progress, ui
 from ..scoring import score_mc
 
 EXAM_MINUTES = 240
@@ -95,12 +95,21 @@ def mock_exam(bank, conn):
         "formula with the values substituted." % (EXAM_POINTS, EXAM_MINUTES)
     )
 
+    # Before the defaults below, because load() is what fills them in. It is a
+    # no-op on the first run of a session - the browser has not been read yet -
+    # and Streamlit re-runs this script by itself when the value arrives.
+    exam_state.load(conn, bank)
+
     if "exam_started" not in st.session_state:
         st.session_state.exam_started = False
         st.session_state.exam_start_ts = None
         st.session_state.exam_answers = {}
         st.session_state.setdefault("exam_seed", _new_seed())
         st.session_state.exam_idx = 0
+
+    saved_notice = exam_state.notice()
+    if saved_notice and st.session_state.exam_started:
+        st.info(saved_notice)
 
     if not st.session_state.exam_started:
         paper = _build_paper(bank)
@@ -126,20 +135,28 @@ def mock_exam(bank, conn):
         with cols[1]:
             if st.button("Randomize"):
                 st.session_state.exam_seed = _new_seed()
+                exam_state.save(conn)
                 st.rerun()
         if st.button("Start the 4-hour exam", type="primary"):
+            # Any exam already in progress is replaced, deliberately and without
+            # asking. The button says what it does.
             st.session_state.exam_seed = int(seed_in)
             st.session_state.paper = _build_paper(bank)
             st.session_state.exam_started = True
             st.session_state.exam_start_ts = time.time()
             st.session_state.exam_answers = {}
             st.session_state.exam_idx = 0
+            exam_state.save(conn)
             st.rerun()
+        # Nothing in progress, so make sure a finished or abandoned exam cannot
+        # be resumed by a later refresh.
+        exam_state.save(conn)
         return
 
     paper = st.session_state.get("paper", [])
     if not paper:
         st.session_state.exam_started = False
+        exam_state.save(conn)
         st.rerun()
 
     elapsed = time.time() - st.session_state.exam_start_ts
@@ -152,6 +169,7 @@ def mock_exam(bank, conn):
     if left <= 0:
         st.error("Time is up. Submit your answers.")
         st.session_state.exam_started = False
+        exam_state.save(conn)
 
     idx = min(st.session_state.exam_idx, len(paper) - 1)
     q = paper[idx]
@@ -186,17 +204,26 @@ def mock_exam(bank, conn):
     with c1:
         if st.button("Previous", disabled=idx == 0, use_container_width=True):
             st.session_state.exam_idx = idx - 1
+            exam_state.save(conn)
             st.rerun()
     with c2:
         if st.button("Next", disabled=idx >= len(paper) - 1,
                      use_container_width=True):
             st.session_state.exam_idx = idx + 1
+            exam_state.save(conn)
             st.rerun()
     with c3:
         if st.button("Finish and grade", type="primary", use_container_width=True):
             _grade(bank, conn, paper, answers)
             st.session_state.exam_started = False
+            # Handed in: clear it, so a refresh cannot bring the paper back.
+            exam_state.save(conn)
             st.rerun()
+
+    # Last, so it captures the MC ticks and the WA text typed on this run. The
+    # buttons above save before rerunning, because a rerun unwinds the script
+    # and never reaches this line.
+    exam_state.save(conn)
 
 
 def _grade(bank, conn, paper, answers):

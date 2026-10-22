@@ -27,6 +27,11 @@
 //   in   streamlit:render              carries args on every script run
 //   out  streamlit:setComponentValue   carries the stored progress back
 //   out  streamlit:setFrameHeight      this component draws nothing
+//
+// The blob has three fields: attempts (graded answers), prefs (settings such as
+// sound on/off) and exam (a mock exam in progress). exam is null when there is
+// none. It survives the attempt trim on purpose - the ceiling exists to stop
+// the answer log growing forever, and an exam you are sitting is not that.
 
 (function () {
   "use strict";
@@ -37,16 +42,18 @@
   function readBlob() {
     try {
       var raw = window.localStorage.getItem(KEY);
-      if (!raw) return { attempts: [], prefs: {} };
+      if (!raw) return { attempts: [], prefs: {}, exam: null };
       var parsed = JSON.parse(raw);
       return {
         attempts: Array.isArray(parsed.attempts) ? parsed.attempts : [],
         prefs:
           parsed.prefs && typeof parsed.prefs === "object" ? parsed.prefs : {},
+        exam:
+          parsed.exam && typeof parsed.exam === "object" ? parsed.exam : null,
       };
     } catch (e) {
       // A corrupt or unreadable value must not take the app down. Start clean.
-      return { attempts: [], prefs: {} };
+      return { attempts: [], prefs: {}, exam: null };
     }
   }
 
@@ -67,6 +74,7 @@
     if (op === "record") blob.attempts.push(payload);
     else if (op === "reset") blob.attempts = [];
     else if (op === "set_pref") blob.prefs[payload.name] = String(payload.value);
+    else if (op === "set_exam") blob.exam = payload || null;
     return blob;
   }
 

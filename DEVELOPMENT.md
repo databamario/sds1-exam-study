@@ -256,7 +256,7 @@ python tools/build_sfx.py    # rewrites src/sfx_data.py
 `make_sfx.py` cuts the long tail off the source, downmixes to mono, resamples to 16 kHz and sets
 the peak, then derives the other three sounds by shifting its pitch, so they belong to one family.
 
-## Two validation layers, before any push
+## Validation, before any push
 
 `tools/check_all.py` runs the data side — schema, R, numbers, scoring, progress, second pages.
 None of those scripts ever launch Streamlit. That is fine for the *content*, but it leaves the
@@ -291,7 +291,46 @@ To run it on its own: `python tools/test_app_smoke.py`.
 A change that wants to add AppTest coverage should follow the same shape: drive the page once,
 assert the visible side-effect, and keep the test self-contained.
 
-### Layer 2 — Chromium click-through (manual, before risky pushes)
+### Layer 3 — exam persistence (gates 9 and 10)
+
+A mock exam used to live entirely in `st.session_state`, which lives in one
+Streamlit session's memory. F5 ends that session, so a four-hour paper was lost
+to a refresh. It now goes to the same browser local storage that already holds
+progress, as a third field on the same blob:
+
+```
+{ "attempts": [...], "prefs": {...}, "exam": { started, start_ts, paper, idx, answers, seed } }
+```
+
+`src/exam_state.py` is the only place that reads or writes it. Two rules there
+are not stylistic:
+
+**Never write before the browser has answered.** A component's value arrives on
+the run *after* the call, so the first run of every session sees an empty blob.
+Reading that as "no exam in progress" and writing it back destroys the saved
+exam before anything has read it. `progress.hydrated()` separates "nothing is
+stored" from "we have not found out yet", and both `exam_state.save()` and
+`progress.set_exam()` refuse to write until they can be told apart.
+`test_first_run_does_not_clobber` watches `_write` to prove no `set_exam` op is
+sent before hydration — asserting on the session mirror cannot catch this,
+because the mirror already holds `None`, so a write of `None` is invisible in it.
+
+**Never trust a saved paper.** Papers are stored by question id. If a deploy
+changes the bank, an id can stop existing and rendering it would raise on
+`None`. `load()` drops a paper with any unknown id and says why.
+
+`tools/test_storage_parity.py` (gate 10) exists because `progress.py` and
+`_progress_component/index.js` each hold their own copy of the blob format, with
+no build step to keep them in step. The gate asserts on the text of both files
+that every field and op appears in each, and that `reset` does not touch the
+exam — clearing the answer log must not throw away an exam in progress.
+
+Not covered by any gate: the browser half of the round trip. AppTest does not
+run JavaScript, so the local-storage write itself is checked by hand in Chromium
+— start an exam, answer three questions, F5, and confirm the app comes back on
+question 4 with the answers ticked and the clock counting down from where it
+was. That is the check that matters, because the gates only prove the Python
+side is willing to write.
 
 For anything that touches `celebrate.py`, `ui.py` or `app.py`, the eight gates do not see what
 the browser sees. The procedure is:

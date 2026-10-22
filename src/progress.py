@@ -42,8 +42,14 @@ COMPONENT_DIR = os.path.join(REPO, "_progress_component")
 STORAGE_KEY = "sds1-progress-v1"
 SESSION_KEY = "_sds1_progress_blob"
 NONCE_KEY = "_sds1_progress_nonce"
+HYDRATED_KEY = "_sds1_progress_hydrated"
 
-_EMPTY: dict[str, Any] = {"attempts": [], "prefs": {}}
+# ``exam`` holds an in-progress mock exam: the paper, the question index, the
+# answers and the wall-clock start time. It lives in the same blob as progress
+# because it is the same kind of thing - something the person using the app
+# would be furious to lose to a browser refresh - and because this module is
+# already the one place that knows how to read and write browser storage.
+_EMPTY: dict[str, Any] = {"attempts": [], "prefs": {}, "exam": None}
 
 MAX_ATTEMPTS = 20000
 
@@ -80,16 +86,18 @@ def _decode(raw: Any) -> dict:
     if isinstance(raw, dict):
         attempts = raw.get("attempts")
         prefs = raw.get("prefs")
+        exam = raw.get("exam")
         return {
             "attempts": list(attempts) if isinstance(attempts, list) else [],
             "prefs": dict(prefs) if isinstance(prefs, dict) else {},
+            "exam": dict(exam) if isinstance(exam, dict) else None,
         }
     if isinstance(raw, str) and raw.strip():
         try:
             return _decode(json.loads(raw))
         except (ValueError, TypeError):
             pass
-    return {"attempts": [], "prefs": {}}
+    return dict(_EMPTY)
 
 
 def _mirror() -> dict:
@@ -125,9 +133,26 @@ def hydrate() -> dict:
     )
     if returned is not None:
         st.session_state[SESSION_KEY] = _decode(returned)
+        # Only a value that actually came back counts as hydrated. Until this
+        # flips, ``_mirror()`` is the empty default and knows nothing about the
+        # browser - so anything that would *write* based on it has to hold off,
+        # or the first run of a fresh session overwrites real stored data with
+        # the absence of it.
+        st.session_state[HYDRATED_KEY] = True
 
     st.session_state[SESSION_KEY] = _decode(st.session_state.get(SESSION_KEY))
     return st.session_state[SESSION_KEY]
+
+
+def hydrated() -> bool:
+    """True once the browser's stored blob has actually arrived this session.
+
+    False on the first run of every session, and stays false if the component
+    never loads. That is the point: it is the difference between "there is
+    nothing stored" and "we have not found out yet", and :func:`set_exam` uses
+    it to refuse to write before the second one.
+    """
+    return bool(st.session_state.get(HYDRATED_KEY))
 
 
 def _write(op: str, payload: Any = None) -> None:
@@ -146,13 +171,14 @@ def _write(op: str, payload: Any = None) -> None:
           function read() {
             try {
               var raw = window.localStorage.getItem(KEY);
-              if (!raw) return { attempts: [], prefs: {} };
+              if (!raw) return { attempts: [], prefs: {}, exam: null };
               var p = JSON.parse(raw);
               return {
                 attempts: Array.isArray(p.attempts) ? p.attempts : [],
-                prefs: p.prefs && typeof p.prefs === "object" ? p.prefs : {}
+                prefs: p.prefs && typeof p.prefs === "object" ? p.prefs : {},
+                exam: p.exam && typeof p.exam === "object" ? p.exam : null
               };
-            } catch (e) { return { attempts: [], prefs: {} }; }
+            } catch (e) { return { attempts: [], prefs: {}, exam: null }; }
           }
           function write(b) {
             if (b.attempts.length > %d) {
@@ -166,6 +192,7 @@ def _write(op: str, payload: Any = None) -> None:
           if (op === "record") { blob.attempts.push(payload); }
           else if (op === "reset") { blob.attempts = []; }
           else if (op === "set_pref") { blob.prefs[payload.name] = String(payload.value); }
+          else if (op === "set_exam") { blob.exam = payload; }
           write(blob);
         })();
         </script>
@@ -252,8 +279,20 @@ def overall(store: Any) -> dict:
 
 
 def reset(store: Any) -> None:
-    """Throw the history away."""
-    st.session_state[SESSION_KEY] = dict(_EMPTY)
+    """Throw the history away.
+
+    The in-progress exam is left alone. Progress is a record of what you have
+    done; an exam you are halfway through is work in hand, and wiping the
+    record should not silently throw that out too. It goes when you press
+    "Start the 4-hour exam" or finish and grade, both of which call
+    :func:`set_exam` explicitly.
+    """
+    # The mirror keeps the exam, because the JS below only clears attempts.
+    # Dropping it here would make the mirror disagree with local storage, and
+    # the next set_exam() would then write that disagreement through.
+    blob = _mirror()
+    blob["attempts"] = []
+    st.session_state[SESSION_KEY] = blob
     _write("reset")
 
 
@@ -277,3 +316,31 @@ def set_pref(store: Any, name: str, value: str) -> None:
     blob["prefs"] = prefs
     st.session_state[SESSION_KEY] = blob
     _write("set_pref", {"name": name, "value": value})
+
+
+def read_exam(store: Any) -> dict | None:
+    """The in-progress mock exam, or ``None`` if there is none.
+
+    Returns ``None`` when the browser has not been read yet, and also when it
+    has and holds no exam. The caller cannot tell those apart, which is
+    deliberate: from :mod:`src.exam_state` they need the same answer, namely
+    "do not adopt anything", and the one case where the difference matters -
+    writing - is gated on :func:`hydrated` instead.
+    """
+    exam = _mirror().get("exam")
+    return dict(exam) if isinstance(exam, dict) else None
+
+
+def set_exam(store: Any, exam: dict | None) -> None:
+    """Save, or clear with ``None``, the in-progress mock exam.
+
+    Refuses to write before the browser has answered, because the mirror is the
+    empty default until then and writing would replace a real saved exam with
+    the knowledge that none was found. See :func:`hydrated`.
+    """
+    if not hydrated():
+        return
+    blob = _mirror()
+    blob["exam"] = dict(exam) if isinstance(exam, dict) else None
+    st.session_state[SESSION_KEY] = blob
+    _write("set_exam", blob["exam"])

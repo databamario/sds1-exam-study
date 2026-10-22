@@ -57,18 +57,31 @@ def test_decode_is_forgiving() -> None:
     session, and local storage can hold something hand-edited or truncated. A
     corrupt value must not take the app down.
     """
-    check("decode none", progress._decode(None), {"attempts": [], "prefs": {}})
-    check("decode empty string", progress._decode(""), {"attempts": [], "prefs": {}})
-    check("decode junk", progress._decode("not json"), {"attempts": [], "prefs": {}})
+    # exam: None is the third field of the blob - a mock exam in progress, or
+    # null. It came with the exam persistence work; these expectations carry it
+    # so the shape of the empty blob is pinned in both directions.
+    empty = {"attempts": [], "prefs": {}, "exam": None}
+    check("decode none", progress._decode(None), empty)
+    check("decode empty string", progress._decode(""), empty)
+    check("decode junk", progress._decode("not json"), empty)
     check("decode wrong shapes",
           progress._decode({"attempts": "no", "prefs": 5}),
-          {"attempts": [], "prefs": {}})
-    check("decode good", progress._decode({"attempts": [1], "prefs": {"a": "b"}}),
-          {"attempts": [1], "prefs": {"a": "b"}})
+          empty)
+    check("decode good",
+          progress._decode({"attempts": [1], "prefs": {"a": "b"}}),
+          {"attempts": [1], "prefs": {"a": "b"}, "exam": None})
     # a JSON string is accepted too, since that is how a raw store looks
     check("decode from json text",
           progress._decode('{"attempts": [], "prefs": {"sound": "0"}}'),
-          {"attempts": [], "prefs": {"sound": "0"}})
+          {"attempts": [], "prefs": {"sound": "0"}, "exam": None})
+    # An exam survives, but only if it is a dict. A string or a list in that
+    # slot is corruption, and read_exam() has to be able to say no to it.
+    check("decode keeps a saved exam",
+          progress._decode({"attempts": [], "prefs": {}, "exam": {"idx": 2}}),
+          {"attempts": [], "prefs": {}, "exam": {"idx": 2}})
+    check("decode rejects a junk exam",
+          progress._decode({"attempts": [], "prefs": {}, "exam": "no"}),
+          empty)
 
 
 def test_overall_sums_scores() -> None:
