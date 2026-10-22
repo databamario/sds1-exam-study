@@ -57,6 +57,12 @@ GATES = [
     "tools/verify_r.py",
     "tools/verify_numbers.py",
     "tools/verify_second_pages.py",
+    # Booting the full app via AppTest, not just the data tools. Caught the
+    # ``TypeError: html() got an unexpected keyword argument 'key'`` regression
+    # from ``7cb8327``; without it, the deployed app crashes for an hour before
+    # anyone notices. Kept last so a failure in this gate does not mask the
+    # data checks.
+    "tools/test_app_smoke.py",
 ]
 
 

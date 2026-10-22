@@ -16,15 +16,17 @@ def _new_seed() -> int:
 
     Earlier this read 1 once and never changed - the seed was stashed in
     ``st.session_state``, which persists across reloads on cloud deploys,
-    so every visit produced the same shuffled order. ``random.getrandbits``
-    is fine for shuffling (Mersenne Twister is not cryptographically strong,
-    but neither is shuffling - you just want unpredictability here, not
-    secrecy), and ``setdefault`` only fires the first time so a user
-    revisiting the same quiz mid-practice sees the same order, which is
-    what they want.
+    so every visit produced the same shuffled order. ``SystemRandom`` is
+    fine for shuffling (you just want unpredictability here, not secrecy),
+    and ``setdefault`` only fires the first time so a user revisiting the
+    same quiz mid-practice sees the same order, which is what they want.
+
+    Bounded to 2**31 to match ``mock_exam._new_seed``: anything wider does
+    not buy a more varied order for a ~50-question pool and risks overflow
+    if a future change decides to display the value.
     """
     import random
-    return random.getrandbits(64)
+    return random.SystemRandom().randrange(2**31)
 
 
 def _pick(questions, key, label):

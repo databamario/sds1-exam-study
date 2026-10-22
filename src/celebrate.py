@@ -210,14 +210,7 @@ def flush() -> None:
         print("[celebrate] no embedded audio for %r" % (name,), file=sys.stderr)
         st.session_state[_DRAWN_KEY] = seq
         return
-    # A stable per-sequence key so Streamlit's component tracker does not
-    # tear down and rebuild the iframe on every rerun. Without it, any widget
-    # interaction (Check answer, Next, a chip) replaces the audio element
-    # mid-playback and the sound cuts. The bump keyed on seq makes each new
-    # sound its own component while keeping the old one alive until the new
-    # one is drawn.
-    components.html(_PLAYER % (uri, _SOUND_VOLUME[name]), height=0,
-                    key="sds-sfx-%d" % seq)
+    components.html(_PLAYER % (uri, _SOUND_VOLUME[name]), height=0)
     st.session_state[_DRAWN_KEY] = seq
 
 

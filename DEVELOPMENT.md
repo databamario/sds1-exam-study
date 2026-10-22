@@ -255,3 +255,72 @@ python tools/build_sfx.py    # rewrites src/sfx_data.py
 
 `make_sfx.py` cuts the long tail off the source, downmixes to mono, resamples to 16 kHz and sets
 the peak, then derives the other three sounds by shifting its pitch, so they belong to one family.
+
+## Two validation layers, before any push
+
+`tools/check_all.py` runs the data side — schema, R, numbers, scoring, progress, second pages.
+None of those scripts ever launch Streamlit. That is fine for the *content*, but it leaves the
+*runtime* unguarded: a `TypeError` from a bad kwarg on `components.html(...)` would pass every
+gate and crash the deployed app an hour later when someone opens the page. The same is true for
+any wrong seed value that the JS widget then refuses to render. Two layers exist so this stops
+being the discovery path.
+
+### Layer 1 — `tools/test_app_smoke.py` (in the suite, automatic)
+
+`streamlit.testing.v1.AppTest` boots `app.py` in-process, lets us peek at session state and the
+widgets, and reruns without a browser. The file is run as the eighth gate by `check_all.py` and
+covers:
+
+- `test_app_runs` — boots the script twice (idle, then with a sound queued) and asserts no
+  exception from `celebrate.flush()` or anywhere else at module level. This is the gate that
+  caught the `key=html()` regression from `7cb8327`.
+- `test_wa_streak_refresh_after_chip` — pins the WA streak recomputation inside `_wa_body`.
+  Before the fix the cached `streak` argument was passed in before the chip click updated `done`,
+  which suppressed the confetti for WA entirely.
+- `test_mock_exam_seed_within_widget_bounds` — navigates into Mock exam with a fresh session so
+  `setdefault("exam_seed", _new_seed())` actually calls the seed source. With the old
+  `random.getrandbits(64)` this raised `StreamlitJSNumberBoundsError` on more than half of the
+  first opens.
+- `test_new_seed_is_within_st_widget_bounds` — direct unit-level check that `_new_seed()` in
+  `practice.py` and `mock_exam.py` returns values in `[0, 2**31)`.
+- `test_mc_streak_refreshes_after_check` — pins the MC streak recomputation after the
+  Check answer rerun.
+
+To run it on its own: `python tools/test_app_smoke.py`.
+
+A change that wants to add AppTest coverage should follow the same shape: drive the page once,
+assert the visible side-effect, and keep the test self-contained.
+
+### Layer 2 — Chromium click-through (manual, before risky pushes)
+
+For anything that touches `celebrate.py`, `ui.py` or `app.py`, the eight gates do not see what
+the browser sees. The procedure is:
+
+1. From the repo root, start a clean server on a port that nothing else uses:
+
+   ```bash
+   python -m streamlit run app.py \
+     --server.port 8512 \
+     --server.headless true \
+     --browser.gatherUsageStats false \
+     --server.fileWatcherType none \
+     > streamlit.log 2> streamlit.err &
+   ```
+
+2. Drive Chromium with `chrome-devtools` MCP:
+   - `new_page url=http://localhost:8512`, then for each in-scope page
+     (Home → Study MC → Study WA → Mock exam → Answer key → Progress → R coverage), `take_snapshot`
+     and `list_console_messages` to catch any red box.
+   - At least one click on a checkbox (MC), one tick on a WA chip and a full Mock-exam start to
+     exercise `celebrate.flush()` with a sound queued.
+   - Capture a screenshot if anything looks off; the snapshot diff catches most things first.
+
+3. Kill the server when done:
+
+   ```bash
+   pkill -f 'streamlit run app.py' || true
+   ```
+
+   On Windows PowerShell: `Get-Process python | Where-Object { $_.CommandLine -match 'streamlit run' } | Stop-Process -Force`.
+
+When this layer caught a regression locally, the change does not get pushed.

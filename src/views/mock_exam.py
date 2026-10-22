@@ -29,9 +29,16 @@ def _new_seed() -> int:
     random number instead, and a Randomize button next to the input
     lets them swap to a different paper mid-session without rerunning the
     script.
+
+    The range is bounded to a 31-bit unsigned integer. ``getrandbits(64)``
+    produced values up to 2**64-1, which JavaScript - and therefore
+    Streamlit's number_input widget - cannot represent exactly: the JS
+    number sends half of them through as floating-point and the widget
+    raises ``StreamlitJSNumberBoundsError`` at render. 2**31 covers every
+    case the paper builder actually needs to vary.
     """
     import random
-    return random.getrandbits(64)
+    return random.SystemRandom().randrange(2**31)
 
 
 def _build_paper(bank, seed=None):
